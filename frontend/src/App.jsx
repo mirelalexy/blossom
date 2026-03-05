@@ -8,6 +8,7 @@ import Transactions from "./pages/Transactions"
 import Goals from "./pages/Goals"
 import Journey from "./pages/Journey"
 import Settings from "./pages/Settings"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
           element={
             <AppLayout>
               <Goals />
+            </AppLayout>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <AppLayout>
+              <Profile />
             </AppLayout>
           } 
         />
