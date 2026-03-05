@@ -1,0 +1,25 @@
+.bottombar button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bottombar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+/* Only on mobile */
+@media (min-width: 1024px) {
+    .bottombar {
+        display: none;
+    }
+}

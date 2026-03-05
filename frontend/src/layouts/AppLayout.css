@@ -9,10 +9,6 @@
 }
 
 @media (min-width: 1024px) {
-    .bottombar {
-        display: none;
-    }
-
     .sidebar {
         display: flex;
     }
