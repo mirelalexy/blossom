@@ -1,0 +1,26 @@
+.transaction-merchant {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.transaction-amount {
+    font-weight: 600;
+}
+
+.transaction-basics {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transaction-details p{
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.transaction-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
