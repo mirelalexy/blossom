@@ -1,0 +1,14 @@
+.top-category-card-content p {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.top-category-card-content p span {
+    font-weight: 600;
+}
+
+.top-category-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
