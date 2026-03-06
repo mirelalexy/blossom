@@ -5,6 +5,7 @@ function Button({ icon, children, onClick, type="button" }) {
         <button
             type={type}
             onClick={onClick}
+            className="button"
         >
             {icon && <div className="card-icon">
                     {icon}
