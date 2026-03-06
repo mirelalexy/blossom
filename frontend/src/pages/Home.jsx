@@ -1,5 +1,15 @@
+import GreetingHeader from "../components/navigation/home/GreetingHeader"
+
+import "./Home.css"
+
 function Home() {
-    return <h1>Home</h1>
+    return (
+        <div className="home-layout">
+            <div className="home-content">
+                <GreetingHeader />
+            </div>
+        </div>
+    )
 }
 
 export default Home
