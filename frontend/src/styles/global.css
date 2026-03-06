@@ -9,3 +9,7 @@ body {
 p {
     color: var(--text-primary)
 }
+
+button {
+    font-family: "DM Sans", serif;
+}
