@@ -1,0 +1,30 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-content p {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.card-header {
+    display: flex;
+    gap: 10px;
+}
+
+.card-header p {
+    font-weight: 600;
+    font-size: 13px;
+}

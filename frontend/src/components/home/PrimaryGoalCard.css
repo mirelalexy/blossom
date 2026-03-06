@@ -1,0 +1,15 @@
+.goal-meta span {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.goal-meta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.goal-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

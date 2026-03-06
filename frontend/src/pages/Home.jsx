@@ -1,5 +1,5 @@
-import GreetingHeader from "../components/navigation/home/GreetingHeader"
-import StatsSection from "../components/navigation/home/StatsSection"
+import GreetingHeader from "../components/home/GreetingHeader"
+import StatsSection from "../components/home/StatsSection"
 
 import "../styles/pages/Home.css"
 
