@@ -53,14 +53,3 @@
 .home-content {
     margin: 7%;
 }
-
-.home-stats-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
- 
-.home-stats-section h3 {
-    font-size: 13px;
-    margin: 0;
-}

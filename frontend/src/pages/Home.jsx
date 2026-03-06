@@ -1,5 +1,7 @@
 import GreetingHeader from "../components/home/GreetingHeader"
-import StatsSection from "../components/home/StatsSection"
+import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
+import TopCategoryCard from "../components/home/TopCategoryCard"
+import Section from "../components/ui/Section"
 
 import "../styles/pages/Home.css"
 
@@ -9,7 +11,10 @@ function Home() {
             <div className="home-content">
                 <GreetingHeader />
 
-                <StatsSection />
+                <Section title="Stats">
+                    <PrimaryGoalCard />
+                    <TopCategoryCard />
+                </Section>
             </div>
         </div>
     )
