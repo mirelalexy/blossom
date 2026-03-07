@@ -1,5 +1,7 @@
 import Card from "../ui/Card";
 
+import { formatDate } from "../../utils/dateUtils"
+
 import "./TransactionCard.css"
 
 function TransactionCard({ category, icon, merchant, date, mood, type, amount, currency }) {
@@ -26,7 +28,7 @@ function TransactionCard({ category, icon, merchant, date, mood, type, amount, c
                 </div>
 
                 <div className="transaction-details">
-                    <p>{date} {mood && <> • {emoji} </>}</p>
+                    <p>{formatDate(date)} {mood && <> • {emoji} </>}</p>
                 </div>
             </div>
         </Card>
