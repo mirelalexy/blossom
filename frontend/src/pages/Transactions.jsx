@@ -21,20 +21,24 @@ function Transactions() {
         return t
     })
 
-    const recentTransactions = formattedTransactions.filter((t) => {
-        if (!t.date) return false
+    const recentTransactions = formattedTransactions
+        .filter((t) => {
+            if (!t.date) return false
 
-        const transactionDate = new Date(t.date)
-        const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24)
+            const transactionDate = new Date(t.date)
+            const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24)
 
-        return diffDays >= 0 && diffDays <= 7
-    })
+            return diffDays >= 0 && diffDays <= 7
+        })
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-    const upcomingTransactions = formattedTransactions.filter((t) => {
-        const transactionDate = new Date(t.date)
+    const upcomingTransactions = formattedTransactions
+        .filter((t) => {
+            const transactionDate = new Date(t.date)
 
-        return transactionDate > today
-    })
+            return transactionDate > today
+        })
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
 
     return (
         <div className="transactions-layout">
