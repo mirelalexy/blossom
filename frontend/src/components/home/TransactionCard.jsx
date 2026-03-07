@@ -1,10 +1,11 @@
 import Card from "../ui/Card";
 
 import { formatDate } from "../../utils/dateUtils"
+import { categoryIcons } from "../../utils/categoryIcons"
 
 import "./TransactionCard.css"
 
-function TransactionCard({ category, icon, merchant, date, mood, type, amount, currency }) {
+function TransactionCard({ category, merchant, date, mood, type, amount, currency }) {
     const moodEmojis = {
         happy: "🤩",
         calm: "😌",
@@ -13,13 +14,14 @@ function TransactionCard({ category, icon, merchant, date, mood, type, amount, c
         sad: "☹️"
     }
 
-    const emoji = moodEmojis[mood] || "";
+    const emoji = moodEmojis[mood] || ""
+    const Icon = categoryIcons[category]
 
     return (
         <Card 
             className="transaction-card" 
             title={category} 
-            icon={icon}
+            icon={<Icon size={18} />}
         >
             <div className="transaction-card-content">
                 <div className="transaction-basics">
