@@ -3,28 +3,38 @@ import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 
 import { transactions } from "../data/mock/transactions"
+import { getNextRecurringDate } from "../utils/recurringUtils"
 
 import "../styles/pages/Transactions.css"
 
 function Transactions() {
-    const today = new Date();
+    const today = new Date()
 
-    const recentTransactions = transactions.filter((t) => {
-        if (!t.date) return false;
-
-        const transactionDate = new Date(t.date);
-        const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24);
-
-        return diffDays >= 0 && diffDays <= 7;
-    });
-
-    const upcomingTransactions = transactions.filter((t) => {
+    const formattedTransactions = transactions.map((t) => {
         if (t.recurring) {
-            return true;
+            return {
+                ...t,
+                date: getNextRecurringDate(t.recurring)
+            }
         }
 
-        return false;
-    });
+        return t
+    })
+
+    const recentTransactions = formattedTransactions.filter((t) => {
+        if (!t.date) return false
+
+        const transactionDate = new Date(t.date)
+        const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24)
+
+        return diffDays >= 0 && diffDays <= 7
+    })
+
+    const upcomingTransactions = formattedTransactions.filter((t) => {
+        const transactionDate = new Date(t.date)
+
+        return transactionDate > today
+    })
 
     return (
         <div className="transactions-layout">
