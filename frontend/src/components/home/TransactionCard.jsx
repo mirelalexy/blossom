@@ -26,7 +26,7 @@ function TransactionCard({ category, icon, merchant, date, mood, type, amount, c
                 </div>
 
                 <div className="transaction-details">
-                    <p>{date} • {emoji}</p>
+                    <p>{date} {mood && <> • {emoji} </>}</p>
                 </div>
             </div>
         </Card>
