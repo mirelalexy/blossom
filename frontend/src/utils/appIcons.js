@@ -1,0 +1,43 @@
+import {
+    House, 
+    Medal, 
+    Sprout, 
+    Plus, 
+    Sparkle, 
+    Banknote, 
+    Bell, 
+    Receipt, 
+    ArrowLeft, 
+    Trash, 
+    CircleUserRound, 
+    GlobeLock, 
+    Palette, 
+    HandCoins, 
+    CircleDollarSign, 
+    Wallet, 
+    BadgeInfo, 
+    CircleQuestionMark,
+    Settings 
+} from "lucide-react"
+
+export const appIcons = {
+    home: House,
+    transactions: Receipt,
+    add: Plus,
+    goals: Banknote,
+    profile: Sparkle,
+    notifications: Bell,
+    settings: Settings,
+    back: ArrowLeft,
+    account: CircleUserRound,
+    delete: Trash,
+    dataPrivacy: GlobeLock,
+    theme: Palette,
+    monthlyBudget: HandCoins,
+    currency: CircleDollarSign,
+    customSpendingRules: Wallet,
+    appTips: BadgeInfo,
+    faq: CircleQuestionMark,
+    topCategory: Medal,
+    primaryGoal: Sprout
+}
