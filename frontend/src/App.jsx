@@ -9,6 +9,7 @@ import Goals from "./pages/Goals"
 import Journey from "./pages/Journey"
 import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
+import AddTransaction from "./pages/AddTransaction"
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
           element={
             <AppLayout>
               <Transactions />
+            </AppLayout>
+          } 
+        />
+        <Route 
+          path="/add-transaction" 
+          element={
+            <AppLayout>
+              <AddTransaction />
             </AppLayout>
           } 
         />

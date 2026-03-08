@@ -17,9 +17,9 @@ function Bottombar({ onAddTransaction }) {
             </NavLink>
 
             {/* Add transaction */}
-            <button onClick={onAddTransaction}>
+            <NavLink to="/add-transaction" className="nav-item">
                 <Icon name="add" size={45} className="bottom-add-icon"/>
-            </button>
+            </NavLink>
 
             {/* Goals */}
             <NavLink to="/goals" className="nav-item">
