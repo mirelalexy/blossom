@@ -1,11 +1,11 @@
 import { appIcons } from "../../utils/appIcons"
 
-function Icon({ name, size = 25 }) {
+function Icon({ name, size = 25, className }) {
     const LucideIcon = appIcons[name]
 
     if (!LucideIcon) return null
 
-    return <LucideIcon size={size} />
+    return <LucideIcon size={size} className={className} />
 }
 
 export default Icon
