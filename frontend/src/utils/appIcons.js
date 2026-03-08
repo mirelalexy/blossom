@@ -17,7 +17,9 @@ import {
     Wallet, 
     BadgeInfo, 
     CircleQuestionMark,
-    Settings 
+    Settings,
+    Funnel,
+    Search
 } from "lucide-react"
 
 export const appIcons = {
@@ -39,5 +41,7 @@ export const appIcons = {
     appTips: BadgeInfo,
     faq: CircleQuestionMark,
     topCategory: Medal,
-    primaryGoal: Sprout
+    primaryGoal: Sprout,
+    search: Search,
+    filter: Funnel
 }
