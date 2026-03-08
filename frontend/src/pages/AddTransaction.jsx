@@ -34,6 +34,8 @@ function AddTransaction() {
     return (
         <div className="add-transaction-layout">
             <div className="add-transaction-content">
+                <PageHeader title="Add Transaction"></PageHeader>
+
                 <form className="add-transaction-form">
                     {/* Amount and Currency */}
                     <div className="amount-input">
