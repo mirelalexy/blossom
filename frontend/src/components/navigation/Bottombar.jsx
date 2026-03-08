@@ -18,7 +18,7 @@ function Bottombar({ onAddTransaction }) {
 
             {/* Add transaction */}
             <button onClick={onAddTransaction}>
-                <Icon name="add" size={45} />
+                <Icon name="add" size={45} className="bottom-add-icon"/>
             </button>
 
             {/* Goals */}

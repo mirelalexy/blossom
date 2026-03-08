@@ -7,9 +7,13 @@ body {
 }
 
 p {
-    color: var(--text-primary)
+    color: var(--text-primary);
 }
 
 button {
     font-family: "DM Sans", serif;
+}
+
+.bottom-add-icon {
+    color: var(--accent);
 }
