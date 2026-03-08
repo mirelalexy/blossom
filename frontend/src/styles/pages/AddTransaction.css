@@ -1,0 +1,41 @@
+.amount-row {
+    display: flex;
+    background-color: var(--input);
+    border-radius: 10px;
+    height: 35px;
+    align-items: center;
+    padding: 0 15px;
+    justify-content: space-between;
+}
+
+.amount-row .form-field:first-child {
+    flex: 2;
+}
+
+.amount-row .form-field:last-child {
+    flex: 1;
+}
+
+.add-transaction-content {
+    margin: 7%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 60px;
+}
+
+.form-field input, select {
+    border: none;
+    background: none;
+}
+
+.input-label {
+    font-size: 13px;
+    margin: 0;
+}
+
+.amount-input {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
