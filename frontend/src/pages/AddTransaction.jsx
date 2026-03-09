@@ -1,4 +1,3 @@
-import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
@@ -20,12 +19,12 @@ function AddTransaction() {
         type: "Expense",
         method: "Card",
         category: "",
-        date: "Today",
+        date: "today",
         customDate: "",
         recurring: false,
         frequency: "monthly",
-        dayOfMonth: "",
-        dayOfWeek: "",
+        dayOfMonth: null,
+        dayOfWeek: null,
         mood: null,
         notes: ""
     })
@@ -47,18 +46,6 @@ function AddTransaction() {
         { value: "yesterday", label: "Yesterday"},
         { value: "custom", label: "Pick a date"}
     ]
-
-    function setTransactionDate() {
-        if (formData.date === "today") return new Date()
-
-        if (formData.date === "yesterday") {
-            const d = new Date()
-            d.setDate(d.getDate() - 1)
-            return d
-        }
-
-        return new Date(formData.customDate)
-    }
 
     return (
         <div className="add-transaction-layout">
@@ -153,34 +140,6 @@ function AddTransaction() {
                         />
                     )}
 
-                    {formData.recurring && formData.frequency === "monthly" && (
-                        <Input 
-                            label="Day of Month"
-                            type="number"
-                            min="1"
-                            max="31"
-                            value={formData.dayOfMonth}
-                            onChange={(e) => handleChange("dayOfMonth", e.target.value)}
-                        />
-                    )}
-
-                    {formData.recurring && formData.frequency === "weekly" && (
-                        <Select 
-                            label="Day of Week"
-                            value={formData.dayOfWeek}
-                            onChange={(e) => handleChange("dayOfWeek", e.target.value)}
-                            options={[
-                                { value: "monday", label: "Monday" },
-                                { value: "tuesday", label: "Tuesday" },
-                                { value: "wednesday", label: "Wednesday" },
-                                { value: "thursday", label: "Thursday" },
-                                { value: "friday", label: "Friday" },
-                                { value: "saturday", label: "Saturday" },
-                                { value: "sunday", label: "Sunday" },
-                            ]}
-                        />
-                    )}
-
                     {/* Mood */}
                     <MoodSelector 
                         label="Mood"
@@ -193,7 +152,7 @@ function AddTransaction() {
                         label="Notes"
                         placeholder="Add a note (optional)"
                         maxlength={200}
-                        value={formData.notes || ""}
+                        value={formData.notes}
                         onChange={(e) => handleChange("notes", e.target.value)}
                     />
                 </form>
