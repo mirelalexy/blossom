@@ -42,12 +42,6 @@ function AddTransaction() {
         label: cat.name
     }))
 
-    const dateOptions = [
-        { value: "today", label: "Today"},
-        { value: "yesterday", label: "Yesterday"},
-        { value: "custom", label: "Pick a date"}
-    ]
-
     return (
         <div className="add-transaction-layout">
             <div className="add-transaction-content">
