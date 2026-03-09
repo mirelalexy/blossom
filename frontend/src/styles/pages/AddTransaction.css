@@ -1,11 +1,26 @@
 .amount-row {
     display: flex;
     background-color: var(--input);
-    border-radius: 10px;
-    height: 35px;
+    border-radius: 14px;
+    height: 46px;
     align-items: center;
+}
+
+.amount-row input {
+    width: 100%;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: var(--text-primary);
     padding: 0 15px;
-    justify-content: space-between;
+    outline: none;
+}
+
+.amount-row .select-wrapper select {
+    background: none;
+    border: none;
+    padding: 0 20px 0 8px;
+    outline: none;
 }
 
 .amount-row .form-field:first-child {
