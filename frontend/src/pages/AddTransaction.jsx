@@ -10,6 +10,7 @@ import { categories } from "../data/mock/categories"
 
 import "../styles/pages/AddTransaction.css"
 import Toggle from "../components/forms/Toggle"
+import MoodSelector from "../components/forms/MoodSelector"
 
 function AddTransaction() {
     const [formData, setFormData] = useState({
@@ -180,6 +181,10 @@ function AddTransaction() {
                     )}
 
                     {/* Mood */}
+                    <MoodSelector 
+                        value={formData.mood}
+                        onChange={(val) => handleChange("mood", val)}
+                    />
 
                     {/* Notes */}
                 </form>
