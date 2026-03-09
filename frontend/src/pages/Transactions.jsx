@@ -9,6 +9,8 @@ import { getNextRecurringDate } from "../utils/recurringUtils"
 import "../styles/pages/Transactions.css"
 import Icon from "../components/ui/Icon"
 
+const monthlyBudget = 4000;
+
 function Transactions() {
     const { transactions } = useTransactions()
 
@@ -44,6 +46,21 @@ function Transactions() {
         })
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
+    const expenses = transactions
+        .filter(t => {
+            if (t.type !== "Expense") return false
+
+            const date = new Date(t.date)
+
+            return (
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+            )
+        })
+        .reduce((sum, t) => sum + t.amount, 0)
+
+    const budgetLeft = monthlyBudget - expenses
+
     return (
         <div className="transactions-layout">
             <div className="transactions-content">
@@ -62,8 +79,8 @@ function Transactions() {
 
                 <Section title="Overall" className="transactions-overall">
                     <div>
-                        <p>Budget left: <span>1,720 RON</span></p>
-                        <p>This month spent: <span>1,280 RON</span></p>
+                        <p>Budget left: <span>{budgetLeft}</span></p>
+                        <p>This month spent: <span>{expenses}</span></p>
                     </div>
                 </Section>
 
