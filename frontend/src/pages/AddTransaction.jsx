@@ -6,6 +6,8 @@ import { useState } from "react"
 import PageHeader from "../components/ui/PageHeader"
 import RadioGroup from "../components/forms/RadioGroup"
 
+import { categories } from "../data/mock/categories"
+
 import "../styles/pages/AddTransaction.css"
 
 function AddTransaction() {
@@ -27,6 +29,11 @@ function AddTransaction() {
             [field]: value
         }))
     }
+
+    const categoryOptions = categories.map((cat) => ({
+        value: cat.name,
+        label: cat.name
+    }))
 
     return (
         <div className="add-transaction-layout">
@@ -75,6 +82,13 @@ function AddTransaction() {
                     />
 
                     {/* Category */}
+                    <Select 
+                        label="Category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        options={categoryOptions}
+                    />
 
                     {/* Date */}
 
