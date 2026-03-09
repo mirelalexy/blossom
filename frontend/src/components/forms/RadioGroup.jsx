@@ -6,7 +6,7 @@ function RadioGroup({ label, name, options = [], value, onChange }) {
             <div className="radio-group">
                 {options.map((opt) => (
                     <label key={opt.value} className="radio-option">
-                        <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} />
+                        <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={(e) => onChange(e.target.value)} />
                         <span className="radio-label">{opt.label}</span>
                     </label>
                 ))}

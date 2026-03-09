@@ -67,7 +67,7 @@ function AddTransaction() {
                         label="Method"
                         name="method"
                         value={formData.method}
-                        onChange={(val) => handleChange("type", val)}
+                        onChange={(val) => handleChange("method", val)}
                         options={[
                             { value: "Card", label: "Card" },
                             { value: "Cash", label: "Cash" }
