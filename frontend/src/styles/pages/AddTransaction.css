@@ -66,3 +66,15 @@
     flex-direction: column;
     gap: 20px;
 }
+
+input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--input);
+    color: var(--text-primary);
+    font-size: 14px;
+    appearance: none;
+}

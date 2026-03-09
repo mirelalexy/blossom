@@ -13,14 +13,15 @@ import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
 
 function AddTransaction() {
+    const today = new Date().toISOString().split("T")[0]
+
     const [formData, setFormData] = useState({
         amount: "",
         currency: "RON",
         type: "Expense",
         method: "Card",
         category: "",
-        date: "today",
-        customDate: "",
+        date: today,
         recurring: false,
         frequency: "monthly",
         dayOfMonth: null,
@@ -103,22 +104,12 @@ function AddTransaction() {
                     />
 
                     {/* Date */}
-                    <Select 
+                    <Input 
                         label="Date"
-                        name="date"
+                        type="date"
                         value={formData.date}
                         onChange={(e) => handleChange("date", e.target.value)}
-                        options={dateOptions}
                     />
-
-                    {formData.date === "custom" && (
-                        <Input 
-                            type="date"
-                            name="customDate"
-                            value={formData.customDate}
-                            onChange={(e) => handleChange("customDate", e.target.value)}
-                        />
-                    )}
 
                     {/* Recurring */}
                     <Toggle
