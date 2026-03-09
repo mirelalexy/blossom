@@ -2,13 +2,16 @@ import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 
-import { transactions } from "../data/mock/transactions"
+import { useTransactions } from "../store/TransactionStore"
+
 import { getNextRecurringDate } from "../utils/recurringUtils"
 
 import "../styles/pages/Transactions.css"
 import Icon from "../components/ui/Icon"
 
 function Transactions() {
+    const { transactions } = useTransactions()
+
     const today = new Date()
 
     const formattedTransactions = transactions.map((t) => {

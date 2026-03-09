@@ -2,6 +2,7 @@ import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import PageHeader from "../components/ui/PageHeader"
 import RadioGroup from "../components/forms/RadioGroup"
 
@@ -12,7 +13,13 @@ import Toggle from "../components/forms/Toggle"
 import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
 
+import { useTransactions } from "../store/TransactionStore"
+
 function AddTransaction() {
+    const navigate = useNavigate()
+
+    const { addTransaction } = useTransactions()
+
     const today = new Date().toISOString().split("T")[0]
 
     const [formData, setFormData] = useState({
@@ -67,7 +74,9 @@ function AddTransaction() {
                 : null
         }
 
-        console.log("New transaction:", newTransaction)
+        addTransaction(newTransaction)
+
+        navigate("/transactions")
     }
 
     const categoryOptions = categories.map((cat) => ({

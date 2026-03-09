@@ -5,12 +5,14 @@ import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 
-import { transactions } from "../data/mock/transactions"
+import { useTransactions } from "../store/TransactionStore"
 
 import "../styles/pages/Home.css"
 
 function Home() {
     const today = new Date()
+
+    const { transactions } = useTransactions()
 
     const recentTransactions = transactions
         .filter((t) => {
