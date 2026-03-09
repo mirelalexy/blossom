@@ -9,6 +9,7 @@ import RadioGroup from "../components/forms/RadioGroup"
 import { categories } from "../data/mock/categories"
 
 import "../styles/pages/AddTransaction.css"
+import Toggle from "../components/forms/Toggle"
 
 function AddTransaction() {
     const [formData, setFormData] = useState({
@@ -20,6 +21,9 @@ function AddTransaction() {
         date: "Today",
         customDate: "",
         recurring: false,
+        frequency: "monthly",
+        dayOfMonth: "",
+        dayOfWeek: "",
         mood: null,
         notes: ""
     })
@@ -128,6 +132,52 @@ function AddTransaction() {
                     )}
 
                     {/* Recurring */}
+                    <Toggle
+                        label="Recurring"
+                        checked={formData.recurring}
+                        onChange={(val) => handleChange("recurring", val)}    
+                    />
+
+                    {formData.recurring && (
+                        <Select 
+                            label="Frequency"
+                            name="frequency"
+                            value={formData.frequency}
+                            onChange={(e) => handleChange("frequency", e.target.value)}
+                            options={[
+                                { value: "monthly", label: "Monthly" },
+                                { value: "weekly", label: "Weekly" }
+                            ]}
+                        />
+                    )}
+
+                    {formData.recurring && formData.frequency === "monthly" && (
+                        <Input 
+                            label="Day of Month"
+                            type="number"
+                            min="1"
+                            max="31"
+                            value={formData.dayOfMonth}
+                            onChange={(e) => handleChange("dayOfMonth", e.target.value)}
+                        />
+                    )}
+
+                    {formData.recurring && formData.frequency === "weekly" && (
+                        <Select 
+                            label="Day of Week"
+                            value={formData.dayOfWeek}
+                            onChange={(e) => handleChange("dayOfWeek", e.target.value)}
+                            options={[
+                                { value: "monday", label: "Monday" },
+                                { value: "tuesday", label: "Tuesday" },
+                                { value: "wednesday", label: "Wednesday" },
+                                { value: "thursday", label: "Thursday" },
+                                { value: "friday", label: "Friday" },
+                                { value: "saturday", label: "Saturday" },
+                                { value: "sunday", label: "Sunday" },
+                            ]}
+                        />
+                    )}
 
                     {/* Mood */}
 
