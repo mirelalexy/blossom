@@ -1,3 +1,5 @@
+import "../../styles/components/RadioGroup.css"
+
 function RadioGroup({ label, name, options = [], value, onChange }) {
     return (
         <div className="form-field">
