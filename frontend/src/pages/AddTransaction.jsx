@@ -111,7 +111,7 @@ function AddTransaction() {
                         label="Category"
                         name="category"
                         value={formData.category}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange("category", e.target.value)}
                         options={categoryOptions}
                     />
 
