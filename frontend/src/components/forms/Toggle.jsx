@@ -1,3 +1,5 @@
+import "../../styles/components/Toggle.css"
+
 function Toggle({ label, checked, onChange }) {
     return (
         <div className="form-field toggle-field">
