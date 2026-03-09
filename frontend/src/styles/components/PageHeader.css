@@ -1,12 +1,11 @@
 .page-title {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
 }
 
 .page-header-left, .page-header-right {
@@ -17,4 +16,5 @@
     border: none;
     background: none;
     cursor: pointer;
+    color: var(--text-primary);
 }
