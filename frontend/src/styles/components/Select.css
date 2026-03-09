@@ -1,0 +1,23 @@
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 14px 42px 14px 16px;
+    border-radius: 14px;
+    border: none;
+    background-color: var(--input);
+    font-size: 14px;
+    color: var(--text-secondary);
+    appearance: none;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+}

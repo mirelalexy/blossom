@@ -19,7 +19,8 @@ import {
     CircleQuestionMark,
     Settings,
     Funnel,
-    Search
+    Search,
+    ChevronDown
 } from "lucide-react"
 
 export const appIcons = {
@@ -43,5 +44,6 @@ export const appIcons = {
     topCategory: Medal,
     primaryGoal: Sprout,
     search: Search,
-    filter: Funnel
+    filter: Funnel,
+    select: ChevronDown
 }
