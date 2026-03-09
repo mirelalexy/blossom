@@ -1,13 +1,10 @@
-import GreetingHeader from "../components/home/GreetingHeader"
-import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
-import TopCategoryCard from "../components/home/TopCategoryCard"
-import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
 import { useState } from "react"
 import PageHeader from "../components/ui/PageHeader"
+import RadioGroup from "../components/forms/RadioGroup"
 
 import "../styles/pages/AddTransaction.css"
 
@@ -54,8 +51,28 @@ function AddTransaction() {
                     </div>
 
                     {/* Type */}
+                    <RadioGroup
+                        label="Type"
+                        name="type"
+                        value={formData.type}
+                        onChange={(val) => handleChange("type", val)}
+                        options={[
+                            { value: "Expense", label: "Expense" },
+                            { value: "Income", label: "Income" }
+                        ]}
+                    />
 
                     {/* Method */}
+                    <RadioGroup
+                        label="Method"
+                        name="method"
+                        value={formData.method}
+                        onChange={(val) => handleChange("type", val)}
+                        options={[
+                            { value: "Card", label: "Card" },
+                            { value: "Cash", label: "Cash" }
+                        ]}
+                    />
 
                     {/* Category */}
 
