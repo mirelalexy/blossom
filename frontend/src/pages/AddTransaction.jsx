@@ -11,6 +11,7 @@ import { categories } from "../data/mock/categories"
 import "../styles/pages/AddTransaction.css"
 import Toggle from "../components/forms/Toggle"
 import MoodSelector from "../components/forms/MoodSelector"
+import Textarea from "../components/forms/Textarea"
 
 function AddTransaction() {
     const [formData, setFormData] = useState({
@@ -188,6 +189,13 @@ function AddTransaction() {
                     />
 
                     {/* Notes */}
+                    <Textarea 
+                        label="Notes"
+                        placeholder="Add a note (optional)"
+                        maxlength={200}
+                        value={formData.notes || ""}
+                        onChange={(e) => handleChange("notes", e.target.value)}
+                    />
                 </form>
             </div>
         </div>
