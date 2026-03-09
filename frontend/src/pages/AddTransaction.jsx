@@ -18,6 +18,7 @@ function AddTransaction() {
         method: "Card",
         category: "",
         date: "Today",
+        customDate: "",
         recurring: false,
         mood: null,
         notes: ""
@@ -34,6 +35,24 @@ function AddTransaction() {
         value: cat.name,
         label: cat.name
     }))
+
+    const dateOptions = [
+        { value: "today", label: "Today"},
+        { value: "yesterday", label: "Yesterday"},
+        { value: "custom", label: "Pick a date"}
+    ]
+
+    function setTransactionDate() {
+        if (formData.date === "today") return new Date()
+
+        if (formData.date === "yesterday") {
+            const d = new Date()
+            d.setDate(d.getDate() - 1)
+            return d
+        }
+
+        return new Date(formData.customDate)
+    }
 
     return (
         <div className="add-transaction-layout">
@@ -91,6 +110,22 @@ function AddTransaction() {
                     />
 
                     {/* Date */}
+                    <Select 
+                        label="Date"
+                        name="date"
+                        value={formData.date}
+                        onChange={(e) => handleChange("date", e.target.value)}
+                        options={dateOptions}
+                    />
+
+                    {formData.date === "custom" && (
+                        <Input 
+                            type="date"
+                            name="customDate"
+                            value={formData.customDate}
+                            onChange={(e) => handleChange("customDate", e.target.value)}
+                        />
+                    )}
 
                     {/* Recurring */}
 
