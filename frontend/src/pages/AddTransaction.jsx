@@ -24,8 +24,6 @@ function AddTransaction() {
         date: today,
         recurring: false,
         frequency: "monthly",
-        dayOfMonth: null,
-        dayOfWeek: null,
         mood: null,
         notes: ""
     })
@@ -35,6 +33,39 @@ function AddTransaction() {
             ...prev,
             [field]: value
         }))
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        const transactionDate = new Date(formData.date)
+
+        const newTransaction = {
+            id: Date.now(),
+            amount: Number(formData.amount),
+            currency: formData.currency,
+            type: formData.type,
+            method: formData.method,
+            category: formData.category,
+            date: formData.date,
+            mood: formData.mood,
+            notes: formData.notes,
+            recurring: formData.recurring
+                ? {
+                    frequency: formData.frequency,
+                    dayOfMonth:
+                        formData.frequency === "monthly"
+                            ? transactionDate.getDate() 
+                            : null,
+                    dayOfWeek: 
+                        formData.frequency === "weekly" 
+                            ? transactionDate.getDay()
+                            : null,
+                } 
+                : null
+        }
+
+        console.log("New transaction:", newTransaction)
     }
 
     const categoryOptions = categories.map((cat) => ({
@@ -47,7 +78,7 @@ function AddTransaction() {
             <div className="add-transaction-content">
                 <PageHeader title="Add Transaction"></PageHeader>
 
-                <form className="add-transaction-form">
+                <form className="add-transaction-form" onSubmit={handleSubmit}>
                     {/* Amount and Currency */}
                     <div className="amount-input">
                         <label className="input-label">Amount</label>
@@ -140,6 +171,8 @@ function AddTransaction() {
                         value={formData.notes}
                         onChange={(e) => handleChange("notes", e.target.value)}
                     />
+                    
+                    <Button type="submit">Save Transaction</Button>
                 </form>
             </div>
         </div>
