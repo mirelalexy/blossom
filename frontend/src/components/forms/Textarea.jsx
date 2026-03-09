@@ -1,3 +1,5 @@
+import "../../styles/components/Textarea.css"
+
 function Textarea({ label, ...props }) {
     return (
         <div className="form-field">
