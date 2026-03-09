@@ -46,7 +46,8 @@ function AddTransaction() {
     function handleSubmit(e) {
         e.preventDefault()
 
-        const transactionDate = new Date(formData.date)
+        const [year, month, day] = formData.date.split("-")
+        const transactionDate = new Date(year, month - 1, day)
 
         const newTransaction = {
             id: Date.now(),
