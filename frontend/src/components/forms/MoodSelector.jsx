@@ -1,3 +1,5 @@
+import "../../styles/components/MoodSelector.css"
+
 const moods = [
     { value: "happy", emoji: "🤩" },
     { value: "calm", emoji: "😌" },
