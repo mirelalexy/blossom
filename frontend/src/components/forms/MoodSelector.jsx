@@ -6,7 +6,7 @@ const moods = [
     { value: "sad", emoji: "☹️" }
 ]
 
-function MoodSelector({ value, onChange }) {
+function MoodSelector({ label, value, onChange }) {
     return (
         <div className="form-field">
             {label && <label className="input-label">{label}</label>}

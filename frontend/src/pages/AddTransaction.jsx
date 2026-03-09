@@ -182,6 +182,7 @@ function AddTransaction() {
 
                     {/* Mood */}
                     <MoodSelector 
+                        label="Mood"
                         value={formData.mood}
                         onChange={(val) => handleChange("mood", val)}
                     />
