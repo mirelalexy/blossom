@@ -1,14 +1,16 @@
 function RadioGroup({ label, name, options, value, onChange }) {
     return (
         <div className="form-field">
-            {label && <label>{label}</label>}
-            {options.map((opt) => {
-                <label key={opt.value}>
-                    <input type="radio" name={name} value={value} checked={value === opt.value} onChange={onChange}>
-                        {opt.label}
-                    </input>
-                </label>
-            })}
+            {label && <label className="input-label">{label}</label>}
+
+            <div className="radio-group">
+                {options.map((opt) => (
+                    <label key={opt.value} className="radio-option">
+                        <input type="radio" name={name} value={value} checked={value === opt.value} onChange={() => onChange(opt.value)}> </input>
+                        <span className="radio-label">{opt.label}</span>
+                    </label>
+                ))}
+            </div>
         </div>
     )
 }
