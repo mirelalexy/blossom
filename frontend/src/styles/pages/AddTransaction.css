@@ -78,3 +78,14 @@ input[type="date"] {
     font-size: 14px;
     appearance: none;
 }
+
+input[type="text"] {
+    width: 100%;
+    padding: 13px 12px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--input);
+    color: var(--text-primary);
+    font-size: 14px;
+}

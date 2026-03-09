@@ -20,6 +20,7 @@ function AddTransaction() {
         currency: "RON",
         type: "Expense",
         method: "Card",
+        merchant: "",
         category: "",
         date: today,
         recurring: false,
@@ -46,6 +47,7 @@ function AddTransaction() {
             currency: formData.currency,
             type: formData.type,
             method: formData.method,
+            merchant: formData.merchant,
             category: formData.category,
             date: formData.date,
             mood: formData.mood,
@@ -117,6 +119,14 @@ function AddTransaction() {
                             { value: "Card", label: "Card" },
                             { value: "Cash", label: "Cash" }
                         ]}
+                    />
+
+                    {/* Merchant */}
+                    <Input 
+                        label="Merchant"
+                        type="text"
+                        value={formData.merchant}
+                        onChange={(e) => handleChange("merchant", e.target.value)}
                     />
 
                     {/* Category */}
