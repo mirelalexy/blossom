@@ -65,12 +65,13 @@ function Home() {
 
     const topCategory = calculateTopCategory(transactions)
 
+    const username = localStorage.getItem("username") || "friend"
     const message = getNextMonthInfo()
 
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader message={message}/>
+                <GreetingHeader username={username} message={message}/>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
