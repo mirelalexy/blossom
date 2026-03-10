@@ -1,5 +1,6 @@
 import Button from "../ui/Button"
 import ProgressBar from "../ui/ProgressBar"
+import Icon from "../ui/Icon"
 
 import "../../styles/components/SavingGoalCard.css"
 
