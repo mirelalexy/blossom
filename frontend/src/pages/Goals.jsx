@@ -1,14 +1,17 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useGoals } from "../store/GoalsStore"
+
 import AutosaveCard from "../components/goals/AutosaveCard"
 import PageHeader from "../components/ui/PageHeader"
 import SearchBar from "../components/ui/SearchBar"
-
-import "../styles/pages/Goals.css"
 import SavingGoalCard from "../components/goals/SavingGoalCard"
 import Button from "../components/ui/Button"
-import { useGoals } from "../store/GoalsStore"
+
+import "../styles/pages/Goals.css"
 
 function Goals() {
+    const navigate = useNavigate()
     const [search, setSearch] = useState("") 
     
     const { goals } = useGoals()
@@ -28,7 +31,7 @@ function Goals() {
                     <SavingGoalCard key={g.id} goal={g} />
                 ))}
 
-                <Button>Add Saving Goal</Button>
+                <Button onClick={() => navigate("/add-goal")}>Add Saving Goal</Button>
             </div>
         </div>
     )
