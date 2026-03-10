@@ -7,7 +7,7 @@ import Button from "../components/ui/Button"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
-import { getNextMonthInfo } from "../utils/dateUtils"
+import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
 import { useNavigate } from "react-router-dom"
 
 import "../styles/pages/Home.css"
@@ -67,11 +67,12 @@ function Home() {
 
     const username = localStorage.getItem("username") || "friend"
     const message = getNextMonthInfo()
+    const greeting = getGreeting()
 
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader username={username} message={message}/>
+                <GreetingHeader greeting={greeting} username={username} message={message}/>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
