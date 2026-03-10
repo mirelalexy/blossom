@@ -1,3 +1,5 @@
+import { useGoals } from "../../store/GoalsStore"
+
 import Button from "../ui/Button"
 import ProgressBar from "../ui/ProgressBar"
 import Icon from "../ui/Icon"
@@ -5,6 +7,8 @@ import Icon from "../ui/Icon"
 import "../../styles/components/SavingGoalCard.css"
 
 function SavingGoalCard({ goal }) {
+    const { deleteGoal } = useGoals()
+
     const progress = Math.round((goal.saved / goal.target) * 100)
     const remaining = goal.target - goal.saved
 
@@ -13,7 +17,9 @@ function SavingGoalCard({ goal }) {
             <div className="goal-header">
                 <div className="goal-header-first-row">
                     <h3>{goal.name}</h3>
-                    <Icon name="delete" size={18} />
+                    <button onClick={() => deleteGoal(goal.id)} className="delete-goal-btn">
+                        <Icon name="delete" size={18} />
+                    </button>
                 </div>
 
                 <p className="goal-header-second-row">Target: <strong>{goal.target} {goal.currency}</strong></p>
