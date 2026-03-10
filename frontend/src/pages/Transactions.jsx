@@ -51,33 +51,26 @@ function Transactions() {
         })
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-    const expenses = transactions
-        .filter(t => {
-            if (t.type !== "Expense") return false
+    const monthlyTransactions = transactions.filter(t => {
+        if (!t.date) return false
 
-            const date = new Date(t.date)
+        const date = new Date(t.date)
 
-            return (
-                date.getMonth() === today.getMonth() &&
-                date.getFullYear() === today.getFullYear()
-            )
-        })
+        return (
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear()
+        )
+    })
+
+    const expenses = monthlyTransactions
+        .filter(t => t.type === "Expense")
+        .reduce((sum, t) => sum + t.amount, 0)
+
+    const income = monthlyTransactions
+        .filter(t => t.type === "Income")
         .reduce((sum, t) => sum + t.amount, 0)
 
     const budgetLeft = monthlyBudget - expenses
-
-    const income = transactions
-        .filter(t => {
-            if (t.type !== "Income") return false
-
-            const date = new Date(t.date)
-
-            return (
-                date.getMonth() === today.getMonth() &&
-                date.getFullYear() === today.getFullYear()
-            )
-        })
-        .reduce((sum, t) => sum + t.amount, 0)
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
