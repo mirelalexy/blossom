@@ -1,0 +1,11 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--input);
+    padding: 1px 16px;
+    border-radius: 14px;
+}
+
+.search-bar svg {
+    color: var(--text-secondary);
+}
