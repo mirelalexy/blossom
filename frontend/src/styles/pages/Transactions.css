@@ -32,12 +32,3 @@
 .transactions-overall span {
     font-weight: 600;
 }
-
-.empty-transactions {
-    text-align: center;
-    padding: 24px 0;
-}
-
-.empty-transactions p {
-    margin: 6px 0;
-}

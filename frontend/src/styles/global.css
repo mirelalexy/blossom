@@ -21,14 +21,3 @@ button {
 .italic-p {
     font-style: italic;
 }
-
-.empty-sub {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
-.empty-state {
-    text-align: center;
-    color: var(--text-secondary);
-    margin: 12px 0;
-}

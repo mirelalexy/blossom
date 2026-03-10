@@ -1,13 +1,14 @@
-import Button from "../ui/Button";
-import Card from "../ui/Card";
-import Icon from "../ui/Icon";
+import Button from "../ui/Button"
+import Card from "../ui/Card"
+import Icon from "../ui/Icon"
+import EmptyState from "../ui/EmptyState"
 
 import "./TopCategoryCard.css"
 
 function TopCategoryCard({ category }) {
     if (!category) {
         return (
-            <p>No spending data yet.</p>
+            <EmptyState title="No spending data yet." />
         )
     }
 
@@ -27,4 +28,4 @@ function TopCategoryCard({ category }) {
     )
 }
 
-export default TopCategoryCard;
+export default TopCategoryCard

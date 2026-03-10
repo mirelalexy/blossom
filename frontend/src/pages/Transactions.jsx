@@ -10,6 +10,7 @@ import { formatCurrency } from "../utils/currencyUtils"
 
 import "../styles/pages/Transactions.css"
 import Icon from "../components/ui/Icon"
+import EmptyState from "../components/ui/EmptyState"
 
 const monthlyBudget = 4000;
 const currency = "RON"
@@ -100,24 +101,21 @@ function Transactions() {
 
                 {noTransactions ? (
                     <Section title="Transactions">
-                        <div className="empty-transactions">
-                            <p>You haven't added any transactions yet... 🌸</p>
-                            <p className="empty-sub">
-                                Start by adding your first one.
-                            </p>
-
-                            <Button onClick={() => navigate("/add-transaction")}>
-                                Add Transaction
-                            </Button>
-                        </div>
+                        <EmptyState 
+                            title="You haven't added any transactions yet 🌸"
+                            subtitle="Start by adding your first one."
+                            action={
+                                <Button onClick={() => navigate("/add-transaction")}>
+                                    Add Transaction
+                                </Button>
+                            }
+                        />
                     </Section>
                 ) : (
                     <>
                         <Section title="Upcoming">
                         {upcomingTransactions.length === 0 ? (
-                            <p className="empty-state">
-                                No upcoming transactions
-                            </p>
+                            <EmptyState title="No upcoming transactions." />
                         ) : (
                             upcomingTransactions.map((t) => (
                                 <TransactionCard key={t.id} {...t} />
@@ -127,9 +125,7 @@ function Transactions() {
 
                     <Section title="Recent">
                         {recentTransactions.length === 0 ? (
-                            <p className="empty-state">
-                                No recent transactions yet
-                            </p>
+                            <EmptyState title="No recent transactions yet." />
                         ) : (
                             recentTransactions.map((t) => (
                                 <TransactionCard key={t.id} {...t} />

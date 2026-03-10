@@ -1,17 +1,17 @@
-import { useGoals } from "../../store/GoalsStore";
-import Card from "../ui/Card";
-import Icon from "../ui/Icon";
-import ProgressBar from "../ui/ProgressBar";
+import Card from "../ui/Card"
+import EmptyState from "../ui/EmptyState"
+import Icon from "../ui/Icon"
+import ProgressBar from "../ui/ProgressBar"
 
 import "./PrimaryGoalCard.css"
 
 function PrimaryGoalCard({ goal }) {
     if (!goal) {
         return (
-            <p>No primary goal set.</p>
+            <EmptyState title="No primary goal set." />
         )
     }
-    
+
     const progress = Math.round((goal.saved / goal.target) * 100)
 
     return (
@@ -35,4 +35,4 @@ function PrimaryGoalCard({ goal }) {
     )
 }
 
-export default PrimaryGoalCard;
+export default PrimaryGoalCard
