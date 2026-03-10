@@ -64,6 +64,8 @@ function Transactions() {
 
     const budgetLeft = monthlyBudget - expenses
 
+    const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
+
     return (
         <div className="transactions-layout">
             <div className="transactions-content">
@@ -87,19 +89,48 @@ function Transactions() {
                     </div>
                 </Section>
 
-                <Section title="Upcoming">
-                    {upcomingTransactions.map((t) => (
-                        <TransactionCard key={t.id} {...t} />
-                    ))}
-                </Section>
+                {noTransactions ? (
+                    <Section title="Transactions">
+                        <div className="empty-transactions">
+                            <p>You haven't added any transactions yet... 🌸</p>
+                            <p className="empty-sub">
+                                Start by adding your first one.
+                            </p>
 
-                <Section title="Recent">
-                    {recentTransactions.map((t) => (
-                        <TransactionCard key={t.id} {...t} />
-                    ))}
-                    
-                    <Button onClick={() => navigate("/add-transaction")}>Add Transaction</Button>
-                </Section>
+                            <Button onClick={() => navigate("/add-transaction")}>
+                                Add Transaction
+                            </Button>
+                        </div>
+                    </Section>
+                ) : (
+                    <>
+                        <Section title="Upcoming">
+                        {upcomingTransactions.length === 0 ? (
+                            <p className="empty-state">
+                                No upcoming transactions
+                            </p>
+                        ) : (
+                            upcomingTransactions.map((t) => (
+                                <TransactionCard key={t.id} {...t} />
+                            ))
+                        )}
+                    </Section>
+
+                    <Section title="Recent">
+                        {recentTransactions.length === 0 ? (
+                            <p className="empty-state">
+                                No recent transactions yet
+                            </p>
+                        ) : (
+                            recentTransactions.map((t) => (
+                                <TransactionCard key={t.id} {...t} />
+                            ))
+                        )}
+                        
+                        <Button onClick={() => navigate("/add-transaction")}>Add Transaction</Button>
+                    </Section>
+                    </>
+                )}
             </div>
         </div>
     )
