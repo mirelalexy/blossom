@@ -6,6 +6,12 @@ import ProgressBar from "../ui/ProgressBar";
 import "./PrimaryGoalCard.css"
 
 function PrimaryGoalCard({ goal }) {
+    if (!goal) {
+        return (
+            <p>No primary goal set.</p>
+        )
+    }
+    
     const progress = Math.round((goal.saved / goal.target) * 100)
 
     return (
