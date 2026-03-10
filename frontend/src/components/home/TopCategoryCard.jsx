@@ -5,6 +5,12 @@ import Icon from "../ui/Icon";
 import "./TopCategoryCard.css"
 
 function TopCategoryCard({ category }) {
+    if (!category) {
+        return (
+            <p>No spending data yet.</p>
+        )
+    }
+
     return (
         <Card 
             className="top-category-card" 
