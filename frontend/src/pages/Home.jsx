@@ -6,6 +6,7 @@ import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 
 import { useTransactions } from "../store/TransactionStore"
+import { useGoals } from "../store/GoalsStore"
 
 import "../styles/pages/Home.css"
 
@@ -13,6 +14,9 @@ function Home() {
     const today = new Date()
 
     const { transactions } = useTransactions()
+
+    const { goals } = useGoals()
+    const primaryGoal = goals.find(g => g.primaryGoal)
 
     const recentTransactions = transactions
         .filter((t) => {
@@ -32,7 +36,7 @@ function Home() {
                 <GreetingHeader />
 
                 <Section title="Stats">
-                    <PrimaryGoalCard />
+                    <PrimaryGoalCard goal={primaryGoal} />
                     <TopCategoryCard />
                 </Section>
 

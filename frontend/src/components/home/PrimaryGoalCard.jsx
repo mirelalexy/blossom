@@ -1,14 +1,12 @@
+import { useGoals } from "../../store/GoalsStore";
 import Card from "../ui/Card";
 import Icon from "../ui/Icon";
 import ProgressBar from "../ui/ProgressBar";
 
 import "./PrimaryGoalCard.css"
 
-function PrimaryGoalCard() {
-    const percent = 50;
-    const sum = 2500;
-    const currency = "RON";
-    const primaryGoal = "Bali";
+function PrimaryGoalCard({ goal }) {
+    const progress = Math.round((goal.saved / goal.target) * 100)
 
     return (
         <Card 
@@ -18,13 +16,13 @@ function PrimaryGoalCard() {
             <Icon name="primaryGoal" size={20} />
             }
         >
-            <p>{primaryGoal}</p>
+            <p>{goal.name}</p>
             <div className="goal-progress">
-                <ProgressBar progress={percent}/>
+                <ProgressBar progress={progress}/>
 
                 <div className="goal-meta">
-                    <span>{sum} {currency} saved</span>
-                    <span>{percent}%</span>
+                    <span>{goal.saved} {goal.currency} saved</span>
+                    <span>{progress}%</span>
                 </div>
             </div>
         </Card>
