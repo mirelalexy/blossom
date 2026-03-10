@@ -30,6 +30,37 @@ function Home() {
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .slice(0, 3)
 
+    function calculateTopCategory(transactions) {
+        const now = new Date()
+        const monthlyExpenses = transactions.filter(t => {
+            const date = new Date(t.date)
+
+            return (
+                t.type === "Expense" && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+            )
+        })
+
+        const categoryTotals = {}
+
+        monthlyExpenses.forEach(t => {
+            categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount
+        })
+
+        let topCategory = null
+        let highestAmount = 0
+
+        Object.entries(categoryTotals).forEach(([category, amount]) => {
+            if (amount > highestAmount) {
+                highestAmount = amount
+                topCategory = category
+            }
+        })
+
+        return topCategory
+    }
+
+    const topCategory = calculateTopCategory(transactions)
+
     return (
         <div className="home-layout">
             <div className="home-content">
@@ -37,7 +68,7 @@ function Home() {
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
-                    <TopCategoryCard />
+                    <TopCategoryCard category={topCategory}/>
                 </Section>
 
                 <Section title="Recent">

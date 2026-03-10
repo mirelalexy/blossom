@@ -4,9 +4,7 @@ import Icon from "../ui/Icon";
 
 import "./TopCategoryCard.css"
 
-function TopCategoryCard() {
-    const topCategory = "Food";
-
+function TopCategoryCard({ category }) {
     return (
         <Card 
             className="top-category-card" 
@@ -16,7 +14,7 @@ function TopCategoryCard() {
             }
         >
             <div className="top-category-card-content">
-                <p><span>{topCategory}</span> is your highest spend this month.</p>
+                <p><span>{category}</span> is your highest spend this month.</p>
                 <Button>View Categories</Button>
             </div>
         </Card>
