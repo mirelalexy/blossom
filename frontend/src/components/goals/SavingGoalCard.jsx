@@ -20,7 +20,7 @@ function SavingGoalCard({ goal }) {
             </div>
             
             <div className="goal-stats">
-                <ProgressBar value={progress} />
+                <ProgressBar progress={progress} />
 
                 <div className="goal-stats-info">
                     <span>{goal.saved} {goal.currency} saved</span>
