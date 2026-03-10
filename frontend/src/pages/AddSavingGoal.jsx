@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import PageHeader from "../components/ui/PageHeader"
 import Input from "../components/forms/Input"
@@ -6,10 +7,17 @@ import Select from "../components/forms/Select"
 import RadioGroup from "../components/forms/RadioGroup"
 import Textarea from "../components/forms/Textarea"
 import Toggle from "../components/forms/Toggle"
+import Button from "../components/ui/Button"
 
 import "../styles/pages/AddSavingGoal.css"
 
+import { useGoals } from "../store/GoalsStore"
+
 function AddSavingGoal() {
+    const navigate = useNavigate()
+
+    const { addGoal } = useGoals()
+
     const today = new Date().toISOString().split("T")[0]
 
     const [formData, setFormData] = useState({
@@ -20,7 +28,7 @@ function AddSavingGoal() {
         monthlyContribution: "automatic",
         notes: "",
         link: "",
-        primaryGoal: false
+        primaryGoal: false,
     })
 
     function handleChange(field, value) {
@@ -43,12 +51,33 @@ function AddSavingGoal() {
         return Math.ceil(goal.target / months)
     }
 
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        const newGoal = {
+            id: Date.now(),
+            name: formData.name,
+            target: Number(formData.target),
+            currency: formData.currency,
+            date: formData.date,
+            monthlyContribution: formData.monthlyContribution,
+            notes: formData.notes,
+            link: formData.link,
+            primaryGoal: formData.primaryGoal,
+            saved: 0
+        }
+
+        addGoal(newGoal)
+
+        navigate("/goals")
+    }
+
     return (
         <div className="add-goal-layout">
             <div className="add-goal-content">
                 <PageHeader title="Add Saving Goal"></PageHeader>
 
-                <form className="add-goal-form">
+                <form className="add-goal-form" onSubmit={handleSubmit}>
                     {/* Name */}
                     <Input 
                         label="Name"
@@ -122,6 +151,8 @@ function AddSavingGoal() {
                         checked={formData.primaryGoal}
                         onChange={(val) => handleChange("primaryGoal", val)}    
                     />
+
+                    <Button type="submit">Plant New Goal</Button>
                 </form>
             </div>
         </div>

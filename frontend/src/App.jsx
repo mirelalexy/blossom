@@ -12,79 +12,82 @@ import Profile from "./pages/Profile"
 import AddTransaction from "./pages/AddTransaction"
 import { TransactionsProvider } from "./store/TransactionStore"
 import AddSavingGoal from "./pages/AddSavingGoal"
+import { GoalsProvider } from "./store/GoalsStore"
 
 function App() {
   return (
     <TransactionsProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              <AppLayout>
-                <Home />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/transactions" 
-            element={
-              <AppLayout>
-                <Transactions />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/add-transaction" 
-            element={
-              <AppLayout>
-                <AddTransaction />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/goals" 
-            element={
-              <AppLayout>
-                <Goals />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/add-goal" 
-            element={
-              <AppLayout>
-                <AddSavingGoal />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/profile" 
-            element={
-              <AppLayout>
-                <Profile />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/journey" 
-            element={
-              <AppLayout>
-                <Journey />
-              </AppLayout>
-            } 
-          />
-          <Route 
-            path="/settings" 
-            element={
-              <AppLayout>
-                <Settings />
-              </AppLayout>
-            } 
-          />
-          <Route path="login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+      <GoalsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <AppLayout>
+                  <Home />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/transactions" 
+              element={
+                <AppLayout>
+                  <Transactions />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/add-transaction" 
+              element={
+                <AppLayout>
+                  <AddTransaction />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/goals" 
+              element={
+                <AppLayout>
+                  <Goals />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/add-goal" 
+              element={
+                <AppLayout>
+                  <AddSavingGoal />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <AppLayout>
+                  <Profile />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/journey" 
+              element={
+                <AppLayout>
+                  <Journey />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/settings" 
+              element={
+                <AppLayout>
+                  <Settings />
+                </AppLayout>
+              } 
+            />
+            <Route path="login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </GoalsProvider>
     </TransactionsProvider>
   )
 }
