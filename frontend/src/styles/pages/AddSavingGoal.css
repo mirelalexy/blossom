@@ -49,3 +49,26 @@ input[type="url"] {
     color: var(--text-primary);
     font-size: 14px;
 }
+
+.add-goal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.target-input {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.monthly-contribution p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.monthly-contribution {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
