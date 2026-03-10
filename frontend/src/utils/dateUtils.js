@@ -15,3 +15,37 @@ export function formatDate(dateString) {
         year: "numeric"
     })
 }
+
+export function getNextMonthInfo() {
+    const today = new Date()
+    const currentMonth = today.getMonth()
+
+    const nextMonth = (currentMonth + 1) % 12
+    const year = today.getFullYear()
+
+    let targetDate = new Date(year, nextMonth, 1)
+
+    if (today > targetDate) {
+        targetDate = new Date(year + 1, nextMonth, 1)
+    }
+
+    const diffTime = targetDate - today
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ]
+
+    const monthName = months[nextMonth]
+
+    if (diffDays === 0) {
+        return `${monthName} is today!`
+    }
+    
+    if (diffDays === 1) {
+        return `${monthName} is tomorrow.`
+    }
+
+    return `${monthName}'s only ${diffDays} days away.`
+}

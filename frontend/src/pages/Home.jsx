@@ -7,6 +7,7 @@ import Button from "../components/ui/Button"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
+import { getNextMonthInfo } from "../utils/dateUtils"
 
 import "../styles/pages/Home.css"
 
@@ -61,10 +62,12 @@ function Home() {
 
     const topCategory = calculateTopCategory(transactions)
 
+    const message = getNextMonthInfo()
+
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader />
+                <GreetingHeader message={message}/>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
