@@ -1,3 +1,4 @@
+import AutosaveCard from "../components/goals/AutosaveCard"
 import Button from "../components/ui/Button"
 import PageHeader from "../components/ui/PageHeader"
 import SearchBar from "../components/ui/SearchBar"
@@ -11,6 +12,8 @@ function Goals() {
                 <PageHeader title="Saving Goals"></PageHeader>
                 
                 <SearchBar className="search-bar-icon"/>
+
+                <AutosaveCard autosaveActive={true} primaryGoal="Bali"/>
             </div>
         </div>
     )
