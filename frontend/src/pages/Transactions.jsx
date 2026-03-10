@@ -6,11 +6,13 @@ import { useTransactions } from "../store/TransactionStore"
 import { useNavigate } from "react-router-dom"
 
 import { getNextRecurringDate } from "../utils/recurringUtils"
+import { formatCurrency } from "../utils/currencyUtils"
 
 import "../styles/pages/Transactions.css"
 import Icon from "../components/ui/Icon"
 
 const monthlyBudget = 4000;
+const currency = "RON"
 
 function Transactions() {
     const navigate = useNavigate()
@@ -84,8 +86,8 @@ function Transactions() {
 
                 <Section title="Overall" className="transactions-overall">
                     <div>
-                        <p>Budget left: <span>{budgetLeft}</span></p>
-                        <p>This month spent: <span>{expenses}</span></p>
+                        <p>Budget left: <span>{formatCurrency(budgetLeft, currency)}</span></p>
+                        <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
                     </div>
                 </Section>
 
