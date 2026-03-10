@@ -1,0 +1,13 @@
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    margin: 16px 0;
+}
+
+.empty-title {
+    font-weight: 500;
+}
+
+.empty-subtitle {
+    font-size: 14px;
+}
