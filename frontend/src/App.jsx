@@ -11,6 +11,7 @@ import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
 import AddTransaction from "./pages/AddTransaction"
 import { TransactionsProvider } from "./store/TransactionStore"
+import AddSavingGoal from "./pages/AddSavingGoal"
 
 function App() {
   return (
@@ -46,6 +47,14 @@ function App() {
             element={
               <AppLayout>
                 <Goals />
+              </AppLayout>
+            } 
+          />
+          <Route 
+            path="/add-goal" 
+            element={
+              <AppLayout>
+                <AddSavingGoal />
               </AppLayout>
             } 
           />
