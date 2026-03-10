@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: auto;
+    width: 100%;
     padding: 10px 16px;
     border: none;
     border-radius: 30px;
@@ -12,6 +12,7 @@
     font-size: 15px;
     cursor: pointer;
     transition: all 0.15s ease;
+    flex: 1;
 }
 
 .button:hover {

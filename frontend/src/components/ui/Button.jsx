@@ -7,7 +7,7 @@ function Button({ icon, children, onClick, type="button" }) {
             onClick={onClick}
             className="button"
         >
-            {icon && <div className="card-icon">
+            {icon && <div className="button-icon">
                     {icon}
             </div>}
 
