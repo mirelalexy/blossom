@@ -1,3 +1,5 @@
+import "../../styles/components/EmptyState.css"
+
 function EmptyState({ title, subtitle, action }) {
     return (
         <div className="empty-state">
