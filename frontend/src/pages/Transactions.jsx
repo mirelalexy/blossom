@@ -3,6 +3,7 @@ import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 
 import { useTransactions } from "../store/TransactionStore"
+import { useNavigate } from "react-router-dom"
 
 import { getNextRecurringDate } from "../utils/recurringUtils"
 
@@ -12,6 +13,8 @@ import Icon from "../components/ui/Icon"
 const monthlyBudget = 4000;
 
 function Transactions() {
+    const navigate = useNavigate()
+
     const { transactions } = useTransactions()
 
     const today = new Date()
@@ -95,7 +98,7 @@ function Transactions() {
                         <TransactionCard key={t.id} {...t} />
                     ))}
                     
-                    <Button>Add Transaction</Button>
+                    <Button onClick={() => navigate("/add-transaction")}>Add Transaction</Button>
                 </Section>
             </div>
         </div>
