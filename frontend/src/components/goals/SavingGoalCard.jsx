@@ -7,7 +7,7 @@ import Icon from "../ui/Icon"
 import "../../styles/components/SavingGoalCard.css"
 
 function SavingGoalCard({ goal }) {
-    const { deleteGoal } = useGoals()
+    const { deleteGoal, updateGoalSaved, withdrawGoalSaved } = useGoals()
 
     const progress = Math.round((goal.saved / goal.target) * 100)
     const remaining = goal.target - goal.saved
@@ -37,8 +37,26 @@ function SavingGoalCard({ goal }) {
             <p className="italic-p"><strong>{remaining} {goal.currency}</strong> remaining</p>
 
             <div className="goal-actions">
-                <Button>Add Funds</Button>
-                <Button>Withdraw</Button>
+                <Button 
+                    onClick={() => {
+                        const amount = Number(prompt("Add funds"))
+                        if (!amount) return
+
+                        updateGoalSaved(goal.id, amount)
+                    }}
+                >
+                    Add Funds
+                </Button>
+                <Button 
+                    onClick={() => {
+                        const amount = Number(prompt("Withdraw funds"))
+                        if (!amount) return
+
+                        withdrawGoalSaved(goal.id, amount)
+                    }}
+                >
+                    Withdraw Funds
+                </Button>
             </div>
         </div>
     )
