@@ -11,20 +11,24 @@ function SavingGoalCard({ goal }) {
     return (
         <div className="goal-card">
             <div className="goal-header">
-                <h3>{goal.name}</h3>
-                <Icon name="delete" size={18} />
+                <div className="goal-header-first-row">
+                    <h3>{goal.name}</h3>
+                    <Icon name="delete" size={18} />
+                </div>
+
+                <p className="goal-header-second-row">Target: <strong>{goal.target} {goal.currency}</strong></p>
             </div>
-
-            <p>Target: <strong>{goal.target} {goal.currency}</strong></p>
-
-            <ProgressBar value={progress} />
-
+            
             <div className="goal-stats">
-                <span>{goal.saved} {goal.currency} saved</span>
-                <span>{progress}%</span>
-            </div>
+                <ProgressBar value={progress} />
 
-            <p><strong>{remaining} {goal.currency}</strong> remaining</p>
+                <div className="goal-stats-info">
+                    <span>{goal.saved} {goal.currency} saved</span>
+                    <span>{progress}%</span>
+                </div>
+            </div>
+            
+            <p className="italic-p"><strong>{remaining} {goal.currency}</strong> remaining</p>
 
             <div className="goal-actions">
                 <Button>Add Funds</Button>

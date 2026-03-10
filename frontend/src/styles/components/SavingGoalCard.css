@@ -2,11 +2,13 @@
     border: 2px solid var(--card-border);
     background-color: var(--card);
     border-radius: 14px;
+    display: flex;
     flex-direction: column;
-    gap: 12px;
+    padding: 20px;
+    gap: 15px;
 }
 
-.goal-header {
+.goal-header-first-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,5 +16,32 @@
 
 .goal-actions {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
+
+.goal-stats-info {
+    display: flex;
+    justify-content: space-between;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.goal-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.goal-header-first-row h3 {
+    margin: 0;
+}
+
+.goal-header-second-row {
+    color: var(--text-secondary);
+}
+
+.goal-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+

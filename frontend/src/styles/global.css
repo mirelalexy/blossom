@@ -17,3 +17,7 @@ button {
 .bottom-add-icon {
     color: var(--accent);
 }
+
+.italic-p {
+    font-style: italic;
+}
