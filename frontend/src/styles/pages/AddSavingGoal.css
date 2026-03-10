@@ -5,3 +5,47 @@
     gap: 20px;
     padding-bottom: 60px;
 }
+
+.target-row {
+    display: flex;
+    background-color: var(--input);
+    border-radius: 14px;
+    height: 46px;
+    align-items: center;
+}
+
+.target-row input {
+    width: 100%;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: var(--text-primary);
+    padding: 0 15px;
+    outline: none;
+}
+
+.target-row .select-wrapper select {
+    background: none;
+    border: none;
+    padding: 0 20px 0 8px;
+    outline: none;
+}
+
+.target-row .form-field:first-child {
+    flex: 2;
+}
+
+.target-row .form-field:last-child {
+    flex: 1;
+}
+
+input[type="url"] {
+    width: 100%;
+    padding: 13px 12px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--input);
+    color: var(--text-primary);
+    font-size: 14px;
+}
