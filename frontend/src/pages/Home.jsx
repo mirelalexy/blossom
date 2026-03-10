@@ -8,10 +8,13 @@ import Button from "../components/ui/Button"
 import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
 import { getNextMonthInfo } from "../utils/dateUtils"
+import { useNavigate } from "react-router-dom"
 
 import "../styles/pages/Home.css"
 
 function Home() {
+    const navigate = useNavigate()
+
     const today = new Date()
 
     const { transactions } = useTransactions()
@@ -79,7 +82,7 @@ function Home() {
                         <TransactionCard key={t.id} {...t} />
                     ))}
                     
-                    <Button>View All Transactions</Button>
+                    <Button onClick={() => navigate("/transactions")}>View All Transactions</Button>
                 </Section>
             </div>
         </div>
