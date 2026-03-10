@@ -66,6 +66,19 @@ function Transactions() {
 
     const budgetLeft = monthlyBudget - expenses
 
+    const income = transactions
+        .filter(t => {
+            if (t.type !== "Income") return false
+
+            const date = new Date(t.date)
+
+            return (
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+            )
+        })
+        .reduce((sum, t) => sum + t.amount, 0)
+
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
     return (
@@ -88,6 +101,7 @@ function Transactions() {
                     <div>
                         <p>Budget left: <span>{formatCurrency(budgetLeft, currency)}</span></p>
                         <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
+                        <p>This month gained: <span>{formatCurrency(income, currency)}</span></p>
                     </div>
                 </Section>
 
