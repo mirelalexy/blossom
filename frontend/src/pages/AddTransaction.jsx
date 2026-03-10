@@ -76,14 +76,18 @@ function AddTransaction() {
         }
 
         addTransaction(newTransaction)
+        console.log(newTransaction)
 
         navigate("/transactions")
     }
 
-    const categoryOptions = categories.map((cat) => ({
-        value: cat.name,
-        label: cat.name
-    }))
+    const categoryOptions = [
+        { value: "", label: "Select category" },
+        ...categories.map((cat) => ({
+            value: cat.name,
+            label: cat.name
+        }))
+    ]
 
     return (
         <div className="add-transaction-layout">
