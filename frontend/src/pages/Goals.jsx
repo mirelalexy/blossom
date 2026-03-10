@@ -5,6 +5,7 @@ import SearchBar from "../components/ui/SearchBar"
 
 import "../styles/pages/Goals.css"
 import SavingGoalCard from "../components/goals/SavingGoalCard"
+import Button from "../components/ui/Button"
 
 function Goals() {
     const [search, setSearch] = useState("") 
@@ -28,6 +29,8 @@ function Goals() {
                 {filteredGoals.map(g => (
                     <SavingGoalCard key={g.id} goal={g} />
                 ))}
+
+                <Button>Add Saving Goal</Button>
             </div>
         </div>
     )
