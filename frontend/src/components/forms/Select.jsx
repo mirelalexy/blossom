@@ -2,7 +2,7 @@ import Icon from "../ui/Icon"
 
 import "../../styles/components/Select.css"
 
-function Select({ label, options, ...props }) {
+function Select({ label, options = [], ...props }) {
     return (
         <div className="form-field">
             {label && <label className="input-label">{label}</label>}
