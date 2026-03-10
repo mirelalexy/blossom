@@ -18,6 +18,14 @@ export function GoalsProvider({ children }) {
         setGoals(goals.filter(g => g.id !== id))
     }
 
+    function updateGoalSaved(id, amount) {
+        setGoals(goals.map(g => g.id === id ? { ...g, saved: g.saved + amount } : g))
+    }
+
+    function withdrawGoalSaved(id, amount) {
+        setGoals(goals.map(g => g.id === id ? { ...g, saved: Math.max(0, g.saved - amount) } : g))
+    }
+
     useEffect(() => {
         localStorage.setItem("goals", JSON.stringify(goals))
     }, [goals])
