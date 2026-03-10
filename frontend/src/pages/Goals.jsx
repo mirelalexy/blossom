@@ -6,15 +6,13 @@ import SearchBar from "../components/ui/SearchBar"
 import "../styles/pages/Goals.css"
 import SavingGoalCard from "../components/goals/SavingGoalCard"
 import Button from "../components/ui/Button"
+import { useGoals } from "../store/GoalsStore"
 
 function Goals() {
     const [search, setSearch] = useState("") 
     
-    const goals = [
-        { id: 1, name: "Bali", target: 5000, saved: 2500 },
-        { id: 2, name: "Emergency Fund", target: 10000, saved: 3000 }
-    ]
-
+    const { goals } = useGoals()
+    
     const filteredGoals = goals.filter(g => g.name.toLowerCase().includes(search.toLowerCase()))
 
     return (
