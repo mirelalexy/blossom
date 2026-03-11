@@ -10,6 +10,7 @@ import Journey from "./pages/Journey"
 import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
 import AddTransaction from "./pages/AddTransaction"
+import TransactionDetails from "./pages/TransactionDetails"
 import { TransactionsProvider } from "./store/TransactionStore"
 import AddSavingGoal from "./pages/AddSavingGoal"
 import { GoalsProvider } from "./store/GoalsStore"
@@ -33,6 +34,14 @@ function App() {
               element={
                 <AppLayout>
                   <Transactions />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/transactions/:id" 
+              element={
+                <AppLayout>
+                  <TransactionDetails />
                 </AppLayout>
               } 
             />

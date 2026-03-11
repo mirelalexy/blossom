@@ -21,3 +21,7 @@ button {
 .italic-p {
     font-style: italic;
 }
+
+.card.clickable {
+    cursor: pointer;
+}
