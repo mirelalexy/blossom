@@ -33,6 +33,7 @@ function AddTransaction() {
         recurring: false,
         frequency: "monthly",
         mood: null,
+        intent: null,
         notes: ""
     })
 
@@ -59,6 +60,7 @@ function AddTransaction() {
             category: formData.category,
             date: formData.date,
             mood: formData.mood,
+            intent: formData.intent,
             notes: formData.notes,
             recurring: formData.recurring
                 ? {
@@ -186,6 +188,21 @@ function AddTransaction() {
                         value={formData.mood}
                         onChange={(val) => handleChange("mood", val)}
                     />
+
+                    {/* Intent */}
+                    {formData.type === "Expense" && (
+                        <RadioGroup
+                            label="Purchase Intent"
+                            name="intent"
+                            value={formData.intent}
+                            onChange={(val) => handleChange("intent", val)}
+                            options={[
+                                { value: "Necessary", label: "Necessary" },
+                                { value: "Planned", label: "Planned" },
+                                { value: "Impulse", label: "Impulse" }
+                            ]}
+                        />
+                    )}
 
                     {/* Notes */}
                     <Textarea 
