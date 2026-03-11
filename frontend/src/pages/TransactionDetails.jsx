@@ -27,9 +27,13 @@ function TransactionDetails() {
         const confirmed = window.confirm("Delete this transaction?")
 
         if(!confirmed) return
-        
+
         deleteTransaction(transaction.id)
         navigate("/transactions")
+    }
+
+    function handleEdit() {
+        navigate(`/edit-transaction/${transaction.id}`)
     }
 
     return (
@@ -71,7 +75,7 @@ function TransactionDetails() {
                     )}
 
                     <div className="transaction-actions">
-                        <Button>Edit</Button>
+                        <Button onClick={handleEdit}>Edit</Button>
                         <Button onClick={handleDelete}>Delete</Button>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import PageHeader from "../components/ui/PageHeader"
 import RadioGroup from "../components/forms/RadioGroup"
 
@@ -15,14 +15,19 @@ import Textarea from "../components/forms/Textarea"
 
 import { useTransactions } from "../store/TransactionStore"
 
-function AddTransaction() {
+function AddTransaction() { 
     const navigate = useNavigate()
 
-    const { addTransaction } = useTransactions()
+    const { id } = useParams()
 
+    const { transactions, addTransaction, updateTransaction } = useTransactions()
+
+    const existingTransaction = transactions.find(t => t.id === Number(id))
+    
     const today = new Date().toISOString().split("T")[0]
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState(
+        existingTransaction || {
         amount: "",
         currency: "RON",
         type: "Expense",
@@ -51,7 +56,7 @@ function AddTransaction() {
         const transactionDate = new Date(year, month - 1, day)
 
         const newTransaction = {
-            id: Date.now(),
+            id: existingTransaction ? existingTransaction.id : Date.now(),
             amount: Number(formData.amount),
             currency: formData.currency,
             type: formData.type,
@@ -77,8 +82,13 @@ function AddTransaction() {
                 : null
         }
 
-        addTransaction(newTransaction)
         console.log(newTransaction)
+
+        if(existingTransaction) {
+            updateTransaction(newTransaction)
+        } else {
+            addTransaction(newTransaction)
+        }
 
         navigate("/transactions")
     }
@@ -94,7 +104,7 @@ function AddTransaction() {
     return (
         <div className="add-transaction-layout">
             <div className="add-transaction-content">
-                <PageHeader title="Add Transaction"></PageHeader>
+                <PageHeader title={existingTransaction ? "Edit Transaction" : "Add Transaction"}></PageHeader>
 
                 <form className="add-transaction-form" onSubmit={handleSubmit}>
                     {/* Amount and Currency */}

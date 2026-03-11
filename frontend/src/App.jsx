@@ -54,6 +54,14 @@ function App() {
               } 
             />
             <Route 
+              path="/edit-transaction/:id" 
+              element={
+                <AppLayout>
+                  <AddTransaction />
+                </AppLayout>
+              } 
+            />
+            <Route 
               path="/goals" 
               element={
                 <AppLayout>
