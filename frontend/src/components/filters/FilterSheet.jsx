@@ -1,6 +1,7 @@
 import Select from "../forms/Select"
 import RadioGroup from "../forms/RadioGroup"
 import Button from "../ui/Button"
+import Input from "../forms/Input"
 
 import "../../styles/components/FilterSheet.css"
 
@@ -50,6 +51,26 @@ function FilterSheet({ filters, updateFilter, onClose }) {
                         { value: "Planned", label: "Planned" },
                         { value: "Impulse", label: "Impulse" }
                     ]}
+                />
+
+                <Input 
+                    label="From"
+                    type="date"
+                    value={filters.period.start}
+                    onChange={(e) => updateFilter("period", {
+                        ...filters.period,
+                        start: e.target.value
+                    })}
+                />
+
+                <Input 
+                    label="To"
+                    type="date"
+                    value={filters.period.end}
+                    onChange={(e) => updateFilter("period", {
+                        ...filters.period,
+                        end: e.target.value
+                    })}
                 />
 
                 <div className="filter-actions">

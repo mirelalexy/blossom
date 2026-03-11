@@ -3,6 +3,7 @@ export function filterTransactions(transactions, filters) {
         if(!matchesCategory(transaction, filters)) return false
         if(!matchesType(transaction, filters)) return false
         if(!matchesIntent(transaction, filters)) return false
+        if(!matchesPeriod(transaction, filters)) return false
         return true
     })
 }
@@ -20,4 +21,17 @@ function matchesType(transaction, filters) {
 function matchesIntent(transaction, filters) {
     if(!filters.intent) return true
     return transaction.intent === filters.intent
+}
+
+function matchesPeriod(transaction, filters) {
+    const { start, end } = filters.period || {}
+
+    if(!start && !end) return true
+    
+    const date = new Date(transaction.date)
+
+    if(start && date < new Date(start)) return false
+    if(end && date > new Date(end)) return false
+
+    return true
 }

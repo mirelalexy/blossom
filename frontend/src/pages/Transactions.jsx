@@ -81,10 +81,14 @@ function Transactions() {
     const [filters, setFilters] = useState({
         category: "",
         type: "",
-        intent: ""
+        intent: "",
+        period: {
+            start: "",
+            end: ""
+        }
     })
 
-    const hasActiveFilters = filters.category || filters.type || filters.intent
+    const hasActiveFilters = filters.category || filters.type || filters.intent || filters.period.start || filters.period.end
     
     function updateFilter(field, value) {
         setFilters(prev => ({
@@ -124,7 +128,7 @@ function Transactions() {
                 
                 {hasActiveFilters ? (
                     <Section title={`Results (${filteredTransactions.length})`}>
-                        {filterTransactions.length === 0 ? (
+                        {filteredTransactions.length === 0 ? (
                             <EmptyState title="No transactions match your filters." />
                         ) : (
                             filteredTransactions.map((t) => (
