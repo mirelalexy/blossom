@@ -13,7 +13,7 @@ function TransactionDetails() {
     const navigate = useNavigate()
 
     const { id } = useParams()
-    const { transactions } = useTransactions()
+    const { transactions, deleteTransaction } = useTransactions()
 
     const transaction = transactions.find(t => t.id === Number(id))
 
@@ -22,6 +22,15 @@ function TransactionDetails() {
     }
 
     const Icon = categoryIcons[transaction.category]
+
+    function handleDelete() {
+        const confirmed = window.confirm("Delete this transaction?")
+
+        if(!confirmed) return
+        
+        deleteTransaction(transaction.id)
+        navigate("/transactions")
+    }
 
     return (
         <div className="transaction-details-layout">
@@ -63,7 +72,7 @@ function TransactionDetails() {
 
                     <div className="transaction-actions">
                         <Button>Edit</Button>
-                        <Button>Delete</Button>
+                        <Button onClick={handleDelete}>Delete</Button>
                     </div>
                 </div>
             </div>          

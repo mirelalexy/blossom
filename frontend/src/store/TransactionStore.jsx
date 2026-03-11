@@ -14,12 +14,16 @@ export function TransactionsProvider({ children }) {
         setTransactions(prev => [transaction, ...prev])
     }
 
+    function deleteTransaction(id) {
+        setTransactions(prev => prev.filter(t => t.id !== id))
+    }
+
     useEffect(() => {
         localStorage.setItem("transactions", JSON.stringify(transactions))
     }, [transactions])
 
     return (
-        <TransactionsContext.Provider value={{ transactions, addTransaction }}>
+        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction }}>
             {children}
         </TransactionsContext.Provider>
     )
