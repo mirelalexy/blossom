@@ -12,6 +12,7 @@ import { useState } from "react"
 import { getNextRecurringDate } from "../utils/recurringUtils"
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
+import { getCurrentMonthYear } from "../utils/dateUtils"
 
 import "../styles/pages/Transactions.css"
 
@@ -20,6 +21,8 @@ const currency = "RON"
 
 function Transactions() {
     const navigate = useNavigate()
+
+    const currentMonthYear = getCurrentMonthYear()
 
     const { transactions } = useTransactions()
 
@@ -113,7 +116,9 @@ function Transactions() {
                             <Icon name="search" size={22} />
                         </div>
                     </div>
-                    <h2 className="transactions-header-second-row">March 2026</h2>
+                    {!hasActiveFilters && (
+                        <h2 className="transactions-header-second-row">{currentMonthYear}</h2>
+                    )}
                 </div>
 
                 {!hasActiveFilters && (

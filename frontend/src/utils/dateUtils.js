@@ -58,3 +58,12 @@ export function getGreeting() {
 
     return "Good evening"
 }
+
+export function getCurrentMonthYear() {
+    const today = new Date()
+
+    return today.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric"
+    })
+}
