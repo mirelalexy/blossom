@@ -112,14 +112,16 @@ function Transactions() {
                     <h2 className="transactions-header-second-row">March 2026</h2>
                 </div>
 
-                <Section title="Overall" className="transactions-overall">
-                    <div>
-                        <p>Budget left: <span>{formatCurrency(budgetLeft, currency)}</span></p>
-                        <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
-                        <p>This month gained: <span>{formatCurrency(income, currency)}</span></p>
-                    </div>
-                </Section>
-
+                {!hasActiveFilters && (
+                    <Section title="Overall" className="transactions-overall">
+                        <div>
+                            <p>Budget left: <span>{formatCurrency(budgetLeft, currency)}</span></p>
+                            <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
+                            <p>This month gained: <span>{formatCurrency(income, currency)}</span></p>
+                        </div>
+                    </Section>
+                )}
+                
                 {hasActiveFilters ? (
                     <Section title={`Results (${filteredTransactions.length})`}>
                         {filterTransactions.length === 0 ? (
