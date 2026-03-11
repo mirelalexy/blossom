@@ -4,9 +4,11 @@ import Button from "../components/ui/Button"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 import { getNextRecurringDate } from "../utils/recurringUtils"
 import { formatCurrency } from "../utils/currencyUtils"
+import { filterTransactions } from "../utils/filterTransactions"
 
 import "../styles/pages/Transactions.css"
 import Icon from "../components/ui/Icon"
@@ -75,6 +77,23 @@ function Transactions() {
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
+    const [filters, setFilters] = useState({
+        category: "",
+        type: "",
+        intent: ""
+    })
+
+    const hasActiveFilters = filters.category || filters.type || filters.intent
+    
+    function updateFilter(field, value) {
+        setFilters(prev => ({
+            ...prev,
+            [field]: value
+        }))
+    }
+
+    const filteredTransactions = filterTransactions(formattedTransactions, filters)
+
     return (
         <div className="transactions-layout">
             <div className="transactions-content">
@@ -99,7 +118,17 @@ function Transactions() {
                     </div>
                 </Section>
 
-                {noTransactions ? (
+                {hasActiveFilters ? (
+                    <Section title={`Results (${filterTransactions.length})`}>
+                        {filterTransactions.length === 0 ? (
+                            <EmptyState title="No transactions match your filters." />
+                        ) : (
+                            filteredTransactions.map((t) => (
+                                <TransactionCard key={t.id} {...t} />
+                            ))
+                        )}
+                    </Section>
+                ) : noTransactions ? (
                     <Section title="Transactions">
                         <EmptyState 
                             title="You haven't added any transactions yet 🌸"
