@@ -3,6 +3,7 @@ export function filterTransactions(transactions, filters) {
         if(!matchesCategory(transaction, filters)) return false
         if(!matchesType(transaction, filters)) return false
         if(!matchesIntent(transaction, filters)) return false
+        return true
     })
 }
 

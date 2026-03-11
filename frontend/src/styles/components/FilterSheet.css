@@ -1,0 +1,51 @@
+.filter-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rbga(0, 0, 0, 0.35);
+    z-index: 100;
+}
+
+.filter-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-secondary);
+    border-radius: 20px 20px 0 0;
+    padding: 24px;
+    box-sizing: border-box;
+    z-index: 101;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.filter-sheet-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-handle {
+    width: 40px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 999px;
+    margin: 0 auto 16px auto;
+}
+
+.filter-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-sheet > * {
+    margin-bottom: 16px;
+}

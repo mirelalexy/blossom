@@ -1,6 +1,9 @@
 import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
+import Icon from "../components/ui/Icon"
+import EmptyState from "../components/ui/EmptyState"
+import FilterSheet from "../components/filters/FilterSheet"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useNavigate } from "react-router-dom"
@@ -11,8 +14,6 @@ import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
 
 import "../styles/pages/Transactions.css"
-import Icon from "../components/ui/Icon"
-import EmptyState from "../components/ui/EmptyState"
 
 const monthlyBudget = 4000;
 const currency = "RON"
@@ -93,13 +94,14 @@ function Transactions() {
     }
 
     const filteredTransactions = filterTransactions(formattedTransactions, filters)
+    const [showFilters, setShowFilters] = useState(false)
 
     return (
         <div className="transactions-layout">
             <div className="transactions-content">
                 <div className="transactions-header">
                     <div className="transactions-header-first-row">
-                        <div className="filter-icon">
+                        <div className="filter-icon" onClick={() => setShowFilters(true)}>
                             <Icon name="filter" size={22} />
                         </div>
                         <h1>Transactions</h1>
@@ -119,7 +121,7 @@ function Transactions() {
                 </Section>
 
                 {hasActiveFilters ? (
-                    <Section title={`Results (${filterTransactions.length})`}>
+                    <Section title={`Results (${filteredTransactions.length})`}>
                         {filterTransactions.length === 0 ? (
                             <EmptyState title="No transactions match your filters." />
                         ) : (
@@ -166,6 +168,14 @@ function Transactions() {
                     </>
                 )}
             </div>
+
+            {showFilters && (
+                <FilterSheet 
+                    filters={filters}
+                    updateFilter={updateFilter}
+                    onClose={() => setShowFilters(false)}
+                />
+            )}
         </div>
     )
 }
