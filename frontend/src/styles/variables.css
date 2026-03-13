@@ -17,7 +17,7 @@
     --font-primary: "DM Sans", serif;
 }
 
-.theme-forest {
+[data-theme="forest"] {
     --bg-primary: #f2faf2;
     --bg-secondary: #e6f2e6;
 
@@ -26,9 +26,10 @@
     --success: #a0d6a0;
     --border: #cdf1cd;
     --card: #dcf5dc;
+    --card2: #b5d8bf;
 }
 
-.theme-night {
+[data-theme="night"] {
     --bg-primary: #1b1b2f;
     --bg-secondary: #2a2a40;
     
@@ -40,5 +41,6 @@
     --success: #dda0dd;
     --border: #cfa9e3;
     --card: #613783;
+    --card2: #4b335f;
     --input: #44444c;
 }

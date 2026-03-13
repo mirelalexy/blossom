@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+
 import PageHeader from "../components/ui/PageHeader"
 import Section from "../components/ui/Section"
 import SettingsCard from "../components/settings/SettingsCard"
@@ -6,6 +8,8 @@ import SettingsItem from "../components/settings/SettingsItem"
 import "../styles/pages/Settings.css"
 
 function Settings() {
+    const navigate = useNavigate()
+
     return (
         <div className="settings-content">
             <PageHeader title="Settings" />
@@ -29,6 +33,7 @@ function Settings() {
                     <SettingsItem 
                         icon="theme"
                         label="Theme"
+                        onClick={() => navigate("/settings/theme")}
                     />
 
                     <SettingsItem 

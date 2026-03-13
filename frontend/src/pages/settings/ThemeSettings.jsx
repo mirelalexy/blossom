@@ -1,0 +1,37 @@
+import { useTheme } from "../../store/ThemeStore"
+
+import PageHeader from "../../components/ui/PageHeader"
+import Section from "../../components/ui/Section"
+import SettingsCard from "../../components/settings/SettingsCard"
+import SettingsItem from "../../components/settings/SettingsItem"
+
+function ThemeSettings() {
+    const { theme, setTheme } = useTheme()
+
+    return (
+        <div className="settings-content">
+            <PageHeader title="Theme" />
+
+            <Section title="Customize how Blossom looks and feels">
+                <SettingsCard>
+                    <SettingsItem 
+                        label={`Blossom ${theme === "blossom" ? "(current)" : ""}`}
+                        onClick={() => setTheme("blossom")}
+                    />
+
+                    <SettingsItem 
+                        label={`Forest ${theme === "forest" ? "(current)" : ""}`}
+                        onClick={() => setTheme("forest")}
+                    />
+
+                    <SettingsItem 
+                        label={`Night ${theme === "night" ? "(current)" : ""}`}
+                        onClick={() => setTheme("night")}
+                    />
+                </SettingsCard>
+            </Section>
+        </div>
+    )
+}
+
+export default ThemeSettings
