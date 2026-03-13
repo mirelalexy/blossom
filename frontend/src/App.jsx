@@ -19,6 +19,7 @@ import ThemeSettings from "./pages/settings/ThemeSettings"
 import AppTips from "./pages/settings/AppTips"
 import FAQ from "./pages/settings/FAQ"
 import { CurrencyProvider } from "./store/CurrencyStore"
+import CurrencySettings from "./pages/settings/CurrencySettings"
 
 function App() {
   return (
@@ -129,6 +130,14 @@ function App() {
                   element={
                     <AppLayout>
                       <FAQ />
+                    </AppLayout>
+                  } 
+                />
+                <Route 
+                  path="/settings/currency" 
+                  element={
+                    <AppLayout>
+                      <CurrencySettings />
                     </AppLayout>
                   } 
                 />

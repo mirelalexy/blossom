@@ -49,6 +49,7 @@ function Settings() {
                     <SettingsItem 
                         icon="currency"
                         label="Currency"
+                        onClick={() => navigate("/settings/currency")}
                     />
 
                     <SettingsItem 
