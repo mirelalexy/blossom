@@ -5,7 +5,7 @@ export const appTips = [
     },
     {
         title: "Use guidelines gently",
-        content: "Spending limits are guides, not punishments. If you occassionally go over, treat it as feedback, not failure"
+        content: "Spending limits are guides, not punishments. If you occassionally go over, treat it as feedback, not failure."
     },
     {
         title: "Review weekly",
