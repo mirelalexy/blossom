@@ -63,6 +63,7 @@ function Settings() {
                     <SettingsItem 
                         icon="appTips"
                         label="App Tips"
+                        onClick={() => navigate("/settings/app-tips")}
                     />
 
                     <SettingsItem 

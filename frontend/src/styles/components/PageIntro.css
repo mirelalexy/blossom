@@ -1,0 +1,14 @@
+.page-intro-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page-intro-title {
+    font-size: 20px;
+}
+
+.page-intro-text {
+    font-size: 13px;
+    font-weight: 600;
+}

@@ -16,6 +16,7 @@ import AddSavingGoal from "./pages/AddSavingGoal"
 import { GoalsProvider } from "./store/GoalsStore"
 import { ThemeProvider } from "./store/ThemeStore"
 import ThemeSettings from "./pages/settings/ThemeSettings"
+import AppTips from "./pages/settings/AppTips"
 
 function App() {
   return (
@@ -109,6 +110,14 @@ function App() {
                 element={
                   <AppLayout>
                     <ThemeSettings />
+                  </AppLayout>
+                } 
+              />
+              <Route 
+                path="/settings/app-tips" 
+                element={
+                  <AppLayout>
+                    <AppTips />
                   </AppLayout>
                 } 
               />
