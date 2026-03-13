@@ -1,5 +1,13 @@
+import PageHeader from "../components/ui/PageHeader"
+
+import "../styles/pages/Settings.css"
+
 function Settings() {
-    return <h1>Settings</h1>
+    return (
+        <div className="settings-content">
+            <PageHeader title="Settings" />
+        </div>
+    )
 }
 
 export default Settings
