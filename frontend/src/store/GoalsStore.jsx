@@ -26,12 +26,16 @@ export function GoalsProvider({ children }) {
         setGoals(goals.map(g => g.id === id ? { ...g, saved: Math.max(0, g.saved - amount) } : g))
     }
 
+    function clearGoals() {
+        setGoals([])
+    }
+
     useEffect(() => {
         localStorage.setItem("goals", JSON.stringify(goals))
     }, [goals])
 
     return (
-        <GoalsContext.Provider value={{ goals, addGoal, deleteGoal, updateGoalSaved, withdrawGoalSaved }}>
+        <GoalsContext.Provider value={{ goals, addGoal, deleteGoal, updateGoalSaved, withdrawGoalSaved, clearGoals }}>
             {children}
         </GoalsContext.Provider>
     )
