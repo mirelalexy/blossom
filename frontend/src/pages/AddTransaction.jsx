@@ -29,7 +29,6 @@ function AddTransaction() {
     const [formData, setFormData] = useState(
         existingTransaction || {
         amount: "",
-        currency: "RON",
         type: "Expense",
         method: "Card",
         merchant: "",
@@ -58,7 +57,6 @@ function AddTransaction() {
         const newTransaction = {
             id: existingTransaction ? existingTransaction.id : Date.now(),
             amount: Number(formData.amount),
-            currency: formData.currency,
             type: formData.type,
             method: formData.method,
             merchant: formData.merchant,
@@ -107,21 +105,14 @@ function AddTransaction() {
                 <PageHeader title={existingTransaction ? "Edit Transaction" : "Add Transaction"}></PageHeader>
 
                 <form className="add-transaction-form" onSubmit={handleSubmit}>
-                    {/* Amount and Currency */}
-                    <div className="amount-input">
-                        <label className="input-label">Amount</label>
-                        <div className="amount-row">
-                            <Input name="Amount" type="number" placeholder="0" value={formData.amount} onChange={(e) => handleChange("amount", e.target.value)}></Input>
-                            <Select name="Currency" value={formData.currency} onChange={(e) => handleChange("currency", e.target.value)}
-                                options={[
-                                    { value: "RON", label: "RON" },
-                                    { value: "EUR", label: "EUR" },
-                                    { value: "GBP", label: "GBP" },
-                                    { value: "USD", label: "USD" }
-                                ]}>
-                            </Select>
-                        </div>
-                    </div>
+                    {/* Amount */}
+                    <Input 
+                        label="Amount"
+                        type="number"
+                        placeholder="0"
+                        value={formData.amount}
+                        onChange={(e) => handleChange("amount", e.target.value)}
+                    />
 
                     {/* Type */}
                     <RadioGroup

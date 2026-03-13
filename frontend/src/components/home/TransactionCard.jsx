@@ -4,11 +4,14 @@ import Card from "../ui/Card"
 
 import { formatDate } from "../../utils/dateUtils"
 import { categoryIcons } from "../../utils/categoryIcons"
+import { useCurrency } from "../../store/CurrencyStore"
+import { formatCurrency } from "../../utils/currencyUtils"
 
 import "./TransactionCard.css"
 
-function TransactionCard({ id, category, merchant, date, mood, type, amount, currency }) {
+function TransactionCard({ id, category, merchant, date, mood, type, amount }) {
     const navigate = useNavigate()
+    const { currency } = useCurrency()
 
     const moodEmojis = {
         happy: "🤩",
@@ -32,7 +35,7 @@ function TransactionCard({ id, category, merchant, date, mood, type, amount, cur
                 <div className="transaction-basics">
                     <span className="transaction-merchant">{merchant}</span>
                     <span className="transaction-amount">
-                        {type === "Expense" ? "-" : "+"}{amount} {currency}
+                        {type === "Expense" ? "-" : "+"}{formatCurrency(amount, currency)}
                     </span>
                 </div>
 

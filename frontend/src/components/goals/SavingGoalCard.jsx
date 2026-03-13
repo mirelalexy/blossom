@@ -1,4 +1,6 @@
 import { useGoals } from "../../store/GoalsStore"
+import { useCurrency } from "../../store/CurrencyStore"
+import { formatCurrency } from "../../utils/currencyUtils"
 
 import Button from "../ui/Button"
 import ProgressBar from "../ui/ProgressBar"
@@ -8,6 +10,7 @@ import "../../styles/components/SavingGoalCard.css"
 
 function SavingGoalCard({ goal }) {
     const { deleteGoal, updateGoalSaved, withdrawGoalSaved } = useGoals()
+    const { currency } = useCurrency()
 
     const progress = Math.round((goal.saved / goal.target) * 100)
     const remaining = goal.target - goal.saved
@@ -22,19 +25,19 @@ function SavingGoalCard({ goal }) {
                     </button>
                 </div>
 
-                <p className="goal-header-second-row">Target: <strong>{goal.target} {goal.currency}</strong></p>
+                <p className="goal-header-second-row">Target: <strong>{formatCurrency(goal.target, currency)}</strong></p>
             </div>
             
             <div className="goal-stats">
                 <ProgressBar progress={progress} />
 
                 <div className="goal-stats-info">
-                    <span>{goal.saved} {goal.currency} saved</span>
+                    <span>{formatCurrency(goal.saved, currency)} saved</span>
                     <span>{progress}%</span>
                 </div>
             </div>
             
-            <p className="italic-p"><strong>{remaining} {goal.currency}</strong> remaining</p>
+            <p className="italic-p"><strong>{formatCurrency(remaining, currency)}</strong> remaining</p>
 
             <div className="goal-actions">
                 <Button 

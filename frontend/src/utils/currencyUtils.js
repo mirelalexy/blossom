@@ -1,3 +1,6 @@
-export function formatCurrency(amount, currencySymbol) {
-    return `${amount.toLocaleString()} ${currencySymbol}`
+export function formatCurrency(amount, currency) {
+    return new Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency: currency
+    }).format(amount)
 }

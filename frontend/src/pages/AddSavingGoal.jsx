@@ -12,18 +12,20 @@ import Button from "../components/ui/Button"
 import "../styles/pages/AddSavingGoal.css"
 
 import { useGoals } from "../store/GoalsStore"
+import { useCurrency } from "../store/CurrencyStore"
+import { formatCurrency } from "../utils/currencyUtils"
 
 function AddSavingGoal() {
     const navigate = useNavigate()
 
     const { addGoal } = useGoals()
+    const { currency } = useCurrency()
 
     const today = new Date().toISOString().split("T")[0]
 
     const [formData, setFormData] = useState({
         name: "",
         target: "",
-        currency: "RON",
         date: today,
         monthlyContribution: "automatic",
         notes: "",
@@ -58,7 +60,6 @@ function AddSavingGoal() {
             id: Date.now(),
             name: formData.name,
             target: Number(formData.target),
-            currency: formData.currency,
             date: formData.date,
             monthlyContribution: formData.monthlyContribution,
             notes: formData.notes,
@@ -86,21 +87,14 @@ function AddSavingGoal() {
                         onChange={(e) => handleChange("name", e.target.value)}
                     />
 
-                    {/* Target and Currency */}
-                    <div className="target-input">
-                        <label className="input-label">Target</label>
-                        <div className="target-row">
-                            <Input name="Target" type="number" placeholder="0" value={formData.target} onChange={(e) => handleChange("target", e.target.value)}></Input>
-                            <Select name="Currency" value={formData.currency} onChange={(e) => handleChange("currency", e.target.value)}
-                                options={[
-                                    { value: "RON", label: "RON" },
-                                    { value: "EUR", label: "EUR" },
-                                    { value: "GBP", label: "GBP" },
-                                    { value: "USD", label: "USD" }
-                                ]}>
-                            </Select>
-                        </div>
-                    </div>
+                    {/* Target */}
+                    <Input 
+                        label="Target"
+                        type="number"
+                        placeholder="0"
+                        value={formData.target}
+                        onChange={(e) => handleChange("target", e.target.value)}
+                    />
 
                     {/* Date */}
                     <Input 
@@ -124,7 +118,7 @@ function AddSavingGoal() {
                         />
 
                         {formData.monthlyContribution === "automatic" && formData.target && formData.date && (
-                            <p>To reach {formData.target} {formData.currency}, you'll need to save {calculateMonthlyContribution(formData)} {formData.currency}/month.</p>
+                            <p>To reach {formatCurrency(formData.target, currency)}, you'll need to save {formatCurrency(calculateMonthlyContribution(formData), currency)}/month.</p>
                         )}
                     </div>
                     

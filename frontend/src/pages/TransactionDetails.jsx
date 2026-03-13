@@ -2,6 +2,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useTransactions } from "../store/TransactionStore"
 import { formatDate } from "../utils/dateUtils"
 import { categoryIcons } from "../utils/categoryIcons"
+import { useCurrency } from "../store/CurrencyStore"
+import { formatCurrency } from "../utils/currencyUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import Section from "../components/ui/Section"
@@ -14,6 +16,7 @@ function TransactionDetails() {
 
     const { id } = useParams()
     const { transactions, deleteTransaction } = useTransactions()
+    const { currency } = useCurrency()
 
     const transaction = transactions.find(t => t.id === Number(id))
 
@@ -52,7 +55,7 @@ function TransactionDetails() {
 
                             <p className="transaction-amount">
                                 {transaction.type === "Expense" ? "-" : "+"}
-                                {transaction.amount} {transaction.currency}
+                                {formatCurrency(transaction.amount, currency)}
                             </p>
                         </div>      
                     </Section>

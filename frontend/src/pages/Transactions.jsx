@@ -15,11 +15,11 @@ import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
 import { getCurrentMonthYear } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
+import { useCurrency } from "../store/CurrencyStore"
 
 import "../styles/pages/Transactions.css"
 
 const monthlyBudget = 4000;
-const currency = "RON"
 
 function Transactions() {
     const navigate = useNavigate()
@@ -31,6 +31,7 @@ function Transactions() {
     const currentMonthYear = getCurrentMonthYear()
 
     const { transactions } = useTransactions()
+    const { currency } = useCurrency()
 
     const today = new Date()
 

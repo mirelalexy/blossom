@@ -3,9 +3,14 @@ import EmptyState from "../ui/EmptyState"
 import Icon from "../ui/Icon"
 import ProgressBar from "../ui/ProgressBar"
 
+import { useCurrency } from "../../store/CurrencyStore"
+import { formatCurrency } from "../../utils/currencyUtils"
+
 import "./PrimaryGoalCard.css"
 
 function PrimaryGoalCard({ goal }) {
+    const { currency } = useCurrency()
+
     if (!goal) {
         return (
             <EmptyState title="No primary goal set." />
@@ -27,7 +32,7 @@ function PrimaryGoalCard({ goal }) {
                 <ProgressBar progress={progress}/>
 
                 <div className="goal-meta">
-                    <span>{goal.saved} {goal.currency} saved</span>
+                    <span>{formatCurrency(goal.saved, currency)} saved</span>
                     <span>{progress}%</span>
                 </div>
             </div>
