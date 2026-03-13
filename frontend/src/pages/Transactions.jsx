@@ -90,13 +90,14 @@ function Transactions() {
         category: "",
         type: "",
         intent: "",
+        mood: "",
         period: {
             start: "",
             end: ""
         }
     })
 
-    const hasActiveFilters = filters.category || filters.type || filters.intent || filters.period.start || filters.period.end || searchQuery
+    const hasActiveFilters = filters.category || filters.type || filters.intent || filters.mood || filters.period.start || filters.period.end || searchQuery
     
     function updateFilter(field, value) {
         setFilters(prev => ({

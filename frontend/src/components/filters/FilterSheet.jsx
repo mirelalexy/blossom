@@ -53,6 +53,20 @@ function FilterSheet({ filters, updateFilter, onClose }) {
                     ]}
                 />
 
+                <Select 
+                    label="Mood"
+                    value={filters.mood}
+                    onChange={(e) => updateFilter("mood", e.target.value)}
+                    options={[
+                        { value: "", label: "Any mood" },
+                        { value: "happy", label: "Happy" },
+                        { value: "calm", label: "Calm" },
+                        { value: "neutral", label: "Neutral" },
+                        { value: "anxious", label: "Anxious" },
+                        { value: "sad", label: "Sad" }
+                    ]}
+                />
+
                 <Input 
                     label="From"
                     type="date"

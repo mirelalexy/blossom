@@ -3,6 +3,7 @@ export function filterTransactions(transactions, filters) {
         if(!matchesCategory(transaction, filters)) return false
         if(!matchesType(transaction, filters)) return false
         if(!matchesIntent(transaction, filters)) return false
+        if(!matchesMood(transaction, filters)) return false
         if(!matchesPeriod(transaction, filters)) return false
         return true
     })
@@ -21,6 +22,11 @@ function matchesType(transaction, filters) {
 function matchesIntent(transaction, filters) {
     if(!filters.intent) return true
     return transaction.intent === filters.intent
+}
+
+function matchesMood(transaction, filters) {
+     if(!filters.mood) return true
+    return transaction.mood === filters.mood
 }
 
 function matchesPeriod(transaction, filters) {
