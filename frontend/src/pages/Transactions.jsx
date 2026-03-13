@@ -4,6 +4,7 @@ import Button from "../components/ui/Button"
 import Icon from "../components/ui/Icon"
 import EmptyState from "../components/ui/EmptyState"
 import FilterSheet from "../components/filters/FilterSheet"
+import SearchBar from "../components/ui/SearchBar"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useNavigate } from "react-router-dom"
@@ -13,6 +14,7 @@ import { getNextRecurringDate } from "../utils/recurringUtils"
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
 import { getCurrentMonthYear } from "../utils/dateUtils"
+import { searchTransactions } from "../utils/searchTransactions"
 
 import "../styles/pages/Transactions.css"
 
@@ -21,6 +23,9 @@ const currency = "RON"
 
 function Transactions() {
     const navigate = useNavigate()
+
+    const [searchQuery, setSearchQuery] = useState("")
+    const [showSearch, setShowSearch] = useState(false) 
 
     const currentMonthYear = getCurrentMonthYear()
 
@@ -91,7 +96,7 @@ function Transactions() {
         }
     })
 
-    const hasActiveFilters = filters.category || filters.type || filters.intent || filters.period.start || filters.period.end
+    const hasActiveFilters = filters.category || filters.type || filters.intent || filters.period.start || filters.period.end || searchQuery
     
     function updateFilter(field, value) {
         setFilters(prev => ({
@@ -103,6 +108,8 @@ function Transactions() {
     const filteredTransactions = filterTransactions(formattedTransactions, filters)
     const [showFilters, setShowFilters] = useState(false)
 
+    const searchedTransactions = searchTransactions(filteredTransactions, searchQuery)
+
     return (
         <div className="transactions-layout">
             <div className="transactions-content">
@@ -112,7 +119,7 @@ function Transactions() {
                             <Icon name="filter" size={22} />
                         </div>
                         <h1>Transactions</h1>
-                        <div className="search-icon">
+                        <div className="search-icon" onClick={() => setShowSearch((prev) => !prev)}>
                             <Icon name="search" size={22} />
                         </div>
                     </div>
@@ -120,6 +127,10 @@ function Transactions() {
                         <h2 className="transactions-header-second-row">{currentMonthYear}</h2>
                     )}
                 </div>
+
+                {showSearch && (
+                    <SearchBar value={searchQuery} onChange={setSearchQuery} />
+                )}
 
                 {!hasActiveFilters && (
                     <Section title="Overall" className="transactions-overall">
@@ -132,11 +143,17 @@ function Transactions() {
                 )}
                 
                 {hasActiveFilters ? (
-                    <Section title={`Results (${filteredTransactions.length})`}>
-                        {filteredTransactions.length === 0 ? (
-                            <EmptyState title="No transactions match your filters." />
+                    <Section title={`Results (${searchedTransactions.length})`}>
+                        {searchedTransactions.length === 0 ? (
+                            <EmptyState 
+                                title={
+                                    searchQuery
+                                        ? `No transactions found for "${searchQuery}".`
+                                        : "No transactions match your filters."
+                                }
+                            />
                         ) : (
-                            filteredTransactions.map((t) => (
+                            searchedTransactions.map((t) => (
                                 <TransactionCard key={t.id} {...t} />
                             ))
                         )}

@@ -8,6 +8,7 @@ function SearchBar({ value, onChange }) {
             <Icon name="search" size={18} />
 
             <input 
+                autoFocus
                 type="text"
                 placeholder="Search"
                 value={value}
