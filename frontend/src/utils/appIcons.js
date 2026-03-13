@@ -20,7 +20,9 @@ import {
     Settings,
     Funnel,
     Search,
-    ChevronDown
+    ChevronDown,
+    ChevronRight,
+    LogOut
 } from "lucide-react"
 
 export const appIcons = {
@@ -45,5 +47,7 @@ export const appIcons = {
     primaryGoal: Sprout,
     search: Search,
     filter: Funnel,
-    select: ChevronDown
+    select: ChevronDown,
+    seeDetails: ChevronRight,
+    logOut: LogOut
 }

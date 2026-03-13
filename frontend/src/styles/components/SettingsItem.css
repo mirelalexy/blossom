@@ -1,0 +1,33 @@
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+}
+
+.settings-item:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.settings-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-item-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.settings-item-label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.settings-item-value {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
