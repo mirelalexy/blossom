@@ -7,7 +7,7 @@ import FilterSheet from "../components/filters/FilterSheet"
 import SearchBar from "../components/ui/SearchBar"
 
 import { useTransactions } from "../store/TransactionStore"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useState } from "react"
 
 import { getNextRecurringDate } from "../utils/recurringUtils"
@@ -23,6 +23,7 @@ const currency = "RON"
 
 function Transactions() {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearch, setShowSearch] = useState(false) 
@@ -86,15 +87,25 @@ function Transactions() {
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
+    const topCategory = location.state?.category || ""
+
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split("T")[0]
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split("T")[0]
+
     const [filters, setFilters] = useState({
-        category: "",
+        category: topCategory,
         type: "",
         intent: "",
         mood: "",
-        period: {
-            start: "",
-            end: ""
-        }
+        period: topCategory
+            ? {
+                start: firstDayOfMonth,
+                end: lastDayOfMonth
+            }
+            : {
+                start: "",
+                end: ""
+            }
     })
 
     const hasActiveFilters = filters.category || filters.type || filters.intent || filters.mood || filters.period.start || filters.period.end || searchQuery

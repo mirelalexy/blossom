@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+
 import Button from "../ui/Button"
 import Card from "../ui/Card"
 import Icon from "../ui/Icon"
@@ -6,6 +8,8 @@ import EmptyState from "../ui/EmptyState"
 import "./TopCategoryCard.css"
 
 function TopCategoryCard({ category }) {
+    const navigate = useNavigate()
+
     if (!category) {
         return (
             <EmptyState title="No spending data yet." />
@@ -22,7 +26,14 @@ function TopCategoryCard({ category }) {
         >
             <div className="top-category-card-content">
                 <p><span>{category}</span> is your highest spend this month.</p>
-                <Button>View Categories</Button>
+                <Button
+                    onClick={() => navigate("/transactions", {
+                        state: { category: category }
+                        })
+                    }
+                >
+                    View Category
+                </Button>
             </div>
         </Card>
     )
