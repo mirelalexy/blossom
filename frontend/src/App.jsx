@@ -17,6 +17,7 @@ import { GoalsProvider } from "./store/GoalsStore"
 import { ThemeProvider } from "./store/ThemeStore"
 import ThemeSettings from "./pages/settings/ThemeSettings"
 import AppTips from "./pages/settings/AppTips"
+import FAQ from "./pages/settings/FAQ"
 
 function App() {
   return (
@@ -118,6 +119,14 @@ function App() {
                 element={
                   <AppLayout>
                     <AppTips />
+                  </AppLayout>
+                } 
+              />
+              <Route 
+                path="/settings/faq" 
+                element={
+                  <AppLayout>
+                    <FAQ />
                   </AppLayout>
                 } 
               />

@@ -69,6 +69,7 @@ function Settings() {
                     <SettingsItem 
                         icon="faq"
                         label="FAQ"
+                        onClick={() => navigate("/settings/faq")}
                     />
                 </SettingsCard>
             </Section>
