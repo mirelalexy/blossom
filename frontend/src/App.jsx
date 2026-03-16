@@ -20,134 +20,137 @@ import AppTips from "./pages/settings/AppTips"
 import FAQ from "./pages/settings/FAQ"
 import { CurrencyProvider } from "./store/CurrencyStore"
 import CurrencySettings from "./pages/settings/CurrencySettings"
+import { UserProvider } from "./store/UserStore"
 
 function App() {
   return (
-    <ThemeProvider>
-      <CurrencyProvider>
-        <TransactionsProvider>
-          <GoalsProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route 
-                  path="/" 
-                  element={
-                    <AppLayout>
-                      <Home />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/transactions" 
-                  element={
-                    <AppLayout>
-                      <Transactions />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/transactions/:id" 
-                  element={
-                    <AppLayout>
-                      <TransactionDetails />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/add-transaction" 
-                  element={
-                    <AppLayout>
-                      <AddTransaction />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/edit-transaction/:id" 
-                  element={
-                    <AppLayout>
-                      <AddTransaction />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/goals" 
-                  element={
-                    <AppLayout>
-                      <Goals />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/add-goal" 
-                  element={
-                    <AppLayout>
-                      <AddSavingGoal />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/profile" 
-                  element={
-                    <AppLayout>
-                      <Profile />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/journey" 
-                  element={
-                    <AppLayout>
-                      <Journey />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/settings" 
-                  element={
-                    <AppLayout>
-                      <Settings />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/settings/theme" 
-                  element={
-                    <AppLayout>
-                      <ThemeSettings />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/settings/app-tips" 
-                  element={
-                    <AppLayout>
-                      <AppTips />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/settings/faq" 
-                  element={
-                    <AppLayout>
-                      <FAQ />
-                    </AppLayout>
-                  } 
-                />
-                <Route 
-                  path="/settings/currency" 
-                  element={
-                    <AppLayout>
-                      <CurrencySettings />
-                    </AppLayout>
-                  } 
-                />
-                <Route path="login" element={<Login />} />
-              </Routes>
-            </BrowserRouter>
-          </GoalsProvider>
-        </TransactionsProvider>
-      </CurrencyProvider>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <CurrencyProvider>
+          <TransactionsProvider>
+            <GoalsProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route 
+                    path="/" 
+                    element={
+                      <AppLayout>
+                        <Home />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/transactions" 
+                    element={
+                      <AppLayout>
+                        <Transactions />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/transactions/:id" 
+                    element={
+                      <AppLayout>
+                        <TransactionDetails />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/add-transaction" 
+                    element={
+                      <AppLayout>
+                        <AddTransaction />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/edit-transaction/:id" 
+                    element={
+                      <AppLayout>
+                        <AddTransaction />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/goals" 
+                    element={
+                      <AppLayout>
+                        <Goals />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/add-goal" 
+                    element={
+                      <AppLayout>
+                        <AddSavingGoal />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/profile" 
+                    element={
+                      <AppLayout>
+                        <Profile />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/journey" 
+                    element={
+                      <AppLayout>
+                        <Journey />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings" 
+                    element={
+                      <AppLayout>
+                        <Settings />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/theme" 
+                    element={
+                      <AppLayout>
+                        <ThemeSettings />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/app-tips" 
+                    element={
+                      <AppLayout>
+                        <AppTips />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/faq" 
+                    element={
+                      <AppLayout>
+                        <FAQ />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/currency" 
+                    element={
+                      <AppLayout>
+                        <CurrencySettings />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route path="login" element={<Login />} />
+                </Routes>
+              </BrowserRouter>
+            </GoalsProvider>
+          </TransactionsProvider>
+        </CurrencyProvider>
+      </ThemeProvider>
+    </UserProvider>
   )
 }
 
