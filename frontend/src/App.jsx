@@ -32,6 +32,7 @@ import NotificationSettings from "./pages/settings/notifications/NotificationSet
 import Frequency from "./pages/settings/notifications/Frequency"
 import { BudgetProvider } from "./store/BudgetStore"
 import MonthlyBudget from "./pages/settings/budget/MonthlyBudget"
+import Amount from "./pages/settings/budget/Amount"
 
 function App() {
   return (
@@ -225,6 +226,14 @@ function App() {
                         element={
                           <AppLayout>
                             <MonthlyBudget />
+                          </AppLayout>
+                        } 
+                      />
+                      <Route 
+                        path="/settings/budget/amount" 
+                        element={
+                          <AppLayout>
+                            <Amount />
                           </AppLayout>
                         } 
                       />

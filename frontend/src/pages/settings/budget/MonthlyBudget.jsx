@@ -23,7 +23,8 @@ function MonthlyBudget() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Amount"
-                        value= {formatCurrency(budget, currency)}
+                        value= {formatCurrency(budget.monthlyBudget, currency)}
+                        onClick={() => navigate("/settings/budget/amount")}
                     />
                 </SettingsCard>
             </Section>
