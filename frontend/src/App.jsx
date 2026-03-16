@@ -24,6 +24,7 @@ import { UserProvider } from "./store/UserStore"
 import Account from "./pages/settings/account/Account"
 import DisplayName from "./pages/settings/account/DisplayName"
 import Email from "./pages/settings/account/Email"
+import Password from "./pages/settings/account/Password"
 
 function App() {
   return (
@@ -167,6 +168,14 @@ function App() {
                     element={
                       <AppLayout>
                         <Email />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/account/password" 
+                    element={
+                      <AppLayout>
+                        <Password />
                       </AppLayout>
                     } 
                   />

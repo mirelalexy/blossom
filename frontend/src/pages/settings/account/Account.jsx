@@ -35,6 +35,7 @@ function Account() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Password"
+                        onClick={() => navigate("/settings/account/password")}
                     />
                 </SettingsCard>
             </Section>
