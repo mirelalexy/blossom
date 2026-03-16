@@ -20,6 +20,7 @@ function Account() {
                     <SettingsItem 
                         label="Display Name"
                         value={user.displayName}
+                        onClick={() => navigate("/settings/account/display-name")}
                     />
 
                     <SettingsItem 

@@ -22,6 +22,7 @@ import { CurrencyProvider } from "./store/CurrencyStore"
 import CurrencySettings from "./pages/settings/CurrencySettings"
 import { UserProvider } from "./store/UserStore"
 import Account from "./pages/settings/account/Account"
+import DisplayName from "./pages/settings/account/DisplayName"
 
 function App() {
   return (
@@ -149,6 +150,14 @@ function App() {
                     element={
                       <AppLayout>
                         <Account />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/account/display-name" 
+                    element={
+                      <AppLayout>
+                        <DisplayName />
                       </AppLayout>
                     } 
                   />
