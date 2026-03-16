@@ -18,7 +18,7 @@ export function NotificationProvider({ children }) {
     })
 
     useEffect(() => {
-        localStorage.getItem("notifications", JSON.stringify(settings))
+        localStorage.setItem("notifications", JSON.stringify(settings))
     }, [settings])
 
     function updateSetting(field, value) {
