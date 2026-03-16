@@ -26,6 +26,7 @@ function Account() {
                     <SettingsItem 
                         label="Email"
                         value={user.email}
+                        onClick={() => navigate("/settings/account/email")}
                     />
                 </SettingsCard>
             </Section>
