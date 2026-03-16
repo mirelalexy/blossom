@@ -19,6 +19,7 @@ function Settings() {
                     <SettingsItem 
                         icon="account"
                         label="Account"
+                        onClick={() => navigate("/settings/account")}
                     />
 
                     <SettingsItem 

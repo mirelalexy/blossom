@@ -1,0 +1,51 @@
+import { useNavigate } from "react-router-dom"
+
+import { useUser } from "../../../store/UserStore"
+
+import PageHeader from "../../../components/ui/PageHeader"
+import Section from "../../../components/ui/Section"
+import SettingsCard from "../../../components/settings/SettingsCard"
+import SettingsItem from "../../../components/settings/SettingsItem"
+
+function Account() {
+    const navigate = useNavigate()
+    const { user } = useUser()
+
+    return (
+        <div className="settings-content">
+            <PageHeader title="Account" />
+
+            <Section title="Account Settings">
+                <SettingsCard>
+                    <SettingsItem 
+                        label="Display Name"
+                        value={user.displayName}
+                    />
+
+                    <SettingsItem 
+                        label="Email"
+                        value={user.email}
+                    />
+                </SettingsCard>
+            </Section>
+
+            <Section title="Login Methods">
+                <SettingsCard>
+                    <SettingsItem 
+                        label="Password"
+                    />
+                </SettingsCard>
+            </Section>
+
+            <Section title="Account Management">
+                <SettingsCard>
+                    <SettingsItem 
+                        label="Delete Account"
+                    />
+                </SettingsCard>
+            </Section>
+        </div>
+    )
+}
+
+export default Account
