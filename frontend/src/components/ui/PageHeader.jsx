@@ -1,11 +1,14 @@
 import Icon from "./Icon"
 
 import "../../styles/components/PageHeader.css"
+import { useNavigate } from "react-router-dom"
 
-function PageHeader({ title, onBack, rightIcon, onRightClick }) {
+function PageHeader({ title, rightIcon, onRightClick }) {
+    const navigate = useNavigate()
+
     return (
         <div className="page-header">
-            <button className="page-header-left" onClick={onBack}>
+            <button className="page-header-left" onClick={() => navigate(-1)}>
                 <Icon name="back" />
             </button>
 
