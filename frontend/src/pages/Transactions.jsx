@@ -16,10 +16,9 @@ import { filterTransactions } from "../utils/filterTransactions"
 import { getCurrentMonthYear } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
 import { useCurrency } from "../store/CurrencyStore"
+import { useBudget } from "../store/BudgetStore"
 
 import "../styles/pages/Transactions.css"
-
-const monthlyBudget = 4000;
 
 function Transactions() {
     const navigate = useNavigate()
@@ -32,6 +31,7 @@ function Transactions() {
 
     const { transactions } = useTransactions()
     const { currency } = useCurrency()
+    const { budget } = useBudget()
 
     const today = new Date()
 
@@ -84,7 +84,7 @@ function Transactions() {
         .filter(t => t.type === "Income")
         .reduce((sum, t) => sum + t.amount, 0)
 
-    const budgetLeft = monthlyBudget - expenses
+    const budgetLeft = budget.monthlyBudget - expenses
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
