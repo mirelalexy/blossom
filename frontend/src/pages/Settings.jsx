@@ -41,6 +41,7 @@ function Settings() {
                     <SettingsItem 
                         icon="notifications"
                         label="Notifications"
+                        onClick={() => navigate("/settings/notifications")}
                     />
 
                     <SettingsItem 

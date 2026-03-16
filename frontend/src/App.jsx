@@ -28,6 +28,7 @@ import Password from "./pages/settings/account/Password"
 import DataPrivacy from "./pages/settings/data & privacy/DataPrivacy"
 import ExportData from "./pages/settings/data & privacy/ExportData"
 import { NotificationProvider } from "./store/NotificationStore"
+import NotificationSettings from "./pages/settings/notifications/NotificationSettings"
 
 function App() {
   return (
@@ -196,6 +197,14 @@ function App() {
                       element={
                         <AppLayout>
                           <ExportData />
+                        </AppLayout>
+                      } 
+                    />
+                    <Route 
+                      path="/settings/notifications" 
+                      element={
+                        <AppLayout>
+                          <NotificationSettings />
                         </AppLayout>
                       } 
                     />
