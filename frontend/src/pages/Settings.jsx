@@ -25,6 +25,7 @@ function Settings() {
                     <SettingsItem 
                         icon="dataPrivacy"
                         label="Data & Privacy"
+                        onClick={() => navigate("/settings/data-and-privacy")}
                     />
                 </SettingsCard>
             </Section>

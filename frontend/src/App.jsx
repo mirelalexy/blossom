@@ -25,6 +25,7 @@ import Account from "./pages/settings/account/Account"
 import DisplayName from "./pages/settings/account/DisplayName"
 import Email from "./pages/settings/account/Email"
 import Password from "./pages/settings/account/Password"
+import DataPrivacy from "./pages/settings/data & privacy/DataPrivacy"
 
 function App() {
   return (
@@ -176,6 +177,14 @@ function App() {
                     element={
                       <AppLayout>
                         <Password />
+                      </AppLayout>
+                    } 
+                  />
+                  <Route 
+                    path="/settings/data-and-privacy" 
+                    element={
+                      <AppLayout>
+                        <DataPrivacy />
                       </AppLayout>
                     } 
                   />
