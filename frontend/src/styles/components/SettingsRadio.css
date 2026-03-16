@@ -1,0 +1,27 @@
+.settings-radio input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--input);
+    border-radius: 50%;
+    position: relative;
+}
+
+.settings-radio input[type="radio"]:checked {
+    border-color: var(--accent);
+}
+
+.settings-radio input[type="radio"]:checked::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+
+.settings-radio:hover {
+    opacity: 0.85;
+}

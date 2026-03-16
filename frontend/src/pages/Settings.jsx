@@ -47,6 +47,7 @@ function Settings() {
                     <SettingsItem 
                         icon="monthlyBudget"
                         label="Monthly Budget"
+                        onClick={() => navigate("/settings/budget")}
                     />
 
                     <SettingsItem 
