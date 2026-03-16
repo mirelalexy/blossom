@@ -16,6 +16,7 @@ function DataPrivacy() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Export Data"
+                        onClick={() => navigate("/settings/data-and-privacy/export")}
                     />
                 </SettingsCard>
             </Section>
