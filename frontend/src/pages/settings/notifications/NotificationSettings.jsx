@@ -65,6 +65,7 @@ function Notifications() {
                     <SettingsItem 
                         label="Frequency"
                         value={settings.frequency}
+                        onClick={() => navigate("/settings/notifications/frequency")}
                     />
                 </SettingsCard>
             </Section>

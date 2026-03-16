@@ -29,6 +29,7 @@ import DataPrivacy from "./pages/settings/data & privacy/DataPrivacy"
 import ExportData from "./pages/settings/data & privacy/ExportData"
 import { NotificationProvider } from "./store/NotificationStore"
 import NotificationSettings from "./pages/settings/notifications/NotificationSettings"
+import Frequency from "./pages/settings/notifications/Frequency"
 
 function App() {
   return (
@@ -205,6 +206,14 @@ function App() {
                       element={
                         <AppLayout>
                           <NotificationSettings />
+                        </AppLayout>
+                      } 
+                    />
+                    <Route 
+                      path="/settings/notifications/frequency" 
+                      element={
+                        <AppLayout>
+                          <Frequency />
                         </AppLayout>
                       } 
                     />
