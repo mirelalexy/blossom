@@ -36,6 +36,7 @@ import Amount from "./pages/settings/budget/Amount"
 import { CategoryProvider } from "./store/CategoryStore"
 import Categories from "./pages/settings/categories/Categories"
 import CategoryDetails from "./pages/settings/categories/CategoryDetails"
+import EditCategory from "./pages/settings/categories/EditCategory"
 
 function App() {
   return (
@@ -254,6 +255,14 @@ function App() {
                           element={
                             <AppLayout>
                               <CategoryDetails />
+                            </AppLayout>
+                          } 
+                        />
+                        <Route 
+                          path="/settings/categories/edit/:id" 
+                          element={
+                            <AppLayout>
+                              <EditCategory />
                             </AppLayout>
                           } 
                         />
