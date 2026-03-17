@@ -30,12 +30,22 @@ export function TransactionsProvider({ children }) {
         setTransactions([])
     }
 
+    function reassignCategory(oldCategoryId, newCategoryId) {
+        setTransactions(prev => 
+            prev.map(t =>
+                t.categoryId === oldCategoryId
+                    ? {...t, categoryId: newCategoryId}
+                    : t
+            )
+        )
+    }
+
     useEffect(() => {
         localStorage.setItem("transactions", JSON.stringify(transactions))
     }, [transactions])
 
     return (
-        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, clearTransactions }}>
+        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, clearTransactions, reassignCategory }}>
             {children}
         </TransactionsContext.Provider>
     )

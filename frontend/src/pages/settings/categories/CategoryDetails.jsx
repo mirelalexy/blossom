@@ -8,12 +8,14 @@ import Icon from "../../../components/ui/Icon"
 
 import Button from "../../../components/ui/Button"
 import { useCategories } from "../../../store/CategoryStore"
+import { useTransactions } from "../../../store/TransactionStore"
 
 function CategoryDetails() {
     const navigate = useNavigate()
     const { id } = useParams()
 
     const { getCategoryById, deleteCategory } = useCategories()
+    const { reassignCategory } = useTransactions()
 
     const category = getCategoryById(id)
 
@@ -24,9 +26,15 @@ function CategoryDetails() {
     const Icon = appIcons[category.icon]
 
     function handleDelete() {
-        const confirmed = window.confirm("Delete this category?")
+        const confirmed = window.confirm("Delete this category? Transactions will be moved to Other category.")
         if (!confirmed) return
 
+        const fallbackCategoryId =
+            category.type === "expense"
+                ? "other-expense"
+                : "other-income"
+
+        reassignCategory(category.id, fallbackCategoryId)
         deleteCategory(category.id)
         navigate(-1)
     }

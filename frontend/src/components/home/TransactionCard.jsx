@@ -30,7 +30,7 @@ function TransactionCard({ id, categoryId, merchant, date, mood, type, amount })
     return (
         <Card 
             className="transaction-card" 
-            title={categoryData?.name} 
+            title={categoryData?.name}
             icon={<Icon size={18} />}
             onClick={() => navigate(`/transactions/${id}`)}
         >
