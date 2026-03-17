@@ -83,6 +83,11 @@ function Settings() {
                         label="FAQ"
                         onClick={() => navigate("/settings/faq")}
                     />
+                    <SettingsItem 
+                        icon="privacyPolicy"
+                        label="Privacy Policy"
+                        onClick={() => navigate("/settings/privacy-policy")}
+                    />
                 </SettingsCard>
             </Section>
         </div>

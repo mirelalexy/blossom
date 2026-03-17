@@ -40,6 +40,7 @@ import EditCategory from "./pages/settings/categories/EditCategory"
 import { RuleProvider } from "./store/RuleStore"
 import CustomSpendingRules from "./pages/settings/rules/CustomSpendingRules"
 import AddRule from "./pages/settings/rules/AddRule"
+import PrivacyPolicy from "./pages/settings/PrivacyPolicy"
 
 function App() {
   return (
@@ -283,6 +284,14 @@ function App() {
                             element={
                               <AppLayout>
                                 <AddRule />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/privacy-policy" 
+                            element={
+                              <AppLayout>
+                                <PrivacyPolicy />
                               </AppLayout>
                             } 
                           />

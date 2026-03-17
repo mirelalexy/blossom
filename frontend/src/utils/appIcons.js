@@ -9,6 +9,7 @@ import {
     Receipt, 
     ArrowLeft, 
     Trash, 
+    Shield,
     CircleUserRound, 
     GlobeLock, 
     Palette, 
@@ -74,6 +75,7 @@ export const appIcons = {
     seeDetails: ChevronRight,
     hideDetails: ChevronUp,
     categories: Flower,
+    privacyPolicy: Shield,
     logOut: LogOut,
 
     // category icons
