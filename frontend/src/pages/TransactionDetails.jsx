@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useTransactions } from "../store/TransactionStore"
 import { formatDate } from "../utils/dateUtils"
-import { categoryIcons } from "../utils/categoryIcons"
+import { appIcons } from "../utils/appIcons"
 import { useCurrency } from "../store/CurrencyStore"
 import { formatCurrency } from "../utils/currencyUtils"
 
@@ -24,7 +24,7 @@ function TransactionDetails() {
         return <p>Transaction not found.</p>
     }
 
-    const Icon = categoryIcons[transaction.category]
+    const Icon = appIcons[transaction.category]
 
     function handleDelete() {
         const confirmed = window.confirm("Delete this transaction?")

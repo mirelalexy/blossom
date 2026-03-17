@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Card from "../ui/Card"
 
 import { formatDate } from "../../utils/dateUtils"
-import { categoryIcons } from "../../utils/categoryIcons"
+import { appIcons } from "../../utils/appIcons"
 import { useCurrency } from "../../store/CurrencyStore"
 import { formatCurrency } from "../../utils/currencyUtils"
 import { useCategories } from "../../store/CategoryStore"
@@ -15,7 +15,7 @@ function TransactionCard({ id, categoryId, merchant, date, mood, type, amount })
     const { currency } = useCurrency()
     const { getCategoryById } = useCategories()
     const categoryData = getCategoryById(categoryId)
-    const Icon = categoryIcons[categoryData?.icon]
+    const Icon = appIcons[categoryData?.icon] || appIcons["circle"]
 
     const moodEmojis = {
         happy: "🤩",

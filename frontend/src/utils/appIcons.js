@@ -4,7 +4,6 @@ import {
     Sprout, 
     Plus, 
     Sparkle, 
-    Banknote, 
     Bell, 
     Flower,
     Receipt, 
@@ -24,10 +23,32 @@ import {
     ChevronDown,
     ChevronRight,
     ChevronUp,
-    LogOut
+    LogOut,
+    Gamepad2,
+    Apple,
+    Coffee,
+    PawPrint,
+    Clapperboard,
+    Banknote,
+    Shirt,
+    HeartPulse,
+    Car,
+    Coins,
+    Handbag,
+    Wine,
+    Headset,
+    Music,
+    Dumbbell,
+    LibraryBig,
+    Bubbles,
+    Volleyball,
+    Plane,
+    Sofa,
+    Circle
 } from "lucide-react"
 
 export const appIcons = {
+    // UI icons
     home: House,
     transactions: Receipt,
     add: Plus,
@@ -53,5 +74,28 @@ export const appIcons = {
     seeDetails: ChevronRight,
     hideDetails: ChevronUp,
     categories: Flower,
-    logOut: LogOut
+    logOut: LogOut,
+
+    // category icons
+    gamepad2: Gamepad2,
+    coffee: Coffee,
+    pawprint: PawPrint,
+    shirt: Shirt,
+    heartPulse: HeartPulse,
+    car: Car,
+    apple: Apple,
+    coins: Coins,
+    handbag: Handbag,
+    clapperboard: Clapperboard,
+    wine: Wine,
+    headset: Headset,
+    bubbles: Bubbles,
+    music: Music,
+    dumbbell: Dumbbell,
+    libraryBig: LibraryBig,
+    volleyball: Volleyball,
+    plane: Plane,
+    sofa: Sofa,
+    banknote: Banknote,
+    circle: Circle
 }
