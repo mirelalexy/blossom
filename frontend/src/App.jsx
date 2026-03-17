@@ -37,246 +37,249 @@ import { CategoryProvider } from "./store/CategoryStore"
 import Categories from "./pages/settings/categories/Categories"
 import CategoryDetails from "./pages/settings/categories/CategoryDetails"
 import EditCategory from "./pages/settings/categories/EditCategory"
+import { RuleProvider } from "./store/RuleStore"
 
 function App() {
   return (
-    <CategoryProvider>
-      <BudgetProvider>
-        <NotificationProvider>
-          <UserProvider>
-            <ThemeProvider>
-              <CurrencyProvider>
-                <TransactionsProvider>
-                  <GoalsProvider>
-                    <BrowserRouter>
-                      <Routes>
-                        <Route 
-                          path="/" 
-                          element={
-                            <AppLayout>
-                              <Home />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/transactions" 
-                          element={
-                            <AppLayout>
-                              <Transactions />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/transactions/:id" 
-                          element={
-                            <AppLayout>
-                              <TransactionDetails />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/add-transaction" 
-                          element={
-                            <AppLayout>
-                              <AddTransaction />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/edit-transaction/:id" 
-                          element={
-                            <AppLayout>
-                              <AddTransaction />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/goals" 
-                          element={
-                            <AppLayout>
-                              <Goals />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/add-goal" 
-                          element={
-                            <AppLayout>
-                              <AddSavingGoal />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/profile" 
-                          element={
-                            <AppLayout>
-                              <Profile />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/journey" 
-                          element={
-                            <AppLayout>
-                              <Journey />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings" 
-                          element={
-                            <AppLayout>
-                              <Settings />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/theme" 
-                          element={
-                            <AppLayout>
-                              <ThemeSettings />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/app-tips" 
-                          element={
-                            <AppLayout>
-                              <AppTips />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/faq" 
-                          element={
-                            <AppLayout>
-                              <FAQ />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/currency" 
-                          element={
-                            <AppLayout>
-                              <CurrencySettings />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/account" 
-                          element={
-                            <AppLayout>
-                              <Account />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/account/display-name" 
-                          element={
-                            <AppLayout>
-                              <DisplayName />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/account/email" 
-                          element={
-                            <AppLayout>
-                              <Email />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/account/password" 
-                          element={
-                            <AppLayout>
-                              <Password />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/data-and-privacy" 
-                          element={
-                            <AppLayout>
-                              <DataPrivacy />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/data-and-privacy/export" 
-                          element={
-                            <AppLayout>
-                              <ExportData />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/notifications" 
-                          element={
-                            <AppLayout>
-                              <NotificationSettings />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/notifications/frequency" 
-                          element={
-                            <AppLayout>
-                              <Frequency />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/budget" 
-                          element={
-                            <AppLayout>
-                              <MonthlyBudget />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/budget/amount" 
-                          element={
-                            <AppLayout>
-                              <Amount />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/categories" 
-                          element={
-                            <AppLayout>
-                              <Categories />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/categories/:id" 
-                          element={
-                            <AppLayout>
-                              <CategoryDetails />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route 
-                          path="/settings/categories/edit/:id" 
-                          element={
-                            <AppLayout>
-                              <EditCategory />
-                            </AppLayout>
-                          } 
-                        />
-                        <Route path="login" element={<Login />} />
-                      </Routes>
-                    </BrowserRouter>
-                  </GoalsProvider>
-                </TransactionsProvider>
-              </CurrencyProvider>
-            </ThemeProvider>
-          </UserProvider>
-        </NotificationProvider>
-      </BudgetProvider>
-    </CategoryProvider>
+    <RuleProvider>
+      <CategoryProvider>
+        <BudgetProvider>
+          <NotificationProvider>
+            <UserProvider>
+              <ThemeProvider>
+                <CurrencyProvider>
+                  <TransactionsProvider>
+                    <GoalsProvider>
+                      <BrowserRouter>
+                        <Routes>
+                          <Route 
+                            path="/" 
+                            element={
+                              <AppLayout>
+                                <Home />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/transactions" 
+                            element={
+                              <AppLayout>
+                                <Transactions />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/transactions/:id" 
+                            element={
+                              <AppLayout>
+                                <TransactionDetails />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/add-transaction" 
+                            element={
+                              <AppLayout>
+                                <AddTransaction />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/edit-transaction/:id" 
+                            element={
+                              <AppLayout>
+                                <AddTransaction />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/goals" 
+                            element={
+                              <AppLayout>
+                                <Goals />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/add-goal" 
+                            element={
+                              <AppLayout>
+                                <AddSavingGoal />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/profile" 
+                            element={
+                              <AppLayout>
+                                <Profile />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/journey" 
+                            element={
+                              <AppLayout>
+                                <Journey />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings" 
+                            element={
+                              <AppLayout>
+                                <Settings />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/theme" 
+                            element={
+                              <AppLayout>
+                                <ThemeSettings />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/app-tips" 
+                            element={
+                              <AppLayout>
+                                <AppTips />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/faq" 
+                            element={
+                              <AppLayout>
+                                <FAQ />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/currency" 
+                            element={
+                              <AppLayout>
+                                <CurrencySettings />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/account" 
+                            element={
+                              <AppLayout>
+                                <Account />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/account/display-name" 
+                            element={
+                              <AppLayout>
+                                <DisplayName />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/account/email" 
+                            element={
+                              <AppLayout>
+                                <Email />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/account/password" 
+                            element={
+                              <AppLayout>
+                                <Password />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/data-and-privacy" 
+                            element={
+                              <AppLayout>
+                                <DataPrivacy />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/data-and-privacy/export" 
+                            element={
+                              <AppLayout>
+                                <ExportData />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/notifications" 
+                            element={
+                              <AppLayout>
+                                <NotificationSettings />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/notifications/frequency" 
+                            element={
+                              <AppLayout>
+                                <Frequency />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/budget" 
+                            element={
+                              <AppLayout>
+                                <MonthlyBudget />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/budget/amount" 
+                            element={
+                              <AppLayout>
+                                <Amount />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/categories" 
+                            element={
+                              <AppLayout>
+                                <Categories />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/categories/:id" 
+                            element={
+                              <AppLayout>
+                                <CategoryDetails />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/categories/edit/:id" 
+                            element={
+                              <AppLayout>
+                                <EditCategory />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route path="login" element={<Login />} />
+                        </Routes>
+                      </BrowserRouter>
+                    </GoalsProvider>
+                  </TransactionsProvider>
+                </CurrencyProvider>
+              </ThemeProvider>
+            </UserProvider>
+          </NotificationProvider>
+        </BudgetProvider>
+      </CategoryProvider>
+    </RuleProvider>
   )
 }
 
