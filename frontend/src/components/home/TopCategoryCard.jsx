@@ -25,10 +25,10 @@ function TopCategoryCard({ category }) {
             }
         >
             <div className="top-category-card-content">
-                <p><span>{category}</span> is your highest spend this month.</p>
+                <p><span>{category.name}</span> is your highest spend this month.</p>
                 <Button
                     onClick={() => navigate("/transactions", {
-                        state: { category: category }
+                        state: { categoryId: category.id }
                         })
                     }
                 >

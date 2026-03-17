@@ -9,6 +9,7 @@ import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
 import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
 import { useNavigate } from "react-router-dom"
+import { useCategories } from "../store/CategoryStore"
 
 import "../styles/pages/Home.css"
 
@@ -18,6 +19,7 @@ function Home() {
     const today = new Date()
 
     const { transactions } = useTransactions()
+    const { getCategoryById } = useCategories()
 
     const { goals } = useGoals()
     const primaryGoal = goals.find(g => g.primaryGoal)
@@ -40,30 +42,31 @@ function Home() {
             const date = new Date(t.date)
 
             return (
-                t.type === "Expense" && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                t.type === "Expense" && t.categoryId && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
             )
         })
 
         const categoryTotals = {}
 
         monthlyExpenses.forEach(t => {
-            categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount
+            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + t.amount
         })
 
-        let topCategory = null
+        let topCategoryId = null
         let highestAmount = 0
 
-        Object.entries(categoryTotals).forEach(([category, amount]) => {
+        Object.entries(categoryTotals).forEach(([categoryId, amount]) => {
             if (amount > highestAmount) {
                 highestAmount = amount
-                topCategory = category
+                topCategoryId = categoryId
             }
         })
 
-        return topCategory
+        return topCategoryId
     }
 
-    const topCategory = calculateTopCategory(transactions)
+    const topCategoryId = calculateTopCategory(transactions)
+    const topCategory = getCategoryById(topCategoryId)
 
     const username = localStorage.getItem("username") || "friend"
     const message = getNextMonthInfo()

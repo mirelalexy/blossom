@@ -88,17 +88,17 @@ function Transactions() {
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
-    const topCategory = location.state?.category || ""
+    const topCategoryId = location.state?.categoryId || ""
 
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split("T")[0]
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split("T")[0]
 
     const [filters, setFilters] = useState({
-        category: topCategory,
+        category: topCategoryId,
         type: "",
         intent: "",
         mood: "",
-        period: topCategory
+        period: topCategoryId
             ? {
                 start: firstDayOfMonth,
                 end: lastDayOfMonth
