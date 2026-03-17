@@ -21,6 +21,7 @@ function matchesType(transaction, filters) {
 
 function matchesIntent(transaction, filters) {
     if(!filters.intent) return true
+    if (transaction.type === "Income") return true
     return transaction.intent === filters.intent
 }
 
