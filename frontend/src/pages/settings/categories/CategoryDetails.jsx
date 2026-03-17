@@ -4,15 +4,21 @@ import { appIcons } from "../../../utils/appIcons"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Section from "../../../components/ui/Section"
-import Icon from "../../../components/ui/Icon"
 
 import Button from "../../../components/ui/Button"
 import { useCategories } from "../../../store/CategoryStore"
 import { useTransactions } from "../../../store/TransactionStore"
+import { useBudget } from "../../../store/BudgetStore"
+import { useCurrency } from "../../../store/CurrencyStore"
+import { formatCurrency } from "../../../utils/currencyUtils"
 
 function CategoryDetails() {
     const navigate = useNavigate()
     const { id } = useParams()
+
+    const { transactions } = useTransactions()
+    const { budget } = useBudget()
+    const { currency } = useCurrency()
 
     const { getCategoryById, deleteCategory } = useCategories()
     const { reassignCategory } = useTransactions()
@@ -39,6 +45,26 @@ function CategoryDetails() {
         navigate(-1)
     }
 
+    const today = new Date()
+
+    const spent = transactions
+        .filter(t => {
+            if (!t.date) return false
+
+            const date = new Date(t.date)
+
+            return (
+                t.categoryId === id &&
+                t.type === "Expense" &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+            )
+        })
+        .reduce((sum, t) => sum + t.amount, 0)
+
+    const categoryBudget = budget.categoryBudgets?.[id] || 0
+    const remaining = categoryBudget - spent
+
     return (
         <div className="settings-content">
             <PageHeader title="Category Details" />
@@ -53,6 +79,24 @@ function CategoryDetails() {
                             <p>{category.type === "expense" ? "Expense" : "Income"}</p>
                         </div>
                              
+                    </Section>
+
+                    <Section title="This Month">
+                        <p>Spent: {formatCurrency(spent, currency)}</p>
+                        <p>
+                            {categoryBudget !== 0 
+                                ? `Budget: ${formatCurrency(categoryBudget, currency)}`
+                                : "No budget set for this category."
+                            }
+                        </p>
+
+                        {categoryBudget !== 0 && (
+                            <p>Remaining: {formatCurrency(remaining, currency)}</p>
+                        )}
+
+                        {remaining < 0 && (
+                            <p>You are over budget.</p>
+                        )}
                     </Section>
 
                     <div className="transaction-actions">
