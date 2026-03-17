@@ -65,6 +65,7 @@ function Settings() {
                     <SettingsItem 
                         icon="customSpendingRules"
                         label="Custom Spending Rules"
+                        onClick={() => navigate("/settings/rules")}
                     />
                 </SettingsCard>
             </Section>

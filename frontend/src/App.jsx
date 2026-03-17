@@ -38,6 +38,7 @@ import Categories from "./pages/settings/categories/Categories"
 import CategoryDetails from "./pages/settings/categories/CategoryDetails"
 import EditCategory from "./pages/settings/categories/EditCategory"
 import { RuleProvider } from "./store/RuleStore"
+import CustomSpendingRules from "./pages/settings/rules/CustomSpendingRules"
 
 function App() {
   return (
@@ -265,6 +266,14 @@ function App() {
                             element={
                               <AppLayout>
                                 <EditCategory />
+                              </AppLayout>
+                            } 
+                          />
+                          <Route 
+                            path="/settings/rules" 
+                            element={
+                              <AppLayout>
+                                <CustomSpendingRules />
                               </AppLayout>
                             } 
                           />
