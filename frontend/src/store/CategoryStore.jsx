@@ -11,7 +11,7 @@ const defaultCategories = [
     { id: "shopping", name: "Shopping", icon: "handbag", type: "expense", default: true },
     { id: "bills", name: "Bills", icon: "coins", type: "expense", default: true },
     { id: "entertainment", name: "Entertainment", icon: "clapperboard", type: "expense", default: true },
-    { id: "other-expense", name: "Other", icon: "circle", type: "expense", default: true },
+    { id: "other-expense", name: "Other Expenses", icon: "circle", type: "expense", default: true },
 
     // income
     { id: "salary", name: "Salary", icon: "banknote", type: "income", default: true },
@@ -19,7 +19,7 @@ const defaultCategories = [
     { id: "gift", name: "Gift", icon: "banknote", type: "income", default: true },
     { id: "business", name: "Business", icon: "banknote", type: "income", default: true },
     { id: "refund", name: "Refund", icon: "banknote", type: "income", default: true },
-    { id: "other-income", name: "Other", icon: "circle", type: "income", default: true }
+    { id: "other-income", name: "Other Income", icon: "circle", type: "income", default: true }
 ]
 
 export function CategoryProvider({ children }) {
