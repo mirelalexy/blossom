@@ -51,6 +51,12 @@ function Settings() {
                     />
 
                     <SettingsItem 
+                        icon="categories"
+                        label="Categories"
+                        onClick={() => navigate("/settings/categories")}
+                    />
+
+                    <SettingsItem 
                         icon="currency"
                         label="Currency"
                         onClick={() => navigate("/settings/currency")}

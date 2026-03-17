@@ -6,6 +6,7 @@ import {
     Sparkle, 
     Banknote, 
     Bell, 
+    Flower,
     Receipt, 
     ArrowLeft, 
     Trash, 
@@ -51,5 +52,6 @@ export const appIcons = {
     select: ChevronDown,
     seeDetails: ChevronRight,
     hideDetails: ChevronUp,
+    categories: Flower,
     logOut: LogOut
 }
