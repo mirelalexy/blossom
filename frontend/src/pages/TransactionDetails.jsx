@@ -10,6 +10,7 @@ import Section from "../components/ui/Section"
 
 import "../styles/pages/TransactionDetails.css"
 import Button from "../components/ui/Button"
+import { useCategories } from "../store/CategoryStore"
 
 function TransactionDetails() {
     const navigate = useNavigate()
@@ -17,14 +18,16 @@ function TransactionDetails() {
     const { id } = useParams()
     const { transactions, deleteTransaction } = useTransactions()
     const { currency } = useCurrency()
+    const { getCategoryById } = useCategories()
 
     const transaction = transactions.find(t => t.id === Number(id))
+
+    const categoryData = getCategoryById(transaction.categoryId)
+    const Icon = appIcons[categoryData?.icon] || appIcons["circle"]
 
     if(!transaction) {
         return <p>Transaction not found.</p>
     }
-
-    const Icon = appIcons[transaction.category]
 
     function handleDelete() {
         const confirmed = window.confirm("Delete this transaction?")
@@ -51,7 +54,7 @@ function TransactionDetails() {
                         </div>
                         <div>
                             <h2>{transaction.merchant}</h2>
-                            <p className="transaction-category">{transaction.category}</p>
+                            <p className="transaction-category">{categoryData?.name}</p>
 
                             <p className="transaction-amount">
                                 {transaction.type === "Expense" ? "-" : "+"}
