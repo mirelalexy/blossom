@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useGoals } from "../store/GoalsStore"
+import { useBudget } from "../store/BudgetStore"
 
 import AutosaveCard from "../components/goals/AutosaveCard"
 import PageHeader from "../components/ui/PageHeader"
@@ -16,6 +17,8 @@ function Goals() {
     const [search, setSearch] = useState("") 
     
     const { goals } = useGoals()
+    const { budget } = useBudget()
+    const isAutosaveActive = budget.rollover === "primaryGoal"
     
     const filteredGoals = goals.filter(g => g.name.toLowerCase().includes(search.toLowerCase()))
 
@@ -27,12 +30,11 @@ function Goals() {
                 
                 <SearchBar className="search-bar-icon" value={search} onChange={setSearch} />
 
-                {primaryGoal && (
-                    <AutosaveCard 
-                        autosaveActive={true}
-                        primaryGoal={primaryGoal.name}
-                    />
-                )}
+                <AutosaveCard
+                    autosaveActive={isAutosaveActive}
+                    primaryGoal={primaryGoal}
+                    onAction={() => navigate("/settings/budget")}
+                />
 
                 {filteredGoals.length === 0 ? (
                     <EmptyState 
