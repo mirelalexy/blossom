@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+
 import Icon from "../ui/Icon"
 
 function GreetingHeader({ greeting, username, message }) {

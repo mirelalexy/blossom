@@ -1,9 +1,9 @@
-import PageHeader from "../../components/ui/PageHeader"
-import Select from "../../components/forms/Select"
-
 import { useCurrency } from "../../store/CurrencyStore"
 import { useTransactions } from "../../store/TransactionStore"
 import { useGoals } from "../../store/GoalsStore"
+
+import PageHeader from "../../components/ui/PageHeader"
+import Select from "../../components/forms/Select"
 
 function CurrencySettings() {
     const { currency, updateCurrency } = useCurrency()

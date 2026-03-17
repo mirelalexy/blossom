@@ -1,15 +1,16 @@
+import { useNavigate } from "react-router-dom"
+
+import { useTransactions } from "../store/TransactionStore"
+import { useGoals } from "../store/GoalsStore"
+import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
+import { useCategories } from "../store/CategoryStore"
+
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
 import TopCategoryCard from "../components/home/TopCategoryCard"
 import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
-
-import { useTransactions } from "../store/TransactionStore"
-import { useGoals } from "../store/GoalsStore"
-import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
-import { useNavigate } from "react-router-dom"
-import { useCategories } from "../store/CategoryStore"
 
 import "../styles/pages/Home.css"
 

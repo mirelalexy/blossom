@@ -1,16 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom"
 
 import { appIcons } from "../../../utils/appIcons"
-
-import PageHeader from "../../../components/ui/PageHeader"
-import Section from "../../../components/ui/Section"
-
-import Button from "../../../components/ui/Button"
 import { useCategories } from "../../../store/CategoryStore"
 import { useTransactions } from "../../../store/TransactionStore"
 import { useBudget } from "../../../store/BudgetStore"
 import { useCurrency } from "../../../store/CurrencyStore"
 import { formatCurrency } from "../../../utils/currencyUtils"
+
+import PageHeader from "../../../components/ui/PageHeader"
+import Section from "../../../components/ui/Section"
+import Button from "../../../components/ui/Button"
 
 function CategoryDetails() {
     const navigate = useNavigate()

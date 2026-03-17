@@ -1,4 +1,3 @@
-import "../../styles/components/SettingsItem.css"
 import "../../styles/components/SettingsRadio.css"
 
 function SettingsRadio({ label, name, value, checkedValue, onChange }) {

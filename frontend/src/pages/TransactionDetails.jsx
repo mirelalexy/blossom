@@ -1,16 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom"
+
 import { useTransactions } from "../store/TransactionStore"
 import { formatDate } from "../utils/dateUtils"
 import { appIcons } from "../utils/appIcons"
 import { useCurrency } from "../store/CurrencyStore"
 import { formatCurrency } from "../utils/currencyUtils"
+import { useCategories } from "../store/CategoryStore"
 
 import PageHeader from "../components/ui/PageHeader"
 import Section from "../components/ui/Section"
+import Button from "../components/ui/Button"
 
 import "../styles/pages/TransactionDetails.css"
-import Button from "../components/ui/Button"
-import { useCategories } from "../store/CategoryStore"
 
 function TransactionDetails() {
     const navigate = useNavigate()

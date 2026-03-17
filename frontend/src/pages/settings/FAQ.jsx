@@ -1,10 +1,10 @@
+import { faq } from "../../data/faq"
+
 import PageHeader from "../../components/ui/PageHeader"
 import PageIntro from "../../components/ui/PageIntro"
 import AccordionItem from "../../components/ui/AccordionItem"
 import SettingsCard from "../../components/settings/SettingsCard"
 import Section from "../../components/ui/Section"
-
-import { faq } from "../../data/faq"
 
 function FAQ() {
     return (

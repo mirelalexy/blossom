@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom"
-import "./Bottombar.css"
 
 import Icon from "../ui/Icon"
+
+import "./Bottombar.css"
 
 function Bottombar({ onAddTransaction }) {
     return (

@@ -1,10 +1,10 @@
+import { useCurrency } from "../../store/CurrencyStore"
+import { formatCurrency } from "../../utils/currencyUtils"
+
 import Card from "../ui/Card"
 import EmptyState from "../ui/EmptyState"
 import Icon from "../ui/Icon"
 import ProgressBar from "../ui/ProgressBar"
-
-import { useCurrency } from "../../store/CurrencyStore"
-import { formatCurrency } from "../../utils/currencyUtils"
 
 import "./PrimaryGoalCard.css"
 

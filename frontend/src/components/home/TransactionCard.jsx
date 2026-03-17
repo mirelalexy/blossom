@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
-import Card from "../ui/Card"
-
 import { formatDate } from "../../utils/dateUtils"
 import { appIcons } from "../../utils/appIcons"
 import { useCurrency } from "../../store/CurrencyStore"
 import { formatCurrency } from "../../utils/currencyUtils"
 import { useCategories } from "../../store/CategoryStore"
+
+import Card from "../ui/Card"
 
 import "./TransactionCard.css"
 

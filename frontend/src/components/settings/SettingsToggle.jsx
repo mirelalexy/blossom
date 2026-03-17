@@ -1,5 +1,6 @@
-import "../../styles/components/SettingsItem.css"
 import Toggle from "../forms/Toggle"
+
+import "../../styles/components/SettingsItem.css"
 
 function SettingsToggle({ label, checked, onChange }) {
     return (
