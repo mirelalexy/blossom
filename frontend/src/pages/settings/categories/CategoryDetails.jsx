@@ -56,9 +56,13 @@ function CategoryDetails() {
                     </Section>
 
                     <div className="transaction-actions">
-                        <Button onClick={() => navigate(`/settings/categories/edit/${category.id}`)}>Edit</Button>
+                        <Button disabled={category.default} onClick={() => navigate(`/settings/categories/edit/${category.id}`)}>Edit</Button>
                         <Button onClick={handleDelete}>Delete</Button>
                     </div>
+
+                    {category.default && (
+                        <p>Default categories cannot be edited.</p>
+                    )}
                 </div>
         </div>
     )
