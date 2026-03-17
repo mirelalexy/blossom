@@ -41,10 +41,20 @@ function AddTransaction() {
     })
 
     function handleChange(field, value) {
-        setFormData(prev => ({
-            ...prev,
-            [field]: value
-        }))
+        setFormData(prev => {
+            if (field === "type") {
+                return {
+                    ...prev,
+                    type: value,
+                    categoryId: ""
+                }
+            }
+
+            return {
+                ...prev,
+                [field]: value
+            }
+        })
     }
 
     function handleSubmit(e) {
@@ -94,7 +104,7 @@ function AddTransaction() {
 
     const categoryOptions = [
         { value: "", label: "Select category" },
-        ...getCategoriesByType(formData.type).map(cat => ({
+        ...getCategoriesByType(formData.type.toLowerCase()).map(cat => ({
             value: cat.id,
             label: cat.name
         }))
