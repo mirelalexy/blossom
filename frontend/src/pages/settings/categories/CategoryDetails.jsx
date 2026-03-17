@@ -56,7 +56,16 @@ function CategoryDetails() {
                     </Section>
 
                     <div className="transaction-actions">
-                        <Button disabled={category.default} onClick={() => navigate(`/settings/categories/edit/${category.id}`)}>Edit</Button>
+                        <Button 
+                            disabled={category.default} 
+                            onClick={() => {
+                                                if (category.default) return
+                                                navigate(`/settings/categories/edit/${category.id}`)
+                                            }
+                                    }
+                        >
+                            Edit
+                        </Button>
                         <Button onClick={handleDelete}>Delete</Button>
                     </div>
 
