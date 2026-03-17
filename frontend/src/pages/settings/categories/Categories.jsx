@@ -17,12 +17,19 @@ function Categories() {
     const [ newCategory, setNewCategory] = useState("")
     const [ type, setType ] = useState("expense")
 
-    const expenseCategories = categories.filter(
-        c => c.type === "expense" && !c.id.includes("other")
+    function sortCategories(list) {
+        return [...list]
+            .filter(cat => !cat.id.includes("other"))
+            .sort((a, b) => a.name.localeCompare(b.name))
+        
+    }
+
+    const expenseCategories = sortCategories(
+        categories.filter(cat => cat.type === "expense")
     )
 
-    const incomeCategories = categories.filter(
-        c => c.type === "income" && !c.id.includes("other")
+    const incomeCategories = sortCategories(
+        categories.filter(cat => cat.type === "income")
     )
 
     function handleAdd() {
