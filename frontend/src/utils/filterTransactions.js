@@ -11,7 +11,7 @@ export function filterTransactions(transactions, filters) {
 
 function matchesCategory(transaction, filters) {
     if(!filters.category) return true
-    return transaction.category === filters.category
+    return transaction.categoryId === filters.category
 }
 
 function matchesType(transaction, filters) {

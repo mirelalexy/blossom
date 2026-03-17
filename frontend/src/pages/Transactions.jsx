@@ -65,7 +65,7 @@ function Transactions() {
         })
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-    const monthlyTransactions = transactions.filter(t => {
+    const monthlyTransactions = formattedTransactions.filter(t => {
         if (!t.date) return false
 
         const date = new Date(t.date)
@@ -112,10 +112,18 @@ function Transactions() {
     const hasActiveFilters = filters.category || filters.type || filters.intent || filters.mood || filters.period.start || filters.period.end || searchQuery
     
     function updateFilter(field, value) {
-        setFilters(prev => ({
-            ...prev,
-            [field]: value
-        }))
+        setFilters(prev => {
+            const updated = {
+                ...prev,
+                [field]: value
+            }
+
+            if (field === "type") {
+                updated.category = ""
+            }
+
+            return updated
+        })
     }
 
     const filteredTransactions = filterTransactions(formattedTransactions, filters)

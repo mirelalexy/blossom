@@ -1,3 +1,5 @@
+import { useCategories } from "../../store/CategoryStore"
+
 import Select from "../forms/Select"
 import RadioGroup from "../forms/RadioGroup"
 import Button from "../ui/Button"
@@ -6,6 +8,26 @@ import Input from "../forms/Input"
 import "../../styles/components/FilterSheet.css"
 
 function FilterSheet({ filters, updateFilter, onClose }) {
+    const { categories } = useCategories()
+
+    const categoryOptions = [
+        { value: "", label: "All categories" },
+        ...categories
+            .filter(c => !c.id.includes("other"))
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(c => ({
+                value: c.id,
+                label: c.name
+            })),
+        // make Other last option
+        ...categories
+            .filter(c => c.id.includes("other"))
+            .map(c => ({
+                value: c.id,
+                label: c.name
+            })),
+    ]
+
     return (
         <>
             <div className="filter-overlay" onClick={onClose}></div>
@@ -19,15 +41,7 @@ function FilterSheet({ filters, updateFilter, onClose }) {
                     label="Category"
                     value={filters.category}
                     onChange={(e) => updateFilter("category", e.target.value)}
-                    options={[
-                        { value: "", label: "All categories" },
-                        { value: "Food", label: "Food" },
-                        { value: "Gaming", label: "Gaming" },
-                        { value: "Coffee", label: "Coffee" },
-                        { value: "Entertainment", label: "Entertainment" },
-                        { value: "Pets", label: "Pets" },
-                        { value: "Clothing", label: "Clothing" }
-                    ]}
+                    options={categoryOptions}
                 />
 
                 <RadioGroup 
