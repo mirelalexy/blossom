@@ -75,6 +75,7 @@ function Categories() {
                             key={cat.id}
                             label={cat.name}
                             icon={cat.icon}
+                            onClick={() => navigate(`/settings/categories/${cat.id}`)}
                         />
                     ))}
                 </SettingsCard>
@@ -87,6 +88,7 @@ function Categories() {
                             key={cat.id}
                             label={cat.name}
                             icon={cat.icon}
+                            onClick={() => navigate(`/settings/categories/${cat.id}`)}
                         />
                     ))}
                 </SettingsCard>

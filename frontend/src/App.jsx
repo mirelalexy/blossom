@@ -35,6 +35,7 @@ import MonthlyBudget from "./pages/settings/budget/MonthlyBudget"
 import Amount from "./pages/settings/budget/Amount"
 import { CategoryProvider } from "./store/CategoryStore"
 import Categories from "./pages/settings/categories/Categories"
+import CategoryDetails from "./pages/settings/categories/CategoryDetails"
 
 function App() {
   return (
@@ -245,6 +246,14 @@ function App() {
                           element={
                             <AppLayout>
                               <Categories />
+                            </AppLayout>
+                          } 
+                        />
+                        <Route 
+                          path="/settings/categories/:id" 
+                          element={
+                            <AppLayout>
+                              <CategoryDetails />
                             </AppLayout>
                           } 
                         />
