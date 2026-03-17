@@ -5,7 +5,7 @@ const RuleContext = createContext()
 export function RuleProvider({ children }) {
     const [rules, setRules] = useState(() => {
         const saved = localStorage.getItem("rules")
-        return saved ? JSON.parse(rules) : []
+        return saved ? JSON.parse(saved) : []
     })
 
     useEffect(() => {
