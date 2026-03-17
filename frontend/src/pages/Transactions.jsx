@@ -120,6 +120,10 @@ function Transactions() {
 
             if (field === "type") {
                 updated.category = ""
+
+                if (value === "Income") {
+                    updated.intent = ""
+                }
             }
 
             return updated
