@@ -25,12 +25,12 @@ export function BudgetProvider({ children }) {
         }))
     }
 
-    function updateCategoryBudget(category, amount) {
+    function updateCategoryBudget(categoryId, amount) {
         setBudget(prev => ({
             ...prev,
             categoryBudgets: {
                 ...prev.categoryBudgets,
-                [category]: amount
+                [categoryId]: Number(amount)
             }
         }))
     }
