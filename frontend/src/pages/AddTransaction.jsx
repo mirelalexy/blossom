@@ -6,8 +6,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import PageHeader from "../components/ui/PageHeader"
 import RadioGroup from "../components/forms/RadioGroup"
 
-import { categories } from "../data/mock/categories"
-
 import "../styles/pages/AddTransaction.css"
 import Toggle from "../components/forms/Toggle"
 import MoodSelector from "../components/forms/MoodSelector"
