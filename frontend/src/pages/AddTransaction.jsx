@@ -13,6 +13,9 @@ import Textarea from "../components/forms/Textarea"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useCategories } from "../store/CategoryStore"
+import { useRules } from "../store/RuleStore"
+import { useBudget } from "../store/BudgetStore"
+import { checkSpendingWarnings } from "../utils/checkSpendingWarnings"
 
 function AddTransaction() { 
     const navigate = useNavigate()
@@ -20,6 +23,8 @@ function AddTransaction() {
     const { id } = useParams()
 
     const { transactions, addTransaction, updateTransaction } = useTransactions()
+    const { rules } = useRules()
+    const { budget } = useBudget()
 
     const existingTransaction = transactions.find(t => t.id === Number(id))
     
@@ -46,7 +51,8 @@ function AddTransaction() {
                 return {
                     ...prev,
                     type: value,
-                    categoryId: ""
+                    categoryId: "",
+                    intent: null
                 }
             }
 
@@ -62,10 +68,21 @@ function AddTransaction() {
 
         const [year, month, day] = formData.date.split("-")
         const transactionDate = new Date(year, month - 1, day)
+        const amount = Number(formData.amount)
+
+        if (!amount || amount <= 0) {
+            alert("Enter a valid amount.")
+            return
+        }
+
+        if(!formData.categoryId) {
+            alert("Select a category.")
+            return
+        }
 
         const newTransaction = {
             id: existingTransaction ? existingTransaction.id : Date.now(),
-            amount: Number(formData.amount),
+            amount: amount,
             type: formData.type,
             method: formData.method,
             merchant: formData.merchant,
@@ -89,8 +106,27 @@ function AddTransaction() {
                 : null
         }
 
-        console.log(newTransaction)
+        const otherTransactions = existingTransaction
+            ? transactions.filter(t => t.id !== existingTransaction.id)
+            : transactions
 
+        if (newTransaction.type === "Expense") {
+             const warnings = checkSpendingWarnings({
+                transaction: newTransaction,
+                transactions: otherTransactions,
+                rules,
+                budget
+            })
+
+            if (warnings.length > 0) {
+                const message = warnings.join("\n")
+
+                const confirmed = window.confirm(`${message}\n\nDo you want to continue?`)
+
+                if (!confirmed) return
+            }
+        }
+       
         if(existingTransaction) {
             updateTransaction(newTransaction)
         } else {
