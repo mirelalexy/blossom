@@ -6,12 +6,16 @@ import { formatDate } from "../../utils/dateUtils"
 import { categoryIcons } from "../../utils/categoryIcons"
 import { useCurrency } from "../../store/CurrencyStore"
 import { formatCurrency } from "../../utils/currencyUtils"
+import { useCategories } from "../../store/CategoryStore"
 
 import "./TransactionCard.css"
 
-function TransactionCard({ id, category, merchant, date, mood, type, amount }) {
+function TransactionCard({ id, categoryId, merchant, date, mood, type, amount }) {
     const navigate = useNavigate()
     const { currency } = useCurrency()
+    const { getCategoryById } = useCategories()
+    const categoryData = getCategoryById(categoryId)
+    const Icon = categoryIcons[categoryData?.icon]
 
     const moodEmojis = {
         happy: "🤩",
@@ -22,12 +26,11 @@ function TransactionCard({ id, category, merchant, date, mood, type, amount }) {
     }
 
     const emoji = moodEmojis[mood] || ""
-    const Icon = categoryIcons[category]
 
     return (
         <Card 
             className="transaction-card" 
-            title={category} 
+            title={categoryData?.name} 
             icon={<Icon size={18} />}
             onClick={() => navigate(`/transactions/${id}`)}
         >

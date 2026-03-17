@@ -14,6 +14,7 @@ import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
 
 import { useTransactions } from "../store/TransactionStore"
+import { useCategories } from "../store/CategoryStore"
 
 function AddTransaction() { 
     const navigate = useNavigate()
@@ -32,7 +33,7 @@ function AddTransaction() {
         type: "Expense",
         method: "Card",
         merchant: "",
-        category: "",
+        categoryId: "",
         date: today,
         recurring: false,
         frequency: "monthly",
@@ -60,7 +61,7 @@ function AddTransaction() {
             type: formData.type,
             method: formData.method,
             merchant: formData.merchant,
-            category: formData.category,
+            categoryId: formData.categoryId,
             date: formData.date,
             mood: formData.mood,
             intent: formData.intent,
@@ -91,10 +92,12 @@ function AddTransaction() {
         navigate("/transactions")
     }
 
+    const { getCategoriesByType } = useCategories()
+
     const categoryOptions = [
         { value: "", label: "Select category" },
-        ...categories.map((cat) => ({
-            value: cat.name,
+        ...getCategoriesByType(formData.type).map(cat => ({
+            value: cat.id,
             label: cat.name
         }))
     ]
@@ -150,8 +153,8 @@ function AddTransaction() {
                     <Select 
                         label="Category"
                         name="category"
-                        value={formData.category}
-                        onChange={(e) => handleChange("category", e.target.value)}
+                        value={formData.categoryId}
+                        onChange={(e) => handleChange("categoryId", e.target.value)}
                         options={categoryOptions}
                     />
 
