@@ -102,9 +102,18 @@ function AddTransaction() {
 
     const { getCategoriesByType } = useCategories()
 
+    const sortedCategories = getCategoriesByType(formData.type.toLowerCase())
+        .sort((a, b) => {
+            // put Other category at the end of the list
+            if (a.id.includes("other")) return 1
+            if (b.id.includes("other")) return -1
+
+            return a.name.localeCompare(b.name)
+        })
+
     const categoryOptions = [
         { value: "", label: "Select category" },
-        ...getCategoriesByType(formData.type.toLowerCase()).map(cat => ({
+        ...sortedCategories.map(cat => ({
             value: cat.id,
             label: cat.name
         }))
