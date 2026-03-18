@@ -41,6 +41,7 @@ import { RuleProvider } from "./store/RuleStore"
 import CustomSpendingRules from "./pages/settings/rules/CustomSpendingRules"
 import AddRule from "./pages/settings/rules/AddRule"
 import PrivacyPolicy from "./pages/settings/PrivacyPolicy"
+import ScrollToTop from "./components/utils/ScrollToTop"
 
 function App() {
   return (
@@ -54,6 +55,8 @@ function App() {
                   <TransactionsProvider>
                     <GoalsProvider>
                       <BrowserRouter>
+                        <ScrollToTop/>
+                        
                         <Routes>
                           <Route 
                             path="/" 
