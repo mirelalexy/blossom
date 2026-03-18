@@ -5,7 +5,7 @@ import Icon from "../ui/Icon"
 
 import "../../styles/components/ProfileHeader.css"
 
-function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle }) {
+function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick }) {
     const navigate = useNavigate()
 
     return (
@@ -22,7 +22,7 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                 </div>
 
                 {isEditing && (
-                    <div className="overlay">Change Banner</div>
+                    <div className="overlay" onClick={onBannerClick}>Change Banner</div>
                 )}
             </div>
 
@@ -35,7 +35,7 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                     )}
                     
                     {isEditing && (
-                        <div className="overlay">Change</div>
+                        <div className="overlay" onClick={onAvatarClick}>Change</div>
                     )}
                 </div>
                 
