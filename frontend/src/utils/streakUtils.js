@@ -92,7 +92,7 @@ export function getStreakMessage({ streak, mood, timeOfDay, transactions }) {
     let message = tier.messages[Math.floor(Math.random() * tier.messages.length)]
 
     // time-based
-    if (timeOfDay === "evening" && streak > 0) {
+    if (timeOfDay === "night" && streak > 0) {
         return "Late night check-in... I like your dedication."
     }
 

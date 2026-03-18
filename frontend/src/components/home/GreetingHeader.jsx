@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 import Icon from "../ui/Icon"
 
-function GreetingHeader({ greeting, username, message, avatarSrc }) {
+function GreetingHeader({ greeting, message, avatarSrc }) {
     return (
         <div className="greeting-header">
             <div className="greeting-left">
@@ -15,7 +15,7 @@ function GreetingHeader({ greeting, username, message, avatarSrc }) {
                 </div>
                 
                 <div className="greeting-user-info">
-                    <h2>{greeting}, <span>{username}</span>!</h2>
+                    <h2>{greeting}</h2>
                     <p>{message}</p>
                 </div>
             </div>

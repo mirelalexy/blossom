@@ -53,19 +53,20 @@ export function getNextMonthInfo() {
 export function getTimeOfDay() {
     const hour = new Date().getHours()
 
-    if (hour < 12) return "morning"
+    if (hour > 4 && hour < 12) return "morning"
     if (hour < 18) return "afternoon"
+    if (hour < 21) return "evening"
 
-    return "evening"
+    return "night"
 }
 
-export function getGreeting() {
+export function getGreeting(name) {
     const time = getTimeOfDay()
 
-    if (time === "morning") return "Good morning"
-    if (time === "afternoon") return "Good afternoon"
-
-    return "Good evening"
+    if (time === "morning") return `Good morning, ${name}!`
+    if (time === "afternoon") return `Good afternoon, ${name}!`
+    if (time === "evening") return `Good evening, ${name}!`
+    return `Still here, ${name}?`
 }
 
 export function getCurrentMonthYear() {
