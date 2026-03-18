@@ -43,3 +43,7 @@ h1, h2, h3, h4, label, span {
     font-size: 13px;
     text-align: center;
 }
+
+svg {
+    display: block;
+}
