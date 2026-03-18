@@ -5,7 +5,7 @@ import { useGoals } from "../store/GoalsStore"
 import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
-import { calculateStreak } from "../utils/streakUtils"
+import { calculateStreak, getNextMilestone, getStreakMessage } from "../utils/streakUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -13,6 +13,7 @@ import TopCategoryCard from "../components/home/TopCategoryCard"
 import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
+import StreakCard from "../components/home/StreakCard"
 
 import "../styles/pages/Home.css"
 
@@ -29,6 +30,8 @@ function Home() {
     const primaryGoal = goals.find(g => g.primaryGoal)
 
     let streak = calculateStreak(transactions)
+    const streakMessage = getStreakMessage(streak)
+    const nextStreakMileStone = getNextMilestone(streak)
 
     const recentTransactions = transactions
         .filter((t) => {
@@ -82,7 +85,7 @@ function Home() {
             <div className="home-content">
                 <GreetingHeader greeting={greeting} username={user.displayName} message={message} avatarSrc={user.avatar}/>
 
-                <p>{streak} day streak!</p>
+                <StreakCard streak={streak} message={streakMessage} nextMileStone={nextStreakMileStone} />
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />

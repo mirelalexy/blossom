@@ -45,7 +45,8 @@ import {
     Volleyball,
     Plane,
     Sofa,
-    Circle
+    Circle,
+    Flame
 } from "lucide-react"
 
 export const appIcons = {
@@ -76,6 +77,7 @@ export const appIcons = {
     hideDetails: ChevronUp,
     categories: Flower,
     privacyPolicy: Shield,
+    streak: Flame,
     logOut: LogOut,
 
     // category icons

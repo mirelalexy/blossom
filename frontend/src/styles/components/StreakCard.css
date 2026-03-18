@@ -1,0 +1,14 @@
+.streak-number {
+    font-size: 22px;
+}
+
+.streak-card-content .streak-milestone {
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.streak-card-content .streak-message {
+    font-size: 13px;
+    font-weight: 400;
+}
