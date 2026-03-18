@@ -1,11 +1,11 @@
 import { appIcons } from "../../utils/appIcons"
 
-function Icon({ name, size = 25, className }) {
+function Icon({ name, size = 25, className, color = "currentColor" }) {
     const LucideIcon = appIcons[name]
 
     if (!LucideIcon) return null
 
-    return <LucideIcon size={size} className={className} />
+    return <LucideIcon size={size} className={className} color={color}/>
 }
 
 export default Icon
