@@ -12,7 +12,7 @@ function Email() {
     const { user, updateUser } = useUser()
     const [email, setEmail] = useState(user.email)
 
-    function handleSave() {
+    function handleSave(e) {
         e.preventDefault()
 
         updateUser("email", email.trim().toLowerCase())
