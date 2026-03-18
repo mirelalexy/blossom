@@ -4,6 +4,7 @@ import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
 import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
 import { useCategories } from "../store/CategoryStore"
+import { useUser } from "../store/UserStore"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -21,6 +22,7 @@ function Home() {
 
     const { transactions } = useTransactions()
     const { getCategoryById } = useCategories()
+    const { user } = useUser()
 
     const { goals } = useGoals()
     const primaryGoal = goals.find(g => g.primaryGoal)
@@ -69,14 +71,13 @@ function Home() {
     const topCategoryId = calculateTopCategory(transactions)
     const topCategory = getCategoryById(topCategoryId)
 
-    const username = localStorage.getItem("username") || "friend"
     const message = getNextMonthInfo()
     const greeting = getGreeting()
 
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader greeting={greeting} username={username} message={message}/>
+                <GreetingHeader greeting={greeting} username={user.displayName} message={message}/>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
