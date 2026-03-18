@@ -1,10 +1,13 @@
 import { useState, useRef } from "react"
 
 import { useUser } from "../store/UserStore"
+import { calculateStreak } from "../utils/streakUtils"
+import { useTransactions } from "../store/TransactionStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 
 function Profile() {
+    const { transactions } = useTransactions()
     const { user, updateUser } = useUser()
     const [isEditing, setIsEditing] = useState(false)
     
@@ -53,6 +56,7 @@ function Profile() {
                 onBannerClick={() => bannerRef.current.click()}
                 onRemoveAvatar={() => handleRemove("avatar")}
                 onRemoveBanner={() => handleRemove("banner")}
+                streak={calculateStreak(transactions)}
             />
 
             <input

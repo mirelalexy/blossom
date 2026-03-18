@@ -5,7 +5,7 @@ import Icon from "../ui/Icon"
 
 import "../../styles/components/ProfileHeader.css"
 
-function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick, onRemoveAvatar, onRemoveBanner }) {
+function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick, onRemoveAvatar, onRemoveBanner, streak }) {
     const navigate = useNavigate()
 
     return (
@@ -69,7 +69,16 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                 
                 <div className="profile-info">
                     <div className="profile-user">
-                        <h2 className="profile-name">{name}</h2>
+                        <div className="profile-identity">
+                            <h2 className="profile-name">{name}</h2>
+                            {streak > 0 && (
+                                <div className="profile-streak">
+                                    <Icon name="streak" size={13} />
+                                    <span>{streak}</span>
+                                </div>
+                            )}
+                        </div>
+                        
                         <p className="profile-email">{email}</p>
                     </div>
 
