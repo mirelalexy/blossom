@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
-import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
+import { getNextMonthInfo, getGreeting, getTimeOfDay } from "../utils/dateUtils"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
-import { calculateStreak, getNextMilestone, getStreakMessage } from "../utils/streakUtils"
+import { calculateStreak, getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -30,7 +30,9 @@ function Home() {
     const primaryGoal = goals.find(g => g.primaryGoal)
 
     let streak = calculateStreak(transactions)
-    const streakMessage = getStreakMessage(streak)
+    const timeOfDay = getTimeOfDay()
+    const recentMood = getRecentMood(transactions)
+    const streakMessage = getStreakMessage({ streak, recentMood, timeOfDay, transactions })
     const nextStreakMileStone = getNextMilestone(streak)
 
     const recentTransactions = transactions

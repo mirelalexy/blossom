@@ -65,22 +65,69 @@ const streakTiers = [
     },
 ]
 
-const milestonesTiers = [0, 1, 3, 7, 14, 30, 60]
+const milestoneTiers = [1, 3, 7, 14, 30, 60]
 
-export function getStreakMessage(streak) {
+export function getRecentMood(transactions) {
+    const recent = transactions
+        .filter(t => t.mood)
+        .slice(-3)
+
+    if (!recent.length) return null
+
+    return recent[recent.length - 1].mood
+}
+
+export function isHighSpending(transactions) {
+    // get last 3 transactions
+    const recent = transactions.slice(-3)
+
+    const total = recent.reduce((sum, t) => sum + t.amount, 0)
+
+    // TODO: adjust later
+    return total > 200
+}
+
+export function getStreakMessage({ streak, mood, timeOfDay, transactions }) {
     const tier = streakTiers.find(t => streak <= t.max)
-    const messages = tier.messages
+    let message = tier.messages[Math.floor(Math.random() * tier.messages.length)]
 
-    return messages[Math.floor(Math.random() * messages.length)]
+    // time-based
+    if (timeOfDay === "evening" && streak > 0) {
+        return "Late night check-in... I like your dedication."
+    }
+
+    if (timeOfDay === "morning" && streak > 0) {
+        return "Starting your day like this? I love that for you!"
+    }
+
+    // mood-based
+    if (mood === "anxious") {
+        return "Hey... you're still showing up, even on tough days."
+    }
+
+    if (mood === "sad") {
+        return "I'm really glad you came back today!"
+    }
+
+    if (mood === "happy") {
+        return "You're glowing today... Let's keep that energy!"
+    }
+
+    // spending-based
+    if (isHighSpending(transactions)) {
+        return "You've been spending a bit more lately... but you're aware now."
+    }
+
+    return message
 }
 
 export function getNextMilestone(streak) {
-    for (let m of milestonesTiers) {
+    for (let m of milestoneTiers) {
         if (streak < m) return m
     }
 
     // after 100 days, new milestone is every 25 days
-    return Math.ceil(streak / 25) * 25
+    return Math.ceil((streak + 1) / 25) * 25
 }
 
 
