@@ -36,6 +36,10 @@ function Profile() {
         e.target.value = ""
     }
 
+    function handleRemove(type) {
+        updateUser(type, "")
+    }
+
     return (
         <div>
             <ProfileHeader 
@@ -47,6 +51,8 @@ function Profile() {
                 onEditToggle={() => setIsEditing(prev => !prev)} 
                 onAvatarClick={() => avatarRef.current.click()}
                 onBannerClick={() => bannerRef.current.click()}
+                onRemoveAvatar={() => handleRemove("avatar")}
+                onRemoveBanner={() => handleRemove("banner")}
             />
 
             <input

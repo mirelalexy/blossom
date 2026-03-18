@@ -5,7 +5,7 @@ import Icon from "../ui/Icon"
 
 import "../../styles/components/ProfileHeader.css"
 
-function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick }) {
+function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick, onRemoveAvatar, onRemoveBanner }) {
     const navigate = useNavigate()
 
     return (
@@ -22,7 +22,21 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                 </div>
 
                 {isEditing && (
-                    <div className="overlay" onClick={onBannerClick}>Change Banner</div>
+                    <div className="overlay">
+                        <span onClick={onBannerClick}>Change Banner</span>
+
+                        {bannerSrc && (
+                            <span
+                                className="remove"
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    onRemoveBanner()
+                                }}
+                            >
+                                Remove
+                            </span>
+                        )}
+                    </div>
                 )}
             </div>
 
@@ -35,7 +49,21 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                     )}
                     
                     {isEditing && (
-                        <div className="overlay" onClick={onAvatarClick}>Change</div>
+                        <div className="overlay">
+                        <span onClick={onAvatarClick}>Change</span>
+
+                        {avatarSrc && (
+                            <span
+                                className="remove"
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    onRemoveAvatar()
+                                }}
+                            >
+                                Remove
+                            </span>
+                        )}
+                    </div>
                     )}
                 </div>
                 
