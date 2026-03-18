@@ -7,7 +7,11 @@ function GreetingHeader({ greeting, username, message, avatarSrc }) {
         <div className="greeting-header">
             <div className="greeting-left">
                 <div className="home-avatar-wrapper">
-                    <img src={avatarSrc} className="home-avatar"/>
+                    { avatarSrc ? (
+                        <img src={avatarSrc} className="home-avatar"/>
+                    ) : (
+                        <div className="avatar-placeholder"></div>
+                    )}
                 </div>
                 
                 <div className="greeting-user-info">
