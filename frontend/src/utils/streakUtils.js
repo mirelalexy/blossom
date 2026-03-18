@@ -87,7 +87,7 @@ export function isHighSpending(transactions) {
     return total > 200
 }
 
-export function getStreakMessage({ streak, mood, timeOfDay, transactions }) {
+export function getStreakMessage({ streak, mood, timeOfDay, isHighSpending, transactions }) {
     const tier = streakTiers.find(t => streak <= t.max)
     let message = tier.messages[Math.floor(Math.random() * tier.messages.length)]
 

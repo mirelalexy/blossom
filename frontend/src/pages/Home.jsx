@@ -32,7 +32,7 @@ function Home() {
     let streak = calculateStreak(transactions)
     const timeOfDay = getTimeOfDay()
     const recentMood = getRecentMood(transactions)
-    const streakMessage = getStreakMessage({ streak, recentMood, timeOfDay, transactions })
+    const streakMessage = getStreakMessage({ streak, recentMood, timeOfDay, isHighSpending, transactions })
     const nextStreakMileStone = getNextMilestone(streak)
 
     const recentTransactions = transactions
