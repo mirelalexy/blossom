@@ -77,7 +77,7 @@ function Home() {
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader greeting={greeting} username={user.displayName} message={message}/>
+                <GreetingHeader greeting={greeting} username={user.displayName} message={message} avatarSrc={user.avatar}/>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />

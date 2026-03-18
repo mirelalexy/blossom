@@ -2,12 +2,12 @@ import { Link } from "react-router-dom"
 
 import Icon from "../ui/Icon"
 
-function GreetingHeader({ greeting, username, message }) {
+function GreetingHeader({ greeting, username, message, avatarSrc }) {
     return (
         <div className="greeting-header">
             <div className="greeting-left">
                 <div className="home-avatar-wrapper">
-                    <img src="/avatar.gif" className="home-avatar"/>
+                    <img src={avatarSrc} className="home-avatar"/>
                 </div>
                 
                 <div className="greeting-user-info">
