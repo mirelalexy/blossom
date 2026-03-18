@@ -5,6 +5,7 @@ import { useGoals } from "../store/GoalsStore"
 import { getNextMonthInfo, getGreeting } from "../utils/dateUtils"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
+import { calculateStreak } from "../utils/streakUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -26,6 +27,8 @@ function Home() {
 
     const { goals } = useGoals()
     const primaryGoal = goals.find(g => g.primaryGoal)
+
+    let streak = calculateStreak(transactions)
 
     const recentTransactions = transactions
         .filter((t) => {
@@ -78,6 +81,8 @@ function Home() {
         <div className="home-layout">
             <div className="home-content">
                 <GreetingHeader greeting={greeting} username={user.displayName} message={message} avatarSrc={user.avatar}/>
+
+                <p>{streak} day streak!</p>
 
                 <Section title="Stats">
                     <PrimaryGoalCard goal={primaryGoal} />
