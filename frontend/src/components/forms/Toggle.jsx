@@ -2,7 +2,7 @@ import "../../styles/components/Toggle.css"
 
 function Toggle({ label, checked = false, onChange }) {
     return (
-        <div className="form-field toggle-field">
+        <div className="toggle-field">
             {label && <label className="input-label">{label}</label>}
 
             <button
