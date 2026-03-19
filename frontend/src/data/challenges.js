@@ -31,27 +31,5 @@ export const challenges = [
         completed: false,
         rewarded: false,
         period: "monthly"
-    },
-    {
-        id: "goal_keeper",
-        title: "Goal Keeper",
-        description: "Contribute to a saving goal every week of the month.",
-        type: "goal",
-        target: 4,
-        progress: 0,
-        completed: false,
-        rewarded: false,
-        period: "monthly"
-    },
-    {
-        id: "level_up",
-        title: "Blooming!",
-        description: "Level up at least once this week.",
-        type: "level",
-        target: 1,
-        progress: 0,
-        completed: false,
-        rewarded: false,
-        period: "weekly"
     }
 ]
