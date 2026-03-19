@@ -50,7 +50,7 @@ export function getLevelTitle(level) {
         .map(Number)
         .sort((a, b) => a - b)
 
-    for (let l in sortedLevels) {
+    for (let l of sortedLevels) {
         if (level >= l) {
             currentTitle = levelMilestones[l]
         }
