@@ -3,8 +3,12 @@ import { useState, useRef } from "react"
 import { useUser } from "../store/UserStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { useTransactions } from "../store/TransactionStore"
+import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
+import LevelCard from "../components/profile/LevelCard"
+
+import "../styles/pages/Profile.css"
 
 function Profile() {
     const { transactions } = useTransactions()
@@ -43,8 +47,22 @@ function Profile() {
         updateUser(type, "")
     }
 
+    const streak = calculateStreak(transactions)
+
+    const xp = calculateXP({
+        transactions,
+        streak,
+        goalsCompleted: 0,
+        weeklyLimitsHit: 0,
+        completedChallenges: 0
+    })
+
+    const level = getLevelFromXP(xp)
+    const levelTitle = getLevelTitle(level)
+    const progress = getLevelProgress(xp)
+
     return (
-        <div>
+        <div className="profile-page">
             <ProfileHeader 
                 bannerSrc={user.banner}
                 avatarSrc={user.avatar}
@@ -56,14 +74,14 @@ function Profile() {
                 onBannerClick={() => bannerRef.current.click()}
                 onRemoveAvatar={() => handleRemove("avatar")}
                 onRemoveBanner={() => handleRemove("banner")}
-                streak={calculateStreak(transactions)}
+                streak={streak}
             />
 
             <input
                 type="file"
                 accept="image/*"
                 ref={avatarRef}
-                style={{ display: "none " }}
+                style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "avatar")}
             />
 
@@ -71,9 +89,13 @@ function Profile() {
                 type="file"
                 accept="image/*"
                 ref={bannerRef}
-                style={{ display: "none " }}
+                style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "banner")}
             />
+
+            <div className="profile-content">
+                <LevelCard title={levelTitle} level={level} progress={progress} />
+            </div>
         </div>
     )
 }

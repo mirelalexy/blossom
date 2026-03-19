@@ -1,0 +1,9 @@
+.level-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.level-card-content .level-title {
+    font-size: 15px;
+}

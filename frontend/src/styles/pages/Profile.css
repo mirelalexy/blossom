@@ -1,0 +1,9 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-content {
+    padding: 30px;
+    margin-top: 170px;
+}
