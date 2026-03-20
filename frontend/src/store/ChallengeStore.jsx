@@ -72,6 +72,20 @@ export function ChallengeProvider({ children }) {
                         break
                     }
 
+                    case "small_expense" : {
+                        const small  = expenseTransactions.filter(t => t.amount < 50)
+
+                        progress = Math.min(small.length, c.target)
+                        break
+                    }
+
+                    case "big_expense" : {
+                        const big = expenseTransactions.filter(t => t.amount >= 70)
+
+                        progress = Math.min(big.length, c.target)
+                        break
+                    }
+
                     default:
                         break
                 }

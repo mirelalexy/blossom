@@ -113,5 +113,27 @@ export const challenges = [
         completed: false,
         rewarded: false,
         period: "weekly"
+    },
+    {
+        id: "little_steps",
+        title: "Little Steps",
+        description: "Log 3 expenses under 50 this week.",
+        type: "small_expense",
+        target: 3,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
+    {
+        id: "big_waves",
+        title: "Big Waves",
+        description: "Log 2 expenses over 70 this week.",
+        type: "big_expense",
+        target: 2,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
     }
 ]
