@@ -32,7 +32,17 @@ export function ChallengeProvider({ children }) {
 
                 switch (c.type) {
                     case "mood": {
-                        const withMood = transactions.filter(t => t.mood)
+                        const withMood = transactions.filter(t => {
+                            if (!t.mood) return false
+
+                            // if specific mood required
+                            if (c.moodType) {
+                                return t.mood === c.moodType
+                            }
+
+                            return true
+                        })
+                        
                         progress = Math.min(withMood.length, c.target)
                         break
                     }

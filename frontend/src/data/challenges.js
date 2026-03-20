@@ -31,5 +31,53 @@ export const challenges = [
         completed: false,
         rewarded: false,
         period: "monthly"
+    },
+    {
+        id: "golden_moments",
+        title: "Golden Moments",
+        description: "Notice and log 3 happy moments this week.",
+        type: "mood",
+        moodType: "happy",
+        target: 3,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
+    {
+        id: "under_control",
+        title: "Under Control",
+        description: "Log 2 calm moments this week.",
+        type: "mood",
+        moodType: "calm",
+        target: 2,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
+    {
+        id: "through_the_storm",
+        title: "Through The Storm",
+        description: "Acknowledge 2 anxious moments this week.",
+        type: "mood",
+        moodType: "anxious",
+        target: 2,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
+    {
+        id: "takes_time_to_blossom",
+        title: "Takes Time To Blossom",
+        description: "Acknowledge 2 sad moments this week.",
+        type: "mood",
+        moodType: "sad",
+        target: 2,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
     }
 ]
