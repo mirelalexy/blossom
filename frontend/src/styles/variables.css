@@ -13,6 +13,7 @@
     --card2: #ffeef3;
     --card-border: #dfdfdf;
     --input: #e2e1e0;
+    --progress-bar: #d1d1d1;
 
     --font-primary: "DM Sans", serif;
 }
@@ -27,6 +28,7 @@
     --border: #cdf1cd;
     --card: #dcf5dc;
     --card2: #b5d8bf;
+    --progress-bar: #a4aca8;
 }
 
 [data-theme="night"] {
@@ -44,4 +46,5 @@
     --card2: #313338;
     --input: #44444c;
     --card-border: #8a8a8a;
+    --progress-bar: #444446;
 }
