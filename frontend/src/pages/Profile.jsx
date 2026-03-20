@@ -9,6 +9,7 @@ import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
 
 import "../styles/pages/Profile.css"
+import ChallengesPreview from "../components/challenges/ChallengesPreview"
 
 function Profile() {
     const { transactions } = useTransactions()
@@ -95,6 +96,8 @@ function Profile() {
 
             <div className="profile-content">
                 <LevelCard title={levelTitle} level={level} progress={progress} />
+
+                <ChallengesPreview />
             </div>
         </div>
     )
