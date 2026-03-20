@@ -1,7 +1,7 @@
 import Card from "../ui/Card"
 import ProgressBar from "../ui/ProgressBar"
 
-import "../../styles/components/ChallengePreviewItem.css"
+import "../../styles/components/ChallengeItem.css"
 
 function ChallengeItem({ challenge }) {
     const progress = Math.min((challenge.progress / challenge.target) * 100, 100)
@@ -15,7 +15,7 @@ function ChallengeItem({ challenge }) {
     }
 
     return (
-        <Card className="challenge-preview-item">
+        <Card className="challenge-item">
             <div>
                 <p className="challenge-title">{challenge.title}</p>
                 <p className="challenge-description">{challenge.description}</p>
