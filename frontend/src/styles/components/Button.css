@@ -18,3 +18,7 @@
 .button:hover {
     opacity: 0.85;
 }
+
+.button.active {
+    background-color: var(--active);
+}

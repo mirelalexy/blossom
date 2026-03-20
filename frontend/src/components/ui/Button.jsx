@@ -1,11 +1,11 @@
 import "../../styles/components/Button.css"
 
-function Button({ icon, children, onClick, type="button" }) {
+function Button({ icon, children, onClick, type="button", className }) {
     return (
         <button
             type={type}
             onClick={onClick}
-            className="button"
+            className={`button ${className}`}
         >
             {icon && <div className="button-icon">
                     {icon}

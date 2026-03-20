@@ -43,6 +43,7 @@ import AddRule from "./pages/settings/rules/AddRule"
 import PrivacyPolicy from "./pages/settings/PrivacyPolicy"
 import ScrollToTop from "./components/utils/ScrollToTop"
 import { ChallengeProvider } from "./store/ChallengeStore"
+import Challenges from "./pages/Challenges"
 
 function App() {
   return (
@@ -297,6 +298,14 @@ function App() {
                               element={
                                 <AppLayout>
                                   <PrivacyPolicy />
+                                </AppLayout>
+                              } 
+                            />
+                            <Route 
+                              path="/challenges" 
+                              element={
+                                <AppLayout>
+                                  <Challenges />
                                 </AppLayout>
                               } 
                             />
