@@ -14,13 +14,21 @@ function ChallengesPreview() {
     const { challenges } = useChallenges()
 
     const activeChallenges = challenges
-        .filter(c => !c.completed)
-        .slice(0, 3)
+        .filter(c => c.progress > 0 && !c.completed)
+        .sort((a, b) => (b.progress / b.target) - (a.progress / a.target))
+
+    const fallBackChallenges = challenges
+        .filter(c => c.progress === 0 && !c.completed)
+
+    const displayedChallenges = [
+        ...activeChallenges,
+        ...fallBackChallenges
+    ].slice(0, 3)
 
     return (
         <Section title="Challenges">
             <div className="challenges-preview">
-                {activeChallenges.map(c => (
+                {displayedChallenges.map(c => (
                     <ChallengePreviewItem key={c.id} challenge={c} />
                 ))}
             </div>
