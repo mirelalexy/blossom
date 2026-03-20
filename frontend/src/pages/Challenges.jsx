@@ -4,7 +4,7 @@ import { useChallenges } from "../store/ChallengeStore"
 
 import PageHeader from "../components/ui/PageHeader"
 import Button from "../components/ui/Button"
-import ChallengePreviewItem from "../components/challenges/ChallengePreviewItem"
+import ChallengeItem from "../components/challenges/ChallengeItem"
 
 import "../styles/pages/Challenges.css"
 
@@ -61,7 +61,7 @@ function Challenges() {
 
             <div className="challenges-list">
                 {sortedChallenges.map(c => (
-                    <ChallengePreviewItem key={c.id} challenge={c} />
+                    <ChallengeItem key={c.id} challenge={c} />
                 ))}
             </div>
         </div>

@@ -4,7 +4,7 @@ import { useChallenges } from "../../store/ChallengeStore"
 
 import Section from "../ui/Section"
 import Button from "../ui/Button"
-import ChallengePreviewItem from "./ChallengePreviewItem"
+import ChallengeItem from "./ChallengeItem"
 
 import "../../styles/components/ChallengesPreview.css"
 
@@ -29,7 +29,7 @@ function ChallengesPreview() {
         <Section title="Challenges">
             <div className="challenges-preview">
                 {displayedChallenges.map(c => (
-                    <ChallengePreviewItem key={c.id} challenge={c} />
+                    <ChallengeItem key={c.id} challenge={c} />
                 ))}
             </div>
 

@@ -3,7 +3,7 @@ import ProgressBar from "../ui/ProgressBar"
 
 import "../../styles/components/ChallengePreviewItem.css"
 
-function ChallengePreviewItem({ challenge }) {
+function ChallengeItem({ challenge }) {
     const progress = Math.min((challenge.progress / challenge.target) * 100, 100)
 
     return (
@@ -19,4 +19,4 @@ function ChallengePreviewItem({ challenge }) {
     )
 }
 
-export default ChallengePreviewItem
+export default ChallengeItem
