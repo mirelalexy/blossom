@@ -79,5 +79,17 @@ export const challenges = [
         completed: false,
         rewarded: false,
         period: "weekly"
-    }
+    },
+    {
+        id: "whatever",
+        title: "Whatever",
+        description: "Log 4 neutral moments this week.",
+        type: "mood",
+        moodType: "neutral",
+        target: 4,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
 ]
