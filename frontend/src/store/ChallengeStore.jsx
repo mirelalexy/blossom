@@ -22,13 +22,14 @@ export function ChallengeProvider({ children }) {
     }
 
     function evaluateChallenges({ transactions, streak, budget }) {
-        const expenses = transactions
-                            .filter(t => t.type === "Expense")
-                            .reduce((sum, t) => sum + t.amount, 0)
+        const expenseTransactions = transactions.filter(t => t.type === "Expense")
+        const incomeTransactions = transactions.filter(t => t.type === "Income")
+
+        const expenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
 
         setChallenges(prev =>
             prev.map(c => {
-                let progress = c.progress
+                let progress = 0
 
                 switch (c.type) {
                     case "mood": {
@@ -58,6 +59,16 @@ export function ChallengeProvider({ children }) {
                         const percentUsed = (expenses / budget.monthlyBudget) * 100
 
                         progress = Math.min(percentUsed, c.target)
+                        break
+                    }
+
+                    case "expense_count": {
+                        progress = Math.min(expenseTransactions.length, c.target)
+                        break
+                    }
+
+                    case "income_count": {
+                        progress = Math.min(incomeTransactions.length, c.target)
                         break
                     }
 

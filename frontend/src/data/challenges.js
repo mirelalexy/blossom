@@ -81,8 +81,8 @@ export const challenges = [
         period: "weekly"
     },
     {
-        id: "whatever",
-        title: "Whatever",
+        id: "neutral_ground",
+        title: "Neutral Ground",
         description: "Log 4 neutral moments this week.",
         type: "mood",
         moodType: "neutral",
@@ -92,4 +92,26 @@ export const challenges = [
         rewarded: false,
         period: "weekly"
     },
+    {
+        id: "money_goes",
+        title: "Money Goes",
+        description: "Log 10 expense transactions this week.",
+        type: "expense_count",
+        target: 10,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    },
+    {
+        id: "counting_money",
+        title: "Counting Money",
+        description: "Log 5 income transactions this week.",
+        type: "income_count",
+        target: 5,
+        progress: 0,
+        completed: false,
+        rewarded: false,
+        period: "weekly"
+    }
 ]
