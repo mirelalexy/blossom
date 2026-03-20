@@ -72,17 +72,25 @@ export function ChallengeProvider({ children }) {
                         break
                     }
 
-                    case "small_expense" : {
+                    case "small_expense": {
                         const small  = expenseTransactions.filter(t => t.amount < 50)
 
                         progress = Math.min(small.length, c.target)
                         break
                     }
 
-                    case "big_expense" : {
+                    case "big_expense": {
                         const big = expenseTransactions.filter(t => t.amount >= 70)
 
                         progress = Math.min(big.length, c.target)
+                        break
+                    }
+
+                    case "mood_all": {
+                        const total = transactions.length
+                        const withMood = transactions.filter(t => t.mood).length
+
+                        progress = total === 0 ? 0 : (withMood / total) * 100
                         break
                     }
 
