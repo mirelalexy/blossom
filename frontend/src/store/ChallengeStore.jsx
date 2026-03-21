@@ -115,23 +115,6 @@ export function ChallengeProvider({ children }) {
         )
     }
 
-    function rewardCompletedChallenges(addXP) {
-        setChallenges(prev =>
-            prev.map(c => {
-                if (c.completed && !c.rewarded) {
-                    addXP()
-
-                    return {
-                        ...c,
-                        rewarded: true
-                    }
-                }
-
-                return c
-            })
-        )
-    }
-
     function resetChallenges() {
         const lastReset = localStorage.getItem("challengeLastReset")
         const now = new Date()
@@ -151,8 +134,7 @@ export function ChallengeProvider({ children }) {
                     return {
                         ...c,
                         progress: 0,
-                        completed: false,
-                        rewarded: false
+                        completed: false
                     }
                 }
 
@@ -164,7 +146,7 @@ export function ChallengeProvider({ children }) {
     }
 
     return (
-        <ChallengeContext.Provider value={{ challenges, updateChallenge, evaluateChallenges, rewardCompletedChallenges, resetChallenges }}>
+        <ChallengeContext.Provider value={{ challenges, updateChallenge, evaluateChallenges, resetChallenges }}>
             {children}
         </ChallengeContext.Provider>
     )

@@ -8,7 +8,6 @@ export const challenges = [
         display: "percent",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -20,7 +19,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -32,7 +30,6 @@ export const challenges = [
         display: "percent",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "monthly"
     },
     {
@@ -45,7 +42,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -58,7 +54,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -71,7 +66,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -84,7 +78,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -97,7 +90,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -109,7 +101,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -121,7 +112,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -133,7 +123,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     },
     {
@@ -145,7 +134,6 @@ export const challenges = [
         display: "fraction",
         progress: 0,
         completed: false,
-        rewarded: false,
         period: "weekly"
     }
 ]
