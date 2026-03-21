@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
+
 import { challenges as initialChallenges } from "../data/challenges"
+import { isNewWeek, isNewMonth } from "../utils/dateUtils"
 
 const ChallengeContext = createContext()
 
@@ -130,8 +132,39 @@ export function ChallengeProvider({ children }) {
         )
     }
 
+    function resetChallenges() {
+        const lastReset = localStorage.getItem("challengeLastReset")
+        const now = new Date()
+
+        // first time user opens app
+        if (!lastReset) {
+            localStorage.setItem("challengeLastReset", now.toISOString())
+            return
+        }
+
+        const resetWeekly = isNewWeek(lastReset)
+        const resetMonthly = isNewMonth(lastReset)
+
+        setChallenges(prev =>
+            prev.map(c => {
+                if ((c.period === "weekly" && resetWeekly) || (c.period === "monthly" && resetMonthly)) {
+                    return {
+                        ...c,
+                        progress: 0,
+                        completed: false,
+                        rewarded: false
+                    }
+                }
+
+                return c
+            })
+        )
+
+        localStorage.setItem("challengeLastReset", now.toISOString())
+    }
+
     return (
-        <ChallengeContext.Provider value={{ challenges, updateChallenge, evaluateChallenges, rewardCompletedChallenges }}>
+        <ChallengeContext.Provider value={{ challenges, updateChallenge, evaluateChallenges, rewardCompletedChallenges, resetChallenges }}>
             {children}
         </ChallengeContext.Provider>
     )
