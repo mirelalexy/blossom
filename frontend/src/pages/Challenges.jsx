@@ -17,7 +17,7 @@ function Challenges() {
         return c.period === filter
     })
 
-    const sortedChallenges = filteredChallenges.sort((a, b) => {
+    const sortedChallenges = [...filteredChallenges].sort((a, b) => {
         const aPercent = a.progress / a.target
         const bPercent = b.progress / b.target
 
