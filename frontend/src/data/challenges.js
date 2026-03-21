@@ -2,10 +2,10 @@ export const challenges = [
     {
         id: "mood_tracker",
         title: "Moody",
-        description: "Add a mood for every transaction this week.",
+        description: "Add a mood for 10 transactions this week.",
         type: "mood_all",
-        target: 100,
-        display: "percent",
+        target: 10,
+        display: "fraction",
         progress: 0,
         completed: false,
         period: "weekly"
