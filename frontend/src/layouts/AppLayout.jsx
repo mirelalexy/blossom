@@ -11,11 +11,16 @@ import Bottombar from "../components/navigation/Bottombar"
 import "./AppLayout.css"
 
 function AppLayout({ children }) {
-    const { evaluateChallenges } = useChallenges()
+    const { evaluateChallenges, resetChallenges } = useChallenges()
     const { transactions } = useTransactions()
     const { budget } = useBudget()
 
     const streak = calculateStreak(transactions)
+
+    // reset challenges if needed
+    useEffect(() => {
+        resetChallenges()
+    }, [])
 
     useEffect(() => {
         evaluateChallenges({
