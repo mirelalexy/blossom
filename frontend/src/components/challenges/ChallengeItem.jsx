@@ -2,6 +2,7 @@ import Card from "../ui/Card"
 import ProgressBar from "../ui/ProgressBar"
 
 import "../../styles/components/ChallengeItem.css"
+import Icon from "../ui/Icon"
 
 function ChallengeItem({ challenge }) {
     const progress = Math.min((challenge.progress / challenge.target) * 100, 100)
@@ -15,9 +16,15 @@ function ChallengeItem({ challenge }) {
     }
 
     return (
-        <Card className="challenge-item">
+        <Card className={`challenge-item ${challenge.completed ? "completed" : ""}`}>
             <div>
-                <p className="challenge-title">{challenge.title}</p>
+                <div className="challenge-header">
+                    <p className="challenge-title">{challenge.title}</p>
+                    {challenge.completed && (
+                        <Icon name="completed" size={17} className="challenge-check"/>
+                    )} 
+                </div>
+                
                 <p className="challenge-description">{challenge.description}</p>
                 <p className="challenge-progress">{formatProgress(challenge)}</p>
             </div>

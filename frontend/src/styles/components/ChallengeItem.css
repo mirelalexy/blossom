@@ -12,3 +12,29 @@
     color: var(--accent);
     font-weight: 600;
 }
+
+.challenge-item.completed {
+    border: 1px solid var(--accent);
+    background-color: var(--bg-primary);
+    animation: completeFade 0.3s ease;
+}
+
+@keyframes completeFade {
+    from {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.challenge-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.challenge-check {
+    color: var(--accent);
+}
