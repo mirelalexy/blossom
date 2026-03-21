@@ -103,7 +103,7 @@ export function ChallengeProvider({ children }) {
                 let completed = progress >= c.target
 
                 if (c.type === "budget") {
-                    completed = expenses <= budget.monthlyBudget
+                    completed = expenses > 0 && expenses <= budget.monthlyBudget
                 }
 
                 return {
