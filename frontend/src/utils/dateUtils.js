@@ -77,3 +77,21 @@ export function getCurrentMonthYear() {
         year: "numeric"
     })
 }
+
+export function isNewMonth(lastDate) {
+    const now = new Date()
+    const last = new Date(lastDate)
+
+    return (
+        now.getFullYear() !== last.getFullYear() || now.getMonth() !== last.getMonth()
+    )
+}
+
+export function isNewWeek(lastDate) {
+    const now = new Date()
+    const last = new Date(lastDate)
+
+    const diffDays = (now - last) / (1000 * 60 * 60 * 24)
+
+    return diffDays >= 7
+}
