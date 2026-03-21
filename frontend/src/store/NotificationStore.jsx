@@ -17,9 +17,18 @@ export function NotificationProvider({ children }) {
         }
     })
 
+    const [notifications, setNotifications] = useState(() => {
+        const saved = localStorage.getItem("notificationFeed")
+        return saved ? JSON.parse(saved) : []
+    })
+
     useEffect(() => {
         localStorage.setItem("notifications", JSON.stringify(settings))
     }, [settings])
+
+    useEffect(() => {
+        localStorage.setItem("notificationFeed", JSON.stringify(notifications))
+    }, [notifications])
 
     function updateSetting(field, value) {
         setSettings(prev => ({
@@ -28,8 +37,25 @@ export function NotificationProvider({ children }) {
         }))
     }
 
+    function addNotification(notification) {
+        setNotifications(prev => [
+            {
+                id: Date.now(),
+                createdAt: Date.now(),
+                ...notification
+            },
+            ...prev
+        ])
+    }
+
+    function cleanOldNotifications() {
+        const twoWeeks = 14 * 24 * 60 * 60 * 1000
+
+        setNotifications(prev => prev.filter(n => Date.now() - n.createdAt < twoWeeks))
+    }
+
     return (
-        <NotificationContext.Provider value={{ settings, updateSetting }}>
+        <NotificationContext.Provider value={{ settings, updateSetting, addNotification, cleanOldNotifications }}>
             {children}
         </NotificationContext.Provider>
     )
