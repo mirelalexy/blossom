@@ -4,6 +4,7 @@ import { useUser } from "../store/UserStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { useTransactions } from "../store/TransactionStore"
 import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
+import { useChallenges } from "../store/ChallengeStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
@@ -16,6 +17,9 @@ function Profile() {
     const { user, updateUser } = useUser()
     const [isEditing, setIsEditing] = useState(false)
     
+    const { challenges } = useChallenges()
+    const completedChallenges = challenges.filter(c => c.completed).length
+
     const avatarRef = useRef()
     const bannerRef = useRef()
 
@@ -55,7 +59,7 @@ function Profile() {
         streak,
         goalsCompleted: 0,
         weeklyLimitsHit: 0,
-        completedChallenges: 0
+        completedChallenges
     })
 
     const level = getLevelFromXP(xp)
