@@ -66,7 +66,7 @@ function AppLayout({ children }) {
         })
 
         localStorage.setItem("notifiedChallenges", JSON.stringify([...newNotified]))
-    }, [challenges])
+    }, [challenges, settings.challengeComplete])
 
     // trigger level up notifications
     useEffect(() => {
@@ -86,7 +86,7 @@ function AppLayout({ children }) {
         }
 
         localStorage.setItem("prevLevel", level)
-    }, [level])
+    }, [level, settings.levelUp])
 
     return (
         <div className="layout">
