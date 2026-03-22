@@ -63,7 +63,7 @@ function Notifications() {
                     />
 
                     <SettingsItem 
-                        label="Frequency"
+                        label="Review Recurring Payments Frequency"
                         value={settings.frequency}
                         onClick={() => navigate("/settings/notifications/frequency")}
                     />

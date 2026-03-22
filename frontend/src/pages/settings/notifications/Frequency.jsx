@@ -10,15 +10,10 @@ function Frequency() {
 
     return (
         <div className="settings-content">
-            <PageHeader title="Frequency" />
+            <PageHeader title="Review Recurring Payments Frequency" />
 
             <Section title="Customize how often Blossom sends you reminders">
                 <SettingsCard>
-                    <SettingsItem 
-                        label={`Daily ${settings.frequency === "daily" ? "(current)" : ""}`}
-                        onClick={() => updateSetting("frequency", "daily")}
-                    />
-
                     <SettingsItem 
                         label={`Weekly ${settings.frequency === "weekly" ? "(current)" : ""}`}
                         onClick={() => updateSetting("frequency", "weekly")}
