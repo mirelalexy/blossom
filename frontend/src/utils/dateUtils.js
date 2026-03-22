@@ -139,3 +139,13 @@ export function getCurrentWeekKey() {
 
     return `${year}-week-${weekNo}`
 }
+
+export function getReminderKey(frequency) {
+    if (frequency === "weekly") {
+        return getCurrentWeekKey()
+    } else if (frequency === "monthly") {
+        return getCurrentMonthKey()
+    } else {
+        return ""
+    }
+}

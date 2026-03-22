@@ -6,7 +6,7 @@ import { useBudget } from "../store/BudgetStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { useNotifications } from "../store/NotificationStore"
 import { calculateXP, getLevelFromXP, getLevelTitle } from "../utils/levelUtils"
-import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils"
+import { getCurrentMonthKey, getCurrentWeekKey, getReminderKey } from "../utils/dateUtils"
 
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
@@ -135,6 +135,33 @@ function AppLayout({ children }) {
             localStorage.setItem("exceedBudgetNotifiedMonth", currentMonth)
         }
     }, [percentUsedBudget, settings.exceedBudget])
+
+    // trigger log reminders (daily, evening)
+    useEffect(() => {
+        if (!settings.logReminder) return
+
+        const now = new Date()
+        const hour = now.getHours()
+
+        if (hour < 18 || hour > 22) return
+
+        const today = now.toDateString()
+        const lastNotified = localStorage.getItem("logReminderDate")
+
+        const hasLoggedToday = transactions.some(t => {
+            return new Date(t.date).toDateString() === today
+        })
+
+        if (!hasLoggedToday && lastNotified !== today) {
+            addNotification({
+                title: "Don't forget!",
+                message: "Log your transactions for today.",
+                type: "reminder"
+            })
+
+            localStorage.setItem("logReminderDate", today)
+        }
+    }, [transactions, settings.logReminder])
 
     return (
         <div className="layout">
