@@ -95,3 +95,18 @@ export function isNewWeek(lastDate) {
 
     return diffDays >= 7
 }
+
+export function formatTime(timestamp) {
+    const diff = Date.now() - timestamp
+
+    const minutes = Math.floor(diff / (1000 * 60))
+    if (minutes < 60) return `${minutes}m ago`
+
+    const hours = Math.floor(minutes / 60)
+    if (hours < 24) return `${hours}h ago`
+
+    const days = Math.floor(hours / 24)
+    if (days === 1) return "Yesterday"
+
+    return `${days}d ago`
+}
