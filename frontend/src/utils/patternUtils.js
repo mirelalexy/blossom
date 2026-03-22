@@ -9,7 +9,7 @@ export function getUserPatterns(transactions) {
         return day === 0 || day === 6
     }).length
 
-    const weekdaySpending = transactions.length = weekendSpending
+    const weekdaySpending = transactions.length - weekendSpending
 
     if (weekendSpending > weekdaySpending) {
         patterns.push({
@@ -52,17 +52,17 @@ export function getUserPatterns(transactions) {
     if (topIntent) {
         const [intent] = topIntent
 
-        if (intent === "necessary") {
+        if (intent === "Necessary") {
             patterns.push({
                 icon: "tags",
                 text: "Most of your spending goes toward essentials."
             })    
-        } else if (intent === "planned") {
+        } else if (intent === "Planned") {
             patterns.push({
                 icon: "sparkles",
                 text: "You tend to plan your spending ahead."
             })   
-        } else if (intent === "impulse") {
+        } else if (intent === "Impulse") {
             patterns.push({
                 icon: "zap",
                 text: "Most of your spending happens on impulse."

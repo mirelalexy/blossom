@@ -33,6 +33,7 @@ function Journey() {
     const levelStory = getLevelNarrative(level)
 
     const patterns = getUserPatterns(transactions)
+    console.log(patterns)
 
     return (
         <div className="journey-content">
