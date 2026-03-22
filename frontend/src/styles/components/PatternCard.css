@@ -1,0 +1,10 @@
+.pattern-card {
+    align-items: center;
+    gap: 12px;
+    padding: 15px 15px;
+    flex-direction: row;
+}
+
+.pattern-text {
+    font-size: 15px;
+}
