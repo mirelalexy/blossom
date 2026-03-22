@@ -31,6 +31,12 @@ function AppLayout({ children }) {
 
     const level = getLevelFromXP(xp)
 
+    const expenseTransactions = transactions.filter(t => t.type === "Expense")
+
+    const expenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
+
+    const percentUsedBudget = budget?.monthlyBudget ? (expenses / budget.monthlyBudget) * 100 : 0
+
     // reset challenges if needed and clean notifications older than two weeks
     useEffect(() => {
         resetChallenges()
@@ -87,6 +93,42 @@ function AppLayout({ children }) {
 
         localStorage.setItem("prevLevel", level)
     }, [level, settings.levelUp])
+
+    // trigger near budget notifications
+    useEffect(() => {
+        if (!settings.nearBudget) return
+        if (!budget?.monthlyBudget) return
+
+        const triggered = JSON.parse(localStorage.getItem("nearBudgetNotified")) || false
+
+        if (percentUsedBudget >= 80 && !triggered) {
+            addNotification({
+                title: "Almost there...",
+                message: "You're close to your monthly budget.",
+                type: "budget"
+            })
+
+            localStorage.setItem("nearBudgetNotified", true)
+        }
+    }, [percentUsedBudget, settings.nearBudget])
+
+    // trigger exceeded budget notifications
+    useEffect(() => {
+        if (!settings.exceedBudget) return
+        if (!budget?.monthlyBudget) return
+
+        const triggered = JSON.parse(localStorage.getItem("exceedBudgetNotified")) || false
+
+        if (percentUsedBudget >= 100 && !triggered) {
+            addNotification({
+                title: "Budget exceeded",
+                message: "You've gone over your monthly budget.",
+                type: "budget"
+            })
+
+            localStorage.setItem("exceedBudgetNotified", true)
+        }
+    }, [percentUsedBudget, settings.exceedBudget])
 
     return (
         <div className="layout">
