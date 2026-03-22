@@ -125,7 +125,7 @@ function AppLayout({ children }) {
         const currentMonth = getCurrentMonthKey()
         const lastNotified = localStorage.getItem("exceedBudgetNotifiedMonth")
 
-        if (percentUsedBudget >= 100 && lastNotified !== currentMonth) {
+        if (percentUsedBudget > 100 && lastNotified !== currentMonth) {
             addNotification({
                 title: "Budget exceeded",
                 message: "You've gone over your monthly budget.",
