@@ -40,7 +40,7 @@ export function NotificationProvider({ children }) {
     function addNotification(notification) {
         setNotifications(prev => [
             {
-                id: Date.now(),
+                id: Date.now() + Math.random(),
                 createdAt: Date.now(),
                 ...notification
             },
