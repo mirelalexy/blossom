@@ -1,4 +1,4 @@
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
+import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelNarrative } from "../utils/levelUtils"
 import { useTransactions } from "../store/TransactionStore"
 import { useChallenges } from "../store/ChallengeStore"
 import { calculateStreak } from "../utils/streakUtils"
@@ -28,6 +28,7 @@ function Journey() {
     const level = getLevelFromXP(xp)
     const levelTitle = getLevelTitle(level)
     const progress = getLevelProgress(xp)
+    const levelStory = getLevelNarrative(level)
 
     return (
         <div className="journey-content">
@@ -36,7 +37,7 @@ function Journey() {
             <LevelCard variant="hero" title={levelTitle} level={level} progress={progress} />
 
             <Section title="Your Journey So Far">
-
+                <p className="journey-story">{levelStory}</p>
             </Section>
             
             <Section title="Your Patterns">

@@ -5,3 +5,9 @@
     gap: 20px;
     padding-bottom: 60px;
 }
+
+.journey-story {
+    font-size: 14px;
+    white-space: pre-line;
+    color: var(--text-secondary);
+}
