@@ -163,6 +163,27 @@ function AppLayout({ children }) {
         }
     }, [transactions, settings.logReminder])
 
+    // trigger recurring reminders (weekly/monthly)
+    useEffect(() => {
+        if (!settings.recurringReminder) return
+
+        const recurring = transactions.filter(t => t.recurring)
+        if (recurring.length === 0) return
+
+        const key = getReminderKey(settings.frequency)
+        const lastNotified = localStorage.getItem("recurringReminderKey")
+
+        if (lastNotified !== key) {
+            addNotification({
+                title: "Quick check",
+                message: `You have ${recurring.length} recurring payments to review.`,
+                type: "reminder"
+            })
+
+            localStorage.setItem("recurringReminderKey", key)
+        }
+    }, [transactions, settings.recurringReminder, settings.frequency])
+
     return (
         <div className="layout">
             <Sidebar />
