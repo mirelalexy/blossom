@@ -12,3 +12,28 @@
     font-size: 14px;
     font-weight: 400;
 }
+
+.level-card-content.hero {
+    align-items: center;
+    text-align: center;
+    background-color: var(--focus-card);
+    border: 1px solid var(--accent);
+}
+
+.level-card-content.hero .card-content {
+    align-items: center;
+    width: 100%;
+}
+
+.level-card-content.hero .progress-bar {
+    width: 100%;
+}
+
+.level-card-content.hero .level-title {
+    font-size: 22px;
+}
+
+.level-card-content.hero .level-level {
+    font-size: 13px;
+    opacity: 0.6;
+}

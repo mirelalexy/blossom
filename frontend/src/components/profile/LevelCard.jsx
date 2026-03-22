@@ -6,21 +6,34 @@ import ProgressBar from "../ui/ProgressBar"
 
 import "../../styles/components/LevelCard.css"
 
-function LevelCard({ title, level, description, story, progress }) {
+function LevelCard({ title, level, description, story, progress, variant="default", clickable=true }) {
     const navigate = useNavigate()
+
+    const isHero = variant === "hero"
 
     return (
         <Card
-            title="Current Stage"
-            icon={<Icon name="categories" size={20} />}
-            className="level-card-content"
-            onClick={() => navigate("/journey")}
+            title={!isHero ? "Current Stage" : null}
+            icon={!isHero ? <Icon name="categories" size={20} /> : null}
+            className={`level-card-content ${variant}`}
+            onClick={clickable && !isHero ? () => navigate("/journey") : undefined}
         >
-            <p className="level-title">{title} • Level {level}</p>
+            {!isHero ? (
+                <p className="level-title">
+                    {title} • Level {level}
+                </p>
+            ) : (
+                <>
+                    <p className="level-title">{title}</p>
+                    <p className="level-level">Level {level}</p>
+                </>
+            )}
+            
+            <ProgressBar progress={progress} />
 
-            <ProgressBar progress={progress}  />
-
-            <p className="level-subtitle">See and understand your journey.</p>
+            {!isHero && (
+                <p className="level-subtitle">See and understand your journey.</p>
+            )}
         </Card>
     )
 }
