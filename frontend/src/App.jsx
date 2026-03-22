@@ -44,6 +44,7 @@ import PrivacyPolicy from "./pages/settings/PrivacyPolicy"
 import ScrollToTop from "./components/utils/ScrollToTop"
 import { ChallengeProvider } from "./store/ChallengeStore"
 import Challenges from "./pages/Challenges"
+import Notifications from "./pages/Notifications"
 
 function App() {
   return (
@@ -306,6 +307,14 @@ function App() {
                               element={
                                 <AppLayout>
                                   <Challenges />
+                                </AppLayout>
+                              } 
+                            />
+                            <Route 
+                              path="/notifications" 
+                              element={
+                                <AppLayout>
+                                  <Notifications />
                                 </AppLayout>
                               } 
                             />

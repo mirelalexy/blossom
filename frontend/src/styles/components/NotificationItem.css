@@ -1,0 +1,31 @@
+.notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    gap: 5px;
+}
+
+.notification-right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 2;
+}
+
+.notification-title {
+    font-weight: 600;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.notification-left {
+    flex: 1;
+}
