@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 
 import { useChallenges } from "../store/ChallengeStore"
 import { useTransactions } from "../store/TransactionStore"
@@ -18,8 +18,6 @@ function AppLayout({ children }) {
     const { cleanOldNotifications, addNotification, settings } = useNotifications()
 
     const streak = calculateStreak(transactions)
-    
-    const prevCompletedRef = useRef(new Set())
 
     // reset challenges if needed and clean notifications older than two weeks
     useEffect(() => {
@@ -39,21 +37,23 @@ function AppLayout({ children }) {
     useEffect(() => {
         if (!settings.challengeComplete) return
 
-        const currentCompleted = new Set(challenges.filter(c => c.completed).map(c=> c.id))
+        const notified = new Set(JSON.parse(localStorage.getItem("notifiedChallenges")) || [])
 
-        currentCompleted.forEach(id => {
-            if (!prevCompletedRef.current.has(id)) {
-                const c = challenges.find(c => c.id === id)
+        const newNotified = new Set(notified)
 
+        challenges.forEach(c => {
+            if (c.completed && !notified.has(c.id)) {
                 addNotification({
                     title: "Challenge completed",
                     message: `${c.title} completed! Keep going.`,
                     type: "challenge"
                 })
+
+                newNotified.add(c.id)
             }
         })
 
-        prevCompletedRef.current = currentCompleted
+        localStorage.setItem("notifiedChallenges", JSON.stringify([...newNotified]))
     }, [challenges])
 
     return (
