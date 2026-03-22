@@ -6,6 +6,7 @@ import { useBudget } from "../store/BudgetStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { useNotifications } from "../store/NotificationStore"
 import { calculateXP, getLevelFromXP, getLevelTitle } from "../utils/levelUtils"
+import { getCurrentMonthKey } from "../utils/dateUtils"
 
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
@@ -99,16 +100,17 @@ function AppLayout({ children }) {
         if (!settings.nearBudget) return
         if (!budget?.monthlyBudget) return
 
-        const triggered = JSON.parse(localStorage.getItem("nearBudgetNotified")) || false
+        const currentMonth = getCurrentMonthKey()
+        const lastNotified = localStorage.getItem("nearBudgetNotifiedMonth")
 
-        if (percentUsedBudget >= 80 && !triggered) {
+        if (percentUsedBudget >= 80 && lastNotified !== currentMonth) {
             addNotification({
                 title: "Almost there...",
                 message: "You're close to your monthly budget.",
                 type: "budget"
             })
 
-            localStorage.setItem("nearBudgetNotified", true)
+            localStorage.setItem("nearBudgetNotifiedMonth", currentMonth)
         }
     }, [percentUsedBudget, settings.nearBudget])
 
@@ -117,16 +119,17 @@ function AppLayout({ children }) {
         if (!settings.exceedBudget) return
         if (!budget?.monthlyBudget) return
 
-        const triggered = JSON.parse(localStorage.getItem("exceedBudgetNotified")) || false
+        const currentMonth = getCurrentMonthKey()
+        const lastNotified = localStorage.getItem("exceedBudgetNotifiedMonth")
 
-        if (percentUsedBudget >= 100 && !triggered) {
+        if (percentUsedBudget >= 100 && lastNotified !== currentMonth) {
             addNotification({
                 title: "Budget exceeded",
                 message: "You've gone over your monthly budget.",
                 type: "budget"
             })
 
-            localStorage.setItem("exceedBudgetNotified", true)
+            localStorage.setItem("exceedBudgetNotifiedMonth", currentMonth)
         }
     }, [percentUsedBudget, settings.exceedBudget])
 

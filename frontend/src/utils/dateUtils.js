@@ -110,3 +110,8 @@ export function formatTime(timestamp) {
 
     return `${days}d ago`
 }
+
+export function getCurrentMonthKey() {
+    const now = new Date()
+    return `${now.getFullYear()} - ${now.getMonth()}`
+}
