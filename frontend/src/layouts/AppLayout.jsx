@@ -6,7 +6,7 @@ import { useBudget } from "../store/BudgetStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { useNotifications } from "../store/NotificationStore"
 import { calculateXP, getLevelFromXP, getLevelTitle } from "../utils/levelUtils"
-import { getCurrentMonthKey } from "../utils/dateUtils"
+import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils"
 
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
@@ -56,23 +56,26 @@ function AppLayout({ children }) {
     useEffect(() => {
         if (!settings.challengeComplete) return
 
-        const notified = new Set(JSON.parse(localStorage.getItem("notifiedChallenges")) || [])
+        const notified = JSON.parse(localStorage.getItem("notifiedChallenges")) || {}
 
-        const newNotified = new Set(notified)
+        const weekKey = getCurrentWeekKey()
+        const monthKey = getCurrentMonthKey()
 
         challenges.forEach(c => {
-            if (c.completed && !notified.has(c.id)) {
+            const periodKey = c.period === "weekly" ? weekKey : monthKey
+
+            if (c.completed && notified[c.id] !== periodKey) {
                 addNotification({
                     title: "Challenge completed",
                     message: `${c.title} completed! Keep going.`,
                     type: "challenge"
                 })
 
-                newNotified.add(c.id)
+                notified[c.id] = periodKey
             }
         })
 
-        localStorage.setItem("notifiedChallenges", JSON.stringify([...newNotified]))
+        localStorage.setItem("notifiedChallenges", JSON.stringify(notified))
     }, [challenges, settings.challengeComplete])
 
     // trigger level up notifications
