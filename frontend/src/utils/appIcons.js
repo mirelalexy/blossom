@@ -47,7 +47,12 @@ import {
     Sofa,
     Circle,
     Flame,
-    Check
+    Check,
+    CalendarDays,
+    Leaf,
+    Zap,
+    Tags,
+    Sparkles
 } from "lucide-react"
 
 export const appIcons = {
@@ -81,6 +86,11 @@ export const appIcons = {
     streak: Flame,
     completed: Check,
     logOut: LogOut,
+    calendar: CalendarDays,
+    leaf: Leaf,
+    zap: Zap,
+    tags: Tags,
+    sparkles: Sparkles,
 
     // category icons
     gamepad2: Gamepad2,

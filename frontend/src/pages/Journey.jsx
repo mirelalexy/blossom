@@ -2,6 +2,7 @@ import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelN
 import { useTransactions } from "../store/TransactionStore"
 import { useChallenges } from "../store/ChallengeStore"
 import { calculateStreak } from "../utils/streakUtils"
+import { getUserPatterns } from "../utils/patternUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -10,6 +11,7 @@ import Section from "../components/ui/Section"
 import LevelCard from "../components/profile/LevelCard"
 
 import "../styles/pages/Journey.css"
+import PatternCard from "../components/journey/PatternCard"
 
 function Journey() {
     const { transactions } = useTransactions()
@@ -30,6 +32,8 @@ function Journey() {
     const progress = getLevelProgress(xp)
     const levelStory = getLevelNarrative(level)
 
+    const patterns = getUserPatterns(transactions)
+
     return (
         <div className="journey-content">
             <PageHeader title="Journey" />
@@ -41,7 +45,17 @@ function Journey() {
             </Section>
             
             <Section title="Your Patterns">
-
+                {patterns.length > 0 ? (
+                    patterns.map((p, index) => (
+                        <PatternCard
+                            key={index}
+                            icon={p.icon}
+                            text={p.text}
+                        />
+                    ))
+                ) : (
+                    <EmptyState title="Not enough data yet to show patterns." />
+                )}
             </Section>
 
             <Section title="Statistics">
