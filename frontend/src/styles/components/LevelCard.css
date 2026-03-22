@@ -7,3 +7,8 @@
 .level-card-content .level-title {
     font-size: 15px;
 }
+
+.level-card-content .level-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+}
