@@ -3,6 +3,8 @@ import { useTransactions } from "../store/TransactionStore"
 import { useChallenges } from "../store/ChallengeStore"
 import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
+import { getStatistics } from "../utils/statisticsUtils"
+import { useCurrency } from "../store/CurrencyStore"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -12,6 +14,7 @@ import LevelCard from "../components/profile/LevelCard"
 
 import "../styles/pages/Journey.css"
 import PatternCard from "../components/journey/PatternCard"
+import StatCard from "../components/journey/StatCard"
 
 function Journey() {
     const { transactions } = useTransactions()
@@ -34,6 +37,9 @@ function Journey() {
 
     const patterns = getUserPatterns(transactions)
     console.log(patterns)
+
+    const stats = getStatistics(transactions)
+    const { currency } = useCurrency()
 
     return (
         <div className="journey-content">
@@ -60,7 +66,12 @@ function Journey() {
             </Section>
 
             <Section title="Statistics">
-
+                <div className="stats-grid">
+                    <StatCard label="Spent" value={`${stats.totalExpenses} ${currency}`} />
+                    <StatCard label="Income" value={`${stats.totalIncome} ${currency}`} />
+                    <StatCard label="Transactions" value={stats.count} />
+                    <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
+                </div>
             </Section>
 
             <Section title="Insights">
