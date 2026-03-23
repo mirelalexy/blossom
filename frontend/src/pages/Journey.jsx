@@ -88,7 +88,7 @@ function Journey() {
 
             <Section title="Insights" className="insights-section" >
                 <div className="insights-chart">
-                    <p className="subsection-title">Spending By Mood</p>
+                    <p className="subsection-title">Spending By Category</p>
                     <PieChart data={categoryChartData} />
                 </div>
 
