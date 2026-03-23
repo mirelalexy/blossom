@@ -5,7 +5,7 @@ import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
-import { getCategoryData, getChartColors, getSpendingOverTime } from "../utils/chartUtils"
+import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 
 import PageHeader from "../components/ui/PageHeader"
@@ -51,6 +51,7 @@ function Journey() {
     console.log(categoryChartData)
 
     const spendingChartData = getSpendingOverTime(transactions)
+    const intentChartData = getIntentData(transactions, colors)
 
     return (
         <div className="journey-content">
@@ -91,9 +92,14 @@ function Journey() {
                     <PieChart data={categoryChartData} />
                 </div>
 
-                 <div className="insights-chart">
+                <div className="insights-chart">
                     <p className="subsection-title">Spending Over Time</p>
                     <LineChart data={spendingChartData} />
+                </div>
+
+                <div className="insights-chart">
+                    <p className="subsection-title">Spending By Intent</p>
+                    <PieChart data={intentChartData} />
                 </div>
             </Section>
         </div>

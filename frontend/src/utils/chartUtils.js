@@ -45,3 +45,24 @@ export function getSpendingOverTime(transactions) {
         value
     })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 }
+
+export function getIntentData(transactions, colors) {
+    const intentMap = {}
+
+    transactions.forEach(t => {
+        if (t.type !== "Expense") return
+        if (!t.intent) return
+
+        const name = t.intent
+        
+        intentMap[name] = (intentMap[name] || 0) + t.amount
+    })
+
+    return Object.entries(intentMap).map(([name, value], index) => {
+        return {
+            name,
+            value,
+            fill: colors[index % colors.length]
+        }
+    }).sort((a, b) => b.value - a.value)
+}
