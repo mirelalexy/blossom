@@ -7,7 +7,7 @@ import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
-import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense } from "../utils/insightUtils"
+import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
 import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
@@ -69,12 +69,21 @@ function Journey() {
     console.log(topMerchants)
 
     const biggestExpense = getBiggestExpense(monthlyTransactions)
+    const spendingStyle = getSpendingStyle({ moodData: moodChartData, intentData: intentChartData })
 
     return (
         <div className="journey-content">
             <PageHeader title="Journey" />
             
             <LevelCard variant="hero" title={levelTitle} level={level} progress={progress} />
+
+            {spendingStyle && (
+                <div className="highlight-card">
+                    <p className="highlight-title">Your Spending Style</p>
+                    <p className="highlight-value">{spendingStyle}</p>
+                    <p>{getSpendingStyleDetails(spendingStyle)}</p>
+                </div>
+            )}
 
             <Section title="Your Journey So Far">
                 <p className="journey-story">{levelStory}</p>

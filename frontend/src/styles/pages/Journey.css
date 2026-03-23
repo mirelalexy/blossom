@@ -44,8 +44,20 @@
 
 .highlight-card {
     display: flex;
+    flex-direction: column;
     border-radius: 15px;
     background-color: var(--bg-secondary);
     padding: 15px;
     font-size: 14px;
+    border: 1px solid var(--accent);
+}
+
+.highlight-title {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.highlight-value {
+    color: var(--accent);
+    font-weight: 600;
 }

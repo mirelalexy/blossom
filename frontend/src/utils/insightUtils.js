@@ -124,3 +124,48 @@ export function getBiggestExpense(transactions) {
 
     return expenses.sort((a, b) => b.amount - a.amount)[0]
 }
+
+export function getSpendingStyle({ moodData, intentData }) {
+    if (!moodData?.length || !intentData?.length) {
+        return "Still figuring you out"
+    }
+
+    const mood = moodData[0].name
+    const intent = intentData[0].name
+
+    if (mood === "Calm" && intent === "Planned") {
+        return "Intentional Spender"
+    } else if (mood === "Anxious" && intent === "Impulse") {
+        return "Emotional Spender"
+    } else if (intent === "Necessary") {
+        return "Practical Spender"
+    } else if (intent === "Planned") {
+        return "Organized Spender"
+    } else if (intent === "Impulse") {
+        return "Spontaneous Spender"
+    } else if (mood === "Happy") {
+        return "Reward-Driven Spender"
+    } else if (mood === "Calm") {
+        return "Routine Spender"
+    } else if (mood === "Anxious") {
+        return "Emotion-Driven Spender"
+    } else {
+        return "Balanced Spender"
+    }
+}
+
+export function getSpendingStyleDetails(style) {
+    const map = {
+        "Intentional Spender": "You plan your spending and stay in control.",
+        "Emotional Spender": "Your spending is often influenced by emotions.",
+        "Practical Spender": "You focus on essentials and needs.",
+        "Organized Spender": "You tend to think ahead before spending.",
+        "Spontaneous Spender": "You enjoy making quick, unplanned purchases.",
+        "Reward-Driven Spender": "You like to treat yourself when feeling good.",
+        "Routine Spender": "Your spending follows consistent habits.",
+        "Emotion-Driven Spender": "Your emotions influence your decisions.",
+        "Balanced Spender": "You show a mix of different spending behaviors."
+    }
+
+    return map[style] || ""
+}
