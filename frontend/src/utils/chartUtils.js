@@ -15,3 +15,15 @@ export function getCategoryData(transactions, categories) {
         value
     }))
 }
+
+export function getChartColors() {
+    const style = getComputedStyle(document.documentElement)
+
+    return [
+        style.getPropertyValue("--chart-1").trim(),
+        style.getPropertyValue("--chart-2").trim(),
+        style.getPropertyValue("--chart-3").trim(),
+        style.getPropertyValue("--chart-4").trim(),
+        style.getPropertyValue("--chart-5").trim()
+    ]
+}
