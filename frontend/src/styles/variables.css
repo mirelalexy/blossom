@@ -17,6 +17,12 @@
     --active: #df39bb;
 
     --font-primary: "DM Sans", serif;
+
+    --chart-1: #df47a5;
+    --chart-2: #e097bf;
+    --chart-3: #cc7da5;
+    --chart-4: #9a539c;
+    --chart-5: #cc52ae;
 }
 
 [data-theme="forest"] {
@@ -31,6 +37,12 @@
     --card2: #b5d8bf;
     --progress-bar: #a4aca8;
     --active: #9debb7;
+
+    --chart-1: #5cf6d5;
+    --chart-2: #63f17b;
+    --chart-3: #13663d;
+    --chart-4: #3c6d4c;
+    --chart-5: #6da86b;
 }
 
 [data-theme="night"] {
@@ -51,4 +63,10 @@
     --progress-bar: #444446;
     --active: #6464e0;
     --focus-card: #171731;
+
+    --chart-1: #a78bfa;
+    --chart-2: #6366f1;
+    --chart-3: #818cf8;
+    --chart-4: #9d62af;
+    --chart-5: #8d10f3;
 }
