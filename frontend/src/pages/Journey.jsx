@@ -85,9 +85,16 @@ function Journey() {
                 </div>
             </Section>
 
-            <Section title="Insights">
-                <CategoryChart data={categoryChartData} />
-                <SpendingChart data={spendingChartData} />
+            <Section title="Insights" className="insights-section" >
+                <div className="insights-chart">
+                    <p className="subsection-title">Spending By Mood</p>
+                    <CategoryChart data={categoryChartData} />
+                </div>
+
+                 <div className="insights-chart">
+                    <p className="subsection-title">Spending Over Time</p>
+                    <SpendingChart data={spendingChartData} />
+                </div>
             </Section>
         </div>
     )

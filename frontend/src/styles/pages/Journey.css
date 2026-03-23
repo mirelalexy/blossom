@@ -17,3 +17,18 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
+
+.subsection-title {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.insights-section {
+    gap: 25px;
+}
+
+.insights-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
