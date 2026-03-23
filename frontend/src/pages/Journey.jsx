@@ -8,7 +8,7 @@ import { useCurrency } from "../store/CurrencyStore"
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight } from "../utils/insightUtils"
-import { isCurrentMonth } from "../utils/dateUtils"
+import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -42,8 +42,9 @@ function Journey() {
     const levelStory = getLevelNarrative(level)
 
     const monthlyTransactions = transactions.filter(t => isCurrentMonth(t.date))
+    const recentTransactions = transactions.filter(t => isLast30Days(t.date))
 
-    const patterns = getUserPatterns(transactions)
+    const patterns = getUserPatterns(recentTransactions)
     console.log(patterns)
 
     const stats = getStatistics(monthlyTransactions)

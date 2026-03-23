@@ -159,3 +159,13 @@ export function isCurrentMonth(date) {
         d.getFullYear() === now.getFullYear()
     )
 }
+
+export function isLast30Days(date) {
+    const d = new Date(date)
+    const now = new Date()
+
+    const diff = now - d
+    const days = diff / (1000 * 60 * 60 * 24)
+
+    return days <= 30
+}
