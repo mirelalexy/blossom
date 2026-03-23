@@ -28,3 +28,20 @@ export function getChartColors() {
         style.getPropertyValue("--chart-5").trim()
     ]
 }
+
+export function getSpendingOverTime(transactions) {
+    const map = {}
+
+    transactions.forEach(t => {
+        if (t.type !== "Expense") return
+
+        const date = t.date
+
+        map[date] = (map[date] || 0) + t.amount
+    })
+
+    return Object.entries(map).map(([date, value]) => ({
+        date,
+        value
+    })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+}
