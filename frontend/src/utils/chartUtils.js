@@ -14,7 +14,7 @@ export function getCategoryData(transactions, categories, colors) {
         name,
         value,
         fill: colors[index % colors.length]
-    }))
+    })).sort((a, b) => b.value - a.value)
 }
 
 export function getChartColors() {
