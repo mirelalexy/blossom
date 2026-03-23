@@ -5,6 +5,8 @@ import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
+import { getCategoryData } from "../utils/chartUtils"
+import { useCategories } from "../store/CategoryStore"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -15,6 +17,7 @@ import LevelCard from "../components/profile/LevelCard"
 import "../styles/pages/Journey.css"
 import PatternCard from "../components/journey/PatternCard"
 import StatCard from "../components/journey/StatCard"
+import CategoryChart from "../components/charts/CategoryChart"
 
 function Journey() {
     const { transactions } = useTransactions()
@@ -40,6 +43,10 @@ function Journey() {
 
     const stats = getStatistics(transactions)
     const { currency } = useCurrency()
+
+    const { categories } = useCategories()
+    const categoryChartData = getCategoryData(transactions, categories)
+    console.log(categoryChartData)
 
     return (
         <div className="journey-content">
@@ -75,7 +82,7 @@ function Journey() {
             </Section>
 
             <Section title="Insights">
-
+                <CategoryChart data={categoryChartData} />
             </Section>
         </div>
     )

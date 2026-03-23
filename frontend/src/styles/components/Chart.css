@@ -1,0 +1,28 @@
+.legend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+
+.chart-legend {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
