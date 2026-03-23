@@ -5,7 +5,7 @@ import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
-import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData } from "../utils/chartUtils"
+import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 
 import PageHeader from "../components/ui/PageHeader"
@@ -53,6 +53,7 @@ function Journey() {
     const spendingChartData = getSpendingOverTime(transactions)
     const intentChartData = getIntentData(transactions, colors)
     const moodChartData = getMoodData(transactions, colors)
+    const incomeExpenseChartData = getIncomeExpenseData(transactions, colors)
 
     return (
         <div className="journey-content">
@@ -106,6 +107,10 @@ function Journey() {
                 <div className="insights-chart">
                     <p className="subsection-title">Spending By Mood</p>
                     <PieChart data={moodChartData} />
+                </div>
+                <div className="insights-chart">
+                    <p className="subsection-title">Income vs Expenses</p>
+                    <PieChart data={incomeExpenseChartData} />
                 </div>
             </Section>
         </div>

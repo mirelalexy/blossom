@@ -88,3 +88,26 @@ export function getMoodData(transactions, colors) {
         }
     }).sort((a, b) => b.value - a.value)
 }
+
+export function getIncomeExpenseData(transactions, colors) {
+    let income = 0
+    let expenses = 0
+
+    transactions.forEach(t => {
+        if (t.type === "Income") income += t.amount
+        else if (t.type === "Expense") expenses += t.amount
+    })
+
+    return [
+        {
+            name: "Income",
+            value: income,
+            fill: colors[0]
+        },
+        {
+            name: "Expenses",
+            value: expenses,
+            fill: colors[1]
+        }
+    ]
+}
