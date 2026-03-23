@@ -32,3 +32,12 @@
     flex-direction: column;
     gap: 15px;
 }
+
+.merchant-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 15px;
+    background-color: var(--bg-secondary);
+    border-radius: 15px;
+}

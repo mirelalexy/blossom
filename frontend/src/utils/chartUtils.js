@@ -111,3 +111,23 @@ export function getIncomeExpenseData(transactions, colors) {
         }
     ]
 }
+
+export function getTopMerchantsData(transactions, limit = 3) {
+    const merchantMap = {}
+
+    transactions.forEach(t => {
+        if (t.type !== "Expense") return
+        if (!t.merchant) return
+
+        const name = t.merchant.trim()
+        
+        merchantMap[name] = (merchantMap[name] || 0) + t.amount
+    })
+
+    return Object.entries(merchantMap).map(([name, value]) => {
+        return {
+            name,
+            value
+        }
+    }).sort((a, b) => b.value - a.value).slice(0, limit)
+}

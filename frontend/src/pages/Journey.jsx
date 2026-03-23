@@ -5,7 +5,7 @@ import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
-import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData } from "../utils/chartUtils"
+import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight } from "../utils/insightUtils"
 import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
@@ -65,6 +65,9 @@ function Journey() {
     const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData)
     const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData)
 
+    const topMerchants = getTopMerchantsData(monthlyTransactions)
+    console.log(topMerchants)
+
     return (
         <div className="journey-content">
             <PageHeader title="Journey" />
@@ -96,6 +99,15 @@ function Journey() {
                     <StatCard label="Transactions" value={stats.count} />
                     <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
                 </div>
+            </Section>
+
+            <Section title="Where Your Money Goes Most">
+                {topMerchants.map((merchant, i) => (
+                    <div key={i} className="merchant-item">
+                        <span>{merchant.name}</span>
+                        <span>{merchant.value} {currency} </span>
+                    </div>
+                ))}
             </Section>
 
             <Section title="Insights" className="insights-section" >
