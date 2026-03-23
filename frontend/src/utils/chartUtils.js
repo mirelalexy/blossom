@@ -1,4 +1,4 @@
-export function getCategoryData(transactions, categories) {
+export function getCategoryData(transactions, categories, colors) {
     const categoryMap = {}
 
     transactions.forEach(t => {
@@ -10,9 +10,10 @@ export function getCategoryData(transactions, categories) {
         categoryMap[name] = (categoryMap[name] || 0) + t.amount
     })
 
-    return Object.entries(categoryMap).map(([name, value]) => ({
+    return Object.entries(categoryMap).map(([name, value], index) => ({
         name,
-        value
+        value,
+        fill: colors[index % colors.length]
     }))
 }
 

@@ -5,7 +5,7 @@ import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
-import { getCategoryData } from "../utils/chartUtils"
+import { getCategoryData, getChartColors } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 
 import PageHeader from "../components/ui/PageHeader"
@@ -45,7 +45,8 @@ function Journey() {
     const { currency } = useCurrency()
 
     const { categories } = useCategories()
-    const categoryChartData = getCategoryData(transactions, categories)
+    const colors = getChartColors()
+    const categoryChartData = getCategoryData(transactions, categories, colors)
     console.log(categoryChartData)
 
     return (
