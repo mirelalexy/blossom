@@ -1,8 +1,8 @@
-import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis, Line, Tooltip } from "recharts"
+import { CartesianGrid, LineChart as RechartsLineChart, ResponsiveContainer, XAxis, YAxis, Line, Tooltip } from "recharts"
 import { useCurrency } from "../../store/CurrencyStore"
 import EmptyState from "../ui/EmptyState"
 
-function SpendingChart({ data }) {
+function LineChart({ data }) {
     const { currency } = useCurrency()
 
     if (!data) return <EmptyState title="No data yet." />
@@ -10,7 +10,7 @@ function SpendingChart({ data }) {
     return (
         <div className="chart-container">
             <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={data}>
+                <RechartsLineChart data={data}>
                     <CartesianGrid stroke="var(--border)" vertical={false} />
 
                     <XAxis 
@@ -42,10 +42,10 @@ function SpendingChart({ data }) {
                         dot={{ r: 3 }}
                         activeDot={{ r: 6 }}
                     />
-                </LineChart>
+                </RechartsLineChart>
             </ResponsiveContainer>
         </div>
     )
 }
 
-export default SpendingChart
+export default LineChart

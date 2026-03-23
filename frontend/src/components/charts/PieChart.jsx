@@ -1,11 +1,11 @@
-import { Pie, PieChart, ResponsiveContainer } from "recharts"
+import { Pie, PieChart as RechartsPieChart, ResponsiveContainer } from "recharts"
 import { useCurrency } from "../../store/CurrencyStore"
 
 import EmptyState from "../ui/EmptyState"
 
 import "../../styles/components/Chart.css"
 
-function CategoryChart({ data }) {
+function PieChart({ data }) {
     if (!data) return <EmptyState title="No data yet." />
 
     const { currency } = useCurrency()
@@ -13,7 +13,7 @@ function CategoryChart({ data }) {
     return (
         <div className="chart-container">
             <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
+                <RechartsPieChart>
                     <Pie
                         data={data}
                         dataKey="value"
@@ -22,7 +22,7 @@ function CategoryChart({ data }) {
                         label
                     >
                     </Pie>
-                </PieChart>
+                </RechartsPieChart>
             </ResponsiveContainer>
 
             <div className="chart-legend">
@@ -41,4 +41,4 @@ function CategoryChart({ data }) {
     )
 }
 
-export default CategoryChart
+export default PieChart

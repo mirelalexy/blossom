@@ -17,8 +17,8 @@ import LevelCard from "../components/profile/LevelCard"
 import "../styles/pages/Journey.css"
 import PatternCard from "../components/journey/PatternCard"
 import StatCard from "../components/journey/StatCard"
-import CategoryChart from "../components/charts/CategoryChart"
-import SpendingChart from "../components/charts/SpendingChart"
+import PieChart from "../components/charts/PieChart"
+import LineChart from "../components/charts/LineChart"
 
 function Journey() {
     const { transactions } = useTransactions()
@@ -88,12 +88,12 @@ function Journey() {
             <Section title="Insights" className="insights-section" >
                 <div className="insights-chart">
                     <p className="subsection-title">Spending By Mood</p>
-                    <CategoryChart data={categoryChartData} />
+                    <PieChart data={categoryChartData} />
                 </div>
 
                  <div className="insights-chart">
                     <p className="subsection-title">Spending Over Time</p>
-                    <SpendingChart data={spendingChartData} />
+                    <LineChart data={spendingChartData} />
                 </div>
             </Section>
         </div>
