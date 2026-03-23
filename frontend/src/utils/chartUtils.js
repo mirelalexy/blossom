@@ -66,3 +66,25 @@ export function getIntentData(transactions, colors) {
         }
     }).sort((a, b) => b.value - a.value)
 }
+
+export function getMoodData(transactions, colors) {
+    const moodMap = {}
+
+    transactions.forEach(t => {
+        if (t.type !== "Expense") return
+        if (!t.mood) return
+
+        const mood = t.mood
+        const name = mood.charAt(0).toUpperCase() + mood.slice(1)
+        
+        moodMap[name] = (moodMap[name] || 0) + t.amount
+    })
+
+    return Object.entries(moodMap).map(([name, value], index) => {
+        return {
+            name,
+            value,
+            fill: colors[index % colors.length]
+        }
+    }).sort((a, b) => b.value - a.value)
+}
