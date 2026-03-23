@@ -7,7 +7,7 @@ import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
-import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight } from "../utils/insightUtils"
+import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense } from "../utils/insightUtils"
 import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
@@ -68,6 +68,8 @@ function Journey() {
     const topMerchants = getTopMerchantsData(monthlyTransactions)
     console.log(topMerchants)
 
+    const biggestExpense = getBiggestExpense(monthlyTransactions)
+
     return (
         <div className="journey-content">
             <PageHeader title="Journey" />
@@ -100,6 +102,12 @@ function Journey() {
                     <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
                 </div>
             </Section>
+
+            {biggestExpense && (
+                <div className="highlight-card">
+                    <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.merchant}.</p>
+                </div>
+            )}
 
             <Section title="Where Your Money Goes Most">
                 {topMerchants.map((merchant, i) => (

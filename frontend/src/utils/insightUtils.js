@@ -116,3 +116,11 @@ export function getIncomeExpenseInsight(data) {
 
     return { insight, tip }
 }
+
+export function getBiggestExpense(transactions) {
+    const expenses = transactions.filter(t => t.type === "Expense")
+
+    if (!expenses || expenses.length === 0) return null
+
+    return expenses.sort((a, b) => b.amount - a.amount)[0]
+}
