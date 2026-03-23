@@ -7,6 +7,7 @@ import { getStatistics } from "../utils/statisticsUtils"
 import { useCurrency } from "../store/CurrencyStore"
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
+import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight } from "../utils/insightUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -48,12 +49,17 @@ function Journey() {
     const { categories } = useCategories()
     const colors = getChartColors()
     const categoryChartData = getCategoryData(transactions, categories, colors)
-    console.log(categoryChartData)
 
     const spendingChartData = getSpendingOverTime(transactions)
     const intentChartData = getIntentData(transactions, colors)
     const moodChartData = getMoodData(transactions, colors)
     const incomeExpenseChartData = getIncomeExpenseData(transactions, colors)
+
+    const { insight: categoryInsight, tip: categoryTip } = getCategoryInsight(categoryChartData)
+    const { insight: intentInsight, tip: intentTip } = getIntentInsight(intentChartData)
+    const { insight: moodInsight, tip: moodTip } = getMoodInsight(moodChartData)
+    const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData)
+    const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData)
 
     return (
         <div className="journey-content">
@@ -92,25 +98,35 @@ function Journey() {
                 <div className="insights-chart">
                     <p className="subsection-title">Spending By Category</p>
                     <PieChart data={categoryChartData} />
+                    <p>{categoryInsight}</p>
+                    <p>{categoryTip}</p>
                 </div>
 
                 <div className="insights-chart">
                     <p className="subsection-title">Spending Over Time</p>
                     <LineChart data={spendingChartData} />
+                    <p>{timeInsight}</p>
+                    <p>{timeTip}</p>
                 </div>
 
                 <div className="insights-chart">
                     <p className="subsection-title">Spending By Intent</p>
                     <PieChart data={intentChartData} />
+                    <p>{intentInsight}</p>
+                    <p>{intentTip}</p>
                 </div>
 
                 <div className="insights-chart">
                     <p className="subsection-title">Spending By Mood</p>
                     <PieChart data={moodChartData} />
+                    <p>{moodInsight}</p>
+                    <p>{moodTip}</p>
                 </div>
                 <div className="insights-chart">
                     <p className="subsection-title">Income vs Expenses</p>
                     <PieChart data={incomeExpenseChartData} />
+                    <p>{typeInsight}</p>
+                    <p>{typeTip}</p>
                 </div>
             </Section>
         </div>
