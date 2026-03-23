@@ -1,18 +1,5 @@
 export function getStatistics(transactions) {
-    const today = new Date()
-
-    const monthlyTransactions = transactions.filter(t => {
-        if (!t.date) return false
-
-        const date = new Date(t.date)
-
-        return (
-            date.getMonth() === today.getMonth() &&
-            date.getFullYear() === today.getFullYear()
-        )
-    })
-
-    if (!monthlyTransactions || monthlyTransactions.length === 0) {
+    if (!transactions || transactions.length === 0) {
         return {
             totalExpenses: 0,
             totalIncome: 0,
@@ -20,17 +7,17 @@ export function getStatistics(transactions) {
         }
     }
 
-    const totalExpenses = monthlyTransactions
+    const totalExpenses = transactions
         .filter(t => t.type === "Expense")
         .reduce((sum, t) => sum + t.amount, 0)
 
-    const totalIncome = monthlyTransactions
+    const totalIncome = transactions
         .filter(t => t.type === "Income")
         .reduce((sum, t) => sum + t.amount, 0)
 
     return {
         totalExpenses,
         totalIncome,
-        count: monthlyTransactions.length
+        count: transactions.length
     }
 }

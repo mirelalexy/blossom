@@ -8,6 +8,7 @@ import { useCurrency } from "../store/CurrencyStore"
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData } from "../utils/chartUtils"
 import { useCategories } from "../store/CategoryStore"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight } from "../utils/insightUtils"
+import { isCurrentMonth } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -24,7 +25,7 @@ import LineChart from "../components/charts/LineChart"
 function Journey() {
     const { transactions } = useTransactions()
     const streak = calculateStreak(transactions)
-     const { challenges } = useChallenges()
+    const { challenges } = useChallenges()
     const completedChallenges = challenges.filter(c => c.completed).length
 
     const xp = calculateXP({
@@ -40,20 +41,22 @@ function Journey() {
     const progress = getLevelProgress(xp)
     const levelStory = getLevelNarrative(level)
 
+    const monthlyTransactions = transactions.filter(t => isCurrentMonth(t.date))
+
     const patterns = getUserPatterns(transactions)
     console.log(patterns)
 
-    const stats = getStatistics(transactions)
+    const stats = getStatistics(monthlyTransactions)
     const { currency } = useCurrency()
 
     const { categories } = useCategories()
     const colors = getChartColors()
-    const categoryChartData = getCategoryData(transactions, categories, colors)
 
-    const spendingChartData = getSpendingOverTime(transactions)
-    const intentChartData = getIntentData(transactions, colors)
-    const moodChartData = getMoodData(transactions, colors)
-    const incomeExpenseChartData = getIncomeExpenseData(transactions, colors)
+    const categoryChartData = getCategoryData(monthlyTransactions, categories, colors)
+    const spendingChartData = getSpendingOverTime(monthlyTransactions)
+    const intentChartData = getIntentData(monthlyTransactions, colors)
+    const moodChartData = getMoodData(monthlyTransactions, colors)
+    const incomeExpenseChartData = getIncomeExpenseData(monthlyTransactions, colors)
 
     const { insight: categoryInsight, tip: categoryTip } = getCategoryInsight(categoryChartData)
     const { insight: intentInsight, tip: intentTip } = getIntentInsight(intentChartData)

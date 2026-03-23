@@ -149,3 +149,13 @@ export function getReminderKey(frequency) {
         return ""
     }
 }
+
+export function isCurrentMonth(date) {
+    const d = new Date(date)
+    const now = new Date()
+
+    return (
+        d.getMonth() === now.getMonth() &&
+        d.getFullYear() === now.getFullYear()
+    )
+}
