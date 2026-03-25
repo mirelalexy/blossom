@@ -24,6 +24,7 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    opacity: 0.6;
 }
 
 .card-header p {
@@ -33,4 +34,9 @@
 
 .card-icon svg {
     display: block;
+}
+
+.card-content .secondary-text {
+    font-size: 14px;
+    font-weight: 400;
 }

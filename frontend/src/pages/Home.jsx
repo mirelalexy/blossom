@@ -19,6 +19,7 @@ import Card from "../components/ui/Card"
 import Icon from "../components/ui/Icon"
 
 import "../styles/pages/Home.css"
+import TipCard from "../components/tips/TipCard"
 
 function Home() {
     const navigate = useNavigate()
@@ -101,9 +102,9 @@ function Home() {
                         </Section>
 
                         <div className="new-user-info">
-                            <Card icon={<Icon name="categories" size={20} />} title="Tip">
-                                <p>Your insights will appear here as you start tracking.</p>
-                            </Card>
+                            <TipCard>
+                                <p className="secondary-text">Your insights will appear here as you start tracking.</p>
+                            </TipCard>
 
                             <Button className="secondary" onClick={() => navigate("/settings/faq")}>Learn how Blossom works</Button>
                         </div>
