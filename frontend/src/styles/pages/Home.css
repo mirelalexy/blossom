@@ -63,3 +63,9 @@
     flex-direction: column;
     gap: 40px;
 }
+
+.new-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}

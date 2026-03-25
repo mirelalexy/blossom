@@ -100,9 +100,14 @@ function Home() {
                             <Button className="secondary" onClick={() => navigate("/add-goal")}>Set a goal</Button>
                         </Section>
 
-                        <Card icon={<Icon name="categories" size={20} />} title="Tip">
-                            <p>Your insights will appear here as you start tracking.</p>
-                        </Card>
+                        <div className="new-user-info">
+                            <Card icon={<Icon name="categories" size={20} />} title="Tip">
+                                <p>Your insights will appear here as you start tracking.</p>
+                            </Card>
+
+                            <Button className="secondary" onClick={() => navigate("/settings/faq")}>Learn how Blossom works</Button>
+                        </div>
+                        
                     </div>
                 ) : (
                     <>
