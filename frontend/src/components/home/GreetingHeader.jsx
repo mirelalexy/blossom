@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import Icon from "../ui/Icon"
 
 function GreetingHeader({ greeting, message, avatarSrc }) {
+    const navigate = useNavigate()
+
     return (
         <div className="greeting-header">
             <div className="greeting-left">
-                <div className="home-avatar-wrapper">
+                <div className="home-avatar-wrapper" onClick={() => navigate("/profile")}>
                     { avatarSrc ? (
                         <img src={avatarSrc} className="home-avatar"/>
                     ) : (
