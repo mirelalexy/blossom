@@ -15,6 +15,8 @@ import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
 import StreakCard from "../components/home/StreakCard"
+import Card from "../components/ui/Card"
+import Icon from "../components/ui/Icon"
 
 import "../styles/pages/Home.css"
 
@@ -90,18 +92,34 @@ function Home() {
 
                 <StreakCard streak={streak} message={streakMessage} nextMileStone={nextStreakMileStone} />
 
-                <Section title="Stats">
-                    <PrimaryGoalCard goal={primaryGoal} />
-                    <TopCategoryCard category={topCategory}/>
-                </Section>
+                {transactions.length == 0 ? (
+                    <>
+                        <Section title="Get Started" className="get-started-section">
+                            <p className="secondary-text">Welcome to Blossom! This is where your habits begin to take shape. Shall we begin?</p>
+                            <Button>Add your first transaction</Button>
+                            <Button>Set a goal</Button>
+                        </Section>
 
-                <Section title="Recent">
-                    {recentTransactions.map((t) => (
-                        <TransactionCard key={t.id} {...t} />
-                    ))}
-                    
-                    <Button onClick={() => navigate("/transactions")}>View All Transactions</Button>
-                </Section>
+                        <Card icon={<Icon name="categories" size={20} />} title="Tip">
+                            <p>Your insights will appear here as you start tracking.</p>
+                        </Card>
+                    </>
+                ) : (
+                    <>
+                        <Section title="Stats">
+                            <PrimaryGoalCard goal={primaryGoal} />
+                            <TopCategoryCard category={topCategory}/>
+                        </Section>
+
+                        <Section title="Recent">
+                            {recentTransactions.map((t) => (
+                                <TransactionCard key={t.id} {...t} />
+                            ))}
+                                
+                            <Button onClick={() => navigate("/transactions")}>View All Transactions</Button>
+                        </Section>
+                    </>
+                )}
             </div>
         </div>
     )
