@@ -6,5 +6,10 @@
  
 .section h3 {
     font-size: 13px;
-    margin: 0;
+}
+
+.section-children {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
 }
