@@ -1,16 +1,17 @@
 import { useState, useRef } from "react"
 
 import { useUser } from "../store/UserStore"
-import { calculateStreak } from "../utils/streakUtils"
 import { useTransactions } from "../store/TransactionStore"
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
 import { useChallenges } from "../store/ChallengeStore"
+
+import { calculateStreak } from "../utils/streakUtils"
+import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
+import ChallengesPreview from "../components/challenges/ChallengesPreview"
 
 import "../styles/pages/Profile.css"
-import ChallengesPreview from "../components/challenges/ChallengesPreview"
 
 function Profile() {
     const { transactions } = useTransactions()

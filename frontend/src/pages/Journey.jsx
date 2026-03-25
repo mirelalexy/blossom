@@ -1,26 +1,26 @@
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelNarrative } from "../utils/levelUtils"
 import { useTransactions } from "../store/TransactionStore"
 import { useChallenges } from "../store/ChallengeStore"
+import { useCurrency } from "../store/CurrencyStore"
+import { useCategories } from "../store/CategoryStore"
+
+import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
+import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
+import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
+import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelNarrative } from "../utils/levelUtils"
 import { calculateStreak } from "../utils/streakUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
-import { useCurrency } from "../store/CurrencyStore"
-import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
-import { useCategories } from "../store/CategoryStore"
-import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
-import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
-import NotificationItem from "../components/notifications/NotificationItem"
 import EmptyState from "../components/ui/EmptyState"
 import Section from "../components/ui/Section"
 import LevelCard from "../components/profile/LevelCard"
-
-import "../styles/pages/Journey.css"
 import PatternCard from "../components/journey/PatternCard"
 import StatCard from "../components/journey/StatCard"
 import PieChart from "../components/charts/PieChart"
 import LineChart from "../components/charts/LineChart"
+
+import "../styles/pages/Journey.css"
 
 function Journey() {
     const { transactions } = useTransactions()

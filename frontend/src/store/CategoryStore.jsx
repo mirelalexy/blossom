@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
+
 import { getCategoryIcon } from "../utils/getCategoryIcon"
 
 const CategoryContext = createContext()

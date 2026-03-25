@@ -3,8 +3,9 @@ import { useEffect } from "react"
 import { useChallenges } from "../store/ChallengeStore"
 import { useTransactions } from "../store/TransactionStore"
 import { useBudget } from "../store/BudgetStore"
-import { calculateStreak } from "../utils/streakUtils"
 import { useNotifications } from "../store/NotificationStore"
+
+import { calculateStreak } from "../utils/streakUtils"
 import { calculateXP, getLevelFromXP, getLevelTitle } from "../utils/levelUtils"
 import { getCurrentMonthKey, getCurrentWeekKey, getReminderKey } from "../utils/dateUtils"
 

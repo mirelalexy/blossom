@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom"
 
-import { appIcons } from "../../../utils/appIcons"
 import { useCategories } from "../../../store/CategoryStore"
 import { useTransactions } from "../../../store/TransactionStore"
 import { useBudget } from "../../../store/BudgetStore"
 import { useCurrency } from "../../../store/CurrencyStore"
+
 import { formatCurrency } from "../../../utils/currencyUtils"
+import { appIcons } from "../../../utils/appIcons"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Section from "../../../components/ui/Section"

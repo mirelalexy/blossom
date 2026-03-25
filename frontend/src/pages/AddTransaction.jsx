@@ -5,6 +5,7 @@ import { useTransactions } from "../store/TransactionStore"
 import { useCategories } from "../store/CategoryStore"
 import { useRules } from "../store/RuleStore"
 import { useBudget } from "../store/BudgetStore"
+
 import { checkSpendingWarnings } from "../utils/checkSpendingWarnings"
 
 import Button from "../components/ui/Button"

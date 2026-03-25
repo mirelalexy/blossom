@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom"
 
 import { useCurrency } from "../../../store/CurrencyStore"
 import { useBudget } from "../../../store/BudgetStore"
-import { formatCurrency } from "../../../utils/currencyUtils"
 import { useCategories } from "../../../store/CategoryStore"
+
+import { formatCurrency } from "../../../utils/currencyUtils"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Section from "../../../components/ui/Section"

@@ -1,8 +1,8 @@
 import Card from "../ui/Card"
 import ProgressBar from "../ui/ProgressBar"
+import Icon from "../ui/Icon"
 
 import "../../styles/components/ChallengeItem.css"
-import Icon from "../ui/Icon"
 
 function ChallengeItem({ challenge }) {
     const progress = Math.min((challenge.progress / challenge.target) * 100, 100)

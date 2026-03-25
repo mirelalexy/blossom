@@ -1,5 +1,7 @@
 import { CartesianGrid, LineChart as RechartsLineChart, ResponsiveContainer, XAxis, YAxis, Line, Tooltip } from "recharts"
+
 import { useCurrency } from "../../store/CurrencyStore"
+
 import EmptyState from "../ui/EmptyState"
 
 function LineChart({ data }) {

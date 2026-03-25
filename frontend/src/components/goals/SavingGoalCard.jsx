@@ -1,5 +1,6 @@
 import { useGoals } from "../../store/GoalsStore"
 import { useCurrency } from "../../store/CurrencyStore"
+
 import { formatCurrency } from "../../utils/currencyUtils"
 
 import Button from "../ui/Button"

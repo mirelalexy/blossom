@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import { useGoals } from "../store/GoalsStore"
 import { useCurrency } from "../store/CurrencyStore"
+
 import { formatCurrency } from "../utils/currencyUtils"
 
 import PageHeader from "../components/ui/PageHeader"

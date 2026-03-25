@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
-import { getNextMonthInfo, getGreeting, getTimeOfDay } from "../utils/dateUtils"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
+
 import { calculateStreak, getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
+import { getNextMonthInfo, getGreeting, getTimeOfDay } from "../utils/dateUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
