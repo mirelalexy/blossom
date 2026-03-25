@@ -12,7 +12,7 @@ function ChallengeItem({ challenge }) {
             return `${Math.round(c.progress)}%`
         }
 
-        return `${c.progress}/${c.target}`
+        return `${Math.min(c.progress, c.target)}/${c.target}`
     }
 
     return (
