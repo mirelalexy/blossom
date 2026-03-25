@@ -93,17 +93,17 @@ function Home() {
                 <StreakCard streak={streak} message={streakMessage} nextMileStone={nextStreakMileStone} />
 
                 {transactions.length == 0 ? (
-                    <>
+                    <div className="new-user-home">
                         <Section title="Get Started" className="get-started-section">
-                            <p className="secondary-text">Welcome to Blossom! This is where your habits begin to take shape. Shall we begin?</p>
-                            <Button>Add your first transaction</Button>
-                            <Button className="secondary">Set a goal</Button>
+                            <p className="secondary-text">Welcome to Blossom! This is where your habits begin to take shape. Ready to begin?</p>
+                            <Button onClick={() => navigate("/add-transaction")}>Add your first transaction</Button>
+                            <Button className="secondary" onClick={() => navigate("/add-goal")}>Set a goal</Button>
                         </Section>
 
                         <Card icon={<Icon name="categories" size={20} />} title="Tip">
                             <p>Your insights will appear here as you start tracking.</p>
                         </Card>
-                    </>
+                    </div>
                 ) : (
                     <>
                         <Section title="Stats">

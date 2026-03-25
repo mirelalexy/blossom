@@ -57,3 +57,9 @@
     gap: 20px;
     padding-bottom: 60px;
 }
+
+.new-user-home {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
