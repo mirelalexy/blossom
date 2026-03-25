@@ -72,3 +72,31 @@
 
     --accent-rgb: 132, 92, 246;
 }
+
+[data-theme="velvet-rose"] {
+    --bg-primary: #151218;
+    --bg-secondary: #1e1a24;
+    
+    --text-primary: #f5f2f7;
+    --text-secondary: #b8afc2;
+
+    --accent: #a13d77;
+    --hover: #c060b8;
+    --success: #8d4d70;
+    --border: #3f4147;
+    --card: #1e1a24;
+    --card2: #313338;
+    --input: #44444c;
+    --card-border: #411d35;
+    --progress-bar: #332f32;
+    --active: #c95293;
+    --focus-card: #3d0d2d;
+
+    --chart-1: #a54e8f;
+    --chart-2: #a04070;
+    --chart-3: #690f44;
+    --chart-4: #aa2357;
+    --chart-5: #b33b73;
+
+    --accent-rgb: 161, 61, 119;
+}
