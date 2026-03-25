@@ -22,3 +22,9 @@
 .button.active {
     background-color: var(--active);
 }
+
+.button.secondary {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--accent);
+    opacity: 0.8;
+}
