@@ -12,3 +12,54 @@
     font-size: 13px;
     font-weight: 400;
 }
+
+.streak-card-content {
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.streak-card-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+
+    background: linear-gradient(
+        120deg,
+        transparent 20%,
+        rgba(var(--accent-rgb), 0.9),
+        transparent 80%
+    );
+
+    background-size: 200% 200%;
+    animation: borderGlow 6s ease-in-out infinite;
+    
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+}
+
+@keyframes borderGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.streak-card-content > * {
+    position: relative;
+    z-index: 1;
+}
