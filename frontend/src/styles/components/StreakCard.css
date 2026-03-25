@@ -17,6 +17,16 @@
     position: relative;
     overflow: hidden;
     border: none;
+    animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.04);
+    }
 }
 
 .streak-card-content::before {
