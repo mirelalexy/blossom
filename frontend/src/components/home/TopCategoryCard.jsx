@@ -10,12 +10,6 @@ import "./TopCategoryCard.css"
 function TopCategoryCard({ category }) {
     const navigate = useNavigate()
 
-    if (!category) {
-        return (
-            <EmptyState title="No spending data yet." />
-        )
-    }
-
     return (
         <Card 
             className="top-category-card" 
@@ -24,8 +18,7 @@ function TopCategoryCard({ category }) {
             <Icon name="topCategory" size={20} />
             }
         >
-            <div className="top-category-card-content">
-                <p><span>{category.name}</span> is your highest spend this month.</p>
+                <p className="no-goal"><span>{category.name}</span> is your highest spend this month.</p>
                 <Button
                     onClick={() => navigate("/transactions", {
                         state: { categoryId: category.id }
@@ -34,7 +27,6 @@ function TopCategoryCard({ category }) {
                 >
                     View Category
                 </Button>
-            </div>
         </Card>
     )
 }
