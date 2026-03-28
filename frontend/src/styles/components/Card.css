@@ -6,7 +6,7 @@
     border-radius: 15px;
     border: 1px solid var(--card-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    gap: 5px;
+    gap: 10px;
 }
 
 .card-content {
@@ -22,9 +22,9 @@
 
 .card-header {
     display: flex;
-    gap: 10px;
+    gap: 6px;
     align-items: center;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .card-header p {

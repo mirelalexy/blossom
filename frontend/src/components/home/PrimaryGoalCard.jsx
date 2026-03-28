@@ -23,7 +23,7 @@ function PrimaryGoalCard({ goal }) {
                 }
             >
                 <p className="no-goal">Want to save up for something? Pick a <strong>primary goal</strong> to guide your journey.</p>
-                <Button>Create Primary Goal</Button>
+                <Button className="secondary">Create Primary Goal</Button>
             </Card>
         )
     }
