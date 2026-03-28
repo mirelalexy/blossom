@@ -13,3 +13,8 @@
     flex-direction: column;
     gap: 5px;
 }
+
+.primary-goal-card .no-goal {
+    font-size: 15px;
+    font-weight: 400;
+}
