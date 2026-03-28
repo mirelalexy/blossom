@@ -1,16 +1,18 @@
+import { useNavigate } from "react-router-dom"
+
 import { useCurrency } from "../../store/CurrencyStore"
 
 import { formatCurrency } from "../../utils/currencyUtils"
-import Button from "../ui/Button"
 
+import Button from "../ui/Button"
 import Card from "../ui/Card"
-import EmptyState from "../ui/EmptyState"
 import Icon from "../ui/Icon"
 import ProgressBar from "../ui/ProgressBar"
 
 import "./PrimaryGoalCard.css"
 
 function PrimaryGoalCard({ goal }) {
+    const navigate = useNavigate()
     const { currency } = useCurrency()
 
     if (!goal) {
@@ -23,7 +25,7 @@ function PrimaryGoalCard({ goal }) {
                 }
             >
                 <p className="no-goal">Want to save up for something? Pick a <strong>primary goal</strong> to guide your journey.</p>
-                <Button className="secondary">Create Primary Goal</Button>
+                <Button className="secondary" onClick={() => navigate("/add-goal")}>Create Primary Goal</Button>
             </Card>
         )
     }
