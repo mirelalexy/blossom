@@ -16,6 +16,7 @@ import RadioGroup from "../components/forms/RadioGroup"
 import Toggle from "../components/forms/Toggle"
 import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
+import ConfirmModal from "../components/ui/ConfirmModal"
 
 import "../styles/pages/AddTransaction.css"
 
@@ -31,6 +32,9 @@ function AddTransaction() {
     const existingTransaction = transactions.find(t => t.id === Number(id))
     
     const today = new Date().toISOString().split("T")[0]
+
+    const [pendingTransaction, setPendingTransaction] = useState(null)
+    const [warningMessage, setWarningMessage] = useState("")
 
     const [formData, setFormData] = useState(
         existingTransaction || {
@@ -121,15 +125,17 @@ function AddTransaction() {
             })
 
             if (warnings.length > 0) {
-                const message = warnings.join("\n")
-
-                const confirmed = window.confirm(`${message}\n\nDo you want to continue?`)
-
-                if (!confirmed) return
+                setPendingTransaction({ newTransaction, existingTransaction })
+                setWarningMessage(warnings.join("\n"))
+                return
             }
         }
        
-        if(existingTransaction) {
+        saveTransaction(newTransaction)
+    }
+
+    function saveTransaction(newTransaction) {
+        if (existingTransaction) {
             updateTransaction(newTransaction)
         } else {
             addTransaction(newTransaction)
@@ -275,6 +281,24 @@ function AddTransaction() {
                     <Button type="submit">Save Transaction</Button>
                 </form>
             </div>
+
+            {pendingTransaction && (
+                <ConfirmModal
+                    title="Spending Warning"
+                    message={warningMessage + "\n\nDo you want to continue?"}
+                    variant="warning"
+                    confirmLabel="Yes, save it"
+                    cancelLabel="Go back"
+                    onConfirm={() => {
+                        saveTransaction(pendingTransaction.newTransaction)
+                        setPendingTransaction(null)
+                    }}
+                    onCancel={() => {
+                        setPendingTransaction(null)
+                        setWarningMessage("")
+                    }}
+                />
+            )}
         </div>
     )
 }
