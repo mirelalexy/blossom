@@ -1,0 +1,72 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 200;
+    animation: fadeIn 0.18s ease;
+}
+
+.modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 24px;
+    width: min(90vw, 360px);
+    box-sizing: border-box;
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.2s cubic-bezier(0.35, 1.55, 0.65, 1);
+}
+
+.modal-title {
+    font-size: 17px;
+}
+
+.modal-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.modal.warning {
+    border-color: var(--accent);
+}
+
+.modal.warning .modal-title {
+    color: var(--accent);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale (1);
+    }
+    
+}
