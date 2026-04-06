@@ -1,0 +1,98 @@
+.sidebar {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        flex-shrink: 0;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        background-color: var(--bg-secondary);
+        border-right: 1px solid var(--border);
+        padding: 24px 16px;
+        box-sizing: border-box;
+        gap: 8px;
+    }
+
+    .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px 20px;
+        cursor: pointer;
+        color: var(--accent);
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 8px;
+    }
+
+    .sidebar-logo span {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: -0.3px;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        flex: 1;
+    }
+
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.15s ease, color 0.15 ease;
+    }
+
+    .sidebar-item:hover {
+        background-color: var(--card);
+        color: var(--text-primary);
+        cursor: pointer;
+    }
+
+    .sidebar-item.active {
+        background-color: var(--card);
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .sidebar-user {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .sidebar-user .home-avatar-wrapper {
+        width: 45px;
+        height: 45px;
+    }
+
+    .sidebar-footer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .sidebar-settings:hover {
+        cursor: pointer;
+    }
+
+    .sidebar-settings {
+        border: none;
+        background: none;
+    }
+ }
