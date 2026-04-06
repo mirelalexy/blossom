@@ -12,7 +12,7 @@ p {
 }
 
 button {
-    font-family: "DM Sans", serif;
+    font-family: var(--font-primary);
 }
 
 .bottom-add-icon {

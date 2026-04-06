@@ -24,7 +24,7 @@ function PrimaryGoalCard({ goal }) {
                 <Icon name="primaryGoal" size={20} />
                 }
             >
-                <p className="no-goal">Want to save up for something? Pick a <strong>primary goal</strong> to guide your journey.</p>
+                <p className="normal-text">Want to save up for something? Pick a <strong>primary goal</strong> to guide your journey.</p>
                 <Button className="secondary" onClick={() => navigate("/add-goal")}>Create Primary Goal</Button>
             </Card>
         )

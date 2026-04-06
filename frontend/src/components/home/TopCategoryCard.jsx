@@ -3,9 +3,6 @@ import { useNavigate } from "react-router-dom"
 import Button from "../ui/Button"
 import Card from "../ui/Card"
 import Icon from "../ui/Icon"
-import EmptyState from "../ui/EmptyState"
-
-import "./TopCategoryCard.css"
 
 function TopCategoryCard({ category }) {
     const navigate = useNavigate()
@@ -18,7 +15,7 @@ function TopCategoryCard({ category }) {
             <Icon name="topCategory" size={20} />
             }
         >
-                <p className="no-goal"><span>{category.name}</span> is your highest spend this month.</p>
+                <p className="normal-text"><strong>{category.name}</strong> is your highest spending category this month.</p>
                 <Button
                     onClick={() => navigate("/transactions", {
                         state: { categoryId: category.id }
