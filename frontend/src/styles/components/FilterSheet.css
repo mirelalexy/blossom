@@ -3,6 +3,7 @@
     inset: 0;
     background-color: rbga(0, 0, 0, 0.35);
     z-index: 100;
+    animation: fadeIn 0.18s ease;
 }
 
 .filter-sheet {
@@ -10,11 +11,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--card-border);
     border-radius: 20px 20px 0 0;
     padding: 24px;
     box-sizing: border-box;
     z-index: 101;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.28s cubic-bezier(0.35, 0.75, 0, 1);
 }
 
 @keyframes slideUp {
@@ -26,6 +31,11 @@
     }
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .filter-sheet-header {
     display: flex;
     justify-content: center;
@@ -35,17 +45,21 @@
 .filter-handle {
     width: 40px;
     height: 4px;
-    background: #ddd;
+    background: var(--card-border);
     border-radius: 999px;
     margin: 0 auto 16px auto;
 }
 
 .filter-actions {
-    margin-top: 20px;
+    margin-top: 8px;
     display: flex;
-    justify-content: flex-end;
+    gap: 10px;
 }
 
 .filter-sheet > * {
     margin-bottom: 16px;
+}
+
+.filter-sheet > *:last-child {
+    margin-bottom: 0;
 }
