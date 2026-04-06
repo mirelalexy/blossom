@@ -15,11 +15,11 @@ function Modal({ title, children, onClose, actions, variant = "default" }) {
             <div className="modal-overlay" onClick={onClose} />
             <div className={`modal ${variant}`} role="dialog" aria-modal="true">
                 {title && <h2 className="modal-title">{title}</h2>}
+                <div className="modal-body">
+                    {children}
+                </div>
+                {actions && <div className="modal-actions">{actions}</div>}
             </div>
-            <div className="modal-body">
-                {children}
-            </div>
-            {actions && <div className="modal-actions">{actions}</div>}
         </>
     )
 }
