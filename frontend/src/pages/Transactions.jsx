@@ -21,12 +21,15 @@ import SearchBar from "../components/ui/SearchBar"
 
 import "../styles/pages/Transactions.css"
 
+const PAGE_SIZE = 10
+
 function Transactions() {
     const navigate = useNavigate()
     const location = useLocation()
 
     const [searchQuery, setSearchQuery] = useState("")
-    const [showSearch, setShowSearch] = useState(false) 
+    const [showSearch, setShowSearch] = useState(false)
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
     const currentMonthYear = getCurrentMonthYear()
 
@@ -113,6 +116,7 @@ function Transactions() {
     const hasActiveFilters = filters.category || filters.type || filters.intent || filters.mood || filters.period.start || filters.period.end || searchQuery
     
     function updateFilter(field, value) {
+        setVisibleCount(PAGE_SIZE)
         setFilters(prev => {
             const updated = {
                 ...prev,
@@ -135,6 +139,12 @@ function Transactions() {
     const [showFilters, setShowFilters] = useState(false)
 
     const searchedTransactions = searchTransactions(filteredTransactions, searchQuery)
+
+    // pagination
+    const paginatedFiltered = searchedTransactions.slice(0, visibleCount)
+    const hasMore = searchedTransactions.length > visibleCount
+    const paginatedRecent = recentTransactions.slice(0, visibleCount)
+    const recentHasMore = recentTransactions.length > visibleCount
 
     return (
         <div className="transactions-layout">
@@ -179,9 +189,20 @@ function Transactions() {
                                 }
                             />
                         ) : (
-                            searchedTransactions.map((t) => (
+                            <>
+                            {paginatedFiltered.map((t) => (
                                 <TransactionCard key={t.id} {...t} />
-                            ))
+                            ))}
+
+                            {hasMore && (
+                                <Button 
+                                    className="secondary" 
+                                    onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+                                >
+                                    Load more
+                                </Button>
+                            )}
+                            </>
                         )}
                     </Section>
                 ) : noTransactions ? (
@@ -212,9 +233,20 @@ function Transactions() {
                         {recentTransactions.length === 0 ? (
                             <EmptyState title="No recent transactions yet." />
                         ) : (
-                            recentTransactions.map((t) => (
+                            <>
+                            {paginatedRecent.map((t) => (
                                 <TransactionCard key={t.id} {...t} />
-                            ))
+                            ))}
+
+                            {recentHasMore && (
+                                <Button 
+                                    className="secondary" 
+                                    onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+                                >
+                                    Load more
+                                </Button>
+                            )}
+                            </>
                         )}
                         
                         <Button onClick={() => navigate("/add-transaction")}>Add Transaction</Button>
