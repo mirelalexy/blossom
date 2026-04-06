@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 import { useCategories } from "../../store/CategoryStore"
 
 import Select from "../forms/Select"
@@ -9,6 +11,22 @@ import "../../styles/components/FilterSheet.css"
 
 function FilterSheet({ filters, updateFilter, onClose }) {
     const { categories } = useCategories()
+
+    useEffect(() => {
+        const prev = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+        return () => {
+            document.body.style.overflow = prev
+        }
+    }, [])
+
+    function handleClear() {
+        updateFilter("category", "")
+        updateFilter("type", "")
+        updateFilter("intent", "")
+        updateFilter("mood", "")
+        updateFilter("period", { start: "", end: "" })
+    }
 
     const categoryOptions = [
         { value: "", label: "All categories" },
@@ -105,6 +123,7 @@ function FilterSheet({ filters, updateFilter, onClose }) {
 
                 <div className="filter-actions">
                     <Button onClick={onClose}>Apply</Button>
+                    <Button className="secondary" onClick={handleClear}>Clear</Button>
                 </div>
             </div>
         </>
