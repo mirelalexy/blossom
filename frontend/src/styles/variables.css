@@ -23,6 +23,8 @@
     --chart-3: #cc7da5;
     --chart-4: #9a539c;
     --chart-5: #cc52ae;
+
+    --accent-rgb: 232, 154, 179;
 }
 
 [data-theme="forest"] {
@@ -43,6 +45,8 @@
     --chart-3: #13663d;
     --chart-4: #3c6d4c;
     --chart-5: #6da86b;
+
+    --accent-rgb: 123, 181, 123;
 }
 
 [data-theme="night"] {
