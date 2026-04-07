@@ -19,6 +19,11 @@
     opacity: 0.85;
 }
 
+.button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
 .button.active {
     background-color: var(--active);
 }
@@ -26,5 +31,10 @@
 .button.secondary {
     background-color: var(--bg-secondary);
     border: 1px solid var(--accent);
+    color: var(--accent);
     opacity: 0.8;
+}
+
+.button.secondary:hover {
+    opacity: 0.5;
 }
