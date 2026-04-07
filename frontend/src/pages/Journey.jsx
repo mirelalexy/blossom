@@ -45,7 +45,6 @@ function Journey() {
     const recentTransactions = transactions.filter(t => isLast30Days(t.date))
 
     const patterns = getUserPatterns(recentTransactions)
-    console.log(patterns)
 
     const stats = getStatistics(monthlyTransactions)
     const { currency } = useCurrency()
@@ -66,7 +65,6 @@ function Journey() {
     const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData)
 
     const topMerchants = getTopMerchantsData(monthlyTransactions)
-    console.log(topMerchants)
 
     const biggestExpense = getBiggestExpense(monthlyTransactions)
     const spendingStyle = getSpendingStyle({ moodData: moodChartData, intentData: intentChartData })
