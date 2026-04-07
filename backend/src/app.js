@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 
 import pool from "./db.js"
+import authRoutes from "./routes/authRoutes.js"
 
 const app = express()
 
@@ -15,5 +16,7 @@ app.get("/", (req, res) => {
 pool.query("SELECT NOW()")
     .then(res => console.log("DB connected:", res.rows[0]))
     .catch(err => console.log("DB error:", err))
+
+app.use("/api/auth", authRoutes)
 
 export default app
