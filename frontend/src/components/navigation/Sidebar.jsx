@@ -43,7 +43,7 @@ function Sidebar() {
             <div className="sidebar-footer">
                 <div className="sidebar-user">
                     <div className="home-avatar-wrapper" onClick={() => navigate("/profile")}>
-                        { user.avatar ? (
+                        { user?.avatar ? (
                             <img src={user.avatar} className="home-avatar"/>
                         ) : (
                             <div className="avatar-placeholder"></div>
@@ -51,7 +51,7 @@ function Sidebar() {
                     </div>
                     
                     <div className="sidebar-user-name">
-                        <p>{user.displayName}</p>
+                        <p>{user?.displayName}</p>
                     </div>
                 </div>
 

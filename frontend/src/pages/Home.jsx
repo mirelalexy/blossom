@@ -84,12 +84,12 @@ function Home() {
     const topCategory = getCategoryById(topCategoryId)
 
     const message = getNextMonthInfo()
-    const greeting = getGreeting(user.displayName)
+    const greeting = getGreeting(user?.displayName)
 
     return (
         <div className="home-layout">
             <div className="home-content">
-                <GreetingHeader greeting={greeting} message={message} avatarSrc={user.avatar}/>
+                <GreetingHeader greeting={greeting} message={message} avatarSrc={user?.avatar}/>
 
                 <StreakCard streak={streak} message={streakMessage} nextMileStone={nextStreakMileStone} />
 

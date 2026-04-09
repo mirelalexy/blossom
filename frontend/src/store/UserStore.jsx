@@ -3,20 +3,36 @@ import { createContext, useContext, useState, useEffect } from "react"
 const UserContext = createContext()
 
 export function UserProvider({ children }) {
-    const [user, setUser] = useState(() => {
-        const saved = localStorage.getItem("user")
-
-        return saved ? JSON.parse(saved) : {
-            displayName: "User", 
-            email: "user@example.com",
-            avatar: "",
-            banner: "" 
-        }
-    })
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-        localStorage.setItem("user", JSON.stringify(user))
-    }, [user])
+        async function fetchUser() {
+            const token = localStorage.getItem("token")
+
+            if (!token) return
+
+            try {
+                const res = await fetch("http://localhost:5000/api/users/me", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                const data = await res.json()
+
+                setUser({
+                    displayName: data.display_name,
+                    email: data.email,
+                    avatar: data.avatar,
+                    banner: data.banner
+                })
+            } catch (err) {
+                console.log("Failed to fetch user: ", err)
+            }
+        }
+
+        fetchUser()
+    }, [])
 
     function updateUser(field, value) {
         setUser(prev => ({
