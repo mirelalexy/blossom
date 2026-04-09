@@ -46,3 +46,21 @@ export async function createTransaction(req, res) {
         res.status(500).json({ error: "Create transaction failed" })
     }
 }
+
+export async function getTransactions(req, res) {
+    const userId = req.user.userId
+
+    try {
+        const result = await pool.query(
+            `SELECT * FROM transactions
+            WHERE user_id = $1
+            ORDER BY date DESC`,
+            [userId]
+        )
+
+        res.json(result.rows)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Fetch failed" })
+    }
+}
