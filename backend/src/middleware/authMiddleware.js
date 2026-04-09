@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
-export function authenticateToken(req, res, next) {
-    const authHeader = req.headers["authorization"]
+export function authMiddleware(req, res, next) {
+    const authHeader = req.headers.authorization
 
     const token = authHeader && authHeader.split(" ")[1]
 
@@ -11,7 +11,7 @@ export function authenticateToken(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.userId = decoded.userId
+        req.user = decoded
         next()
     } catch (err) {
         return res.status(403).json({ error: "Invalid token" })
