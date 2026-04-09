@@ -5,6 +5,7 @@ import pool from "./db.js"
 import authRoutes from "./routes/authRoutes.js"
 import { authMiddleware } from "./middleware/authMiddleware.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express()
 
@@ -25,5 +26,6 @@ pool.query("SELECT NOW()")
 
 app.use("/api/auth", authRoutes)
 app.use("/api/transactions", transactionRoutes)
+app.use("/api/users", userRoutes)
 
 export default app
