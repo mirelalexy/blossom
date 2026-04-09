@@ -52,3 +52,26 @@ svg {
     color: var(--text-secondary);
     font-size: 14px;
 }
+
+.error-text {
+    color: #ff0000;
+}
+
+.page-content {
+    padding: 24px 20px;
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 680px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .page-content {
+        padding: 36px 40px;
+        padding-bottom: 60px;
+    }
+}
