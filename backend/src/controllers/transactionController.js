@@ -87,3 +87,68 @@ export async function deleteTransaction(req, res) {
         res.status(500).json({ error: "Delete failed" })
     }
 }
+
+export async function editTransaction(req, res) {
+    const userId = req.user.userId
+    const { id } = req.params
+
+    const {
+        amount,
+        type,
+        method,
+        title,
+        categoryId,
+        date,
+        recurring,
+        mood,
+        intent,
+        notes
+    } = req.body
+
+    try {
+        const result = await pool.query(
+            `UPDATE transactions SET
+                amount = $1,
+                type = $2,
+                method = $3,
+                title = $4,
+                category_id = $5,
+                date = $6,
+                mood = $7,
+                intent = $8,
+                notes = $9,
+                is_recurring = $10,
+                recur_frequency = $11,
+                recur_day_of_month = $12,
+                recur_day_of_week = $13
+            WHERE id = $14 AND user_id = $15
+            RETURNING *`,
+            [
+                amount,
+                type.toLowerCase(),
+                method.toLowerCase(),
+                title,
+                categoryId,
+                date,
+                mood,
+                intent,
+                notes,
+                !!recurring,
+                recurring?.frequency ?? null,
+                recurring?.dayOfMonth || null,
+                recurring?.dayOfWeek || null,
+                id,
+                userId
+            ]
+        )
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Transaction not found" })
+        }
+
+        res.json(result.rows[0])
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Edit failed" })
+    }
+}
