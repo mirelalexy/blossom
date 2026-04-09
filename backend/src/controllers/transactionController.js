@@ -64,3 +64,26 @@ export async function getTransactions(req, res) {
         res.status(500).json({ error: "Fetch failed" })
     }
 }
+
+export async function deleteTransaction(req, res) {
+    const userId = req.user.userId
+    const { id } = req.params
+    
+    try {
+        const result = await pool.query(
+            `DELETE FROM transactions
+            WHERE id = $1 AND user_id = $2
+            RETURNING *`,
+            [id, userId]
+        )
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Transaction not found" })
+        }
+
+        res.json({ message: "Deleted successfully" })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Delete failed" })
+    }
+}
