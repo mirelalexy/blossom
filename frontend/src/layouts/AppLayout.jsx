@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 import { useChallenges } from "../store/ChallengeStore"
 import { useTransactions } from "../store/TransactionStore"
@@ -15,21 +15,12 @@ import Bottombar from "../components/navigation/Bottombar"
 
 import "./AppLayout.css"
 
-function AppLayout({ children }) {
-    const navigate = useNavigate()
-    
+function AppLayout({ children }) {    
     const token = localStorage.getItem("token")
 
     if (!token) {
         return <Navigate to="/login" />
     }
-
-    // prevent going back to login if already logged in
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            navigate("/")
-        }
-    }, [])
 
     const { challenges, evaluateChallenges, resetChallenges } = useChallenges()
     const { transactions } = useTransactions()

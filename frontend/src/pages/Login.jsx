@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom" 
 import Input from "../components/forms/Input"
 import Button from "../components/ui/Button"
@@ -11,6 +11,13 @@ function Login() {
     const [error, setError] = useState("")
 
     const navigate = useNavigate()
+
+    // prevent going back to login if already logged in
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/")
+        }
+    }, [])
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -42,7 +49,7 @@ function Login() {
     }
 
     return (
-        <div className="page-content login-content">
+        <div className="page-content">
             <h2 className="login-title">Login to Blossom</h2>
 
             <form onSubmit={handleLogin} className="login-form">
