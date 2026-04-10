@@ -84,7 +84,7 @@ export async function deleteCategory(req, res) {
 
     try {
         const check = await pool.query(
-            `SELECT is_default FROM categories WHERE id = $1 AND user_id = $2`,
+            `SELECT type, is_default FROM categories WHERE id = $1 AND user_id = $2`,
             [id, userId]
         )
 
