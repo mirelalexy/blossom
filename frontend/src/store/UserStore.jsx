@@ -36,11 +36,26 @@ export function UserProvider({ children }) {
         fetchUser()
     }, [])
 
-    function updateUser(field, value) {
+    async function updateUser(field, value) {
+        const token = localStorage.getItem("token")
+
         setUser(prev => ({
             ...prev,
             [field]: value
         }))
+
+        try {
+            await fetch(`${API_URL}/api/users/settings`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ [field]: value })
+            })
+        } catch (err) {
+            console.log("Update user failed: ", err)
+        }
     }
 
     return (

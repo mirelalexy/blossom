@@ -20,16 +20,18 @@ export async function getCurrentUser(req, res) {
 
 export async function updateUserSettings(req, res) {
     const userId = req.user.userId
-    const { theme, currency } = req.body
+    const { theme, currency, avatar, banner } = req.body
 
     try {
         const result = await pool.query(
             `UPDATE users
             SET theme = COALESCE($1, theme),
-                currency = COALESCE($2, currency)
-            WHERE id = $3
-            RETURNING theme, currency`,
-            [theme ?? null, currency ?? null, userId]
+                currency = COALESCE($2, currency),
+                avatar = COALESCE($3, avatar),
+                banner = COALESCE($4, banner)
+            WHERE id = $5
+            RETURNING *`,
+            [theme ?? null, currency ?? null, avatar ?? null, banner ?? null, userId]
         )
 
         res.json(result.rows[0])

@@ -16,6 +16,7 @@ import "../styles/pages/Profile.css"
 function Profile() {
     const { transactions } = useTransactions()
     const { user, updateUser } = useUser()
+    console.log(user)
     const [isEditing, setIsEditing] = useState(false)
     
     const { challenges } = useChallenges()
@@ -70,10 +71,10 @@ function Profile() {
     return (
         <div className="profile-page">
             <ProfileHeader 
-                bannerSrc={user.banner}
-                avatarSrc={user.avatar}
-                name={user.displayName}
-                email={user.email}
+                bannerSrc={user?.banner}
+                avatarSrc={user?.avatar}
+                name={user?.displayName}
+                email={user?.email}
                 isEditing={isEditing}
                 onEditToggle={() => setIsEditing(prev => !prev)} 
                 onAvatarClick={() => avatarRef.current.click()}
