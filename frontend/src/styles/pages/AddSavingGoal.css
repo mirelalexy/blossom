@@ -62,12 +62,12 @@ input[type="url"] {
     gap: 7px;
 }
 
-.monthly-contribution p {
+.saving-mode p {
     font-size: 14px;
     color: var(--text-secondary);
 }
 
-.monthly-contribution {
+.saving-mode {
     display: flex;
     flex-direction: column;
     gap: 10px;

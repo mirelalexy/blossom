@@ -21,9 +21,9 @@ function Goals() {
     const { budget } = useBudget()
     const isAutosaveActive = budget.rollover === "primaryGoal"
     
-    const filteredGoals = goals.filter(g => g.name.toLowerCase().includes(search.toLowerCase()))
+    const filteredGoals = goals.filter(g => g.name?.toLowerCase().includes(search.toLowerCase()))
 
-    const primaryGoal = goals.find(g => g.primaryGoal)
+    const primaryGoal = goals.find(g => g.is_primary)
     return (
         <div className="saving-goals-layout">
             <div className="saving-goals-content">
@@ -31,12 +31,14 @@ function Goals() {
                 
                 <SearchBar className="search-bar-icon" value={search} onChange={setSearch} />
 
-                <AutosaveCard
-                    autosaveActive={isAutosaveActive}
-                    primaryGoal={primaryGoal}
-                    onAction={() => navigate("/settings/budget")}
-                />
-
+                {goals.length > 0 && (
+                    <AutosaveCard
+                        autosaveActive={isAutosaveActive}
+                        primaryGoal={primaryGoal}
+                        onAction={() => navigate("/settings/budget")}
+                    />
+                )}
+                
                 {filteredGoals.length === 0 ? (
                     <EmptyState 
                         title="No saving goals yet 🌸"

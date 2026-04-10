@@ -25,12 +25,12 @@ function AddSavingGoal() {
 
     const [formData, setFormData] = useState({
         name: "",
-        target: "",
-        date: today,
-        monthlyContribution: "automatic",
+        target_amount: "",
+        deadline: today,
         notes: "",
         link: "",
-        primaryGoal: false,
+        is_primary: false,
+        saving_mode: "auto"
     })
 
     function handleChange(field, value) {
@@ -41,31 +41,30 @@ function AddSavingGoal() {
     }
 
     function calculateMonthlyContribution(goal) {
-        if (!goal.target || !goal.date) return 0
+        if (!goal.target_amount || !goal.deadline) return 0
 
         const start = new Date()
-        const end = new Date(goal.date)
+        const end = new Date(goal.deadline)
 
         const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
 
-        if (months <= 0) return goal.target
+        if (months <= 0) return goal.target_amount
 
-        return Math.ceil(goal.target / months)
+        return Math.ceil(goal.target_amount / months)
     }
 
     function handleSubmit(e) {
         e.preventDefault()
 
         const newGoal = {
-            id: Date.now(),
             name: formData.name,
-            target: Number(formData.target),
-            date: formData.date,
+            target_amount: Number(formData.target_amount),
+            deadline: formData.deadline,
             monthlyContribution: formData.monthlyContribution,
             notes: formData.notes,
             link: formData.link,
-            primaryGoal: formData.primaryGoal,
-            saved: 0
+            is_primary: formData.is_primary,
+            saving_mode: formData.saving_mode
         }
 
         addGoal(newGoal)
@@ -92,33 +91,33 @@ function AddSavingGoal() {
                         label="Target"
                         type="number"
                         placeholder="0"
-                        value={formData.target}
-                        onChange={(e) => handleChange("target", e.target.value)}
+                        value={formData.target_amount}
+                        onChange={(e) => handleChange("target_amount", e.target.value)}
                     />
 
                     {/* Date */}
                     <Input 
-                        label="Date"
+                        label="Deadline"
                         type="date"
-                        value={formData.date}
-                        onChange={(e) => handleChange("date", e.target.value)}
+                        value={formData.deadline}
+                        onChange={(e) => handleChange("deadline", e.target.value)}
                     />
 
                     {/* Monthly Contribution */}
-                    <div className="monthly-contribution">
+                    <div className="saving-mode">
                         <RadioGroup
-                            label="Monthly Contribution"
-                            name="monthlyContribution"
-                            value={formData.monthlyContribution}
-                            onChange={(val) => handleChange("monthlyContribution", val)}
+                            label="Saving Mode"
+                            name="saving_mode"
+                            value={formData.saving_mode}
+                            onChange={(val) => handleChange("saving_mode", val)}
                             options={[
-                                { value: "automatic", label: "Let Blossom calculate for me" },
+                                { value: "auto", label: "Let Blossom calculate for me" },
                                 { value: "manual", label: "I'll decide manually" }
                             ]}
                         />
 
-                        {formData.monthlyContribution === "automatic" && formData.target && formData.date && (
-                            <p>To reach {formatCurrency(formData.target, currency)}, you'll need to save {formatCurrency(calculateMonthlyContribution(formData), currency)}/month.</p>
+                        {formData.saving_mode === "auto" && formData.target_amount && formData.deadline && (
+                            <p>To reach {formatCurrency(formData.target_amount, currency)}, you'll need to save {formatCurrency(calculateMonthlyContribution(formData), currency)}/month.</p>
                         )}
                     </div>
                     
@@ -142,8 +141,8 @@ function AddSavingGoal() {
                     {/* Primary Goal */}
                     <Toggle
                         label="Primary Goal"
-                        checked={formData.primaryGoal}
-                        onChange={(val) => handleChange("primaryGoal", val)}    
+                        checked={formData.is_primary}
+                        onChange={(val) => handleChange("is_primary", val)}    
                     />
 
                     <Button type="submit">Plant New Goal</Button>

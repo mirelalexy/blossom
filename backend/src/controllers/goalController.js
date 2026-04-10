@@ -9,14 +9,15 @@ export async function createGoal(req, res) {
         deadline,
         notes,
         link,
-        is_primary
+        is_primary,
+        saving_mode
     } = req.body
 
     try {
         const result = await pool.query(
             `INSERT INTO goals
-            (user_id, name, target_amount, deadline, notes, link, is_primary)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            (user_id, name, target_amount, deadline, notes, link, is_primary, saving_mode)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *`,
             [
                 userId,
@@ -25,7 +26,8 @@ export async function createGoal(req, res) {
                 deadline,
                 notes,
                 link,
-                is_primary || false
+                is_primary || false,
+                saving_mode || "auto"
             ]
         )
 
@@ -66,7 +68,8 @@ export async function updateGoal(req, res) {
         notes,
         link,
         is_primary,
-        is_completed
+        is_completed,
+        saving_mode
     } = req.body
 
     try {
@@ -79,18 +82,20 @@ export async function updateGoal(req, res) {
                 notes = $5,
                 link = $6,
                 is_primary = $7,
-                is_completed = $8
-            WHERE id = $9 AND user_id = $10
+                is_completed = $8,
+                saving_mode = $9
+            WHERE id = $10 AND user_id = $11
             RETURNING *`,
             [
                 name,
                 target_amount,
-                current_amount,
+                current_amount ?? 0,
                 deadline,
                 notes,
                 link,
                 is_primary,
                 is_completed,
+                saving_mode,
                 id,
                 userId
             ]

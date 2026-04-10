@@ -10,11 +10,11 @@ import Icon from "../ui/Icon"
 import "../../styles/components/SavingGoalCard.css"
 
 function SavingGoalCard({ goal }) {
-    const { deleteGoal, updateGoalSaved, withdrawGoalSaved } = useGoals()
+    const { deleteGoal, addToGoal, withdrawFromGoal } = useGoals()
     const { currency } = useCurrency()
 
-    const progress = Math.round((goal.saved / goal.target) * 100)
-    const remaining = goal.target - goal.saved
+    const progress = Math.round((goal.current_amount / goal.target_amount) * 100)
+    const remaining = goal.target_amount - goal.current_amount
 
     return (
         <div className="goal-card">
@@ -26,14 +26,14 @@ function SavingGoalCard({ goal }) {
                     </button>
                 </div>
 
-                <p className="goal-header-second-row">Target: <strong>{formatCurrency(goal.target, currency)}</strong></p>
+                <p className="goal-header-second-row">Target: <strong>{formatCurrency(goal.target_amount, currency)}</strong></p>
             </div>
             
             <div className="goal-stats">
                 <ProgressBar progress={progress} />
 
                 <div className="goal-stats-info">
-                    <span>{formatCurrency(goal.saved, currency)} saved</span>
+                    <span>{formatCurrency(goal.current_amount, currency)} saved</span>
                     <span>{progress}%</span>
                 </div>
             </div>
@@ -46,7 +46,7 @@ function SavingGoalCard({ goal }) {
                         const amount = Number(prompt("Add funds"))
                         if (!amount) return
 
-                        updateGoalSaved(goal.id, amount)
+                        addToGoal(goal.id, amount)
                     }}
                 >
                     Add Funds
@@ -56,7 +56,7 @@ function SavingGoalCard({ goal }) {
                         const amount = Number(prompt("Withdraw funds"))
                         if (!amount) return
 
-                        withdrawGoalSaved(goal.id, amount)
+                        withdrawFromGoal(goal.id, amount)
                     }}
                 >
                     Withdraw Funds
