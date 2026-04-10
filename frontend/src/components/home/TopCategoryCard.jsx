@@ -15,7 +15,7 @@ function TopCategoryCard({ category }) {
             <Icon name="topCategory" size={20} />
             }
         >
-                <p className="normal-text"><strong>{category.name}</strong> is your highest spending category this month.</p>
+                <p className="normal-text"><strong>{category?.name}</strong> is your highest spending category this month.</p>
                 <Button
                     onClick={() => navigate("/transactions", {
                         state: { categoryId: category.id }

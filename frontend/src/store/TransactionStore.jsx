@@ -2,13 +2,37 @@ import { createContext, useContext, useState, useEffect } from "react"
 
 const TransactionsContext = createContext()
 
-function getInitialTransactions() {
-    const saved = localStorage.getItem("transactions")
-    return saved ? JSON.parse(saved) : []
-}
-
 export function TransactionsProvider({ children }) {
-    const [transactions, setTransactions] = useState(getInitialTransactions)
+    const [transactions, setTransactions] = useState([])
+
+    useEffect(() => {
+        async function fetchTransactions() {
+            const token = localStorage.getItem("token")
+
+            if (!token) return
+
+            try {
+                const res = await fetch("http://localhost:5000/api/transactions", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                const data = await res.json()
+
+                const formatted = data.map(({ category_id, ...rest }) => ({
+                    ...rest,
+                    categoryId: category_id
+                }))
+
+                setTransactions(formatted)
+            } catch (err) {
+                console.log("Fetch transactions failed: ", err)
+            }
+        }
+
+        fetchTransactions()
+    }, [])
 
     function addTransaction(transaction) {
         setTransactions(prev => [transaction, ...prev])
@@ -39,10 +63,6 @@ export function TransactionsProvider({ children }) {
             )
         )
     }
-
-    useEffect(() => {
-        localStorage.setItem("transactions", JSON.stringify(transactions))
-    }, [transactions])
 
     return (
         <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, clearTransactions, reassignCategory }}>

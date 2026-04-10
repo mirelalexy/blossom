@@ -57,14 +57,14 @@ function Home() {
             const date = new Date(t.date)
 
             return (
-                t.type === "Expense" && t.categoryId && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                t.type === "expense" && t.categoryId && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
             )
         })
 
         const categoryTotals = {}
 
         monthlyExpenses.forEach(t => {
-            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + t.amount
+            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + Number(t.amount)
         })
 
         let topCategoryId = null

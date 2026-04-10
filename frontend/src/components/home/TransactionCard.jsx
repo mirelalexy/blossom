@@ -11,7 +11,7 @@ import Card from "../ui/Card"
 
 import "./TransactionCard.css"
 
-function TransactionCard({ id, categoryId, merchant, date, mood, type, amount }) {
+function TransactionCard({ id, categoryId, title, date, mood, type, amount }) {
     const navigate = useNavigate()
     const { currency } = useCurrency()
     const { getCategoryById } = useCategories()
@@ -37,9 +37,9 @@ function TransactionCard({ id, categoryId, merchant, date, mood, type, amount })
         >
             <div className="transaction-card-content">
                 <div className="transaction-basics">
-                    <span className="transaction-merchant">{merchant}</span>
+                    <span className="transaction-merchant">{title}</span>
                     <span className="transaction-amount">
-                        {type === "Expense" ? "-" : "+"}{formatCurrency(amount, currency)}
+                        {type === "expense" ? "-" : "+"}{formatCurrency(amount, currency)}
                     </span>
                 </div>
 
