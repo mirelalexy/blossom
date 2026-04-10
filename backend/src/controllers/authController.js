@@ -16,6 +16,34 @@ export async function register(req, res) {
             [email, hashedPassword, displayName]
         )
 
+        const userId = result.rows[0].id
+
+        const defaultCategories = [
+            // expense
+            { name: "Bills", type: "expense", icon: "coins" },
+            { name: "Food", type: "expense", icon: "apple" },
+            { name: "Health", type: "expense", icon: "heartPulse" },
+            { name: "Entertainment", type: "expense", icon: "clapperboard" },
+            { name: "Shopping", type: "expense", icon: "handbag" },
+            { name: "Transport", type: "expense", icon: "car" },
+            { name: "Other", type: "expense", icon: "circle" },
+
+            // income
+            { name: "Salary", type: "income", icon: "briefcase" },
+            { name: "Freelance", type: "income", icon: "brush" },
+            { name: "Refund", type: "income", icon: "refund" },
+            { name: "Gift", type: "income", icon: "gift" },
+            { name: "Other", type: "income", icon: "circle" }
+        ]
+
+        for (const cat of defaultCategories) {
+            await pool.query(
+                `INSERT INTO categories (user_id, name, icon, type, is_default)
+                VALUES ($1, $2, $3, $4, true)`,
+                [userId, cat.name, cat.icon, cat.type]
+            )
+        }
+
         res.json(result.rows[0])
     } catch (err) {
         console.log(err)

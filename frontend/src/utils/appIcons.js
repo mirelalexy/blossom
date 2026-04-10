@@ -52,7 +52,11 @@ import {
     Leaf,
     Zap,
     Tags,
-    Sparkles
+    Sparkles,
+    Gift,
+    BriefcaseBusiness,
+    Brush,
+    UndoDot
 } from "lucide-react"
 
 export const appIcons = {
@@ -113,5 +117,9 @@ export const appIcons = {
     plane: Plane,
     sofa: Sofa,
     banknote: Banknote,
+    gift: Gift,
+    briefcase: BriefcaseBusiness,
+    brush: Brush,
+    refund: UndoDot,
     circle: Circle
 }
