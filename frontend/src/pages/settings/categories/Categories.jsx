@@ -25,11 +25,11 @@ function Categories() {
     }
 
     const expenseCategories = sortCategories(
-        categories.filter(cat => cat.type === "expense")
+        categories.filter(cat => cat.type === "expense" && cat.name !== "Other")
     )
 
     const incomeCategories = sortCategories(
-        categories.filter(cat => cat.type === "income")
+        categories.filter(cat => cat.type === "income" && cat.name !== "Other")
     )
 
     function handleAdd() {
