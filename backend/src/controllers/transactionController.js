@@ -21,7 +21,23 @@ export async function createTransaction(req, res) {
             `INSERT INTO transactions
             (user_id, amount, type, method, title, category_id, date, mood, intent, notes, is_recurring, recur_frequency, recur_day_of_month, recur_day_of_week)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-            RETURNING *`,
+            RETURNING
+                id,
+                user_id,
+                category_id,
+                amount,
+                type,
+                method,
+                title,
+                notes,
+                date::text AS date,
+                mood,
+                intent,
+                is_recurring,
+                recur_frequency,
+                recur_day_of_month,
+                recur_day_of_week,
+                created_at`,
             [
                 userId,
                 amount,
@@ -52,7 +68,24 @@ export async function getTransactions(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM transactions
+            `SELECT
+                id,
+                user_id,
+                category_id,
+                amount,
+                type,
+                method,
+                title,
+                notes,
+                date::text AS date,
+                mood,
+                intent,
+                is_recurring,
+                recur_frequency,
+                recur_day_of_month,
+                recur_day_of_week,
+                created_at
+            FROM transactions
             WHERE user_id = $1
             ORDER BY date DESC`,
             [userId]
@@ -122,7 +155,23 @@ export async function editTransaction(req, res) {
                 recur_day_of_month = $12,
                 recur_day_of_week = $13
             WHERE id = $14 AND user_id = $15
-            RETURNING *`,
+            RETURNING
+                id,
+                user_id,
+                category_id,
+                amount,
+                type,
+                method,
+                title,
+                notes,
+                date::text AS date,
+                mood,
+                intent,
+                is_recurring,
+                recur_frequency,
+                recur_day_of_month,
+                recur_day_of_week,
+                created_at`,
             [
                 amount,
                 type.toLowerCase(),
