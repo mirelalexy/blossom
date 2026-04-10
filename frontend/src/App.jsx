@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react"
 
 import { TransactionsProvider } from "./store/TransactionStore";
 import { GoalsProvider } from "./store/GoalsStore";
@@ -49,11 +50,25 @@ import Notifications from "./pages/Notifications";
 
 import { useUser } from "./store/UserStore";
 
-function AppContent() {
-  const { loading } = useUser();
+import BlossomLoader from "./components/ui/BlossomLoader";
 
-  if (loading) {
-    return <p>Loading...</p>;
+function AppContent() {
+  const { loading } = useUser()
+  const [showLoader, setShowLoader] = useState(true)
+
+  useEffect(() => {
+    if (!loading) {
+      // delay to see fade out
+      const timer = setTimeout(() => {
+        setShowLoader(false)
+      }, 400)
+
+      return () => clearTimeout(timer)
+    }
+  }, [loading])
+
+  if (showLoader) {
+    return <BlossomLoader />
   }
 
   return (
