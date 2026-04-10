@@ -20,7 +20,11 @@ export async function getCurrentUser(req, res) {
 
 export async function updateUserSettings(req, res) {
     const userId = req.user.userId
-    const { theme, currency, avatar, banner } = req.body
+    const { theme, currency, avatar, banner, displayName, email } = req.body
+
+    if (email && !email.includes("@")) {
+        return res.status(400).json({ error: "Invalid email" })
+    }
 
     try {
         const result = await pool.query(
@@ -28,10 +32,20 @@ export async function updateUserSettings(req, res) {
             SET theme = COALESCE($1, theme),
                 currency = COALESCE($2, currency),
                 avatar = COALESCE($3, avatar),
-                banner = COALESCE($4, banner)
-            WHERE id = $5
+                banner = COALESCE($4, banner),
+                display_name = COALESCE($5, display_name),
+                email = COALESCE($6, email)
+            WHERE id = $7
             RETURNING *`,
-            [theme ?? null, currency ?? null, avatar ?? null, banner ?? null, userId]
+            [
+                theme ?? null, 
+                currency ?? null, 
+                avatar ?? null, 
+                banner ?? null, 
+                displayName ?? null, 
+                email ?? null, 
+                userId
+            ]
         )
 
         res.json(result.rows[0])
