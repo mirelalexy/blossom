@@ -119,10 +119,6 @@ export function TransactionsProvider({ children }) {
         }
     }
 
-    function clearTransactions() {
-        setTransactions([])
-    }
-
     function reassignCategory(oldCategoryId, newCategoryId) {
         setTransactions(prev => 
             prev.map(t =>
@@ -134,7 +130,7 @@ export function TransactionsProvider({ children }) {
     }
 
     return (
-        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, clearTransactions, reassignCategory }}>
+        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, reassignCategory }}>
             {children}
         </TransactionsContext.Provider>
     )
