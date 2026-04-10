@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom" 
+
+import { useUser } from "../store/UserStore"
+
 import Input from "../components/forms/Input"
 import Button from "../components/ui/Button"
 
@@ -11,6 +14,7 @@ function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const { loading } = useUser()
 
     const navigate = useNavigate()
 
@@ -19,7 +23,7 @@ function Login() {
         if (localStorage.getItem("token")) {
             navigate("/")
         }
-    }, [])
+    }, [navigate])
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -44,7 +48,7 @@ function Login() {
             // save token
             localStorage.setItem("token", data.token)
 
-            navigate("/")
+            window.location.href = "/"
         } catch (err) {
             setError("Something went wrong")
         }
@@ -72,7 +76,9 @@ function Login() {
                     required
                 />
 
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={loading}>
+                    {loading ? "Logging in..." : "Login"}
+                </Button>
             </form>
 
             {error && <p className="error-text">{error}</p>}
