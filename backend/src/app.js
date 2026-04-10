@@ -7,6 +7,7 @@ import { authMiddleware } from "./middleware/authMiddleware.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import categoryRoutes from "./routes/categoryRoutes.js"
+import goalRoutes from "./routes/goalRoutes.js"
 
 const app = express()
 
@@ -30,5 +31,6 @@ app.use("/api/auth", authRoutes)
 app.use("/api/transactions", transactionRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/categories", categoryRoutes)
+app.use("/api/goals", goalRoutes)
 
 export default app
