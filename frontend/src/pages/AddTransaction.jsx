@@ -160,8 +160,8 @@ function AddTransaction() {
     const sortedCategories = getCategoriesByType(formData.type.toLowerCase())
         .sort((a, b) => {
             // put Other category at the end of the list
-            if (a.id.includes("other")) return 1
-            if (b.id.includes("other")) return -1
+            if (a.name.includes("Other")) return 1
+            if (b.name.includes("Other")) return -1
 
             return a.name.localeCompare(b.name)
         })
