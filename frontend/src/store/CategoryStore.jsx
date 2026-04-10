@@ -1,80 +1,113 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-import { getCategoryIcon } from "../utils/getCategoryIcon"
+const API_URL = import.meta.env.VITE_API_URL
 
 const CategoryContext = createContext()
 
-const defaultCategories = [
-    // expense
-    { id: "food", name: "Food", icon: "apple", type: "expense", default: true },
-    { id: "transport", name: "Transport", icon: "car", type: "expense", default: true },
-    { id: "health", name: "Health", icon: "heartPulse", type: "expense", default: true },
-    { id: "shopping", name: "Shopping", icon: "handbag", type: "expense", default: true },
-    { id: "bills", name: "Bills", icon: "coins", type: "expense", default: true },
-    { id: "entertainment", name: "Entertainment", icon: "clapperboard", type: "expense", default: true },
-    { id: "other-expense", name: "Other Expenses", icon: "circle", type: "expense", default: true },
-
-    // income
-    { id: "salary", name: "Salary", icon: "banknote", type: "income", default: true },
-    { id: "freelance", name: "Freelance", icon: "banknote", type: "income", default: true },
-    { id: "gift", name: "Gift", icon: "banknote", type: "income", default: true },
-    { id: "business", name: "Business", icon: "banknote", type: "income", default: true },
-    { id: "refund", name: "Refund", icon: "banknote", type: "income", default: true },
-    { id: "other-income", name: "Other Income", icon: "circle", type: "income", default: true }
-]
-
 export function CategoryProvider({ children }) {
-    const [categories, setCategories] = useState(() => {
-        const saved = localStorage.getItem("categories")
-
-        return saved ? JSON.parse(saved) : defaultCategories
-    })
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        localStorage.setItem("categories", JSON.stringify(categories))
-    }, [categories])
+            async function fetchCategories() {
+                const token = localStorage.getItem("token")
+        
+                if (!token) return
+        
+                try { 
+                    const res = await fetch(`${API_URL}/api/categories`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+        
+                    const data = await res.json()
+            
+                    setCategories(data)
+                } catch (err) {
+                    console.log("Fetch categories failed: ", err)
+                }
+            }
+        
+            fetchCategories()
+        }, [])
 
-    function addCategory(name, type="expense") {
+    async function addCategory(name, type = "expense") {
+        const token = localStorage.getItem("token")
         const trimmed = name.trim()
         if (!trimmed) return
 
-        const exists = categories.some(
-            c => c.name.toLowerCase() === trimmed.toLowerCase() && c.type === type
-        )
+        try {
+            const res = await fetch(`${API_URL}/api/categories`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ name: trimmed, type })
+            })
 
-        if (exists) {
-            alert("Category already exists.")
-            return
-        }
+            const data = await res.json()
 
-        const id = trimmed.toLowerCase().replace(/\s+/g, "-")
-        const icon = getCategoryIcon(trimmed)
-
-        setCategories(prev => [
-            ...prev,
-            {
-                id,
-                name: trimmed,
-                icon,
-                type,
-                default: false
+            if (!res.ok) {
+                alert(data.error)
+                return
             }
-        ])
+
+            setCategories(prev => [...prev, data])
+        } catch (err) {
+            console.log("Add category failed: ", err)
+        }
     }
 
-    function renameCategory(id, newName) {
-        setCategories(prev =>
-            prev.map(cat =>
-                cat.id === id ? { ...cat, name: newName } : cat
+    async function renameCategory(id, newName) {
+        const token = localStorage.getItem("token")
+
+        try {
+            const res = await fetch(`${API_URL}/api/categories/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ name: newName })
+            })
+
+            const data = await res.json()
+
+            setCategories(prev =>
+                prev.map(cat =>
+                    cat.id === id ? data : cat
+                )
             )
-        )
+        } catch (err) {
+            console.log("Rename category failed: ", err)
+        }
     }
 
-    // delete custom categories
-    function deleteCategory(id) {
-        setCategories(prev =>
-            prev.filter(cat => cat.id !== id || cat.default)
-        )
+    async function deleteCategory(id) {
+        const token = localStorage.getItem("token")
+
+        try {
+            const res = await fetch(`${API_URL}/api/categories/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                alert(data.error)
+                return
+            }
+
+            setCategories(prev =>
+                prev.filter(cat => cat.id !== id)
+            )
+        } catch (err) {
+            console.log("Delete category failed: ", err)
+        }
     }
 
     function getCategoriesByType(type) {

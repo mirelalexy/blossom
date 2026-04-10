@@ -96,6 +96,23 @@ export async function deleteCategory(req, res) {
             return res.status(400).json({ error: "Cannot delete default category" })
         }
 
+        // find Other category
+        const other = await pool.query(
+            `SELECT id FROM categories
+            WHERE user_id = $1
+            AND name = 'Other'
+            AND type = $2`,
+            [userId, check.rows[0].type]
+        )
+
+        // reassign transactions
+        await pool.query(
+            `UPDATE transactions
+            SET category_id = $1
+            WHERE category_id = $2`,
+            [other.rows[0].id, id]
+        )
+
         await pool.query(
             `DELETE FROM categories
             WHERE id = $1 AND user_id = $2`,

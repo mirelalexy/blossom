@@ -27,7 +27,6 @@ function Home() {
     const today = new Date()
 
     const { transactions } = useTransactions()
-    console.log(transactions)
     const { getCategoryById } = useCategories()
     const { user } = useUser()
 

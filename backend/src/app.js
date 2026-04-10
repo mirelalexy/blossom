@@ -29,6 +29,6 @@ pool.query("SELECT NOW()")
 app.use("/api/auth", authRoutes)
 app.use("/api/transactions", transactionRoutes)
 app.use("/api/users", userRoutes)
-app.use("/ai/categories", categoryRoutes)
+app.use("/api/categories", categoryRoutes)
 
 export default app
