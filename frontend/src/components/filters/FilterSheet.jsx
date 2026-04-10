@@ -68,21 +68,21 @@ function FilterSheet({ filters, updateFilter, onClose }) {
                     onChange={(val) => updateFilter("type", val)}
                     options={[
                         { value: "", label: "All" },
-                        { value: "Expense", label: "Expense" },
-                        { value: "Income", label: "Income" }
+                        { value: "expense", label: "Expense" },
+                        { value: "income", label: "Income" }
                     ]}
                 />
 
-                {filters.type !== "Income" && (
+                {filters.type !== "income" && (
                     <RadioGroup 
                         label="Intent"
                         value={filters.intent}
                         onChange={(val) => updateFilter("intent", val)}
                         options={[
                             { value: "", label: "All" },
-                            { value: "Necessary", label: "Necessary" },
-                            { value: "Planned", label: "Planned" },
-                            { value: "Impulse", label: "Impulse" }
+                            { value: "necessary", label: "Necessary" },
+                            { value: "planned", label: "Planned" },
+                            { value: "impulse", label: "Impulse" }
                         ]}
                     />
                 )}

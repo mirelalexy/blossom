@@ -81,11 +81,11 @@ function Transactions() {
     })
 
     const expenses = monthlyTransactions
-        .filter(t => t.type === "Expense")
+        .filter(t => t.type === "expense")
         .reduce((sum, t) => sum + t.amount, 0)
 
     const income = monthlyTransactions
-        .filter(t => t.type === "Income")
+        .filter(t => t.type === "income")
         .reduce((sum, t) => sum + t.amount, 0)
 
     const budgetLeft = budget.monthlyBudget - expenses
@@ -126,7 +126,7 @@ function Transactions() {
             if (field === "type") {
                 updated.category = ""
 
-                if (value === "Income") {
+                if (value === "income") {
                     updated.intent = ""
                 }
             }
