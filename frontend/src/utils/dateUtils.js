@@ -169,3 +169,9 @@ export function isLast30Days(date) {
 
     return days <= 30
 }
+
+export function formatLocalDate(dateString) {
+    if (!dateString) return
+
+    return dateString.split("T")[0]
+}

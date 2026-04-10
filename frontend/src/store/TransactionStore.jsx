@@ -34,20 +34,87 @@ export function TransactionsProvider({ children }) {
         fetchTransactions()
     }, [])
 
-    function addTransaction(transaction) {
-        setTransactions(prev => [transaction, ...prev])
+    async function addTransaction(transaction) {
+        const token = localStorage.getItem("token")
+
+        const payload = {
+            ...transaction,
+            category_id: transaction.categoryId
+        }
+
+        try {
+            const res = await fetch("http://localhost:5000/api/transactions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            })
+
+            const data = await res.json()
+
+            const formatted = {
+                ...data,
+                categoryId: data.category_id
+            }
+
+            setTransactions(prev => [formatted, ...prev])
+        } catch (err) {
+            console.log("Add transaction failed: ", err)
+        }
     }
 
-    function deleteTransaction(id) {
-        setTransactions(prev => prev.filter(t => t.id !== id))
+    async function deleteTransaction(id) {
+        const token = localStorage.getItem("token")
+
+        try {
+            await fetch(`http://localhost:5000/api/transactions/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            })
+
+            setTransactions(prev => prev.filter(t => t.id !== id))
+        } catch (err) {
+            console.log("Delete transaction failed: ", err)
+        }        
     }
 
-    function updateTransaction(transaction) {
-        setTransactions(prev => 
-            prev.map(t =>
-                t.id === transaction.id ? transaction : t
+    async function updateTransaction(transaction) {
+        const token = localStorage.getItem("token")
+
+        const payload = {
+            ...transaction,
+            category_id: transaction.categoryId
+        }
+
+        try {
+            const res = await fetch(`http://localhost:5000/api/transactions/${transaction.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            })
+
+            const data = await res.json()
+
+            const formatted = {
+                ...data,
+                categoryId: data.category_id
+            }
+
+            setTransactions(prev => 
+                prev.map(t =>
+                    t.id === formatted.id ? formatted : t
+                )
             )
-        )
+        } catch (err) {
+            console.log("Update transaction failed: ", err)
+        }
     }
 
     function clearTransactions() {

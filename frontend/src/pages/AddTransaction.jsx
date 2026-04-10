@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
@@ -7,6 +7,7 @@ import { useRules } from "../store/RuleStore"
 import { useBudget } from "../store/BudgetStore"
 
 import { checkSpendingWarnings } from "../utils/checkSpendingWarnings"
+import { formatLocalDate } from "../utils/dateUtils"
 
 import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
@@ -29,19 +30,18 @@ function AddTransaction() {
     const { rules } = useRules()
     const { budget } = useBudget()
 
-    const existingTransaction = transactions.find(t => t.id === Number(id))
+    const existingTransaction = transactions.find(t => t.id === id)
     
     const today = new Date().toISOString().split("T")[0]
 
     const [pendingTransaction, setPendingTransaction] = useState(null)
     const [warningMessage, setWarningMessage] = useState("")
 
-    const [formData, setFormData] = useState(
-        existingTransaction || {
+    const [formData, setFormData] = useState({
         amount: "",
-        type: "Expense",
-        method: "Card",
-        merchant: "",
+        type: "expense",
+        method: "card",
+        title: "",
         categoryId: "",
         date: today,
         recurring: false,
@@ -50,6 +50,15 @@ function AddTransaction() {
         intent: null,
         notes: ""
     })
+
+    useEffect(() => {
+        if (!existingTransaction) return
+
+        setFormData({
+            ...existingTransaction,
+            date: formatLocalDate(existingTransaction.date)
+        })
+    }, [existingTransaction])
 
     function handleChange(field, value) {
         setFormData(prev => {
@@ -87,11 +96,10 @@ function AddTransaction() {
         }
 
         const newTransaction = {
-            id: existingTransaction ? existingTransaction.id : Date.now(),
             amount: amount,
             type: formData.type,
             method: formData.method,
-            merchant: formData.merchant,
+            title: formData.title,
             categoryId: formData.categoryId,
             date: formData.date,
             mood: formData.mood,
@@ -116,7 +124,7 @@ function AddTransaction() {
             ? transactions.filter(t => t.id !== existingTransaction.id)
             : transactions
 
-        if (newTransaction.type === "Expense") {
+        if (newTransaction.type === "expense") {
              const warnings = checkSpendingWarnings({
                 transaction: newTransaction,
                 transactions: otherTransactions,
@@ -136,7 +144,10 @@ function AddTransaction() {
 
     function saveTransaction(newTransaction) {
         if (existingTransaction) {
-            updateTransaction(newTransaction)
+            updateTransaction({
+                ...newTransaction,
+                id: existingTransaction.id
+            })
         } else {
             addTransaction(newTransaction)
         }
@@ -185,8 +196,8 @@ function AddTransaction() {
                         value={formData.type}
                         onChange={(val) => handleChange("type", val)}
                         options={[
-                            { value: "Expense", label: "Expense" },
-                            { value: "Income", label: "Income" }
+                            { value: "expense", label: "Expense" },
+                            { value: "income", label: "Income" }
                         ]}
                     />
 
@@ -197,17 +208,17 @@ function AddTransaction() {
                         value={formData.method}
                         onChange={(val) => handleChange("method", val)}
                         options={[
-                            { value: "Card", label: "Card" },
-                            { value: "Cash", label: "Cash" }
+                            { value: "card", label: "Card" },
+                            { value: "cash", label: "Cash" }
                         ]}
                     />
 
-                    {/* Merchant */}
+                    {/* Title */}
                     <Input 
-                        label="Merchant"
+                        label="Title"
                         type="text"
-                        value={formData.merchant}
-                        onChange={(e) => handleChange("merchant", e.target.value)}
+                        value={formData.title}
+                        onChange={(e) => handleChange("title", e.target.value)}
                     />
 
                     {/* Category */}
@@ -255,16 +266,16 @@ function AddTransaction() {
                     />
 
                     {/* Intent */}
-                    {formData.type === "Expense" && (
+                    {formData.type === "expense" && (
                         <RadioGroup
                             label="Purchase Intent"
                             name="intent"
                             value={formData.intent}
                             onChange={(val) => handleChange("intent", val)}
                             options={[
-                                { value: "Necessary", label: "Necessary" },
-                                { value: "Planned", label: "Planned" },
-                                { value: "Impulse", label: "Impulse" }
+                                { value: "necessary", label: "Necessary" },
+                                { value: "planned", label: "Planned" },
+                                { value: "impulse", label: "Impulse" }
                             ]}
                         />
                     )}

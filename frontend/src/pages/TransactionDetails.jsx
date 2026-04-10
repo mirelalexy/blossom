@@ -22,15 +22,16 @@ function TransactionDetails() {
     const { currency } = useCurrency()
     const { getCategoryById } = useCategories()
 
-    const transaction = transactions.find(t => t.id === Number(id))
+    const transaction = transactions.find(t => t.id === id)
+
+    if (!transaction) {
+            return <p>Transaction not found.</p>
+        }
 
     const categoryData = getCategoryById(transaction.categoryId)
     const Icon = appIcons[categoryData?.icon] || appIcons["circle"]
 
-    if(!transaction) {
-        return <p>Transaction not found.</p>
-    }
-
+    
     function handleDelete() {
         const confirmed = window.confirm("Delete this transaction?")
 
@@ -55,11 +56,11 @@ function TransactionDetails() {
                             {Icon && <Icon size={35} />}
                         </div>
                         <div>
-                            <h2>{transaction.merchant}</h2>
+                            <h2>{transaction.title}</h2>
                             <p className="transaction-category">{categoryData?.name}</p>
 
                             <p className="transaction-amount">
-                                {transaction.type === "Expense" ? "-" : "+"}
+                                {transaction.type === "expense" ? "-" : "+"}
                                 {formatCurrency(transaction.amount, currency)}
                             </p>
                         </div>      
@@ -69,7 +70,7 @@ function TransactionDetails() {
                         <p>Type: {transaction.type}</p>
                         <p>Method: {transaction.method}</p>
                         <p>Date: {formatDate(transaction.date)}</p>
-                        <p>Recurring: {transaction.recurring ? "Yes" : "No"}</p>
+                        <p>Recurring: {transaction.is_recurring ? "Yes" : "No"}</p>
                     </Section>
 
                     <Section title="Reflection" className="transaction-section reflection-transaction-section">
