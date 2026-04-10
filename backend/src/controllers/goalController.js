@@ -72,6 +72,10 @@ export async function updateGoal(req, res) {
         saving_mode
     } = req.body
 
+    if (current_amount === undefined) {
+        return res.status(400).json({ error: "current_amount is required" })
+    }
+
     try {
         const result = await pool.query(
             `UPDATE goals SET
@@ -89,7 +93,7 @@ export async function updateGoal(req, res) {
             [
                 name,
                 target_amount,
-                current_amount ?? 0,
+                current_amount,
                 deadline,
                 notes,
                 link,

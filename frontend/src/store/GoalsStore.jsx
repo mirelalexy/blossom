@@ -21,7 +21,14 @@ export function GoalsProvider({ children }) {
                 })
 
                 const data = await res.json()
-                setGoals(data)
+
+                const formatted = data.map(g => ({
+                    ...g,
+                    current_amount: Number(g.current_amount),
+                    target_amount: Number(g.target_amount)
+                }))
+
+                setGoals(formatted)
             } catch (err) {
                 console.log("Fetch goals failed: ", err)
             }
@@ -95,10 +102,10 @@ export function GoalsProvider({ children }) {
     // helpers to add/withdraw money
     async function addToGoal(id, amount) {
         const goal = goals.find(g => g.id === id)
-        
+
         if (!goal) return
 
-        const updated = {
+        const updatedGoal = {
             ...goal,
             current_amount: Math.min(
                 goal.target_amount,
@@ -106,15 +113,22 @@ export function GoalsProvider({ children }) {
             )
         }
 
-        await updateGoal(updated)
+        // update UI instantly then DB
+        setGoals(prev =>
+            prev.map(g =>
+                g.id === id ? updatedGoal : g
+            )
+        )
+
+        await updateGoal(updatedGoal)
     }
 
     async function withdrawFromGoal(id, amount) {
         const goal = goals.find(g => g.id === id)
-        
+
         if (!goal) return
 
-        const updated = {
+        const updatedGoal = {
             ...goal,
             current_amount: Math.max(
                 0,
@@ -122,7 +136,14 @@ export function GoalsProvider({ children }) {
             )
         }
 
-        await updateGoal(updated)
+        // update UI instantly then DB
+        setGoals(prev =>
+            prev.map(g =>
+                g.id === id ? updatedGoal : g
+            )
+        )
+
+        await updateGoal(updatedGoal)
     }
 
     return (

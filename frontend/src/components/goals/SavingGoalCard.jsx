@@ -72,7 +72,6 @@ function SavingGoalCard({ goal }) {
                         }
 
                         addToGoal(goal.id, amount)
-                        
 
                         addTransaction({
                             title: `Saved for ${goal.name}`,
