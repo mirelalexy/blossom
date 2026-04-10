@@ -1,5 +1,7 @@
 import { useGoals } from "../../store/GoalsStore"
 import { useCurrency } from "../../store/CurrencyStore"
+import { useTransactions } from "../../store/TransactionStore"
+import { useCategories } from "../../store/CategoryStore"
 
 import { formatCurrency } from "../../utils/currencyUtils"
 
@@ -12,8 +14,21 @@ import "../../styles/components/SavingGoalCard.css"
 function SavingGoalCard({ goal }) {
     const { deleteGoal, addToGoal, withdrawFromGoal } = useGoals()
     const { currency } = useCurrency()
+    const { addTransaction } = useTransactions()
+    const { categories } = useCategories()
 
-    const progress = Math.round((goal.current_amount / goal.target_amount) * 100)
+    const goalsExpenseCategory = categories.find(
+        cat => cat.name === "Goals" && cat.type === "expense"
+    )
+
+    const goalsIncomeCategory = categories.find(
+        cat => cat.name === "Goals" && cat.type === "income"
+    )
+
+    const progress = goal.target_amount
+        ? Math.round((goal.current_amount / goal.target_amount) * 100) 
+        : 0
+
     const remaining = goal.target_amount - goal.current_amount
 
     return (
@@ -44,9 +59,32 @@ function SavingGoalCard({ goal }) {
                 <Button 
                     onClick={() => {
                         const amount = Number(prompt("Add funds"))
-                        if (!amount) return
+                        if (!amount || isNaN(amount) || amount <= 0) return
+
+                        if (goal.current_amount + amount > goal.target_amount) {
+                            alert("You exceeded your goal!")
+                            return
+                        }
+
+                        if (!goalsExpenseCategory) {
+                            alert("Goals category missing")
+                            return
+                        }
 
                         addToGoal(goal.id, amount)
+                        
+
+                        addTransaction({
+                            title: `Saved for ${goal.name}`,
+                            amount: amount,
+                            type: "expense",
+                            categoryId: goalsExpenseCategory.id,
+                            date: new Date().toISOString(),
+                            method: "card",
+                            mood: null,
+                            intent: null,
+                            notes: ""
+                        })
                     }}
                 >
                     Add Funds
@@ -54,9 +92,31 @@ function SavingGoalCard({ goal }) {
                 <Button 
                     onClick={() => {
                         const amount = Number(prompt("Withdraw funds"))
-                        if (!amount) return
+                        if (!amount || isNaN(amount) || amount <= 0) return
+
+                        if (goal.current_amount - amount < 0) {
+                            alert("Amount not available!")
+                            return
+                        }
+
+                        if (!goalsIncomeCategory) {
+                            alert("Goals category missing")
+                            return
+                        }
 
                         withdrawFromGoal(goal.id, amount)
+
+                        addTransaction({
+                            title: `Withdrew from ${goal.name}`,
+                            amount: amount,
+                            type: "income",
+                            categoryId: goalsIncomeCategory.id,
+                            date: new Date().toISOString(),
+                            method: "card",
+                            mood: null,
+                            intent: null,
+                            notes: ""
+                        })
                     }}
                 >
                     Withdraw Funds

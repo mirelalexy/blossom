@@ -56,7 +56,8 @@ import {
     Gift,
     BriefcaseBusiness,
     Brush,
-    UndoDot
+    UndoDot,
+    Target
 } from "lucide-react"
 
 export const appIcons = {
@@ -121,5 +122,6 @@ export const appIcons = {
     briefcase: BriefcaseBusiness,
     brush: Brush,
     refund: UndoDot,
+    target: Target,
     circle: Circle
 }
