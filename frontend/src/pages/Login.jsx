@@ -5,6 +5,8 @@ import Button from "../components/ui/Button"
 
 import "../styles/pages/Login.css"
 
+const API_URL = import.meta.env.VITE_API_URL
+
 function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,7 +26,7 @@ function Login() {
         setError("")
 
         try {
-            const res = await fetch("http://localhost:5000/api/auth/login", {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
@@ -12,7 +14,7 @@ export function TransactionsProvider({ children }) {
             if (!token) return
 
             try {
-                const res = await fetch("http://localhost:5000/api/transactions", {
+                const res = await fetch(`${API_URL}/api/transactions`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -43,7 +45,7 @@ export function TransactionsProvider({ children }) {
         }
 
         try {
-            const res = await fetch("http://localhost:5000/api/transactions", {
+            const res = await fetch(`${API_URL}/api/transactions`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +71,7 @@ export function TransactionsProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`http://localhost:5000/api/transactions/${id}`, {
+            await fetch(`${API_URL}/api/transactions/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -91,7 +93,7 @@ export function TransactionsProvider({ children }) {
         }
 
         try {
-            const res = await fetch(`http://localhost:5000/api/transactions/${transaction.id}`, {
+            const res = await fetch(`${API_URL}/api/transactions/${transaction.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

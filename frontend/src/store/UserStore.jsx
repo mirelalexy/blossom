@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const UserContext = createContext()
 
 export function UserProvider({ children }) {
@@ -12,7 +14,7 @@ export function UserProvider({ children }) {
             if (!token) return
 
             try {
-                const res = await fetch("http://localhost:5000/api/users/me", {
+                const res = await fetch(`${API_URL}/api/users/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
