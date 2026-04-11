@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes.js"
 import categoryRoutes from "./routes/categoryRoutes.js"
 import goalRoutes from "./routes/goalRoutes.js"
 import budgetRoutes from "./routes/budgetRoutes.js"
+import categoryBudgetRoutes from "./routes/categoryBudgetRoutes.js"
 
 const app = express()
 
@@ -34,5 +35,6 @@ app.use("/api/users", userRoutes)
 app.use("/api/categories", categoryRoutes)
 app.use("/api/goals", goalRoutes)
 app.use("/api/budget", budgetRoutes)
+app.use("/api/category-budgets", categoryBudgetRoutes)
 
 export default app
