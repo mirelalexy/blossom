@@ -1,4 +1,4 @@
-export function checkSpendingWarnings({ transaction, transactions, rules, budget }) {
+export function checkSpendingWarnings({ transaction, transactions, rules, budget, categoryBudgets, categories }) {
     const warnings = []
 
     const today = new Date()
@@ -34,6 +34,43 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
             }
         }
     })
+
+    // check category budgets
+    if (transaction.type === "expense" && categoryBudgets) {
+        const categoryBudget = categoryBudgets.find(
+            b => b.category_id === transaction.categoryId
+        )
+
+        const limit = categoryBudget ? Number(categoryBudget.monthly_limit) : 0
+        
+        const category = categories.find(c => c.id === transaction.categoryId)
+        const categoryName = category ? category.name : "this category"
+
+        if (limit > 0) {
+            const spent = transactions
+                .filter(t => {
+                    if (!t.date) return false
+
+                    const date = new Date(t.date)
+
+                    return (
+                        t.categoryId === transaction.categoryId &&
+                        t.type === "expense" &&
+                        date.getMonth() === today.getMonth() &&
+                        date.getFullYear() === today.getFullYear()
+                    )
+                })
+                .reduce((sum, t) => sum + Number(t.amount), 0)
+
+            const newTotal = spent + transaction.amount
+
+            if (newTotal > limit) {
+                warnings.push(`You exceeded your ${categoryName} budget.`)
+            } else if (newTotal > limit * 0.8) {
+                warnings.push("You are close to your category budget.")
+            }
+        }
+    }
 
     // check total budget
     if (transaction.type === "expense" && budget) {

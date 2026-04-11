@@ -5,6 +5,7 @@ import { useTransactions } from "../store/TransactionStore"
 import { useCategories } from "../store/CategoryStore"
 import { useRules } from "../store/RuleStore"
 import { useBudget } from "../store/BudgetStore"
+import { useCategoryBudgets } from "../store/CategoryBudgetStore"
 
 import { checkSpendingWarnings } from "../utils/checkSpendingWarnings"
 import { formatLocalDate } from "../utils/dateUtils"
@@ -29,6 +30,8 @@ function AddTransaction() {
     const { transactions, addTransaction, updateTransaction } = useTransactions()
     const { rules } = useRules()
     const { budget } = useBudget()
+    const { categoryBudgets } = useCategoryBudgets() 
+    const { categories, getCategoriesByType } = useCategories()
 
     const existingTransaction = transactions.find(t => t.id === id)
     
@@ -129,7 +132,9 @@ function AddTransaction() {
                 transaction: newTransaction,
                 transactions: otherTransactions,
                 rules,
-                budget
+                budget,
+                categoryBudgets,
+                categories
             })
 
             if (warnings.length > 0) {
@@ -154,8 +159,6 @@ function AddTransaction() {
 
         navigate("/transactions")
     }
-
-    const { getCategoriesByType } = useCategories()
 
     const sortedCategories = getCategoriesByType(formData.type.toLowerCase())
         .sort((a, b) => {
