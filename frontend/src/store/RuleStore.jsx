@@ -21,10 +21,12 @@ export function RuleProvider({ children }) {
                 })
         
                 const data = await res.json()
-                setRules({
-                    ...data,
-                    value: Number(data.value)
-                })
+                setRules(
+                    data.map(r => ({
+                        ...r,
+                        value: Number(r.value)
+                    }))
+                )
             } catch (err) {
                 console.log("Fetch rules failed: ", err)
             }
@@ -67,7 +69,7 @@ export function RuleProvider({ children }) {
                 },
             })
 
-            setGoals(prev => prev.filter(r => r.id !== id))
+            setRules(prev => prev.filter(r => r.id !== id))
         } catch (err) {
             console.log("Delete rule failed: ", err)
         }        
