@@ -17,10 +17,12 @@ function MonthlyBudget() {
     const navigate = useNavigate()
     const { currency } = useCurrency()
     const { categories } = useCategories()
-    const { budget, updateBudget, updateCategoryBudget } = useBudget()
+    const { budget, updateBudget } = useBudget()
+
+    if (!budget) return null
 
     const expenseCategories = categories
-        .filter(c => c.type === "expense" & !c.id.includes("other"))
+        .filter(c => c.type === "expense" && !c.name.includes("Other"))
         .sort((a, b) => a.name.localeCompare(b.name))
 
     const totalAllocated = Object.values(budget.categoryBudgets || {})
@@ -36,7 +38,7 @@ function MonthlyBudget() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Amount"
-                        value= {formatCurrency(budget.monthlyBudget, currency)}
+                        value= {formatCurrency(budget.monthly_limit, currency)}
                         onClick={() => navigate("/settings/budget/amount")}
                     />
                 </SettingsCard>
@@ -55,7 +57,7 @@ function MonthlyBudget() {
                     <SettingsRadio 
                         label="Rolls over to next month"
                         name="rollover"
-                        value="nextMonth"
+                        value="next_month"
                         checkedValue={budget.rollover}
                         onChange={(val) => updateBudget("rollover", val)}
                     />
@@ -63,7 +65,7 @@ function MonthlyBudget() {
                     <SettingsRadio 
                         label="Adds to primary goal automatically"
                         name="rollover"
-                        value="primaryGoal"
+                        value="primary_goal"
                         checkedValue={budget.rollover}
                         onChange={(val) => updateBudget("rollover", val)}
                     />
@@ -76,42 +78,19 @@ function MonthlyBudget() {
                         label="Single total budget"
                         name="structure"
                         value="total"
-                        checkedValue={budget.structure}
-                        onChange={(val) => updateBudget("structure", val)}
+                        checkedValue={budget.budget_structure}
+                        onChange={(val) => updateBudget("budget_structure", val)}
                     />
 
                     <SettingsRadio 
                         label="Category-based budgeting"
                         name="structure"
                         value="category"
-                        checkedValue={budget.structure}
-                        onChange={(val) => updateBudget("structure", val)}
+                        checkedValue={budget.budget_structure}
+                        onChange={(val) => updateBudget("budget_structure", val)}
                     />
                 </SettingsCard>
             </Section>
-
-            {budget.structure === "category" && (
-                <Section title="Category Budgets">
-                        {expenseCategories.map(c => (
-                            <Input 
-                                key={c.id}
-                                label={c.name}
-                                min={0}
-                                type="number"
-                                value={budget.categoryBudgets?.[c.id] || 0}
-                                onChange={(e) => updateCategoryBudget(c.id, e.target.value)}
-                            />
-                        ))}
-
-                        {budget.structure === "category" && (
-                            <p>
-                                {difference > 0 && `You still have ${formatCurrency(difference, currency)} to allocate.`}
-                                {difference < 0 && `You are over budget by ${formatCurrency(Math.abs(difference), currency)}.`}
-                                {difference === 0 && "Budget fully allocated."}
-                            </p>
-                        )}
-                </Section>
-            )}
         </div>
     )
 }

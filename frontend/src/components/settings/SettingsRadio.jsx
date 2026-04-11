@@ -13,6 +13,7 @@ function SettingsRadio({ label, name, value, checkedValue, onChange }) {
                     name={name} 
                     value={value} 
                     checked={checkedValue === value} 
+                    onChange={() => onChange(value)}
                 />
             </div>
         </div>

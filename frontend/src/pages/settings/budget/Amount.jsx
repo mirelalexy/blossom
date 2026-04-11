@@ -10,7 +10,7 @@ import Button from "../../../components/ui/Button"
 function Amount() {
     const navigate = useNavigate()
     const { budget, updateBudget } = useBudget() 
-    const [amount, setAmount] = useState(budget.monthlyBudget)
+    const [amount, setAmount] = useState(budget?.monthly_budget)
 
     function handleSave() {
         if (!amount || amount <= 0) {
@@ -18,7 +18,7 @@ function Amount() {
             return
         }
 
-        updateBudget("monthlyBudget", amount)
+        updateBudget("monthly_limit", amount)
         navigate(-1)
     }
 
