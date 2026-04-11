@@ -49,6 +49,7 @@ import AddRule from "./pages/settings/rules/AddRule";
 import PrivacyPolicy from "./pages/settings/PrivacyPolicy";
 import Challenges from "./pages/Challenges";
 import Notifications from "./pages/Notifications";
+import Register from "./pages/Register";
 
 import { useUser } from "./store/UserStore";
 
@@ -335,6 +336,7 @@ function AppContent() {
           }
         />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
