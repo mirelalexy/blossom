@@ -10,6 +10,7 @@ import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
 import { getCurrentMonthYear } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
+import { calculateBudgetWithRollover } from "../utils/budgetUtils"
 
 import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
@@ -89,9 +90,14 @@ function Transactions() {
         .filter(t => t.type === "income")
         .reduce((sum, t) => sum + Number(t.amount), 0)
 
-    const budgetLeft = (budget?.monthly_limit || 0) - expenses
+    const effectiveBudget = calculateBudgetWithRollover({ transactions, budget })
+
+    const budgetLeft = effectiveBudget - expenses
 
     const isOverBudget = budgetLeft < 0
+
+    const baseBudget = budget?.monthly_limit || 0
+    const rolloverAmount = effectiveBudget - baseBudget
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
@@ -175,6 +181,11 @@ function Transactions() {
                     <Section title="Overall" className="transactions-overall">
                         <div>
                             <p>Budget left: <span className={isOverBudget ? "red-text" : ""}>{formatCurrency(budgetLeft, currency)}</span></p>
+                            
+                            {budget?.rollover === "next_month" && rolloverAmount > 0 && (
+                                <p>Includes {formatCurrency(rolloverAmount, currency)} rolled over</p>
+                            )} 
+                            
                             <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
                             <p>This month gained: <span>{formatCurrency(income, currency)}</span></p>
                         </div>
