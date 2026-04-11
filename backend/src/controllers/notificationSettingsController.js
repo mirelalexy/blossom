@@ -32,6 +32,16 @@ export async function getNotificationSettings(req, res) {
 export async function updateNotificationSettings(req, res) {
     const userId = req.user.userId
 
+    const {
+        near_budget,
+        exceed_budget,
+        level_up,
+        challenge_complete,
+        log_reminder,
+        recurring_reminder,
+        recurring_frequency
+    } = req.body
+
     try {
         const result = await pool.query(
             `UPDATE notification_settings

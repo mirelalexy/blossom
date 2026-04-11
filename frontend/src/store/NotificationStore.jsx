@@ -3,39 +3,14 @@ import { createContext, useContext, useState, useEffect } from "react"
 const NotificationContext = createContext()
 
 export function NotificationProvider({ children }) {
-    const [settings, setSettings] = useState(() => {
-        const saved = localStorage.getItem("notifications")
-
-        return saved ? JSON.parse(saved) : {
-            nearBudget: true,
-            exceedBudget: true,
-            levelUp: true,
-            challengeComplete: true,
-            logReminder: true,
-            recurringReminder: true,
-            frequency: "weekly"
-        }
-    })
-
     const [notifications, setNotifications] = useState(() => {
         const saved = localStorage.getItem("notificationFeed")
         return saved ? JSON.parse(saved) : []
     })
 
     useEffect(() => {
-        localStorage.setItem("notifications", JSON.stringify(settings))
-    }, [settings])
-
-    useEffect(() => {
         localStorage.setItem("notificationFeed", JSON.stringify(notifications))
     }, [notifications])
-
-    function updateSetting(field, value) {
-        setSettings(prev => ({
-            ...prev,
-            [field]: value
-        }))
-    }
 
     function addNotification(notification) {
         setNotifications(prev => [
@@ -55,7 +30,7 @@ export function NotificationProvider({ children }) {
     }
 
     return (
-        <NotificationContext.Provider value={{ settings, updateSetting, notifications, addNotification, cleanOldNotifications }}>
+        <NotificationContext.Provider value={{ notifications, addNotification, cleanOldNotifications }}>
             {children}
         </NotificationContext.Provider>
     )

@@ -5,6 +5,7 @@ import { useChallenges } from "../store/ChallengeStore"
 import { useTransactions } from "../store/TransactionStore"
 import { useBudget } from "../store/BudgetStore"
 import { useNotifications } from "../store/NotificationStore"
+import { useNotificationSettings } from "../store/NotificationSettingsStore"
 
 import { calculateStreak } from "../utils/streakUtils"
 import { calculateXP, getLevelFromXP, getLevelTitle } from "../utils/levelUtils"
@@ -25,7 +26,8 @@ function AppLayout({ children }) {
     const { challenges, evaluateChallenges, resetChallenges } = useChallenges()
     const { transactions } = useTransactions()
     const { budget } = useBudget()
-    const { cleanOldNotifications, addNotification, settings } = useNotifications()
+    const { cleanOldNotifications, addNotification } = useNotifications()
+    const { notificationSettings: settings } = useNotificationSettings()
 
     const streak = calculateStreak(transactions)
     const completedChallenges = challenges.filter(c => c.completed).length
@@ -40,11 +42,11 @@ function AppLayout({ children }) {
 
     const level = getLevelFromXP(xp)
 
-    const expenseTransactions = transactions.filter(t => t.type === "Expense")
+    const expenseTransactions = transactions.filter(t => t.type === "expense")
 
-    const expenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
+    const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
 
-    const percentUsedBudget = budget?.monthlyBudget ? (expenses / budget.monthlyBudget) * 100 : 0
+    const percentUsedBudget = budget?.monthly_limit ? (expenses / budget.monthly_limit) * 100 : 0
 
     // reset challenges if needed and clean notifications older than two weeks
     useEffect(() => {
@@ -62,7 +64,7 @@ function AppLayout({ children }) {
 
     // trigger challenge notifications
     useEffect(() => {
-        if (!settings.challengeComplete) return
+        if (!settings.challenge_complete) return
 
         const notified = JSON.parse(localStorage.getItem("notifiedChallenges")) || {}
 
@@ -84,11 +86,11 @@ function AppLayout({ children }) {
         })
 
         localStorage.setItem("notifiedChallenges", JSON.stringify(notified))
-    }, [challenges, settings.challengeComplete])
+    }, [challenges, settings.challenge_complete])
 
     // trigger level up notifications
     useEffect(() => {
-        if (!settings.levelUp) return
+        if (!settings.level_up) return
         
         const prevLevel = Number(localStorage.getItem("prevLevel")) || 1
 
@@ -104,12 +106,12 @@ function AppLayout({ children }) {
         }
 
         localStorage.setItem("prevLevel", level)
-    }, [level, settings.levelUp])
+    }, [level, settings.level_up])
 
     // trigger near budget notifications
     useEffect(() => {
-        if (!settings.nearBudget) return
-        if (!budget?.monthlyBudget) return
+        if (!settings.near_budget) return
+        if (!budget?.monthly_limit) return
 
         const currentMonth = getCurrentMonthKey()
         const lastNotified = localStorage.getItem("nearBudgetNotifiedMonth")
@@ -123,12 +125,12 @@ function AppLayout({ children }) {
 
             localStorage.setItem("nearBudgetNotifiedMonth", currentMonth)
         }
-    }, [percentUsedBudget, settings.nearBudget])
+    }, [percentUsedBudget, settings.near_budget])
 
     // trigger exceeded budget notifications
     useEffect(() => {
-        if (!settings.exceedBudget) return
-        if (!budget?.monthlyBudget) return
+        if (!settings.exceed_budget) return
+        if (!budget?.monthly_limit) return
 
         const currentMonth = getCurrentMonthKey()
         const lastNotified = localStorage.getItem("exceedBudgetNotifiedMonth")
@@ -142,11 +144,11 @@ function AppLayout({ children }) {
 
             localStorage.setItem("exceedBudgetNotifiedMonth", currentMonth)
         }
-    }, [percentUsedBudget, settings.exceedBudget])
+    }, [percentUsedBudget, settings.exceed_budget])
 
     // trigger log reminders (daily, evening)
     useEffect(() => {
-        if (!settings.logReminder) return
+        if (!settings.log_reminder) return
 
         const now = new Date()
         const hour = now.getHours()
@@ -169,16 +171,16 @@ function AppLayout({ children }) {
 
             localStorage.setItem("logReminderDate", today)
         }
-    }, [transactions, settings.logReminder])
+    }, [transactions, settings.log_reminder])
 
     // trigger recurring reminders (weekly/monthly)
     useEffect(() => {
-        if (!settings.recurringReminder) return
+        if (!settings.recurring_reminder) return
 
         const recurring = transactions.filter(t => t.recurring)
         if (recurring.length === 0) return
 
-        const key = getReminderKey(settings.frequency)
+        const key = getReminderKey(settings.recurring_frequency)
         const lastNotified = localStorage.getItem("recurringReminderKey")
 
         if (lastNotified !== key) {
@@ -190,7 +192,7 @@ function AppLayout({ children }) {
 
             localStorage.setItem("recurringReminderKey", key)
         }
-    }, [transactions, settings.recurringReminder, settings.frequency])
+    }, [transactions, settings.recurring_reminder, settings.recurring_frequency])
 
     return (
         <div className="layout">

@@ -6,6 +6,6 @@ import { authMiddleware } from "../middleware/authMiddleware.js"
 const router = express.Router()
 
 router.get("/", authMiddleware, getNotificationSettings)
-router.put("/settings", authMiddleware, updateNotificationSettings)
+router.put("/", authMiddleware, updateNotificationSettings)
 
 export default router

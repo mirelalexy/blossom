@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-import { useNotifications } from "../../../store/NotificationStore"
+import { useNotificationSettings } from "../../../store/NotificationSettingsStore"
 
 import Section from "../../../components/ui/Section"
 import PageHeader from "../../../components/ui/PageHeader"
@@ -8,9 +8,9 @@ import SettingsCard from "../../../components/settings/SettingsCard"
 import SettingsItem from "../../../components/settings/SettingsItem"
 import SettingsToggle from "../../../components/settings/SettingsToggle"
 
-function Notifications() {
+function NotificationSettings() {
     const navigate = useNavigate()
-    const { settings, updateSetting } = useNotifications()
+    const { notificationSettings: settings, updateNotificationSetting: updateSetting } = useNotificationSettings() 
 
     return (
         <div className="settings-content">
@@ -20,14 +20,14 @@ function Notifications() {
                 <SettingsCard>
                     <SettingsToggle
                         label="Notify me when I'm close to budget limit"
-                        checked={settings.nearBudget}
-                        onChange={(val) => updateSetting("nearBudget", val)}
+                        checked={settings.near_budget}
+                        onChange={(val) => updateSetting("near_budget", val)}
                     />
 
                     <SettingsToggle
                         label="Notify me when I exceed my budget"
-                        checked={settings.exceedBudget}
-                        onChange={(val) => updateSetting("exceedBudget", val)}
+                        checked={settings.exceed_budget}
+                        onChange={(val) => updateSetting("exceed_budget", val)}
                     />
                 </SettingsCard>
             </Section>
@@ -36,14 +36,14 @@ function Notifications() {
                 <SettingsCard>
                     <SettingsToggle
                         label="Notify me when I level up"
-                        checked={settings.levelUp}
-                        onChange={(val) => updateSetting("levelUp", val)}
+                        checked={settings.level_up}
+                        onChange={(val) => updateSetting("level_up", val)}
                     />
 
                     <SettingsToggle
                         label="Notify me when I complete a challenge"
-                        checked={settings.challengeComplete}
-                        onChange={(val) => updateSetting("challengeComplete", val)}
+                        checked={settings.challenge_complete}
+                        onChange={(val) => updateSetting("challenge_complete", val)}
                     />
                 </SettingsCard>
             </Section>
@@ -52,19 +52,19 @@ function Notifications() {
                 <SettingsCard>
                     <SettingsToggle
                         label="Remind me to log transactions"
-                        checked={settings.logReminder}
-                        onChange={(val) => updateSetting("logReminder", val)}
+                        checked={settings.log_reminder}
+                        onChange={(val) => updateSetting("log_reminder", val)}
                     />
 
                     <SettingsToggle
                         label="Remind me to review recurring payments"
-                        checked={settings.recurringReminder}
-                        onChange={(val) => updateSetting("recurringReminder", val)}
+                        checked={settings.recurring_reminder}
+                        onChange={(val) => updateSetting("recurring_reminder", val)}
                     />
 
                     <SettingsItem 
                         label="Review Recurring Payments Frequency"
-                        value={settings.frequency}
+                        value={settings.recurring_frequency}
                         onClick={() => navigate("/settings/notifications/frequency")}
                     />
                 </SettingsCard>
@@ -73,4 +73,4 @@ function Notifications() {
     )
 }
 
-export default Notifications
+export default NotificationSettings
