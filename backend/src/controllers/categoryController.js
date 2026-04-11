@@ -33,7 +33,7 @@ export async function createCategory(req, res) {
         res.json(result.rows[0])
     } catch (err) {
         if (err.code === "23505") {
-            return res.status(500).json({ error: "Category already exists" })
+            return res.status(409).json({ error: "Category already exists" })
         }
 
         console.log(err)
