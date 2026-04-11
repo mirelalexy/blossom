@@ -89,7 +89,9 @@ function Transactions() {
         .filter(t => t.type === "income")
         .reduce((sum, t) => sum + Number(t.amount), 0)
 
-    const budgetLeft = budget.monthlyBudget - expenses
+    const budgetLeft = (budget?.monthly_limit || 0) - expenses
+
+    const isOverBudget = budgetLeft < 0
 
     const noTransactions = upcomingTransactions.length === 0 && recentTransactions.length === 0
 
@@ -172,7 +174,7 @@ function Transactions() {
                 {!hasActiveFilters && (
                     <Section title="Overall" className="transactions-overall">
                         <div>
-                            <p>Budget left: <span>{formatCurrency(budgetLeft, currency)}</span></p>
+                            <p>Budget left: <span className={isOverBudget ? "red-text" : ""}>{formatCurrency(budgetLeft, currency)}</span></p>
                             <p>This month spent: <span>{formatCurrency(expenses, currency)}</span></p>
                             <p>This month gained: <span>{formatCurrency(income, currency)}</span></p>
                         </div>
