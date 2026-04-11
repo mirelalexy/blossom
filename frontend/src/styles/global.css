@@ -75,3 +75,7 @@ svg {
         padding-bottom: 60px;
     }
 }
+
+.red-text {
+    color: red;
+}

@@ -2,8 +2,8 @@ import { useNavigate, useParams } from "react-router-dom"
 
 import { useCategories } from "../../../store/CategoryStore"
 import { useTransactions } from "../../../store/TransactionStore"
-import { useBudget } from "../../../store/BudgetStore"
 import { useCurrency } from "../../../store/CurrencyStore"
+import { useCategoryBudgets } from "../../../store/CategoryBudgetStore"
 
 import { formatCurrency } from "../../../utils/currencyUtils"
 import { appIcons } from "../../../utils/appIcons"
@@ -17,10 +17,10 @@ function CategoryDetails() {
     const { id } = useParams()
 
     const { transactions } = useTransactions()
-    const { budget } = useBudget()
     const { currency } = useCurrency()
 
-    const { getCategoryById, deleteCategory } = useCategories()
+    const { categories, getCategoryById, deleteCategory } = useCategories()
+    const { categoryBudgets } = useCategoryBudgets()
     const { reassignCategory } = useTransactions()
 
     const category = getCategoryById(id)
@@ -35,12 +35,16 @@ function CategoryDetails() {
         const confirmed = window.confirm("Delete this category? Transactions will be moved to Other category.")
         if (!confirmed) return
 
-        const fallbackCategoryId =
-            category.type === "expense"
-                ? "other-expense"
-                : "other-income"
+        const fallbackCategory = categories.find(
+            c => c.type === category.type && c.is_default && c.name.includes("Other")
+        )
 
-        reassignCategory(category.id, fallbackCategoryId)
+        if (!fallbackCategory) {
+            alert("Fallback category not found.")
+            return
+        }
+
+        reassignCategory(category.id, fallbackCategory.id)
         deleteCategory(category.id)
         navigate(-1)
     }
@@ -55,15 +59,24 @@ function CategoryDetails() {
 
             return (
                 t.categoryId === id &&
-                t.type === "Expense" &&
+                t.type === "expense" &&
                 date.getMonth() === today.getMonth() &&
                 date.getFullYear() === today.getFullYear()
             )
         })
-        .reduce((sum, t) => sum + t.amount, 0)
+        .reduce((sum, t) => sum + Number(t.amount), 0)
 
-    const categoryBudget = budget.categoryBudgets?.[id] || 0
-    const remaining = categoryBudget - spent
+    const categoryBudgetObj = categoryBudgets?.find(b => b.category_id === id)
+
+    const hasBudget = categoryBudgetObj !== undefined
+
+    const categoryBudget = categoryBudgetObj
+        ? Number(categoryBudgetObj.monthly_limit)
+        : 0
+
+    const remaining = hasBudget
+        ? categoryBudget - spent
+        : null
 
     return (
         <div className="settings-content">
@@ -84,37 +97,38 @@ function CategoryDetails() {
                     <Section title="This Month">
                         <p>Spent: {formatCurrency(spent, currency)}</p>
                         <p>
-                            {categoryBudget !== 0 
+                            {hasBudget
                                 ? `Budget: ${formatCurrency(categoryBudget, currency)}`
                                 : "No budget set for this category."
                             }
                         </p>
 
-                        {categoryBudget !== 0 && (
+                        {hasBudget && (
                             <p>Remaining: {formatCurrency(remaining, currency)}</p>
                         )}
 
                         {remaining < 0 && (
-                            <p>You are over budget.</p>
+                            <p className="red-text">You are over budget by {formatCurrency(Math.abs(remaining), currency)}.</p>
                         )}
                     </Section>
 
                     <div className="transaction-actions">
                         <Button 
-                            disabled={category.default} 
-                            onClick={() => {
-                                                if (category.default) return
-                                                navigate(`/settings/categories/edit/${category.id}`)
-                                            }
-                                    }
+                            disabled={category.is_default} 
+                            onClick={() => navigate(`/settings/categories/edit/${category.id}`)}
                         >
                             Edit
                         </Button>
-                        <Button onClick={handleDelete}>Delete</Button>
+                        <Button 
+                            disabled={category.is_default} 
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
                     </div>
 
-                    {category.default && (
-                        <p>Default categories cannot be edited.</p>
+                    {category.is_default && (
+                        <p>Default categories cannot be edited or deleted.</p>
                     )}
                 </div>
         </div>
