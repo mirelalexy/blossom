@@ -4,35 +4,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
     const today = new Date()
     const transactionDate = new Date(transaction.date)
 
-    // check category budget
-    if (transaction.type === "Expense") {
-        const categoryBudget = budget.categoryBudgets?.[transaction.categoryId] || 0
-
-        if (categoryBudget > 0) {
-            const spent = transactions
-                .filter(t => {
-                    if (!t.date) return false
-
-                    const date = new Date(t.date)
-
-                    return (
-                        t.categoryId === transaction.categoryId &&
-                        t.type === "Expense" &&
-                        date.getMonth() === today.getMonth() &&
-                        date.getFullYear() === today.getFullYear()
-                    )
-                })
-                .reduce((sum, t) => sum + t.amount, 0)
-
-            const newTotal = spent + transaction.amount
-
-            if (newTotal > categoryBudget) {
-                warnings.push("This exceeds your category budget.")
-            }
-        }
-     }
-
-     // check rules
+    // check rules
     rules.forEach(rule => {
         if (rule.categoryId !== transaction.categoryId) return
 
@@ -51,7 +23,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
 
                 return (
                     t.categoryId === transaction.categoryId &&
-                    t.type === "Expense" &&
+                    t.type === "expense" &&
                     diffDays >= 0 &&
                     diffDays <= 7
                 )
@@ -62,6 +34,35 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
             }
         }
     })
+
+    // check total budget
+    if (transaction.type === "expense" && budget) {
+        const monthlyLimit = budget.monthly_limit || 0
+
+        if (monthlyLimit > 0) {
+            const spent = transactions
+                .filter(t => {
+                    if (!t.date) return false
+
+                    const date = new Date(t.date)
+
+                    return (
+                        t.type === "expense" &&
+                        date.getMonth() === today.getMonth() &&
+                        date.getFullYear() === today.getFullYear()
+                    )
+                })
+                .reduce((sum, t) => sum + Number(t.amount), 0)
+
+            const newTotal = spent + transaction.amount
+
+            if (newTotal > monthlyLimit) {
+                warnings.push("You exceeded your monthly budget.")
+            } else if (newTotal > monthlyLimit * 0.8) {
+                warnings.push("You are close to your monthly budget.")
+            }
+        }
+    }
 
     return warnings
 }

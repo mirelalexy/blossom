@@ -124,7 +124,7 @@ function AddTransaction() {
             ? transactions.filter(t => t.id !== existingTransaction.id)
             : transactions
 
-        if (newTransaction.type === "expense") {
+        if (newTransaction.type === "expense" && budget) {
              const warnings = checkSpendingWarnings({
                 transaction: newTransaction,
                 transactions: otherTransactions,
