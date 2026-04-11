@@ -65,9 +65,9 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
             const newTotal = spent + transaction.amount
 
             if (newTotal > limit) {
-                warnings.push(`You exceeded your ${categoryName} budget.`)
+                warnings.push(`You will exceed your ${categoryName} budget.`)
             } else if (newTotal > limit * 0.8) {
-                warnings.push("You are close to your category budget.")
+                warnings.push(`You are close to your ${categoryName} budget.`)
             }
         }
     }
