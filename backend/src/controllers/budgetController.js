@@ -41,10 +41,10 @@ export async function upsertBudget(req, res) {
                 budget_structure = EXCLUDED.budget_structure
             RETURNING *`,
             [
+                userId,
                 monthly_limit,
                 rollover,
-                budget_structure,
-                userId
+                budget_structure
             ]
         )
 
