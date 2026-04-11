@@ -23,7 +23,9 @@ function CustomSpendingRules() {
                 <SettingsCard>
                     {rules.length !== 0 && (
                         rules.map(rule => {
-                            const category = getCategoryById(rule.categoryId)
+                            const category = getCategoryById(rule.category_id)
+
+                            if (!category) return null
 
                             return (
                                 <RuleItem 

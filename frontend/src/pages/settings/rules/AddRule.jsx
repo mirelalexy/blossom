@@ -21,8 +21,6 @@ function AddRule() {
     const [value, setValue] = useState("")
 
     function handleSave() {
-        if (!categoryId || !value) return
-
         if (!categoryId) {
             alert("Please select a category.")
             return
@@ -34,16 +32,16 @@ function AddRule() {
         }
 
         const exists = rules.some(
-            r => r.categoryId === categoryId && r.type === type
+            r => r.category_id === categoryId && r.type === type
         )
 
         if (exists) {
-            alert("Rule already exists for this category.")
+            alert("Rule of this type already exists for this category.")
             return
         }
 
         addRule({
-            categoryId,
+            category_id: categoryId,
             type,
             value: Number(value)
         })

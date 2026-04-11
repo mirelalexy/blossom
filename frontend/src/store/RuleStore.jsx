@@ -21,7 +21,10 @@ export function RuleProvider({ children }) {
                 })
         
                 const data = await res.json()
-                setRules(data)
+                setRules({
+                    ...data,
+                    value: Number(data.value)
+                })
             } catch (err) {
                 console.log("Fetch rules failed: ", err)
             }
@@ -44,7 +47,10 @@ export function RuleProvider({ children }) {
             })
 
             const data = await res.json()
-            setRules(prev => [...prev, data])
+            setRules(prev => [...prev, { 
+                ...data,
+                value: Number(data.value)
+            }])
         } catch (err) {
             console.log("Add rule failed: ", err)
         }
@@ -84,7 +90,9 @@ export function RuleProvider({ children }) {
 
             setRules(prev => 
                 prev.map(r =>
-                    r.id === data.id ? data : r
+                    r.id === data.id 
+                        ? { ...data, value: Number(data.value) }
+                        : r
                 )
             )
         } catch (err) {

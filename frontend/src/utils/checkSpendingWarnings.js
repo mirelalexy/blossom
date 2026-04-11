@@ -6,7 +6,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
 
     // check rules
     rules.forEach(rule => {
-        if (rule.categoryId !== transaction.categoryId) return
+        if (rule.category_id !== transaction.categoryId) return
 
         // single transaction limit
         if (rule.type === "single_limit") {
