@@ -11,6 +11,7 @@ import goalRoutes from "./routes/goalRoutes.js"
 import budgetRoutes from "./routes/budgetRoutes.js"
 import categoryBudgetRoutes from "./routes/categoryBudgetRoutes.js"
 import ruleRoutes from "./routes/ruleRoutes.js"
+import notificationSettingsRoutes from "./routes/notificationSettingsRoutes.js"
 
 const app = express()
 
@@ -38,5 +39,6 @@ app.use("/api/goals", goalRoutes)
 app.use("/api/budget", budgetRoutes)
 app.use("/api/category-budgets", categoryBudgetRoutes)
 app.use("/api/rules", ruleRoutes)
+app.use("/api/notification-settings", notificationSettingsRoutes)
 
 export default app
