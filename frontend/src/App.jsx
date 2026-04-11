@@ -12,6 +12,7 @@ import { BudgetProvider } from "./store/BudgetStore";
 import { RuleProvider } from "./store/RuleStore";
 import { ChallengeProvider } from "./store/ChallengeStore";
 import { CategoryBudgetProvider } from "./store/CategoryBudgetStore";
+import { NotificationSettingsProvider } from "./store/NotificationSettingsStore";
 
 import AppLayout from "./layouts/AppLayout";
 import ScrollToTop from "./components/utils/ScrollToTop";
@@ -341,29 +342,31 @@ function AppContent() {
 
 function App() {
   return (
-    <CategoryBudgetProvider>
-      <ChallengeProvider>
-        <RuleProvider>
-          <CategoryProvider>
-            <BudgetProvider>
-              <NotificationProvider>
-                <UserProvider>
-                  <ThemeProvider>
-                    <CurrencyProvider>
-                      <TransactionsProvider>
-                        <GoalsProvider>
-                          <AppContent />
-                        </GoalsProvider>
-                      </TransactionsProvider>
-                    </CurrencyProvider>
-                  </ThemeProvider>
-                </UserProvider>
-              </NotificationProvider>
-            </BudgetProvider>
-          </CategoryProvider>
-        </RuleProvider>
-      </ChallengeProvider>
-    </CategoryBudgetProvider>
+    <NotificationSettingsProvider>
+      <CategoryBudgetProvider>
+        <ChallengeProvider>
+          <RuleProvider>
+            <CategoryProvider>
+              <BudgetProvider>
+                <NotificationProvider>
+                  <UserProvider>
+                    <ThemeProvider>
+                      <CurrencyProvider>
+                        <TransactionsProvider>
+                          <GoalsProvider>
+                            <AppContent />
+                          </GoalsProvider>
+                        </TransactionsProvider>
+                      </CurrencyProvider>
+                    </ThemeProvider>
+                  </UserProvider>
+                </NotificationProvider>
+              </BudgetProvider>
+            </CategoryProvider>
+          </RuleProvider>
+        </ChallengeProvider>
+      </CategoryBudgetProvider>
+    </NotificationSettingsProvider>
   );
 }
 
