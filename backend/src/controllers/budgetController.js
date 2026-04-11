@@ -47,25 +47,25 @@ export async function getBudget(req, res) {
                 })
                 .reduce((sum, t) => sum + Number(t.amount), 0)
 
-                const leftover = Number(budget.monthly_limit) - lastMonthExpenses
+            const leftover = Number(budget.monthly_limit) - lastMonthExpenses
 
-                // primary goal rollover
-                if (budget.rollover === "primary_goal" && leftover > 0) {
-                    await pool.query(
-                        `UPDATE goals
-                        SET current_amount = current_amount + $1
-                        WHERE user_id = $2 AND is_primary = true`,
-                        [leftover, userId]
-                    )
-                }
-
-                // mark as applied for next month rollover
+            // primary goal rollover
+            if (budget.rollover === "primary_goal" && leftover > 0) {
                 await pool.query(
-                    `UPDATE budgets
-                    SET last_rollover_month = $1
-                    WHERE user_id = $2`,
-                    [currentMonth, userId]
+                    `UPDATE goals
+                    SET current_amount = current_amount + $1
+                    WHERE user_id = $2 AND is_primary = true`,
+                    [leftover, userId]
                 )
+            }
+
+            // mark as applied for next month rollover
+            await pool.query(
+                `UPDATE budgets
+                SET last_rollover_month = $1
+                WHERE user_id = $2`,
+                [currentMonth, userId]
+            )
         }
 
         // if rollover ran, last rollover month changed, so fetch again
