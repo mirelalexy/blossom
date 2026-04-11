@@ -3,7 +3,7 @@ import { useChallenges } from "../store/ChallengeStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useCategories } from "../store/CategoryStore"
 
-import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopMerchantsData } from "../utils/chartUtils"
+import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
 import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelNarrative } from "../utils/levelUtils"
@@ -64,7 +64,7 @@ function Journey() {
     const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData)
     const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData)
 
-    const topMerchants = getTopMerchantsData(monthlyTransactions)
+    const topSpendingSources = getTopSpendingSourcesData(monthlyTransactions)
 
     const biggestExpense = getBiggestExpense(monthlyTransactions)
     const spendingStyle = getSpendingStyle({ moodData: moodChartData, intentData: intentChartData })
@@ -112,15 +112,15 @@ function Journey() {
 
             {biggestExpense && (
                 <div className="highlight-card">
-                    <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.merchant}.</p>
+                    <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.title}.</p>
                 </div>
             )}
 
             <Section title="Where Your Money Goes Most">
-                {topMerchants.map((merchant, i) => (
-                    <div key={i} className="merchant-item">
-                        <span>{merchant.name}</span>
-                        <span>{merchant.value} {currency} </span>
+                {topSpendingSources.map((source, i) => (
+                    <div key={i} className="source-item">
+                        <span>{source.name}</span>
+                        <span>{source.value} {currency} </span>
                     </div>
                 ))}
             </Section>

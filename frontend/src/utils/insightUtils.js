@@ -118,7 +118,7 @@ export function getIncomeExpenseInsight(data) {
 }
 
 export function getBiggestExpense(transactions) {
-    const expenses = transactions.filter(t => t.type === "Expense")
+    const expenses = transactions.filter(t => t.type === "expense")
 
     if (!expenses || expenses.length === 0) return null
 

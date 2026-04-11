@@ -52,17 +52,17 @@ export function getUserPatterns(transactions) {
     if (topIntent) {
         const [intent] = topIntent
 
-        if (intent === "Necessary") {
+        if (intent === "necessary") {
             patterns.push({
                 icon: "tags",
                 text: "Most of your spending goes toward essentials."
             })    
-        } else if (intent === "Planned") {
+        } else if (intent === "planned") {
             patterns.push({
                 icon: "sparkles",
                 text: "You tend to plan your spending ahead."
             })   
-        } else if (intent === "Impulse") {
+        } else if (intent === "impulse") {
             patterns.push({
                 icon: "zap",
                 text: "Most of your spending happens on impulse."
