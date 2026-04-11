@@ -38,13 +38,22 @@ export async function register(req, res) {
             { name: "Other", type: "income", icon: "circle" }
         ]
 
-        for (const cat of defaultCategories) {
-            await pool.query(
-                `INSERT INTO categories (user_id, name, icon, type, is_default)
-                VALUES ($1, $2, $3, $4, true)`,
-                [userId, cat.name, cat.icon, cat.type]
-            )
-        }
+        const values = defaultCategories.map((_, i) => {
+            // each category has 3 fields + skip userId ($1)
+            const offset = i * 3 + 2
+            return `($1, $${offset}, $${offset + 1}, $${offset + 2}, true)`
+        }).join(", ")
+
+        const params = [
+            userId,
+            ...defaultCategories.flatMap(c => [c.name, c.icon, c.type])
+        ]
+
+        await pool.query(
+            `INSERT INTO categories (user_id, name, icon, type, is_default)
+            VALUES ${values}`,
+            params
+        )
 
         res.json(result.rows[0])
     } catch (err) {
