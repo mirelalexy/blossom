@@ -11,6 +11,7 @@ import { CategoryProvider } from "./store/CategoryStore";
 import { BudgetProvider } from "./store/BudgetStore";
 import { RuleProvider } from "./store/RuleStore";
 import { ChallengeProvider } from "./store/ChallengeStore";
+import { CategoryBudgetProvider } from "./store/CategoryBudgetStore";
 
 import AppLayout from "./layouts/AppLayout";
 import ScrollToTop from "./components/utils/ScrollToTop";
@@ -340,27 +341,29 @@ function AppContent() {
 
 function App() {
   return (
-    <ChallengeProvider>
-      <RuleProvider>
-        <CategoryProvider>
-          <BudgetProvider>
-            <NotificationProvider>
-              <UserProvider>
-                <ThemeProvider>
-                  <CurrencyProvider>
-                    <TransactionsProvider>
-                      <GoalsProvider>
-                        <AppContent />
-                      </GoalsProvider>
-                    </TransactionsProvider>
-                  </CurrencyProvider>
-                </ThemeProvider>
-              </UserProvider>
-            </NotificationProvider>
-          </BudgetProvider>
-        </CategoryProvider>
-      </RuleProvider>
-    </ChallengeProvider>
+    <CategoryBudgetProvider>
+      <ChallengeProvider>
+        <RuleProvider>
+          <CategoryProvider>
+            <BudgetProvider>
+              <NotificationProvider>
+                <UserProvider>
+                  <ThemeProvider>
+                    <CurrencyProvider>
+                      <TransactionsProvider>
+                        <GoalsProvider>
+                          <AppContent />
+                        </GoalsProvider>
+                      </TransactionsProvider>
+                    </CurrencyProvider>
+                  </ThemeProvider>
+                </UserProvider>
+              </NotificationProvider>
+            </BudgetProvider>
+          </CategoryProvider>
+        </RuleProvider>
+      </ChallengeProvider>
+    </CategoryBudgetProvider>
   );
 }
 
