@@ -36,7 +36,7 @@ export function NotificationProvider({ children }) {
         
         // guard to prevent spam before request
         if (eventKey) {
-            const alreadyExists = notifications.some(n => n.eventKey === eventKey)
+            const alreadyExists = notifications.some(n => n.event_key === eventKey)
             if (alreadyExists) return
         }
 
