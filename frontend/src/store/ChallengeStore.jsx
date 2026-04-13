@@ -21,8 +21,14 @@ export function ChallengeProvider({ children }) {
                         })
             
                         const data = await res.json()
+
+                        const formatted = data.map(c => ({
+                            ...c,
+                            progress: Number(c.progress),
+                            target: Number(c.target)
+                        }))
                 
-                        setChallenges(data)
+                        setChallenges(formatted)
                     } catch (err) {
                         console.log("Fetch challenges failed: ", err)
                     }
