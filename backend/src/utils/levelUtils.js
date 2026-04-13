@@ -1,4 +1,4 @@
-import { XP } from "./xpConfig"
+import { XP } from "./xpConfig.js"
 
 export const levelMilestones = {
     1: "Mindful Seed",
