@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
@@ -10,7 +10,7 @@ import ChallengesPreview from "../components/challenges/ChallengesPreview"
 import "../styles/pages/Profile.css"
 
 function Profile() {
-    const { user, updateUser } = useUser()
+    const { user, uploadAvatar, uploadBanner } = useUser()
     const [isEditing, setIsEditing] = useState(false)
     const { stats } = useProfile()
 
@@ -21,10 +21,31 @@ function Profile() {
 
     const avatarRef = useRef()
     const bannerRef = useRef()
+    const [avatarPreview, setAvatarPreview] = useState(null)
+    const [bannerPreview, setBannerPreview] = useState(null)
 
-    function handleUpload(e, type) {
+    // prevent memory leaks
+    useEffect(() => {
+        return () => {
+            if (avatarPreview?.startsWith("blob:")) {
+                URL.revokeObjectURL(avatarPreview)
+            }
+        }
+    }, [avatarPreview])
+
+    useEffect(() => {
+        return () => {
+            if (bannerPreview?.startsWith("blob:")) {
+                URL.revokeObjectURL(bannerPreview)
+            }
+        }
+    }, [bannerPreview])
+
+    async function handleUpload(e, type) {
         const file = e.target.files[0]
         if (!file) return
+
+        const preview = URL.createObjectURL(file)
 
         const maxSize = type === "banner"
             ? 5 * 1024 * 1024
@@ -35,35 +56,38 @@ function Profile() {
             return
         }
 
-        const reader = new FileReader()
-
-        reader.onloadend = () => {
-            updateUser(type, reader.result)
+        try {
+            if (type === "avatar") {
+                setAvatarPreview(preview)
+                await uploadAvatar(file)
+                setAvatarPreview(null)
+            } else {
+                setBannerPreview(preview)
+                await uploadBanner(file)
+                setBannerPreview(null)
+            }
+        } catch (err) {
+            console.log(err)
+            alert("Upload failed.")
         }
-
-        reader.readAsDataURL(file)
-
+        
         // reset input in case of re-uploading
         e.target.value = ""
-    }
-
-    function handleRemove(type) {
-        updateUser(type, "")
     }
 
     return (
         <div className="profile-page">
             <ProfileHeader 
-                bannerSrc={user?.banner}
-                avatarSrc={user?.avatar}
+                bannerSrc={bannerPreview || user?.banner}
+                avatarSrc={avatarPreview || user?.avatar}
                 name={user?.displayName}
                 email={user?.email}
                 isEditing={isEditing}
                 onEditToggle={() => setIsEditing(prev => !prev)} 
                 onAvatarClick={() => avatarRef.current.click()}
                 onBannerClick={() => bannerRef.current.click()}
-                onRemoveAvatar={() => handleRemove("avatar")}
-                onRemoveBanner={() => handleRemove("banner")}
+                onRemoveAvatar={null}
+                onRemoveBanner={null}
                 streak={streak}
             />
 

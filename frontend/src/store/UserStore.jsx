@@ -65,8 +65,56 @@ export function UserProvider({ children }) {
         }
     }
 
+    async function uploadAvatar(file) {
+        const token = localStorage.getItem("token")
+
+        const formData = new FormData()
+        formData.append("image", file)
+
+        const res = await fetch (`${API_URL}/api/users/avatar`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        })
+
+        const data = await res.json()
+
+        setUser(prev => ({
+            ...prev,
+            avatar: data.avatar
+        }))
+
+        return data.avatar
+    }
+
+    async function uploadBanner(file) {
+        const token = localStorage.getItem("token")
+
+        const formData = new FormData()
+        formData.append("image", file)
+
+        const res = await fetch (`${API_URL}/api/users/banner`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        })
+
+        const data = await res.json()
+
+        setUser(prev => ({
+            ...prev,
+            banner: data.banner
+        }))
+
+        return data.banner
+    }
+
     return (
-        <UserContext.Provider value={{ user, updateUser, loading }}>
+        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner }}>
             {children}
         </UserContext.Provider>
     )
