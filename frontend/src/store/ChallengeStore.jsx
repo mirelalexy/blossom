@@ -1,152 +1,38 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-import { challenges as initialChallenges } from "../data/challenges"
-import { isNewWeek, isNewMonth } from "../utils/dateUtils"
+const API_URL = import.meta.env.VITE_API_URL
 
 const ChallengeContext = createContext()
 
 export function ChallengeProvider({ children }) {
-    const [challenges, setChallenges] = useState(() => {
-        const saved = localStorage.getItem("challenges")
-        return saved ? JSON.parse(saved) : initialChallenges
-    })
-
-    useEffect(() => {
-        localStorage.setItem("challenges", JSON.stringify(challenges))
-    }, [challenges])
-
-    function updateChallenge(id, updates) {
-        setChallenges(prev => 
-            prev.map(c =>
-                c.id === id ? { ...c, ...updates } : c
-            )
-        )
-    }
-
-    function evaluateChallenges({ transactions, streak, budget }) {
-        const expenseTransactions = transactions.filter(t => t.type === "Expense")
-        const incomeTransactions = transactions.filter(t => t.type === "Income")
-
-        const expenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
-
-        setChallenges(prev =>
-            prev.map(c => {
-                let progress = 0
-
-                switch (c.type) {
-                    case "mood": {
-                        const withMood = transactions.filter(t => {
-                            if (!t.mood) return false
-
-                            // if specific mood required
-                            if (c.moodType) {
-                                return t.mood === c.moodType
+    const [challenges, setChallenges] = useState([])
+    
+        useEffect(() => {
+                async function fetchChallenges() {
+                    const token = localStorage.getItem("token")
+            
+                    if (!token) return
+            
+                    try { 
+                        const res = await fetch(`${API_URL}/api/challenges`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`
                             }
-
-                            return true
                         })
-                        
-                        progress = Math.min(withMood.length, c.target)
-                        break
-                    }
-
-                    case "streak": {
-                        progress = Math.min(streak, c.target)
-                        break
-                    }
-
-                    case "budget": {
-                        if (!budget?.monthlyBudget || budget.monthlyBudget === 0) break
-
-                        const percentUsed = (expenses / budget.monthlyBudget) * 100
-
-                        progress = Math.min(percentUsed, c.target)
-                        break
-                    }
-
-                    case "expense_count": {
-                        progress = Math.min(expenseTransactions.length, c.target)
-                        break
-                    }
-
-                    case "income_count": {
-                        progress = Math.min(incomeTransactions.length, c.target)
-                        break
-                    }
-
-                    case "small_expense": {
-                        const small  = expenseTransactions.filter(t => t.amount < 50)
-
-                        progress = Math.min(small.length, c.target)
-                        break
-                    }
-
-                    case "big_expense": {
-                        const big = expenseTransactions.filter(t => t.amount >= 70)
-
-                        progress = Math.min(big.length, c.target)
-                        break
-                    }
-
-                    case "mood_all": {
-                        const total = transactions.length
-                        const withMood = transactions.filter(t => t.mood).length
-
-                        progress = total === 0 ? 0 : (withMood / total) * 100
-                        break
-                    }
-
-                    default:
-                        break
-                }
-
-                let completed = progress >= c.target
-
-                if (c.type === "budget") {
-                    completed = expenses > 0 && expenses <= budget.monthlyBudget
-                }
-
-                return {
-                    ...c,
-                    progress,
-                    completed
-                }
-            })
-        )
-    }
-
-    function resetChallenges() {
-        const lastReset = localStorage.getItem("challengeLastReset")
-        const now = new Date()
-
-        // first time user opens app
-        if (!lastReset) {
-            localStorage.setItem("challengeLastReset", now.toISOString())
-            return
-        }
-
-        const resetWeekly = isNewWeek(lastReset)
-        const resetMonthly = isNewMonth(lastReset)
-
-        setChallenges(prev =>
-            prev.map(c => {
-                if ((c.period === "weekly" && resetWeekly) || (c.period === "monthly" && resetMonthly)) {
-                    return {
-                        ...c,
-                        progress: 0,
-                        completed: false
+            
+                        const data = await res.json()
+                
+                        setChallenges(data)
+                    } catch (err) {
+                        console.log("Fetch challenges failed: ", err)
                     }
                 }
-
-                return c
-            })
-        )
-
-        localStorage.setItem("challengeLastReset", now.toISOString())
-    }
+            
+                fetchChallenges()
+            }, [])
 
     return (
-        <ChallengeContext.Provider value={{ challenges, updateChallenge, evaluateChallenges, resetChallenges }}>
+        <ChallengeContext.Provider value={{ challenges }}>
             {children}
         </ChallengeContext.Provider>
     )
