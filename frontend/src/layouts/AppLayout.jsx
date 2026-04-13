@@ -6,7 +6,7 @@ import { useBudget } from "../store/BudgetStore"
 import { useNotifications } from "../store/NotificationStore"
 import { useNotificationSettings } from "../store/NotificationSettingsStore"
 
-import { getCurrentMonthKey, getReminderKey } from "../utils/dateUtils"
+import { getReminderKey } from "../utils/dateUtils"
 
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
@@ -21,53 +21,8 @@ function AppLayout({ children }) {
     }
 
     const { transactions } = useTransactions()
-    const { budget } = useBudget()
     const { addNotification } = useNotifications()
     const { notificationSettings: settings } = useNotificationSettings()
-
-    const expenseTransactions = transactions.filter(t => t.type === "expense")
-
-    const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
-
-    const percentUsedBudget = budget?.monthly_limit ? (expenses / budget.monthly_limit) * 100 : 0
-
-    // trigger near budget notifications
-    useEffect(() => {
-        if (!settings.near_budget) return
-        if (!budget?.monthly_limit) return
-
-        const currentMonth = getCurrentMonthKey()
-        const lastNotified = localStorage.getItem("nearBudgetNotifiedMonth")
-
-        if (percentUsedBudget >= 80 && lastNotified !== currentMonth) {
-            addNotification({
-                title: "Almost there...",
-                message: "You're close to your monthly budget.",
-                type: "budget"
-            })
-
-            localStorage.setItem("nearBudgetNotifiedMonth", currentMonth)
-        }
-    }, [percentUsedBudget, settings.near_budget])
-
-    // trigger exceeded budget notifications
-    useEffect(() => {
-        if (!settings.exceed_budget) return
-        if (!budget?.monthly_limit) return
-
-        const currentMonth = getCurrentMonthKey()
-        const lastNotified = localStorage.getItem("exceedBudgetNotifiedMonth")
-
-        if (percentUsedBudget > 100 && lastNotified !== currentMonth) {
-            addNotification({
-                title: "Budget exceeded",
-                message: "You've gone over your monthly budget.",
-                type: "budget"
-            })
-
-            localStorage.setItem("exceedBudgetNotifiedMonth", currentMonth)
-        }
-    }, [percentUsedBudget, settings.exceed_budget])
 
     // trigger log reminders (daily, evening)
     useEffect(() => {

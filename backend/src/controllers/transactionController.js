@@ -134,6 +134,36 @@ export async function createTransaction(req, res) {
             })
         }
         
+        const percentUsedBudget = budget?.monthly_limit
+            ? (expenses / budget.monthly_limit) * 100
+            : 0
+
+        // create near budget notifications    
+        if (budget?.monthly_limit && percentUsedBudget >= 80) {
+            const monthKey = getCurrentMonthKey()
+
+            await createSystemNotification({
+                userId,
+                type: "budget",
+                title: "Almost there...",
+                message: "You're close to your monthly budget.",
+                eventKey: `budget_near_${monthKey}`
+            })
+        }
+
+        // create exceeded budget notifications    
+        if (budget?.monthly_limit && percentUsedBudget > 100) {
+            const monthKey = getCurrentMonthKey()
+
+            await createSystemNotification({
+                userId,
+                type: "budget",
+                title: "Budget exceeded",
+                message: "You've gone over your monthly budget.",
+                eventKey: `budget_exceeded_${monthKey}`
+            })
+        }
+        
         res.json(result.rows[0])
     } catch (err) {
         console.log(err)
