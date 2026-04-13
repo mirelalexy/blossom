@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 
 import pool from "../db.js"
 
+import { defaultCategories } from "../config/defaultCategories.js"
 import { defaultChallenges } from "../config/defaultChallenges.js"
 
 export async function register(req, res) {
@@ -20,41 +21,22 @@ export async function register(req, res) {
 
         const userId = result.rows[0].id
 
-        const defaultCategories = [
-            // expense
-            { name: "Bills", type: "expense", icon: "coins" },
-            { name: "Food", type: "expense", icon: "apple" },
-            { name: "Health", type: "expense", icon: "heartPulse" },
-            { name: "Entertainment", type: "expense", icon: "clapperboard" },
-            { name: "Shopping", type: "expense", icon: "handbag" },
-            { name: "Transport", type: "expense", icon: "car" },
-            { name: "Goals", type: "expense", icon: "target" },
-            { name: "Other", type: "expense", icon: "circle" },
-
-            // income
-            { name: "Salary", type: "income", icon: "briefcase" },
-            { name: "Freelance", type: "income", icon: "brush" },
-            { name: "Refund", type: "income", icon: "refund" },
-            { name: "Gift", type: "income", icon: "gift" },
-            { name: "Goals", type: "income", icon: "target" },
-            { name: "Other", type: "income", icon: "circle" }
-        ]
-
-        const values = defaultCategories.map((_, i) => {
+        // add default categories
+        const categoryValues = defaultCategories.map((_, i) => {
             // each category has 3 fields + skip userId ($1)
             const offset = i * 3 + 2
             return `($1, $${offset}, $${offset + 1}, $${offset + 2}, true)`
         }).join(", ")
 
-        const params = [
+        const categoryParams = [
             userId,
             ...defaultCategories.flatMap(c => [c.name, c.icon, c.type])
         ]
 
         await pool.query(
             `INSERT INTO categories (user_id, name, icon, type, is_default)
-            VALUES ${values}`,
-            params
+            VALUES ${categoryValues}`,
+            categoryParams
         )
 
         // add default challenges
