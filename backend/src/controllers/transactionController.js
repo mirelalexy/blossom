@@ -3,6 +3,7 @@ import { createSystemNotification } from "../services/notificationService.js"
 import { calculateXP, getLevelFromXP } from "../utils/levelUtils.js"
 import { evaluateChallenges } from "../utils/challengeUtils.js"
 import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils.js"
+import { calculateStreak } from "../utils/streakUtils.js"
 
 export async function createTransaction(req, res) {
     const {
@@ -99,10 +100,12 @@ export async function createTransaction(req, res) {
 
         const budget = budgetRes.rows[0]
 
+        const streak = calculateStreak(transactions)
+
         // evaluate challenges
         const updatedChallenges = evaluateChallenges({
             transactions,
-            streak: 0, // TODO
+            streak,
             budget,
             challenges
         })
