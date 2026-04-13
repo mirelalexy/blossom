@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react"
 
 const API_URL = import.meta.env.VITE_API_URL
 
-const CategoryContext = createContext()
+const NotificationContext = createContext()
 
 export function NotificationProvider({ children }) {
     const [notifications, setNotifications] = useState([])
