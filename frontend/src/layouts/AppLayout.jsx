@@ -34,20 +34,19 @@ function AppLayout({ children }) {
         if (hour < 18 || hour > 22) return
 
         const today = now.toDateString()
-        const lastNotified = localStorage.getItem("logReminderDate")
 
         const hasLoggedToday = transactions.some(t => {
             return new Date(t.date).toDateString() === today
         })
 
-        if (!hasLoggedToday && lastNotified !== today) {
+        if (!hasLoggedToday) {
+            const eventKey = `log_reminder_${today}`
+
             addNotification({
                 title: "Don't forget!",
                 message: "Log your transactions for today.",
                 type: "reminder"
-            })
-
-            localStorage.setItem("logReminderDate", today)
+            }, eventKey)
         }
     }, [transactions, settings.log_reminder])
 
@@ -55,21 +54,18 @@ function AppLayout({ children }) {
     useEffect(() => {
         if (!settings.recurring_reminder) return
 
-        const recurring = transactions.filter(t => t.recurring)
+        const recurring = transactions.filter(t => t.is_recurring)
         if (recurring.length === 0) return
 
         const key = getReminderKey(settings.recurring_frequency)
-        const lastNotified = localStorage.getItem("recurringReminderKey")
 
-        if (lastNotified !== key) {
-            addNotification({
-                title: "Quick check",
-                message: `You have ${recurring.length} recurring payments to review.`,
-                type: "reminder"
-            })
-
-            localStorage.setItem("recurringReminderKey", key)
-        }
+        const eventKey = `recurring_reminder_${key}`
+        
+        addNotification({
+            title: "Quick check",
+            message: `You have ${recurring.length} recurring payments to review.`,
+            type: "reminder"
+        }, eventKey)
     }, [transactions, settings.recurring_reminder, settings.recurring_frequency])
 
     return (

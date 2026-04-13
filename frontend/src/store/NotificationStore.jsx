@@ -31,8 +31,14 @@ export function NotificationProvider({ children }) {
             fetchNotifications()
         }, [])
 
-    async function addNotification(notification) {
+    async function addNotification(notification, eventKey = null) {
         const token = localStorage.getItem("token")
+        
+        // guard to prevent spam before request
+        if (eventKey) {
+            const alreadyExists = notifications.some(n => n.eventKey === eventKey)
+            if (alreadyExists) return
+        }
 
         try {
             const res = await fetch(`${API_URL}/api/notifications`, {
@@ -41,7 +47,7 @@ export function NotificationProvider({ children }) {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(notification)
+                body: JSON.stringify({ ...notification, eventKey })
             })
 
             const data = await res.json()
