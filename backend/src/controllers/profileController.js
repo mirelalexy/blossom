@@ -38,7 +38,7 @@ export async function getProfileStats(req, res) {
 
         const level = getLevelFromXP(xp)
         const progress = getLevelProgress(xp)
-        const levelTitle = getLevelTitle(xp)
+        const levelTitle = getLevelTitle(level)
 
         res.json({ streak, xp, level, progress, levelTitle })
     } catch (err) {
