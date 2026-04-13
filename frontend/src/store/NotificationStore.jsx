@@ -1,36 +1,80 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-const NotificationContext = createContext()
+const API_URL = import.meta.env.VITE_API_URL
+
+const CategoryContext = createContext()
 
 export function NotificationProvider({ children }) {
-    const [notifications, setNotifications] = useState(() => {
-        const saved = localStorage.getItem("notificationFeed")
-        return saved ? JSON.parse(saved) : []
-    })
+    const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        localStorage.setItem("notificationFeed", JSON.stringify(notifications))
-    }, [notifications])
+            async function fetchNotifications() {
+                const token = localStorage.getItem("token")
+        
+                if (!token) return
+        
+                try { 
+                    const res = await fetch(`${API_URL}/api/notifications`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+        
+                    const data = await res.json()
+            
+                    setNotifications(data)
+                } catch (err) {
+                    console.log("Fetch notifications failed: ", err)
+                }
+            }
+        
+            fetchNotifications()
+        }, [])
 
-    function addNotification(notification) {
-        setNotifications(prev => [
-            {
-                id: Date.now() + Math.random(),
-                createdAt: Date.now(),
-                ...notification
-            },
-            ...prev
-        ])
+    async function addNotification(notification) {
+        const token = localStorage.getItem("token")
+
+        try {
+            const res = await fetch(`${API_URL}/api/notifications`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(notification)
+            })
+
+            const data = await res.json()
+
+            setNotifications(prev => [...prev, data])
+        } catch (err) {
+            console.log("Add notification failed: ", err)
+        }
     }
 
-    function cleanOldNotifications() {
-        const twoWeeks = 14 * 24 * 60 * 60 * 1000
+    async function markAsRead(id) {
+        const token = localStorage.getItem("token")
 
-        setNotifications(prev => prev.filter(n => Date.now() - n.createdAt < twoWeeks))
+        try {
+            const res = await fetch(`${API_URL}/api/notifications/${id}`, {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            setNotifications(prev =>
+                prev.map(n =>
+                    n.id === id ? {...n, read: true} : n
+                )
+            )
+        } catch (err) {
+            console.log("Mark as read failed: ", err)
+        }
     }
 
     return (
-        <NotificationContext.Provider value={{ notifications, addNotification, cleanOldNotifications }}>
+        <NotificationContext.Provider value={{ notifications, addNotification, markAsRead }}>
             {children}
         </NotificationContext.Provider>
     )
