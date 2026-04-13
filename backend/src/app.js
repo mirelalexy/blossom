@@ -12,6 +12,7 @@ import budgetRoutes from "./routes/budgetRoutes.js"
 import categoryBudgetRoutes from "./routes/categoryBudgetRoutes.js"
 import ruleRoutes from "./routes/ruleRoutes.js"
 import notificationSettingsRoutes from "./routes/notificationSettingsRoutes.js"
+import notificationRoutes from "./routes/notificationRoutes.js"
 
 const app = express()
 
@@ -40,5 +41,6 @@ app.use("/api/budget", budgetRoutes)
 app.use("/api/category-budgets", categoryBudgetRoutes)
 app.use("/api/rules", ruleRoutes)
 app.use("/api/notification-settings", notificationSettingsRoutes)
+app.use("/api/notifications", notificationRoutes)
 
 export default app
