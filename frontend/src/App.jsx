@@ -54,6 +54,7 @@ import Register from "./pages/Register";
 import { useUser } from "./store/UserStore";
 
 import BlossomLoader from "./components/ui/BlossomLoader";
+import { ProfileProvider } from "./store/ProfileStore";
 
 function AppContent() {
   const { loading } = useUser()
@@ -344,31 +345,33 @@ function AppContent() {
 
 function App() {
   return (
-    <NotificationSettingsProvider>
-      <CategoryBudgetProvider>
-        <ChallengeProvider>
-          <RuleProvider>
-            <CategoryProvider>
-              <BudgetProvider>
-                <NotificationProvider>
-                  <UserProvider>
-                    <ThemeProvider>
-                      <CurrencyProvider>
-                        <TransactionsProvider>
-                          <GoalsProvider>
-                            <AppContent />
-                          </GoalsProvider>
-                        </TransactionsProvider>
-                      </CurrencyProvider>
-                    </ThemeProvider>
-                  </UserProvider>
-                </NotificationProvider>
-              </BudgetProvider>
-            </CategoryProvider>
-          </RuleProvider>
-        </ChallengeProvider>
-      </CategoryBudgetProvider>
-    </NotificationSettingsProvider>
+    <ProfileProvider>
+      <NotificationSettingsProvider>
+        <CategoryBudgetProvider>
+          <ChallengeProvider>
+            <RuleProvider>
+              <CategoryProvider>
+                <BudgetProvider>
+                  <NotificationProvider>
+                    <UserProvider>
+                      <ThemeProvider>
+                        <CurrencyProvider>
+                          <TransactionsProvider>
+                            <GoalsProvider>
+                              <AppContent />
+                            </GoalsProvider>
+                          </TransactionsProvider>
+                        </CurrencyProvider>
+                      </ThemeProvider>
+                    </UserProvider>
+                  </NotificationProvider>
+                </BudgetProvider>
+              </CategoryProvider>
+            </RuleProvider>
+          </ChallengeProvider>
+        </CategoryBudgetProvider>
+      </NotificationSettingsProvider>
+    </ProfileProvider>
   );
 }
 
