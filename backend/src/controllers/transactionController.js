@@ -1,4 +1,6 @@
 import pool from "../db.js"
+import { createSystemNotification } from "../services/notificationService.js"
+import { calculateXP, getLevelFromXP } from "../utils/levelUtils.js"
 
 export async function createTransaction(req, res) {
     const {
@@ -56,6 +58,29 @@ export async function createTransaction(req, res) {
             ]
         )
 
+        // get all user transactions
+        const transactionsRes = await pool.query(
+            `SELECT * FROM transactions WHERE user_id = $1`,
+            [userId]
+        )
+
+        const transactions = transactionsRes.rows
+
+        // calculate xp and level
+        const xp = calculateXP({ transactions })
+        const level = getLevelFromXP(xp)
+
+        // create notification
+        if (level > 1) {
+            await createSystemNotification({
+                userId,
+                type: "level",
+                title: "Level up!",
+                message: `You reached level ${level}`,
+                eventKey: `level_${level}`
+            })
+        }
+        
         res.json(result.rows[0])
     } catch (err) {
         console.log(err)
