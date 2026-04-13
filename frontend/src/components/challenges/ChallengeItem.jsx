@@ -1,3 +1,5 @@
+import { formatProgress } from "../../utils/challengeUtils"
+
 import Card from "../ui/Card"
 import ProgressBar from "../ui/ProgressBar"
 import Icon from "../ui/Icon"
@@ -6,14 +8,6 @@ import "../../styles/components/ChallengeItem.css"
 
 function ChallengeItem({ challenge }) {
     const progress = Math.min((challenge.progress / challenge.target) * 100, 100)
-
-    function formatProgress(c) {
-        if (c.display === "percent") {
-            return `${Math.round(c.progress)}%`
-        }
-
-        return `${Math.min(c.progress, c.target)}/${c.target}`
-    }
 
     return (
         <Card className={`challenge-item ${challenge.completed ? "completed" : ""}`}>
