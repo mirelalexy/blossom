@@ -1,6 +1,8 @@
 import pool from "../db.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { calculateXP, getLevelFromXP } from "../utils/levelUtils.js"
+import { evaluateChallenges } from "../utils/challengeUtils.js"
+import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils.js"
 
 export async function createTransaction(req, res) {
     const {
@@ -70,7 +72,7 @@ export async function createTransaction(req, res) {
         const xp = calculateXP({ transactions })
         const level = getLevelFromXP(xp)
 
-        // create notification
+        // create level up notification
         if (level > 1) {
             await createSystemNotification({
                 userId,
@@ -79,6 +81,52 @@ export async function createTransaction(req, res) {
                 message: `You reached level ${level}`,
                 eventKey: `level_${level}`
             })
+        }
+
+        // get challenges
+        const challengesRes = await pool.query(
+            `SELECT * FROM challenges WHERE user_id = $1`,
+            [userId]
+        )
+
+        const challenges = challengesRes.rows
+
+        // get budget
+        const budgetRes = await pool.query(
+            `SELECT * FROM budgets WHERE user_id = $1`,
+            [userId]
+        )
+
+        const budget = budgetRes.rows[0]
+
+        // evaluate challenges
+        const updatedChallenges = evaluateChallenges({
+            transactions,
+            streak: 0, // TODO
+            budget,
+            challenges
+        })
+
+        // create challenge notifications
+        for (const c of updatedChallenges) {
+            if (!c.completed) continue
+
+            const periodKey = c.period === "weekly"
+                ? getCurrentWeekKey()
+                : getCurrentMonthKey()
+
+            await createSystemNotification({
+                userId,
+                type: "challenge",
+                title: "Challenge completed",
+                message: `${c.title} completed! Keep going.`,
+                eventKey: `challenge_${c.id}_${periodKey}`
+            })
+
+            await pool.query(
+                `UPDATE challenges SET progress = $1, completed = $2 WHERE id = $3 AND user_id = $4`,
+                [c.progress, c.completed, c.id, userId]
+            )
         }
         
         res.json(result.rows[0])
