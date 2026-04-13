@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
+import { useProfile } from "./ProfileStore"
+
 const API_URL = import.meta.env.VITE_API_URL
 
 const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
     const [transactions, setTransactions] = useState([])
+    const { refreshStats } = useProfile()
 
     useEffect(() => {
         async function fetchTransactions() {
@@ -62,6 +65,8 @@ export function TransactionsProvider({ children }) {
             }
 
             setTransactions(prev => [formatted, ...prev])
+
+            refreshStats()
         } catch (err) {
             console.log("Add transaction failed: ", err)
         }

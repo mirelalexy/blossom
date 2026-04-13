@@ -1,11 +1,7 @@
 import { useState, useRef } from "react"
 
 import { useUser } from "../store/UserStore"
-import { useTransactions } from "../store/TransactionStore"
-import { useChallenges } from "../store/ChallengeStore"
-
-import { calculateStreak } from "../utils/streakUtils"
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils"
+import { useProfile } from "../store/ProfileStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
@@ -14,13 +10,14 @@ import ChallengesPreview from "../components/challenges/ChallengesPreview"
 import "../styles/pages/Profile.css"
 
 function Profile() {
-    const { transactions } = useTransactions()
     const { user, updateUser } = useUser()
-    console.log(user)
     const [isEditing, setIsEditing] = useState(false)
-    
-    const { challenges } = useChallenges()
-    const completedChallenges = challenges.filter(c => c.completed).length
+    const { stats } = useProfile()
+
+    const streak = stats?.streak || 0
+    const level = stats?.level || 1
+    const levelTitle = stats?.levelTitle || "Mindful Seed"
+    const progress = stats?.progress || 0
 
     const avatarRef = useRef()
     const bannerRef = useRef()
@@ -53,20 +50,6 @@ function Profile() {
     function handleRemove(type) {
         updateUser(type, "")
     }
-
-    const streak = calculateStreak(transactions)
-
-    const xp = calculateXP({
-        transactions,
-        streak,
-        goalsCompleted: 0,
-        weeklyLimitsHit: 0,
-        completedChallenges
-    })
-
-    const level = getLevelFromXP(xp)
-    const levelTitle = getLevelTitle(level)
-    const progress = getLevelProgress(xp)
 
     return (
         <div className="profile-page">

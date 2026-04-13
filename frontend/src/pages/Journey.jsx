@@ -1,13 +1,12 @@
 import { useTransactions } from "../store/TransactionStore"
-import { useChallenges } from "../store/ChallengeStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useCategories } from "../store/CategoryStore"
+import { useProfile } from "../store/ProfileStore"
 
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
 import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle, getLevelNarrative } from "../utils/levelUtils"
-import { calculateStreak } from "../utils/streakUtils"
+import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 
@@ -24,21 +23,13 @@ import "../styles/pages/Journey.css"
 
 function Journey() {
     const { transactions } = useTransactions()
-    const streak = calculateStreak(transactions)
-    const { challenges } = useChallenges()
-    const completedChallenges = challenges.filter(c => c.completed).length
+    const { stats: profileStats } = useProfile()
+    
+    const streak = profileStats?.streak || 0
+    const level = profileStats?.level || 1
+    const levelTitle = profileStats?.levelTitle || "Mindful Seed"
+    const progress = profileStats?.progress || 0
 
-    const xp = calculateXP({
-        transactions,
-        streak,
-        goalsCompleted: 0,
-        weeklyLimitsHit: 0,
-        completedChallenges
-    })
-
-    const level = getLevelFromXP(xp)
-    const levelTitle = getLevelTitle(level)
-    const progress = getLevelProgress(xp)
     const levelStory = getLevelNarrative(level)
 
     const monthlyTransactions = transactions.filter(t => isCurrentMonth(t.date))
