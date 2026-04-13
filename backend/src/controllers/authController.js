@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken"
 
 import pool from "../db.js"
 
+import { defaultChallenges } from "../config/defaultChallenges.js"
+
 export async function register(req, res) {
     const { email, password, displayName } = req.body
 
@@ -53,6 +55,26 @@ export async function register(req, res) {
             `INSERT INTO categories (user_id, name, icon, type, is_default)
             VALUES ${values}`,
             params
+        )
+
+        // add default challenges
+        const challengeValues = defaultChallenges.map((_, i) => {
+            // each challenge has 6 fields + skip userId ($1)
+            const offset = i * 6 + 2
+            return `($1, $${offset}, $${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5})`
+        }).join(", ")
+
+        const challengeParams = [
+            userId,
+            ...defaultChallenges.flatMap(c => [
+                c.title, c.description, c.type, c.target, c.period, c.mood_type || null
+            ])
+        ]
+
+        await pool.query(
+            `INSERT INTO challenges (user_id, title, description, type, target, period, mood_type)
+            VALUES ${challengeValues}`,
+            challengeParams
         )
 
         res.json(result.rows[0])
