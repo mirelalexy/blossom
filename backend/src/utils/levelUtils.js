@@ -42,3 +42,36 @@ export function getLevelFromXP(xp) {
 
     return level
 }
+
+export function getLevelTitle(level) {
+    let currentTitle = "Growing Soul"
+
+    const sortedLevels = Object.keys(levelMilestones)
+        .map(Number)
+        .sort((a, b) => a - b)
+
+    for (let l of sortedLevels) {
+        if (level >= l) {
+            currentTitle = levelMilestones[l]
+        }
+    }
+
+    return currentTitle
+}
+
+export function getLevelProgress(xp) {
+    let level = 1
+    let totalXP = 0
+
+    while(true) {
+        const needed = getXPForLevel(level)
+
+        if (xp < totalXP + needed) {
+            const progress = (xp - totalXP) / needed
+            return Math.min(progress * 100, 100)
+        }
+
+        totalXP += needed
+        level++
+    }
+}

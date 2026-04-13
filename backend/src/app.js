@@ -14,6 +14,7 @@ import ruleRoutes from "./routes/ruleRoutes.js"
 import notificationSettingsRoutes from "./routes/notificationSettingsRoutes.js"
 import notificationRoutes from "./routes/notificationRoutes.js"
 import challengeRoutes from "./routes/challengeRoutes.js"
+import profileRoutes from "./routes/profileRoutes.js"
 
 const app = express()
 
@@ -44,5 +45,6 @@ app.use("/api/rules", ruleRoutes)
 app.use("/api/notification-settings", notificationSettingsRoutes)
 app.use("/api/notifications", notificationRoutes)
 app.use("/api/challenges", challengeRoutes)
+app.use("/api/profile", profileRoutes)
 
 export default app
