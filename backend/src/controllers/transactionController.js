@@ -112,6 +112,13 @@ export async function createTransaction(req, res) {
 
         // create challenge notifications
         for (const c of updatedChallenges) {
+            // update progress
+            await pool.query(
+                `UPDATE challenges SET progress = $1, completed = $2 WHERE id = $3 AND user_id = $4`,
+                [c.progress, c.completed, c.id, userId]
+            )
+
+            // then handle notifications
             if (!c.completed) continue
 
             const periodKey = c.period === "weekly"
@@ -125,11 +132,6 @@ export async function createTransaction(req, res) {
                 message: `${c.title} completed! Keep going.`,
                 eventKey: `challenge_${c.id}_${periodKey}`
             })
-
-            await pool.query(
-                `UPDATE challenges SET progress = $1, completed = $2 WHERE id = $3 AND user_id = $4`,
-                [c.progress, c.completed, c.id, userId]
-            )
         }
         
         res.json(result.rows[0])
