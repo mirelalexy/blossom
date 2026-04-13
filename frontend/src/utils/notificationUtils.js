@@ -7,7 +7,7 @@ export function groupNotifications(notifications) {
     const day = 24 * 60 * 60 * 1000
 
     notifications.forEach(n => {
-        const date = new Date(n.createdAt)
+        const date = new Date(n.created_at)
         const diff = now - date
 
         if (diff < day) {

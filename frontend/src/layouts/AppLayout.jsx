@@ -26,7 +26,7 @@ function AppLayout({ children }) {
     const { challenges, evaluateChallenges, resetChallenges } = useChallenges()
     const { transactions } = useTransactions()
     const { budget } = useBudget()
-    const { cleanOldNotifications, addNotification } = useNotifications()
+    const { addNotification } = useNotifications()
     const { notificationSettings: settings } = useNotificationSettings()
 
     const streak = calculateStreak(transactions)
@@ -48,10 +48,9 @@ function AppLayout({ children }) {
 
     const percentUsedBudget = budget?.monthly_limit ? (expenses / budget.monthly_limit) * 100 : 0
 
-    // reset challenges if needed and clean notifications older than two weeks
+    // reset challenges if needed
     useEffect(() => {
         resetChallenges()
-        cleanOldNotifications()
     }, [transactions])
 
     useEffect(() => {
