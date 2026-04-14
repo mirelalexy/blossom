@@ -5,7 +5,6 @@ import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useBudget } from "../store/BudgetStore"
 
-import { getNextRecurringDate } from "../utils/recurringUtils"
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
 import { getCurrentMonthYear } from "../utils/dateUtils"
@@ -39,19 +38,9 @@ function Transactions() {
     const { budget } = useBudget()
 
     const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
-    const formattedTransactions = transactions.map((t) => {
-        if (t.recurring) {
-            return {
-                ...t,
-                date: getNextRecurringDate(t.recurring)
-            }
-        }
-
-        return t
-    })
-
-    const recentTransactions = formattedTransactions
+    const recentTransactions = transactions
         .filter((t) => {
             if (!t.date) return false
 
@@ -62,24 +51,23 @@ function Transactions() {
         })
         .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-    const upcomingTransactions = formattedTransactions
-        .filter((t) => {
-            const transactionDate = new Date(t.date)
-
-            return transactionDate > today
-        })
+    const upcomingTransactions = transactions
+        .filter(t => !t.is_recurring)
+        .filter(t => new Date(t.date) > today)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-    const monthlyTransactions = formattedTransactions.filter(t => {
-        if (!t.date) return false
+    const monthlyTransactions = transactions
+        .filter(t => !t.is_recurring)
+        .filter(t => {
+            if (!t.date) return false
 
-        const date = new Date(t.date)
+            const date = new Date(t.date)
 
-        return (
-            date.getMonth() === today.getMonth() &&
-            date.getFullYear() === today.getFullYear()
-        )
-    })
+            return (
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+            )
+        })
 
     const expenses = monthlyTransactions
         .filter(t => t.type === "expense")
@@ -144,7 +132,7 @@ function Transactions() {
         })
     }
 
-    const filteredTransactions = filterTransactions(formattedTransactions, filters)
+    const filteredTransactions = filterTransactions(transactions.filter(t => !t.is_recurring), filters)
     const [showFilters, setShowFilters] = useState(false)
 
     const searchedTransactions = searchTransactions(filteredTransactions, searchQuery)
