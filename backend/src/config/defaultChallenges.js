@@ -2,7 +2,7 @@ export const defaultChallenges = [
     {
         title: "Moody",
         description: "Add a mood for 10 transactions this week.",
-        type: "mood_all",
+        type: "mood",
         target: 10,
         period: "weekly"
     },

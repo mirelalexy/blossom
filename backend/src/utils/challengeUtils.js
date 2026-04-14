@@ -62,14 +62,6 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 break
             }
 
-            case "mood_all": {
-                const total = transactions.length
-                const withMood = transactions.filter(t => t.mood).length
-
-                progress = total === 0 ? 0 : (withMood / total) * 100
-                break
-            }
-
             default:
                 break
         }
