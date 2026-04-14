@@ -24,6 +24,12 @@ export function UserProvider({ children }) {
                 }
             })
 
+            if (res.status === 401) {
+                localStorage.clear()
+                window.location.href = "/"
+                return
+            }
+
             const data = await res.json()
 
             setUser({

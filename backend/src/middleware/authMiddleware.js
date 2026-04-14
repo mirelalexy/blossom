@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
+import pool from "../db.js"
 
-export function authMiddleware(req, res, next) {
+export async function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization
 
     const token = authHeader && authHeader.split(" ")[1]
@@ -11,6 +12,17 @@ export function authMiddleware(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        // check if user exists
+        const userCheck = await pool.query(
+            `SELECT id FROM users WHERE id = $1`,
+            [decoded.userId]
+        )
+
+        if (userCheck.rows.length === 0) {
+            return res.status(401).json({ error: "User no longer exists" })
+        }
+
         req.user = decoded
         next()
     } catch (err) {
