@@ -45,8 +45,6 @@ function Profile() {
         const file = e.target.files[0]
         if (!file) return
 
-        const preview = URL.createObjectURL(file)
-
         const maxSize = type === "banner"
             ? 5 * 1024 * 1024
             : 2 * 1024 * 1024
@@ -55,6 +53,8 @@ function Profile() {
             alert("File too large.")
             return
         }
+
+        const preview = URL.createObjectURL(file)
 
         try {
             if (type === "avatar") {
@@ -69,6 +69,13 @@ function Profile() {
         } catch (err) {
             console.log(err)
             alert("Upload failed.")
+
+            // reset preview on failure
+            if (type === "avatar") {
+                setAvatarPreview(null)
+            } else {
+                setBannerPreview(null)
+            }
         }
         
         // reset input in case of re-uploading
@@ -93,7 +100,7 @@ function Profile() {
 
             <input
                 type="file"
-                accept="image/*"
+                accept="image/png, image/jpeg, image/jpg, image/gif"
                 ref={avatarRef}
                 style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "avatar")}
@@ -101,7 +108,7 @@ function Profile() {
 
             <input
                 type="file"
-                accept="image/*"
+                accept="image/png, image/jpeg, image/jpg, image/gif"
                 ref={bannerRef}
                 style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "banner")}
