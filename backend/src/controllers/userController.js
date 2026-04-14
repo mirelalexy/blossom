@@ -1,4 +1,6 @@
+import bcrypt from "bcrypt"
 import pool from "../db.js"
+
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
 
 export async function getCurrentUser(req, res) {
@@ -109,3 +111,47 @@ export async function uploadBanner(req, res) {
         res.status(500).json({ error: "Banner upload failed" })
     }
 } 
+
+export async function changePassword(req, res) {
+    const userId = req.user.userId
+    const { currentPassword, newPassword } = req.body
+
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ error: "Missing fields" })
+    }
+
+    try {
+        // get current password hash
+        const userRes = await pool.query(
+            `SELECT password_hash FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const user = userRes.rows[0]
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" })
+        }
+
+        // compare passwords
+        const isMatch = await bcrypt.compare(currentPassword, user.password_hash)
+
+        if (!isMatch) {
+            return res.status(400).json({ error: "Incorrect current password" })
+        }
+
+        // hash new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10)
+
+        // update password
+        await pool.query(
+            `UPDATE users SET password_hash = $1 WHERE id = $2`,
+            [hashedPassword, userId]
+        )
+
+        res.json({ message: "Password updated successfully" })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Change password failed" })
+    }
+}
