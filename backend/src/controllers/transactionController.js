@@ -133,6 +133,10 @@ export async function createTransaction(req, res) {
                 eventKey: `challenge_${c.id}_${periodKey}`
             })
         }
+
+        const expenses = transactions
+            .filter(t => t.type === "expense")
+            .reduce((sum, t) => sum + Number(t.amount), 0)
         
         const percentUsedBudget = budget?.monthly_limit
             ? (expenses / budget.monthly_limit) * 100
