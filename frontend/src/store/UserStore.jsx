@@ -119,8 +119,34 @@ export function UserProvider({ children }) {
         return data.banner
     }
 
+    async function changePassword(currentPassword, newPassword) {
+        const token = localStorage.getItem("token")
+
+        try {
+            const res = await fetch(`${API_URL}/api/users/password`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ currentPassword, newPassword })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.error || "Change password failed")
+            }
+
+            return data
+        } catch (err) {
+            console.log("Change password failed: ", err)
+            throw err
+        }
+    } 
+
     return (
-        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner }}>
+        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner, changePassword }}>
             {children}
         </UserContext.Provider>
     )
