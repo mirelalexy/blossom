@@ -34,7 +34,7 @@ export async function updateUserSettings(req, res) {
                 currency = COALESCE($2, currency),
                 display_name = COALESCE($3, display_name),
                 email = COALESCE($4, email)
-            WHERE id = $7
+            WHERE id = $5
             RETURNING *`,
             [
                 theme ?? null, 
