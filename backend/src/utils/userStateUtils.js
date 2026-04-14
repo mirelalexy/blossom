@@ -73,7 +73,7 @@ export async function recalculateUserState(userId) {
         : 0
 
     // create near budget notifications    
-    if (budget?.monthly_limit && percentUsedBudget >= 80) {
+    if (budget?.monthly_limit && percentUsedBudget >= 80 && percentUsedBudget <= 100) {
         const monthKey = getCurrentMonthKey()
 
         await createSystemNotification({
