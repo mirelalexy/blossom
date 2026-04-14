@@ -1,4 +1,5 @@
 import { useTransactions } from "../../../store/TransactionStore"
+import { useCategories } from "../../../store/CategoryStore"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Button from "../../../components/ui/Button"
@@ -6,22 +7,25 @@ import PageIntro from "../../../components/ui/PageIntro"
 
 function ExportData() {
     const { transactions } = useTransactions()
+    const { getCategoryById } = useCategories()
 
     function convertToCSV(transactions) {
-        const headers = ["date", "merchant", "category", "type", "amount", "mood", "intent", "notes"]
+        const headers = ["date", "title", "category", "type", "amount", "mood", "intent", "notes"]
 
-        const rows = transactions.map(t => 
-            [
+        const rows = transactions.map(t => {
+            const category = getCategoryById(t.category_id)?.name || ""
+        
+            return [
                 t.date,
-                t.merchant,
-                t.category,
+                t.title,
+                category,
                 t.type,
                 t.amount,
-                t.mood,
-                t.intent,
-                t.notes
-            ].join(",")
-        )
+                t.mood || "",
+                t.intent || "",
+                t.notes || ""
+            ].join(", ")
+        })
 
         return [headers.join(","), ...rows].join("\n")
     }
