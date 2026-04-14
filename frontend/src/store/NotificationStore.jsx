@@ -7,29 +7,29 @@ const NotificationContext = createContext()
 export function NotificationProvider({ children }) {
     const [notifications, setNotifications] = useState([])
 
-    useEffect(() => {
-            async function fetchNotifications() {
-                const token = localStorage.getItem("token")
+    async function fetchNotifications() {
+        const token = localStorage.getItem("token")
         
-                if (!token) return
+        if (!token) return
         
-                try { 
-                    const res = await fetch(`${API_URL}/api/notifications`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    })
-        
-                    const data = await res.json()
-            
-                    setNotifications(data)
-                } catch (err) {
-                    console.log("Fetch notifications failed: ", err)
+        try { 
+            const res = await fetch(`${API_URL}/api/notifications`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            }
+            })
         
-            fetchNotifications()
-        }, [])
+            const data = await res.json()
+            
+            setNotifications(data)
+        } catch (err) {
+            console.log("Fetch notifications failed: ", err)
+        }
+    }
+
+    useEffect(() => {
+        fetchNotifications()
+    }, [])
 
     async function addNotification(notification, eventKey = null) {
         const token = localStorage.getItem("token")
@@ -80,7 +80,7 @@ export function NotificationProvider({ children }) {
     }
 
     return (
-        <NotificationContext.Provider value={{ notifications, addNotification, markAsRead }}>
+        <NotificationContext.Provider value={{ notifications, addNotification, markAsRead, fetchNotifications }}>
             {children}
         </NotificationContext.Provider>
     )
