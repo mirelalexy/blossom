@@ -4,8 +4,9 @@ import { useTransactions } from "../store/TransactionStore"
 import { useGoals } from "../store/GoalsStore"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
+import { useProfile } from "../store/ProfileStore"
 
-import { calculateStreak, getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
+import { getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
 import { getNextMonthInfo, getGreeting, getTimeOfDay } from "../utils/dateUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
@@ -29,11 +30,12 @@ function Home() {
     const { transactions } = useTransactions()
     const { getCategoryById } = useCategories()
     const { user } = useUser()
+    const { stats } = useProfile()
 
     const { goals } = useGoals()
     const primaryGoal = goals.find(g => g.primaryGoal)
 
-    let streak = calculateStreak(transactions)
+    let streak = stats?.streak || 0
     const timeOfDay = getTimeOfDay()
     const recentMood = getRecentMood(transactions)
     const streakMessage = getStreakMessage({ streak, recentMood, timeOfDay, isHighSpending, transactions })
