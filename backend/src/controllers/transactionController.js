@@ -2,6 +2,7 @@ import pool from "../db.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { getLevelFromXP } from "../utils/levelUtils.js"
 import { recalculateUserState } from "../utils/userStateUtils.js"
+import { processRecurringTransactions } from "../utils/transactionUtils.js"
 
 import { XP } from "../utils/xpConfig.js"
 
@@ -107,6 +108,8 @@ export async function getTransactions(req, res) {
     const userId = req.user.userId
 
     try {
+        await processRecurringTransactions(userId)
+        
         const result = await pool.query(
             `SELECT
                 id,
