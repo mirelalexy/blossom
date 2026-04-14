@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-import { useProfile } from "./ProfileStore"
-import { useChallenges } from "./ChallengeStore"
+import { useAppRefresh } from "../hooks/useAppRefresh"
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -9,8 +8,7 @@ const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
     const [transactions, setTransactions] = useState([])
-    const { refreshStats } = useProfile()
-    const { fetchChallenges } = useChallenges()
+    const { refreshApp } = useAppRefresh()
 
     useEffect(() => {
         async function fetchTransactions() {
@@ -70,8 +68,7 @@ export function TransactionsProvider({ children }) {
 
             setTransactions(prev => [formatted, ...prev])
 
-            refreshStats()
-            fetchChallenges()
+            refreshApp()
         } catch (err) {
             console.log("Add transaction failed: ", err)
         }
