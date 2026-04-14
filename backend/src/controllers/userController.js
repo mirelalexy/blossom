@@ -6,7 +6,7 @@ export async function getCurrentUser(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT id, display_name, email, avatar, banner, theme, currency
+            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level
             FROM users
             WHERE id = $1`,
             [userId]

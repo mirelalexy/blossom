@@ -1,9 +1,11 @@
 import pool from "../db.js"
 import { createSystemNotification } from "../services/notificationService.js"
-import { calculateXP, getLevelFromXP } from "../utils/levelUtils.js"
+import { getLevelFromXP } from "../utils/levelUtils.js"
 import { evaluateChallenges } from "../utils/challengeUtils.js"
 import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils.js"
 import { calculateStreak } from "../utils/streakUtils.js"
+
+import { XP } from "../utils/xpConfig.js"
 
 export async function createTransaction(req, res) {
     const {
@@ -61,6 +63,39 @@ export async function createTransaction(req, res) {
             ]
         )
 
+        // get user xp and level
+        const userRes = await pool.query(
+            `SELECT xp, level FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const prevXP = userRes.rows[0]?.xp || 0
+        const prevLevel = userRes.rows[0]?.level || 1
+
+        const xpGain = XP.TRANSACTION
+
+        const newXP = prevXP + xpGain
+        const newLevel = getLevelFromXP(newXP)
+
+        // update user
+        await pool.query(
+            `UPDATE users SET xp = $1, level = $2 WHERE id = $3`,
+            [newXP, newLevel, userId]
+        )
+
+        // create level up notification
+        if (newLevel > prevLevel) {
+            for (let lvl = prevLevel + 1; lvl <= newLevel; lvl++) {
+                await createSystemNotification({
+                    userId,
+                    type: "level",
+                    title: "Level up!",
+                    message: `You reached level ${lvl}`,
+                    eventKey: `level_${lvl}`
+                })
+            }
+        }
+
         // get all user transactions
         const transactionsRes = await pool.query(
             `SELECT * FROM transactions WHERE user_id = $1`,
@@ -68,21 +103,6 @@ export async function createTransaction(req, res) {
         )
 
         const transactions = transactionsRes.rows
-
-        // calculate xp and level
-        const xp = calculateXP({ transactions })
-        const level = getLevelFromXP(xp)
-
-        // create level up notification
-        if (level > 1) {
-            await createSystemNotification({
-                userId,
-                type: "level",
-                title: "Level up!",
-                message: `You reached level ${level}`,
-                eventKey: `level_${level}`
-            })
-        }
 
         // get challenges
         const challengesRes = await pool.query(
