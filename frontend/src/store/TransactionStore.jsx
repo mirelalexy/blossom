@@ -86,6 +86,8 @@ export function TransactionsProvider({ children }) {
             })
 
             setTransactions(prev => prev.filter(t => t.id !== id))
+
+            refreshApp()
         } catch (err) {
             console.log("Delete transaction failed: ", err)
         }        
@@ -122,6 +124,8 @@ export function TransactionsProvider({ children }) {
                     t.id === formatted.id ? formatted : t
                 )
             )
+
+            refreshApp()
         } catch (err) {
             console.log("Update transaction failed: ", err)
         }
