@@ -69,6 +69,8 @@ export function NotificationProvider({ children }) {
                 }
             })
 
+            if (!res.ok) throw new Error("Failed to mark as read")
+
             setNotifications(prev =>
                 prev.map(n =>
                     n.id === id ? {...n, read: true} : n
