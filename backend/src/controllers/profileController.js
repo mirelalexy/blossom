@@ -1,6 +1,6 @@
 import pool from "../db.js"
 
-import { calculateXP, getLevelFromXP, getLevelProgress, getLevelTitle } from "../utils/levelUtils.js"
+import { getLevelProgress, getLevelTitle } from "../utils/levelUtils.js"
 import { calculateStreak } from "../utils/streakUtils.js"
 
 export async function getProfileStats(req, res) {
@@ -23,20 +23,17 @@ export async function getProfileStats(req, res) {
 
         const challenges = challengesRes.rows
 
-        const completedChallenges = challenges.filter(c => c.completed).length
-
         // calculate stats
         const streak = calculateStreak(transactions)
 
-        const xp = calculateXP({
-            transactions,
-            streak,
-            goalsCompleted: 0,
-            weeklyLimitsHit: 0,
-            completedChallenges
-        })
+        const userRes = await pool.query(
+            `SELECT xp, level FROM users WHERE id = $1`,
+            [userId]
+        )
 
-        const level = getLevelFromXP(xp)
+        const xp = userRes.rows[0]?.xp || 0
+        const level = userRes.rows[0]?.level || 1
+
         const progress = getLevelProgress(xp)
         const levelTitle = getLevelTitle(level)
 
