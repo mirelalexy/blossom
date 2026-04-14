@@ -1,6 +1,6 @@
 import pool from "../db.js"
 
-import { getCurrentMonthKey } from "../utils/dateUtils.js"
+import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { evaluateChallenges } from "./challengeUtils.js"
 import { calculateStreak } from "./streakUtils.js"
