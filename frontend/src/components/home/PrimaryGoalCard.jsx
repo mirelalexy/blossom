@@ -30,7 +30,7 @@ function PrimaryGoalCard({ goal }) {
         )
     }
 
-    const progress = Math.round((goal.saved / goal.target) * 100)
+    const progress = Math.round((goal.current_amount / goal.target_amount) * 100)
 
     return (
         <Card 
@@ -45,7 +45,7 @@ function PrimaryGoalCard({ goal }) {
                 <ProgressBar progress={progress}/>
 
                 <div className="goal-meta">
-                    <span>{formatCurrency(goal.saved, currency)} saved</span>
+                    <span>{formatCurrency(goal.current_amount, currency)} saved</span>
                     <span>{progress}%</span>
                 </div>
             </div>

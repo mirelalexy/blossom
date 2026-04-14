@@ -33,7 +33,8 @@ function Home() {
     const { stats } = useProfile()
 
     const { goals } = useGoals()
-    const primaryGoal = goals.find(g => g.primaryGoal)
+    const primaryGoal = goals.find(g => g.is_primary)
+    console.log(primaryGoal)
 
     let streak = stats?.streak || 0
     const timeOfDay = getTimeOfDay()
