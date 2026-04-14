@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.get("/me", authMiddleware, getCurrentUser)
 router.put("/settings", authMiddleware, updateUserSettings)
-router.post("/avatar", upload.single("image"), uploadAvatar)
-router.post("/banner", upload.single("image"), uploadBanner)
+router.post("/avatar", authMiddleware, upload.single("image"), uploadAvatar)
+router.post("/banner", authMiddleware, upload.single("image"), uploadBanner)
 
 export default router
