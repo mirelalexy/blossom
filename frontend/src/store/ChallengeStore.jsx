@@ -6,39 +6,39 @@ const ChallengeContext = createContext()
 
 export function ChallengeProvider({ children }) {
     const [challenges, setChallenges] = useState([])
-    
-        useEffect(() => {
-                async function fetchChallenges() {
-                    const token = localStorage.getItem("token")
-            
-                    if (!token) return
-            
-                    try { 
-                        const res = await fetch(`${API_URL}/api/challenges`, {
-                            headers: {
-                                Authorization: `Bearer ${token}`
-                            }
-                        })
-            
-                        const data = await res.json()
 
-                        const formatted = data.map(c => ({
-                            ...c,
-                            progress: Number(c.progress),
-                            target: Number(c.target)
-                        }))
-                
-                        setChallenges(formatted)
-                    } catch (err) {
-                        console.log("Fetch challenges failed: ", err)
-                    }
-                }
+    async function fetchChallenges() {
+        const token = localStorage.getItem("token")
             
-                fetchChallenges()
-            }, [])
+        if (!token) return
+            
+        try { 
+            const res = await fetch(`${API_URL}/api/challenges`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            
+            const data = await res.json()
+
+            const formatted = data.map(c => ({
+                ...c,
+                progress: Number(c.progress),
+                target: Number(c.target)
+            }))
+                
+            setChallenges(formatted)
+        } catch (err) {
+            console.log("Fetch challenges failed: ", err)
+        }
+    }
+    
+    useEffect(() => {
+        fetchChallenges()
+    }, [])
 
     return (
-        <ChallengeContext.Provider value={{ challenges }}>
+        <ChallengeContext.Provider value={{ challenges, fetchChallenges }}>
             {children}
         </ChallengeContext.Provider>
     )
