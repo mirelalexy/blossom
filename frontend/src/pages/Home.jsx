@@ -64,7 +64,7 @@ function Home() {
         const categoryTotals = {}
 
         monthlyExpenses.forEach(t => {
-            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + Number(t.amount)
+            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + t.amount
         })
 
         let topCategoryId = null

@@ -7,7 +7,7 @@ export function getCategoryData(transactions, categories, colors) {
         const category = categories.find(c => c.id === t.categoryId)
         const name = category.name
         
-        categoryMap[name] = (categoryMap[name] || 0) + Number(t.amount)
+        categoryMap[name] = (categoryMap[name] || 0) + t.amount
     })
 
     return Object.entries(categoryMap).map(([name, value], index) => ({
@@ -37,7 +37,7 @@ export function getSpendingOverTime(transactions) {
 
         const date = t.date
 
-        map[date] = (map[date] || 0) + Number(t.amount)
+        map[date] = (map[date] || 0) + t.amount
     })
 
     return Object.entries(map).map(([date, value]) => ({
@@ -55,7 +55,7 @@ export function getIntentData(transactions, colors) {
 
         const name = t.intent
         
-        intentMap[name] = (intentMap[name] || 0) + Number(t.amount)
+        intentMap[name] = (intentMap[name] || 0) + t.amount
     })
 
     return Object.entries(intentMap).map(([name, value], index) => {
@@ -77,7 +77,7 @@ export function getMoodData(transactions, colors) {
         const mood = t.mood
         const name = mood.charAt(0).toUpperCase() + mood.slice(1)
         
-        moodMap[name] = (moodMap[name] || 0) + Number(t.amount)
+        moodMap[name] = (moodMap[name] || 0) + t.amount
     })
 
     return Object.entries(moodMap).map(([name, value], index) => {
@@ -94,8 +94,8 @@ export function getIncomeExpenseData(transactions, colors) {
     let expenses = 0
 
     transactions.forEach(t => {
-        if (t.type === "income") income += Number(t.amount)
-        else if (t.type === "expense") expenses += Number(t.amount)
+        if (t.type === "income") income += t.amount
+        else if (t.type === "expense") expenses += t.amount
     })
 
     return [
@@ -121,7 +121,7 @@ export function getTopSpendingSourcesData(transactions, limit = 3) {
 
         const name = t.title.trim()
         
-        sourcesMap[name] = (sourcesMap[name] || 0) + Number(t.amount)
+        sourcesMap[name] = (sourcesMap[name] || 0) + t.amount
     })
 
     return Object.entries(sourcesMap).map(([name, value]) => {

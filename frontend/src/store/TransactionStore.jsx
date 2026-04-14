@@ -25,8 +25,9 @@ export function TransactionsProvider({ children }) {
 
                 const data = await res.json()
 
-                const formatted = data.map(({ category_id, ...rest }) => ({
+                const formatted = data.map(({ category_id, amount, ...rest }) => ({
                     ...rest,
+                    amount: Number(amount),
                     categoryId: category_id
                 }))
 
@@ -61,6 +62,7 @@ export function TransactionsProvider({ children }) {
 
             const formatted = {
                 ...data,
+                amount: Number(data.amount),
                 categoryId: data.category_id
             }
 
@@ -111,6 +113,7 @@ export function TransactionsProvider({ children }) {
 
             const formatted = {
                 ...data,
+                amount: Number(data.amount),
                 categoryId: data.category_id
             }
 

@@ -64,7 +64,7 @@ function CategoryDetails() {
                 date.getFullYear() === today.getFullYear()
             )
         })
-        .reduce((sum, t) => sum + Number(t.amount), 0)
+        .reduce((sum, t) => sum + t.amount, 0)
 
     const categoryBudgetObj = categoryBudgets?.find(b => b.category_id === id)
 

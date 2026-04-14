@@ -32,7 +32,7 @@ export function calculateBudgetWithRollover({ transactions, budget }) {
 
     const lastMonthExpenses = lastMonthTransactions
         .filter(t => t.type === "expense")
-        .reduce((sum, t) => sum + Number(t.amount), 0)
+        .reduce((sum, t) => sum + t.amount, 0)
 
     const leftover = base - lastMonthExpenses
 

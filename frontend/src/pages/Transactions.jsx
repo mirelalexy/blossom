@@ -83,12 +83,12 @@ function Transactions() {
 
     const expenses = monthlyTransactions
         .filter(t => t.type === "expense")
-        .reduce((sum, t) => sum + Number(t.amount), 0)
+        .reduce((sum, t) => sum + t.amount, 0)
         
 
     const income = monthlyTransactions
         .filter(t => t.type === "income")
-        .reduce((sum, t) => sum + Number(t.amount), 0)
+        .reduce((sum, t) => sum + t.amount, 0)
 
     const effectiveBudget = calculateBudgetWithRollover({ transactions, budget })
 

@@ -60,7 +60,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
                         date.getFullYear() === today.getFullYear()
                     )
                 })
-                .reduce((sum, t) => sum + Number(t.amount), 0)
+                .reduce((sum, t) => sum + t.amount, 0)
 
             const newTotal = spent + transaction.amount
 
@@ -89,7 +89,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
                         date.getFullYear() === today.getFullYear()
                     )
                 })
-                .reduce((sum, t) => sum + Number(t.amount), 0)
+                .reduce((sum, t) => sum + t.amount, 0)
 
             const newTotal = spent + transaction.amount
 
