@@ -44,6 +44,7 @@ function Account() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Delete Account"
+                        onClick={() => navigate("/settings/account/delete")}
                     />
                 </SettingsCard>
             </Section>

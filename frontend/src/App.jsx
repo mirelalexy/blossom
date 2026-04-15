@@ -55,6 +55,7 @@ import { useUser } from "./store/UserStore";
 
 import BlossomLoader from "./components/ui/BlossomLoader";
 import { ProfileProvider } from "./store/ProfileStore";
+import DeleteAccount from "./pages/settings/account/DeleteAccount";
 
 function AppContent() {
   const { loading } = useUser()
@@ -221,6 +222,14 @@ function AppContent() {
           element={
             <AppLayout>
               <Password />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/settings/account/delete"
+          element={
+            <AppLayout>
+              <DeleteAccount />
             </AppLayout>
           }
         />

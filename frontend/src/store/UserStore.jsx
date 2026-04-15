@@ -145,8 +145,37 @@ export function UserProvider({ children }) {
         }
     } 
 
+    async function deleteAccount(password) {
+        const token = localStorage.getItem("token")
+
+        try {
+            const res = await fetch(`${API_URL}/api/users/account`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.error || "Delete account failed")
+            }
+
+            // log out
+            localStorage.removeItem("token")
+
+            return data
+        } catch (err) {
+            console.log("Delete account failed: ", err)
+            throw err
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner, changePassword }}>
+        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount }}>
             {children}
         </UserContext.Provider>
     )
