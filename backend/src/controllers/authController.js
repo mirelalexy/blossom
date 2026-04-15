@@ -65,6 +65,14 @@ export async function register(req, res) {
             challengeParams
         )
 
+        // add notification settings
+        await pool.query(
+            `INSERT INTO notification_settings
+            (user_id, near_budget, exceed_budget, level_up, challenge_complete, log_reminder, recurring_reminder, recurring_frequency)
+            VALUES ($1, true, true, true, true, true, true, 'monthly')`,
+            [userId]
+        )
+
         res.json({
             token,
             user: result.rows[0]
@@ -103,7 +111,14 @@ export async function login(req, res) {
             { expiresIn: "7d" }
         )
 
-        res.json({ token })
+        res.json({
+            token,
+            user: {
+                id: user.rows[0].id,
+                email: user.rows[0].email,
+                displayName: user.rows[0].display_name
+            }
+        })
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: "Server error" })

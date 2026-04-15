@@ -25,8 +25,9 @@ export function UserProvider({ children }) {
             })
 
             if (res.status === 401) {
-                localStorage.clear()
-                window.location.href = "/"
+                localStorage.removeItem("token")
+                setUser(null)
+                setLoading(false)
                 return
             }
 
@@ -175,7 +176,7 @@ export function UserProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount }}>
             {children}
         </UserContext.Provider>
     )

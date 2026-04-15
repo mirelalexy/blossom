@@ -31,7 +31,7 @@ function AppLayout({ children }) {
 
     // trigger log reminders (daily, evening)
     useEffect(() => {
-        if (!settings.log_reminder) return
+        if (!settings?.log_reminder) return
 
         const now = new Date()
         const hour = now.getHours()
@@ -54,11 +54,11 @@ function AppLayout({ children }) {
                 type: "reminder"
             }, eventKey)
         }
-    }, [transactions, settings.log_reminder, addNotification])
+    }, [transactions, settings?.log_reminder])
 
     // trigger recurring reminders (weekly/monthly)
     useEffect(() => {
-        if (!settings.recurring_reminder) return
+        if (!settings?.recurring_reminder) return
 
         const recurring = transactions.filter(t => t.is_recurring)
         if (recurring.length === 0) return
@@ -72,7 +72,7 @@ function AppLayout({ children }) {
             message: `You have ${recurring.length} recurring payments to review.`,
             type: "reminder"
         }, eventKey)
-    }, [transactions, settings.recurring_reminder, settings.recurring_frequency, addNotification])
+    }, [transactions, settings?.recurring_reminder, settings?.recurring_frequency])
 
     return (
         <div className="layout">

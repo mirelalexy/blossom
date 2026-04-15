@@ -16,6 +16,7 @@ function Register() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const { fetchUser } = useUser()
 
     const navigate = useNavigate()
 
@@ -48,6 +49,8 @@ function Register() {
             }
 
             localStorage.setItem("token", data.token)
+
+            await fetchUser()
 
             navigate("/")
         } catch (err) {

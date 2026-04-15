@@ -19,7 +19,7 @@ function Goals() {
     
     const { goals } = useGoals()
     const { budget } = useBudget()
-    const isAutosaveActive = budget.rollover === "primaryGoal"
+    const isAutosaveActive = budget?.rollover === "primaryGoal"
     
     const filteredGoals = goals.filter(g => g.name?.toLowerCase().includes(search.toLowerCase()))
 

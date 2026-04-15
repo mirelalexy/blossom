@@ -14,16 +14,9 @@ function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
-    const { loading } = useUser()
+    const { loading, fetchUser } = useUser()
 
     const navigate = useNavigate()
-
-    // prevent going back to login if already logged in
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            navigate("/")
-        }
-    }, [navigate])
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -48,7 +41,9 @@ function Login() {
             // save token
             localStorage.setItem("token", data.token)
 
-            window.location.href = "/"
+            await fetchUser()
+
+           navigate("/")
         } catch (err) {
             setError("Something went wrong")
         }
