@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useUser } from "../store/UserStore"
@@ -81,7 +81,9 @@ function AppLayoutInner({ children }) {
     return (
         <div className="layout">
             <Sidebar />
-            <main>{children}</main>
+            <main>
+                <Outlet />
+            </main>
             <Bottombar />
         </div>
     )

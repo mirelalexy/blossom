@@ -98,270 +98,41 @@ function AppContent() {
       <ScrollToTop />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            <AppLayout>
-              <Home />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/transactions"
-          element={
-            <AppLayout>
-              <Transactions />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/transactions/:id"
-          element={
-            <AppLayout>
-              <TransactionDetails />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/add-transaction"
-          element={
-            <AppLayout>
-              <AddTransaction />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/edit-transaction/:id"
-          element={
-            <AppLayout>
-              <AddTransaction />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/goals"
-          element={
-            <AppLayout>
-              <Goals />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/add-goal"
-          element={
-            <AppLayout>
-              <AddSavingGoal />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <AppLayout>
-              <Profile />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/journey"
-          element={
-            <AppLayout>
-              <Journey />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <AppLayout>
-              <Settings />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/theme"
-          element={
-            <AppLayout>
-              <ThemeSettings />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/app-tips"
-          element={
-            <AppLayout>
-              <AppTips />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/faq"
-          element={
-            <AppLayout>
-              <FAQ />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/currency"
-          element={
-            <AppLayout>
-              <CurrencySettings />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/account"
-          element={
-            <AppLayout>
-              <Account />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/account/display-name"
-          element={
-            <AppLayout>
-              <DisplayName />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/account/email"
-          element={
-            <AppLayout>
-              <Email />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/account/password"
-          element={
-            <AppLayout>
-              <Password />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/account/delete"
-          element={
-            <AppLayout>
-              <DeleteAccount />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/data-and-privacy"
-          element={
-            <AppLayout>
-              <DataPrivacy />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/data-and-privacy/export"
-          element={
-            <AppLayout>
-              <ExportData />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/notifications"
-          element={
-            <AppLayout>
-              <NotificationSettings />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/notifications/frequency"
-          element={
-            <AppLayout>
-              <Frequency />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/budget"
-          element={
-            <AppLayout>
-              <MonthlyBudget />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/budget/amount"
-          element={
-            <AppLayout>
-              <Amount />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/categories"
-          element={
-            <AppLayout>
-              <Categories />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/categories/:id"
-          element={
-            <AppLayout>
-              <CategoryDetails />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/categories/edit/:id"
-          element={
-            <AppLayout>
-              <EditCategory />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/rules"
-          element={
-            <AppLayout>
-              <CustomSpendingRules />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/rules/add"
-          element={
-            <AppLayout>
-              <AddRule />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings/privacy-policy"
-          element={
-            <AppLayout>
-              <PrivacyPolicy />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/challenges"
-          element={
-            <AppLayout>
-              <Challenges />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <AppLayout>
-              <Notifications />
-            </AppLayout>
-          }
-        />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions/:id" element={<TransactionDetails />} />
+          <Route path="/add-transaction" element={<AddTransaction />} />
+          <Route path="/edit-transaction/:id" element={<AddTransaction />} />
+          <Route path="/goals" element={<Goals />} />
+          <Route path="/add-goal" element={<AddSavingGoal />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/journey" element={<Journey />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/theme" element={<ThemeSettings />} />
+          <Route path="/settings/app-tips" element={<AppTips />} />
+          <Route path="/settings/faq" element={<FAQ />} />
+          <Route path="/settings/currency" element={<CurrencySettings />} />
+          <Route path="/settings/account" element={<Account />} />
+          <Route path="/settings/account/display-name" element={<DisplayName />} />
+          <Route path="/settings/account/email" element={<Email />} />
+          <Route path="/settings/account/password" element={<Password />} />
+          <Route path="/settings/account/delete" element={<DeleteAccount />} />
+          <Route path="/settings/data-and-privacy" element={<DataPrivacy />} />
+          <Route path="/settings/data-and-privacy/export" element={<ExportData />} />
+          <Route path="/settings/notifications" element={<NotificationSettings />} />
+          <Route path="/settings/notifications/frequency" element={<Frequency />} />
+          <Route path="/settings/budget" element={<MonthlyBudget />} />
+          <Route path="/settings/budget/amount" element={<Amount />} />
+          <Route path="/settings/categories" element={<Categories />} />
+          <Route path="/settings/categories/:id" element={<CategoryDetails />} />
+          <Route path="/settings/categories/edit/:id" element={<EditCategory />} />
+          <Route path="/settings/rules" element={<CustomSpendingRules />} />
+          <Route path="/settings/rules/add" element={<AddRule />} />
+          <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/challenges" element={<Challenges />} />
+          <Route path="/notifications" element={<Notifications />} />
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>
