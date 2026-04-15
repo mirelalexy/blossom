@@ -6,6 +6,7 @@ import { useCurrency } from "../../../store/CurrencyStore"
 import { useCategoryBudgets } from "../../../store/CategoryBudgetStore"
 
 import { formatCurrency } from "../../../utils/currencyUtils"
+import { getStartOfDay, parseLocalDate } from "../../../utils/dateUtils"
 import { appIcons } from "../../../utils/appIcons"
 
 import PageHeader from "../../../components/ui/PageHeader"
@@ -49,13 +50,13 @@ function CategoryDetails() {
         navigate(-1)
     }
 
-    const today = new Date()
+    const today = getStartOfDay(new Date())
 
     const spent = transactions
         .filter(t => {
             if (!t.date) return false
 
-            const date = new Date(t.date)
+            const date = parseLocalDate(t.date)
 
             return (
                 t.categoryId === id &&

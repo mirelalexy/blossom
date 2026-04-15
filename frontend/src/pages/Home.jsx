@@ -7,7 +7,7 @@ import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
 
 import { getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
-import { getNextMonthInfo, getGreeting, getTimeOfDay } from "../utils/dateUtils"
+import { getNextMonthInfo, getGreeting, getTimeOfDay, getStartOfDay, parseLocalDate, getDayDiff } from "../utils/dateUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -25,7 +25,7 @@ import TipCard from "../components/tips/TipCard"
 function Home() {
     const navigate = useNavigate()
 
-    const today = new Date()
+    const today = getStartOfDay(new Date())
 
     const { transactions } = useTransactions()
     const { getCategoryById } = useCategories()
@@ -46,8 +46,8 @@ function Home() {
         .filter((t) => {
             if (!t.date) return false
 
-            const transactionDate = new Date(t.date)
-            const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24)
+            const transactionDate = getStartOfDay(parseLocalDate(t.date))
+            const diffDays = getDayDiff(today, transactionDate)
 
             return diffDays >= 0 && diffDays <= 7
         })
@@ -57,7 +57,7 @@ function Home() {
     function calculateTopCategory(transactions) {
         const now = new Date()
         const monthlyExpenses = transactions.filter(t => {
-            const date = new Date(t.date)
+            const date = parseLocalDate(t.date)
 
             return (
                 t.type === "expense" && t.categoryId && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()

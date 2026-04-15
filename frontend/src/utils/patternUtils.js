@@ -1,3 +1,5 @@
+import { parseLocalDate } from "./dateUtils.js"
+
 export function getUserPatterns(transactions) {
     const patterns = []
 
@@ -5,7 +7,7 @@ export function getUserPatterns(transactions) {
 
     // weekend pattern
     const weekendSpending = transactions.filter(t => {
-        const day = new Date(t.date).getDay()
+        const day = parseLocalDate(t.date).getDay()
         return day === 0 || day === 6
     }).length
 

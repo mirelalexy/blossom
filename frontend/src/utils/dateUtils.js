@@ -178,3 +178,21 @@ export function formatLocalDate(dateString) {
 
     return dateString.split("T")[0]
 }
+
+export function parseLocalDate(dateStr) {
+    if (!dateStr) return null
+
+    const [year, month, day] = dateStr.split("-").map(Number)
+    return new Date(year, month - 1, day)
+}
+
+export function getStartOfDay(date) {
+    const d = new Date(date)
+    d.setHours(0, 0, 0, 0)
+    return d
+}
+
+export function getDayDiff(a, b) {
+    const diff = getStartOfDay(a) - getStartOfDay(b)
+    return Math.floor(diff / (1000 * 60 * 60 * 24))
+}

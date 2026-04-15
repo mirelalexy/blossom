@@ -1,8 +1,10 @@
+import { getDayDiff, getStartOfDay, parseLocalDate } from "./dateUtils.js"
+
 export function checkSpendingWarnings({ transaction, transactions, rules, budget, categoryBudgets, categories }) {
     const warnings = []
 
-    const today = new Date()
-    const transactionDate = new Date(transaction.date)
+    const today = getStartOfDay(new Date())
+    const transactionDate = getStartOfDay(parseLocalDate(transaction.date))
 
     // check rules
     rules.forEach(rule => {
@@ -17,9 +19,9 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
 
         if (rule.type === "weekly_count") {
             const weekTransactions = transactions.filter(t => {
-                const date = new Date(t.date)
+                const date = getStartOfDay(parseLocalDate(t.date))
 
-                const diffDays = (transactionDate - date) / (1000 * 60 * 60 * 24)
+                const diffDays = getDayDiff(transactionDate, date)
 
                 return (
                     t.categoryId === transaction.categoryId &&
@@ -51,7 +53,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
                 .filter(t => {
                     if (!t.date) return false
 
-                    const date = new Date(t.date)
+                    const date = parseLocalDate(t.date)
 
                     return (
                         t.categoryId === transaction.categoryId &&
@@ -81,7 +83,7 @@ export function checkSpendingWarnings({ transaction, transactions, rules, budget
                 .filter(t => {
                     if (!t.date) return false
 
-                    const date = new Date(t.date)
+                    const date = parseLocalDate(t.date)
 
                     return (
                         t.type === "expense" &&

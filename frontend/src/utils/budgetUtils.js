@@ -1,3 +1,5 @@
+import { parseLocalDate } from "./dateUtils.js"
+
 export function calculateBudgetWithRollover({ transactions, budget }) {
     if (!budget) return 0
 
@@ -18,7 +20,7 @@ export function calculateBudgetWithRollover({ transactions, budget }) {
     const lastMonthTransactions = transactions.filter(t => {
         if (!t.date) return false
 
-        const date = new Date(t.date)
+        const date = parseLocalDate(t.date)
 
         return (
             date.getMonth() === month &&

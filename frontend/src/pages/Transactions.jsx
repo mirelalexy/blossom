@@ -7,7 +7,7 @@ import { useBudget } from "../store/BudgetStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
-import { getCurrentMonthYear } from "../utils/dateUtils"
+import { getCurrentMonthYear, getDayDiff, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
 import { calculateBudgetWithRollover } from "../utils/budgetUtils"
 
@@ -37,15 +37,14 @@ function Transactions() {
     const { currency } = useCurrency()
     const { budget } = useBudget()
 
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    const today = getStartOfDay(new Date())
 
     const recentTransactions = transactions
         .filter((t) => {
             if (!t.date) return false
 
-            const transactionDate = new Date(t.date)
-            const diffDays = (today - transactionDate) / (1000 * 60 * 60 * 24)
+            const transactionDate = getStartOfDay(parseLocalDate(t.date))
+            const diffDays = getDayDiff(today, transactionDate)
 
             return diffDays >= 0 && diffDays <= 7
         })
@@ -53,15 +52,15 @@ function Transactions() {
 
     const upcomingTransactions = transactions
         .filter(t => !t.is_recurring)
-        .filter(t => new Date(t.date) > today)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter(t => getStartOfDay(parseLocalDate(t.date)) > today)
+        .sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date))
 
     const monthlyTransactions = transactions
         .filter(t => !t.is_recurring)
         .filter(t => {
             if (!t.date) return false
 
-            const date = new Date(t.date)
+            const date = parseLocalDate(t.date)
 
             return (
                 date.getMonth() === today.getMonth() &&

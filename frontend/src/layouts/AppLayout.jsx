@@ -6,7 +6,7 @@ import { useBudget } from "../store/BudgetStore"
 import { useNotifications } from "../store/NotificationStore"
 import { useNotificationSettings } from "../store/NotificationSettingsStore"
 
-import { getReminderKey } from "../utils/dateUtils"
+import { getReminderKey, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
@@ -33,14 +33,15 @@ function AppLayout({ children }) {
 
         if (hour < 18 || hour > 22) return
 
-        const today = now.toDateString()
+        const today = getStartOfDay(new Date())
 
         const hasLoggedToday = transactions.some(t => {
-            return new Date(t.date).toDateString() === today
+            const transactionDate = getStartOfDay(parseLocalDate(t.date))
+            return transactionDate.getTime() === today.getTime()
         })
 
         if (!hasLoggedToday) {
-            const eventKey = `log_reminder_${today}`
+            const eventKey = `log_reminder_${today.toISOString().slice(0, 10)}`
 
             addNotification({
                 title: "Don't forget!",
