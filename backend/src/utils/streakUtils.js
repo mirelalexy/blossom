@@ -1,3 +1,5 @@
+import { parseLocalDate, getStartOfDay, getDayDiff } from "./dateUtils.js"
+
 export function calculateStreak(transactions) {
     if (!transactions.length) return 0
 
@@ -5,24 +7,17 @@ export function calculateStreak(transactions) {
         ...new Set(
             transactions
                 .filter(t => t.date)
-                .map(t => {
-                    const d = new Date(t.date)
-                    d.setHours(0, 0, 0, 0)
-                    return d.getTime()
-                })
+                .map(t => getStartOfDay(parseLocalDate(t.date)).getTime())
         )
     ].sort((a, b) => b - a)
 
     let streak = 0
-    let currentDate = new Date()
-
-    // normalize today (set to midnight)
-    currentDate.setHours(0, 0, 0, 0)
+    let currentDate = getStartOfDay(new Date())
 
     for (let i = 0; i < uniqueDays.length; i++) {
         const transactionDate = new Date(uniqueDays[i])
 
-        const diffDays = Math.floor((currentDate - transactionDate) / (1000 * 60 * 60 * 24))
+        const diffDays = getDayDiff(currentDate, transactionDate)
 
         if (diffDays === 0 || diffDays === 1) {
             streak++;

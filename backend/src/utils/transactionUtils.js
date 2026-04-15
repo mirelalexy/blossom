@@ -1,8 +1,8 @@
 import pool from "../db.js"
+import { getStartOfDay, parseLocalDate } from "./dateUtils.js"
 
 export async function processRecurringTransactions(userId) {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    const today = getStartOfDay(new Date())
 
     // get all recurring templates
     const recurringRes = await pool.query(
@@ -26,12 +26,12 @@ export async function processRecurringTransactions(userId) {
         let lastDate
 
         if (lastRes.rows.length > 0) {
-            lastDate = new Date(lastRes.rows[0].date)
+            lastDate = parseLocalDate(lastRes.rows[0].date)
         } else {
-            lastDate = new Date(t.date)
+            lastDate = parseLocalDate(t.date)
         }
 
-        lastDate.setHours(0, 0, 0, 0)
+        lastDate = getStartOfDay(lastDate)
 
         // move forward day by day
         let current = new Date(lastDate)
@@ -61,7 +61,7 @@ export async function processRecurringTransactions(userId) {
                         t.method.toLowerCase(),
                         t.title,
                         t.category_id,
-                        current,
+                        current.toISOString().slice(0, 10),
                         t.mood,
                         t.intent,
                         t.notes

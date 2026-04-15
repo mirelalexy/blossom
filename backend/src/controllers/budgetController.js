@@ -1,4 +1,5 @@
 import pool from "../db.js"
+import { parseLocalDate } from "../utils/dateUtils.js"
 
 export async function getBudget(req, res) {
     const userId = req.user.userId
@@ -38,7 +39,7 @@ export async function getBudget(req, res) {
             // get expenses from last month
             const lastMonthExpenses = transactions
                 .filter(t => {
-                    const date = new Date(t.date)
+                    const date = parseLocalDate(t.date)
                     return (
                         t.type === "expense" &&
                         date.getMonth() === month &&
