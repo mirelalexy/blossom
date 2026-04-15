@@ -25,6 +25,10 @@ function AppLayout({ children }) {
         return <div>Loading...</div>
     }
 
+    return <AppLayoutInner>{children}</AppLayoutInner>
+}
+
+function AppLayoutInner({ children }) {
     const { transactions } = useTransactions()
     const { addNotification } = useNotifications()
     const { notificationSettings: settings } = useNotificationSettings()
