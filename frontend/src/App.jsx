@@ -56,6 +56,23 @@ import { useUser } from "./store/UserStore";
 import BlossomLoader from "./components/ui/BlossomLoader";
 import { ProfileProvider } from "./store/ProfileStore";
 import DeleteAccount from "./pages/settings/account/DeleteAccount";
+import { ComposeProviders } from "./components/utils/ComposeProviders";
+
+const providers = [
+  UserProvider,
+  ProfileProvider,
+  NotificationSettingsProvider,
+  CategoryBudgetProvider,
+  ChallengeProvider,
+  RuleProvider,
+  CategoryProvider,
+  BudgetProvider,
+  NotificationProvider,
+  ThemeProvider,
+  CurrencyProvider,
+  TransactionsProvider,
+  GoalsProvider
+]
 
 function AppContent() {
   const { loading } = useUser()
@@ -354,34 +371,10 @@ function AppContent() {
 
 function App() {
   return (
-    <UserProvider>
-      <ProfileProvider>
-        <NotificationSettingsProvider>
-          <CategoryBudgetProvider>
-            <ChallengeProvider>
-              <RuleProvider>
-                <CategoryProvider>
-                  <BudgetProvider>
-                    <NotificationProvider>
-                      <ThemeProvider>
-                        <CurrencyProvider>
-                          <TransactionsProvider>
-                            <GoalsProvider>
-                              <AppContent />
-                            </GoalsProvider>
-                          </TransactionsProvider>
-                        </CurrencyProvider>
-                      </ThemeProvider>
-                    </NotificationProvider>
-                  </BudgetProvider>
-                </CategoryProvider>
-              </RuleProvider>
-            </ChallengeProvider>
-          </CategoryBudgetProvider>
-        </NotificationSettingsProvider>
-      </ProfileProvider>
-    </UserProvider>
-  );
+    <ComposeProviders providers={providers}>
+      <AppContent />
+    </ComposeProviders>
+  )
 }
 
 export default App;
