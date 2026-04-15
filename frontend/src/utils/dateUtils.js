@@ -193,7 +193,7 @@ export function parseLocalDate(dateInput) {
 
     // for string
     if (typeof dateInput === "string") {
-        const [year, month, day] = dateStr.split("-").map(Number)
+        const [year, month, day] = dateInput.split("-").map(Number)
         return new Date(year, month - 1, day)
     }
 
