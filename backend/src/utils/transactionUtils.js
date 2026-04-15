@@ -53,7 +53,7 @@ export async function processRecurringTransactions(userId) {
                 await pool.query(
                     `INSERT INTO transactions
                     (user_id, amount, type, method, title, category_id, date, mood, intent, notes, recurring_parent_id)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
                     [
                         userId,
                         t.amount,
