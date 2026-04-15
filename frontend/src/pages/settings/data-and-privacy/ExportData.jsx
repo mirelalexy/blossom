@@ -24,7 +24,7 @@ function ExportData() {
                 t.mood || "",
                 t.intent || "",
                 t.notes || ""
-            ].join(", ")
+            ].join(",")
         })
 
         return [headers.join(","), ...rows].join("\n")
