@@ -15,7 +15,7 @@ function Register() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
-    const { loading } = useUser()
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const navigate = useNavigate()
 
@@ -29,6 +29,7 @@ function Register() {
     async function handleRegister(e) {
         e.preventDefault()
         setError("")
+        setIsSubmitting(true)
 
         try {
             const res = await fetch(`${API_URL}/api/auth/register`, {
@@ -46,9 +47,13 @@ function Register() {
                 return
             }
 
+            localStorage.setItem("token", data.token)
+
             navigate("/")
         } catch (err) {
             setError("Something went wrong")
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -82,8 +87,8 @@ function Register() {
                     required
                 />
 
-                <Button type="submit" disabled={loading}>
-                    {loading ? "Creating account..." : "Register"}
+                <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Creating account..." : "Register"}
                 </Button>
             </form>
 

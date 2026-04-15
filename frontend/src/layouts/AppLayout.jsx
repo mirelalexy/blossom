@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Navigate } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
+import { useUser } from "../store/UserStore"
 import { useBudget } from "../store/BudgetStore"
 import { useNotifications } from "../store/NotificationStore"
 import { useNotificationSettings } from "../store/NotificationSettingsStore"
@@ -14,10 +15,14 @@ import Bottombar from "../components/navigation/Bottombar"
 import "./AppLayout.css"
 
 function AppLayout({ children }) {    
-    const token = localStorage.getItem("token")
+    const { user, loading } = useUser()
 
-    if (!token) {
+    if (!user && !loading) {
         return <Navigate to="/login" />
+    }
+
+    if (loading) {
+        return <div>Loading...</div>
     }
 
     const { transactions } = useTransactions()
@@ -49,7 +54,7 @@ function AppLayout({ children }) {
                 type: "reminder"
             }, eventKey)
         }
-    }, [transactions, settings.log_reminder])
+    }, [transactions, settings.log_reminder, addNotification])
 
     // trigger recurring reminders (weekly/monthly)
     useEffect(() => {
@@ -67,7 +72,7 @@ function AppLayout({ children }) {
             message: `You have ${recurring.length} recurring payments to review.`,
             type: "reminder"
         }, eventKey)
-    }, [transactions, settings.recurring_reminder, settings.recurring_frequency])
+    }, [transactions, settings.recurring_reminder, settings.recurring_frequency, addNotification])
 
     return (
         <div className="layout">

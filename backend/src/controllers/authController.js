@@ -21,6 +21,12 @@ export async function register(req, res) {
 
         const userId = result.rows[0].id
 
+        const token = jwt.sign(
+            { userId },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        )
+
         // add default categories
         const categoryValues = defaultCategories.map((_, i) => {
             // each category has 3 fields + skip userId ($1)
@@ -59,7 +65,10 @@ export async function register(req, res) {
             challengeParams
         )
 
-        res.json(result.rows[0])
+        res.json({
+            token,
+            user: result.rows[0]
+        })
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: "Register failed" })
