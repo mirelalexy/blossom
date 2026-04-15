@@ -27,11 +27,25 @@ export function getCurrentWeekKey() {
     return `${year}-week-${weekNo}`
 }
 
-export function parseLocalDate(dateStr) {
-    if (!dateStr) return null
+export function parseLocalDate(dateInput) {
+    if (!dateInput) return null
 
-    const [year, month, day] = dateStr.split("-").map(Number)
-    return new Date(year, month - 1, day)
+    // for date
+    if (dateInput instanceof Date) {
+        return new Date(
+            dateInput.getFullYear(),
+            dateInput.getMonth(),
+            dateInput.getDate()
+        )
+    }
+
+    // for string
+    if (typeof dateInput === "string") {
+        const [year, month, day] = dateStr.split("-").map(Number)
+        return new Date(year, month - 1, day)
+    }
+
+    return null
 }
 
 export function getStartOfDay(date) {
