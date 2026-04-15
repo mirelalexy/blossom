@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const NotificationContext = createContext()
 
 export function NotificationProvider({ children }) {
+    const { user } = useUser()
     const [notifications, setNotifications] = useState([])
 
     async function fetchNotifications() {
@@ -28,8 +30,10 @@ export function NotificationProvider({ children }) {
     }
 
     useEffect(() => {
+        if (!user) return
+
         fetchNotifications()
-    }, [])
+    }, [user])
 
     async function addNotification(notification, eventKey = null) {
         const token = localStorage.getItem("token")

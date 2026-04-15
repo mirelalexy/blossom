@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const ProfileContext = createContext()
 
 export function ProfileProvider({ children }) {
+    const { user } = useUser()
     const [stats, setStats] = useState(null)
     const [loading, setLoading] = useState(true)
     
@@ -31,8 +33,10 @@ export function ProfileProvider({ children }) {
     }
 
     useEffect(() => {
+        if (!user) return
+
         fetchStats()
-    }, [])
+    }, [user])
 
     return (
         <ProfileContext.Provider value={{ stats, loading, refreshStats: fetchStats }}>

@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const CurrencyContext = createContext()
 
 export function CurrencyProvider({ children }) {
+    const { user } = useUser()
     const [currency, setCurrency] = useState("EUR")
 
     useEffect(() => {
+        if (!user) return
+
         async function fetchCurrency() {
             const token = localStorage.getItem("token")
         
@@ -25,7 +29,7 @@ export function CurrencyProvider({ children }) {
         }
         
         fetchCurrency()
-    }, [])
+    }, [user])
 
     async function updateCurrency(newCurrency) {
         const token = localStorage.getItem("token")

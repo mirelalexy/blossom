@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const RuleContext = createContext()
 
 export function RuleProvider({ children }) {
+    const { user } = useUser()
     const [rules, setRules] = useState([])
 
     useEffect(() => {
+        if (!user) return
+        
         async function fetchRules() {
             const token = localStorage.getItem("token")
         
@@ -33,7 +37,7 @@ export function RuleProvider({ children }) {
         }
         
         fetchRules()
-    }, [])
+    }, [user])
     
     async function addRule(rule) {
         const token = localStorage.getItem("token")

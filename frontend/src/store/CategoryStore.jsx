@@ -1,35 +1,39 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const CategoryContext = createContext()
 
 export function CategoryProvider({ children }) {
+    const { user } = useUser()
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-            async function fetchCategories() {
-                const token = localStorage.getItem("token")
+        if (!user) return
         
-                if (!token) return
+        async function fetchCategories() {
+            const token = localStorage.getItem("token")
         
-                try { 
-                    const res = await fetch(`${API_URL}/api/categories`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    })
+            if (!token) return
         
-                    const data = await res.json()
+            try { 
+                const res = await fetch(`${API_URL}/api/categories`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+        
+                const data = await res.json()
             
-                    setCategories(data)
-                } catch (err) {
-                    console.log("Fetch categories failed: ", err)
-                }
+                setCategories(data)
+            } catch (err) {
+                console.log("Fetch categories failed: ", err)
             }
+        }
         
-            fetchCategories()
-        }, [])
+        fetchCategories()
+    }, [user])
 
     async function addCategory(name, type = "expense") {
         const token = localStorage.getItem("token")

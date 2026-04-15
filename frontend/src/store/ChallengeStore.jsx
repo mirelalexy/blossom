@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const ChallengeContext = createContext()
 
 export function ChallengeProvider({ children }) {
+    const { user } = useUser()
     const [challenges, setChallenges] = useState([])
 
     async function fetchChallenges() {
@@ -34,8 +36,10 @@ export function ChallengeProvider({ children }) {
     }
     
     useEffect(() => {
+        if (!user) return
+
         fetchChallenges()
-    }, [])
+    }, [user])
 
     return (
         <ChallengeContext.Provider value={{ challenges, fetchChallenges }}>

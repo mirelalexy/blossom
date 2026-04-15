@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const ThemeContext = createContext()
 
 export function ThemeProvider({ children }) {
+    const { user } = useUser()
     const [theme, setTheme] = useState("blossom")
 
     useEffect(() => {
+        if (!user) return
+
         async function fetchTheme() {
             const token = localStorage.getItem("token")
     
@@ -29,7 +33,7 @@ export function ThemeProvider({ children }) {
         }
     
         fetchTheme()
-    }, [])
+    }, [user])
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme)

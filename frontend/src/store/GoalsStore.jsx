@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const GoalsContext = createContext()
 
 export function GoalsProvider({ children }) {
+    const { user } = useUser()
     const [goals, setGoals] = useState([])
 
     useEffect(() => {
+        if (!user) return
+        
         async function fetchGoals() {
             const token = localStorage.getItem("token")
 
@@ -35,7 +39,7 @@ export function GoalsProvider({ children }) {
         }
 
         fetchGoals()
-    }, [])
+    }, [user])
 
     async function addGoal(goal) {
         const token = localStorage.getItem("token")

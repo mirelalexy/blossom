@@ -354,15 +354,15 @@ function AppContent() {
 
 function App() {
   return (
-    <ProfileProvider>
-      <NotificationSettingsProvider>
-        <CategoryBudgetProvider>
-          <ChallengeProvider>
-            <RuleProvider>
-              <CategoryProvider>
-                <BudgetProvider>
-                  <NotificationProvider>
-                    <UserProvider>
+    <UserProvider>
+      <ProfileProvider>
+        <NotificationSettingsProvider>
+          <CategoryBudgetProvider>
+            <ChallengeProvider>
+              <RuleProvider>
+                <CategoryProvider>
+                  <BudgetProvider>
+                    <NotificationProvider>
                       <ThemeProvider>
                         <CurrencyProvider>
                           <TransactionsProvider>
@@ -372,15 +372,15 @@ function App() {
                           </TransactionsProvider>
                         </CurrencyProvider>
                       </ThemeProvider>
-                    </UserProvider>
-                  </NotificationProvider>
-                </BudgetProvider>
-              </CategoryProvider>
-            </RuleProvider>
-          </ChallengeProvider>
-        </CategoryBudgetProvider>
-      </NotificationSettingsProvider>
-    </ProfileProvider>
+                    </NotificationProvider>
+                  </BudgetProvider>
+                </CategoryProvider>
+              </RuleProvider>
+            </ChallengeProvider>
+          </CategoryBudgetProvider>
+        </NotificationSettingsProvider>
+      </ProfileProvider>
+    </UserProvider>
   );
 }
 

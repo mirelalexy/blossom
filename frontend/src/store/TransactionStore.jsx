@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 import { useAppRefresh } from "../hooks/useAppRefresh"
 
@@ -7,10 +8,13 @@ const API_URL = import.meta.env.VITE_API_URL
 const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
+    const { user } = useUser()
     const [transactions, setTransactions] = useState([])
     const { refreshApp } = useAppRefresh()
 
     useEffect(() => {
+        if (!user) return
+        
         async function fetchTransactions() {
             const token = localStorage.getItem("token")
 
@@ -38,7 +42,7 @@ export function TransactionsProvider({ children }) {
         }
 
         fetchTransactions()
-    }, [])
+    }, [user])
 
     async function addTransaction(transaction) {
         const token = localStorage.getItem("token")

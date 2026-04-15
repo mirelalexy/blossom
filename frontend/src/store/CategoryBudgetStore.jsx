@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import { useUser } from "./UserStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const CategoryBudgetContext = createContext()
 
 export function CategoryBudgetProvider({ children }) {
+    const { user } = useUser()
     const [categoryBudgets, setCategoryBudgets] = useState([])
 
     useEffect(() => {
+        if (!user) return
+        
         async function fetchCategoryBudgets() {
             const token = localStorage.getItem("token")
     
@@ -29,7 +33,7 @@ export function CategoryBudgetProvider({ children }) {
         }
 
         fetchCategoryBudgets()
-    }, [])
+    }, [user])
 
     async function updateCategoryBudget(categoryId, amount) {
         const token = localStorage.getItem("token")
