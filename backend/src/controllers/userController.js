@@ -155,3 +155,39 @@ export async function changePassword(req, res) {
         res.status(500).json({ error: "Change password failed" })
     }
 }
+
+export async function deleteAccount(req, res) {
+    const userId = req.user.userId
+    const { password } = req.body
+
+    if (!password) {
+        return res.status(400).json({ error: "Password required" })
+    }
+
+    try {
+        // get current password hash
+        const userRes = await pool.query(
+            `SELECT password_hash FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const user = userRes.rows[0]
+
+        // compare passwords
+        const isMatch = await bcrypt.compare(password, user.password_hash)
+
+        if (!isMatch) {
+            return res.status(400).json({ error: "Incorrect password" })
+        }
+
+        await pool.query(
+            `DELETE FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        res.json({ message: "Account deleted successfully" })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Delete account failed" })
+    }
+}
