@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
+import { useUser } from "../store/UserStore"
+
 import PageHeader from "../components/ui/PageHeader"
 import Section from "../components/ui/Section"
 import SettingsCard from "../components/settings/SettingsCard"
@@ -9,6 +11,12 @@ import "../styles/pages/Settings.css"
 
 function Settings() {
     const navigate = useNavigate()
+    const { logout } = useUser()
+
+    function handleLogout() {
+        logout()
+        navigate("/login")
+    }
 
     return (
         <div className="settings-content">
@@ -87,6 +95,16 @@ function Settings() {
                         icon="privacyPolicy"
                         label="Privacy Policy"
                         onClick={() => navigate("/settings/privacy-policy")}
+                    />
+                </SettingsCard>
+            </Section>
+
+            <Section>
+                <SettingsCard>
+                    <SettingsItem 
+                        icon="logOut"
+                        label="Log Out"
+                        onClick={handleLogout}
                     />
                 </SettingsCard>
             </Section>

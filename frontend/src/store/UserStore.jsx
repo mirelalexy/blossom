@@ -175,8 +175,13 @@ export function UserProvider({ children }) {
         }
     }
 
+    function logout() {
+        localStorage.removeItem("token")
+        setUser(null)
+    }
+
     return (
-        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount, logout }}>
             {children}
         </UserContext.Provider>
     )

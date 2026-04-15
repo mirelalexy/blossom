@@ -10,7 +10,10 @@ export function ThemeProvider({ children }) {
     const [theme, setTheme] = useState("blossom")
 
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            setTheme("blossom")
+            return
+        }
 
         async function fetchTheme() {
             const token = localStorage.getItem("token")
