@@ -25,8 +25,8 @@ export async function createTransaction(req, res) {
     try {
         const result = await pool.query(
             `INSERT INTO transactions
-            (user_id, amount, type, method, title, category_id, date, mood, intent, notes, is_recurring, recur_frequency, recur_day_of_month, recur_day_of_week)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+            (user_id, amount, type, method, title, category_id, date, mood, intent, notes, is_recurring, recur_frequency, recur_day_of_month, recur_day_of_week, recurring_parent_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
             RETURNING
                 id,
                 user_id,
@@ -58,7 +58,8 @@ export async function createTransaction(req, res) {
                 !!recurring,
                 recurring?.frequency ?? null,
                 recurring?.dayOfMonth || null,
-                recurring?.dayOfWeek || null
+                recurring?.dayOfWeek || null,
+                null
             ]
         )
 
@@ -148,7 +149,7 @@ export async function deleteTransaction(req, res) {
     try {
         const result = await pool.query(
             `DELETE FROM transactions
-            WHERE id = $1 AND user_id = $2
+            WHERE (id = $1 OR recurring_parent_id = $1) AND user_id = $2
             RETURNING *`,
             [id, userId]
         )

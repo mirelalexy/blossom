@@ -17,10 +17,10 @@ export async function processRecurringTransactions(userId) {
         const lastRes = await pool.query(
             `SELECT date FROM transactions
             WHERE user_id = $1
-            AND title = $2
+            AND recurring_parent_id = $2
             ORDER BY date DESC
             LIMIT 1`,
-            [userId, t.title]
+            [userId, t.id]
         )
 
         let lastDate
@@ -52,7 +52,7 @@ export async function processRecurringTransactions(userId) {
             if (shouldCreate) {
                 await pool.query(
                     `INSERT INTO transactions
-                    (user_id, amount, type, method, title, category_id, date, mood, intent, notes)
+                    (user_id, amount, type, method, title, category_id, date, mood, intent, notes, recurring_parent_id)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
                     [
                         userId,
@@ -64,7 +64,8 @@ export async function processRecurringTransactions(userId) {
                         current.toISOString().slice(0, 10),
                         t.mood,
                         t.intent,
-                        t.notes
+                        t.notes,
+                        t.id
                     ]
                 )
             }
