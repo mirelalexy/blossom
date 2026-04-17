@@ -8,7 +8,7 @@ const router = express.Router()
 router.get("/", authMiddleware, getRewards)
 router.post("/", authMiddleware, createReward)
 router.put("/:id", authMiddleware, updateReward)
-router.patch("/:id", authMiddleware, claimReward)
+router.patch("/:id/claim", authMiddleware, claimReward)
 router.delete("/:id", authMiddleware, deleteReward)
 
 export default router
