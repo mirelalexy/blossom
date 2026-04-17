@@ -72,7 +72,7 @@ export async function updateReward(req, res) {
                 link = $3
             WHERE id = $4 AND user_id = $5
             RETURNING *`,
-            [title, taskId, link, id, userId]
+            [title, taskId || null, link || null, id, userId]
         )
 
         res.json(result.rows[0])
