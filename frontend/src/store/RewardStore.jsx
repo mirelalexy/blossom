@@ -9,6 +9,14 @@ export function RewardProvider({ children }) {
     const { user } = useUser()
     const [rewards, setRewards] = useState([])
 
+    function normalizeReward(r) {
+        return {
+            ...r,
+            task_id: r.task_id ?? r.taskId ?? null,
+            taskId: r.taskId ?? r.task_id ?? null
+        }
+    }
+
     useEffect(() => {
         if (!user) return
         
@@ -25,7 +33,7 @@ export function RewardProvider({ children }) {
                 })
         
                 const data = await res.json()
-                setRewards(data)
+                setRewards(data.map(normalizeReward))
             } catch (err) {
                 console.log("Fetch rewards failed: ", err)
             }
@@ -48,7 +56,7 @@ export function RewardProvider({ children }) {
             })
 
             const data = await res.json()
-            setRewards(prev => [data, ...prev])
+            setRewards(prev => [normalizeReward(data), ...prev])
         } catch (err) {
             console.log("Add reward failed: ", err)
         }
@@ -68,7 +76,7 @@ export function RewardProvider({ children }) {
             const data = await res.json()
 
             setRewards(prev =>
-                prev.map(r => (r.id === id ? data : r))
+                prev.map(r => (r.id === id ? normalizeReward(data) : r))
             )
         } catch (err) {
             console.log("Claim reward failed: ", err)
@@ -92,7 +100,7 @@ export function RewardProvider({ children }) {
         }        
     }
 
-    async function updateReward(id, title, taskId, link) {
+    async function updateReward(id, updates) {
         const token = localStorage.getItem("token")
 
         try {
@@ -102,13 +110,13 @@ export function RewardProvider({ children }) {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({ title, taskId, link })
+                body: JSON.stringify(updates)
             })
 
             const data = await res.json()
 
             setRewards(prev =>
-                prev.map(r => (r.id === id ? data : r))
+                prev.map(r => (r.id === id ? normalizeReward(data) : r))
             )
         } catch (err) {
             console.log("Update reward failed: ", err)
