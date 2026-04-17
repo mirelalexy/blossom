@@ -69,7 +69,7 @@ export async function updateReward(req, res) {
             `UPDATE rewards
             SET title = $1,
                 task_id = $2,
-                link = $3,
+                link = $3
             WHERE id = $4 AND user_id = $5
             RETURNING *`,
             [title, taskId, link, id, userId]
