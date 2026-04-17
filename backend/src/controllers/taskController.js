@@ -73,7 +73,7 @@ export async function updateTask(req, res) {
             SET title = $1
             WHERE id = $2 AND user_id = $3
             RETURNING *`,
-            [id, userId]
+            [title, id, userId]
         )
 
         res.json(result.rows[0])
