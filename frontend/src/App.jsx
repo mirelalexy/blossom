@@ -58,6 +58,7 @@ import { ProfileProvider } from "./store/ProfileStore";
 import DeleteAccount from "./pages/settings/account/DeleteAccount";
 import { ComposeProviders } from "./components/utils/ComposeProviders";
 import { TaskProvider } from "./store/TaskStore";
+import { RewardProvider } from "./store/RewardStore";
 
 const providers = [
   UserProvider,
@@ -66,6 +67,7 @@ const providers = [
   CategoryBudgetProvider,
   ChallengeProvider,
   RuleProvider,
+  RewardProvider,
   TaskProvider,
   CategoryProvider,
   BudgetProvider,
