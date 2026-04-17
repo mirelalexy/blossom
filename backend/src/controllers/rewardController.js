@@ -22,6 +22,8 @@ export async function createReward(req, res) {
     const userId = req.user.userId
     const { title, taskId, link } = req.body
 
+    if (!title?.trim()) return res.status(400).json({ error: "Title is required" })
+
     try {
         const result = await pool.query(
             `INSERT INTO rewards (user_id, title, task_id, link)
