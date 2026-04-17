@@ -5,25 +5,37 @@ import Card from "../ui/Card"
 
 import "../../styles/components/RewardsCard.css"
 
-function RewardsCard({ ready, locked }) {
+function RewardsCard({ ready = 0, locked = 0 }) {
     const navigate = useNavigate()
+
+    const hasRewards = ready > 0 || locked > 0
 
     return (
         <Card
             className={`rewards-card-content`}
-            onClick={navigate("/rewards")}
+            onClick={() => navigate("/rewards")}
         >
-            {(ready || locked) && (
+            <h3 className="rewards-card-title">Rewards</h3>
+            {!hasRewards ? (
+                <div className="rewards-card-empty">
+                    <p className="rewards-card-subtitle">You haven't added any rewards yet</p>
+                    <p className="secondary-text">Create a reward to stay motivated</p>
+                </div>
+            ) : (
                 <>
-                    <h3 className="rewards-card-title">View your rewards</h3>
                     <div className="rewards-card-info">
-                        <p>{ready} ready to claim</p>
-                        <p>{locked} locked</p>
+                        { ready > 0 && (
+                            <p>{ready} ready to claim</p>
+                        )}
+
+                        { locked > 0 && (
+                            <p>{locked} locked</p>
+                        )}
                     </div>
+
+                    <p className="rewards-card-subtitle">Keep going. You're earning it.</p>
                 </>
             )}
-            
-            <p className="rewards-card-subtitle">Need some motivation to complete your tasks?</p>
         </Card>
     )
 }
