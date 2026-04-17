@@ -20,16 +20,18 @@ export async function getRewards(req, res) {
 
 export async function createReward(req, res) {
     const userId = req.user.userId
-    const { title, taskId, link } = req.body
+    const { title, amount, taskId, link } = req.body
 
     if (!title?.trim()) return res.status(400).json({ error: "Title is required" })
+    
+    const cleanAmount = amount ? Number(amount) : null
 
     try {
         const result = await pool.query(
-            `INSERT INTO rewards (user_id, title, task_id, link)
-            VALUES ($1, $2, $3, $4)
+            `INSERT INTO rewards (user_id, title, amount, task_id, link)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *`,
-            [userId, title, taskId || null, link || null]
+            [userId, title, cleanAmount, taskId || null, link || null]
         )
 
         res.json(result.rows[0])
@@ -44,32 +46,58 @@ export async function claimReward(req, res) {
     const { id } = req.params
 
     try {
+        // start safe block to undo if something fails
+        await pool.query("BEGIN")
+
         // check if reward has already been claimed
-        const check = await pool.query(
-            `SELECT claimed FROM rewards WHERE id = $1 AND user_id = $2`,
+        const rewardRes = await pool.query(
+            `SELECT * FROM rewards WHERE id = $1 AND user_id = $2`,
             [id, userId]
         )
 
-        if (!check.rows.length) {
+        const reward = rewardRes.rows[0]
+
+        if (!reward) {
+            await pool.query("ROLLBACK")
             return res.status(404).json({ error: "Reward not found" })
         }
 
-        if (check.rows[0].claimed) {
+        if (reward.claimed) {
+            await pool.query("ROLLBACK")
             return res.status(400).json({ error: "Already claimed" })
+        }
+
+        let transactionId = null
+
+        // create transaction if amount exists
+        if (reward.amount) {
+            const transactionRes = await pool.query(
+                `INSERT INTO transactions
+                (user_id, amount, type, method, title, date)
+                VALUES ($1, $2, 'expense', 'card', $3, NOW())
+                RETURNING id`,
+                [userId, reward.amount, `Claimed reward: ${reward.title}`]
+            )
+
+            transactionId = transactionRes.rows[0].id
         }
 
         const result = await pool.query(
             `UPDATE rewards
             SET
                 claimed = true,
-                claimed_at = NOW()
-            WHERE id = $1 AND user_id = $2
+                claimed_at = NOW(),
+                transaction_id = $1
+            WHERE id = $2 AND user_id = $3
             RETURNING *`,
-            [id, userId]
+            [transactionId, id, userId]
         )
+
+        await pool.query("COMMIT")
 
         res.json(result.rows[0])
     } catch (err) {
+        await pool.query("ROLLBACK")
         console.log(err)
         res.status(500).json({ error: "Claim reward failed" })
     }
@@ -78,17 +106,22 @@ export async function claimReward(req, res) {
 export async function updateReward(req, res) {
     const userId = req.user.userId
     const { id } = req.params
-    const { title, taskId, link } = req.body
+    const { title, taskId, link, amount } = req.body
+
+    if (!title?.trim()) return res.status(400).json({ error: "Title is required" })
+
+    const cleanAmount = amount ? Number(amount) : null
 
     try {
         const result = await pool.query(
             `UPDATE rewards
             SET title = $1,
                 task_id = $2,
-                link = $3
-            WHERE id = $4 AND user_id = $5
+                link = $3,
+                amount = $4
+            WHERE id = $5 AND user_id = $6
             RETURNING *`,
-            [title, taskId || null, link || null, id, userId]
+            [title, taskId || null, link || null, cleanAmount, id, userId]
         )
 
         res.json(result.rows[0])
