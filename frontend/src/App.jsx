@@ -57,6 +57,7 @@ import BlossomLoader from "./components/ui/BlossomLoader";
 import { ProfileProvider } from "./store/ProfileStore";
 import DeleteAccount from "./pages/settings/account/DeleteAccount";
 import { ComposeProviders } from "./components/utils/ComposeProviders";
+import { TaskProvider } from "./store/TaskStore";
 
 const providers = [
   UserProvider,
@@ -65,6 +66,7 @@ const providers = [
   CategoryBudgetProvider,
   ChallengeProvider,
   RuleProvider,
+  TaskProvider,
   CategoryProvider,
   BudgetProvider,
   NotificationProvider,
