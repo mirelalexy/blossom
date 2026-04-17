@@ -86,7 +86,7 @@ export function TaskProvider({ children }) {
                 }
             })
 
-            setTasks(prev => prev.filter(r => r.id !== id))
+            setTasks(prev => prev.filter(t => t.id !== id))
         } catch (err) {
             console.log("Delete task failed: ", err)
         }        
