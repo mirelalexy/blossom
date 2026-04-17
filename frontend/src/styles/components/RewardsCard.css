@@ -1,0 +1,14 @@
+.rewards-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rewards-card-content .rewards-card-title {
+    font-size: 15px;
+}
+
+.rewards-card-content .rewards-card-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+}

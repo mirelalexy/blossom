@@ -2,17 +2,25 @@ import { useState, useRef, useEffect } from "react"
 
 import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
+import { useRewards } from "../store/RewardStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
 import ChallengesPreview from "../components/challenges/ChallengesPreview"
+import RewardsCard from "../components/profile/RewardsCard"
 
 import "../styles/pages/Profile.css"
+import Section from "../components/ui/Section"
 
 function Profile() {
     const { user, uploadAvatar, uploadBanner } = useUser()
     const [isEditing, setIsEditing] = useState(false)
     const { stats } = useProfile()
+    const { rewards } = useRewards()
+
+    // get ready and locked rewards
+    const ready = rewards.filter(r => !r.task_id || r.completed).length
+    const locked = rewards.filter(r => !r.task_id && !r.completed).length
 
     const streak = stats?.streak || 0
     const level = stats?.level || 1
@@ -116,6 +124,13 @@ function Profile() {
 
             <div className="profile-content">
                 <LevelCard title={levelTitle} level={level} progress={progress} />
+
+                <Section title="Rewards">
+                    <RewardsCard 
+                        ready={ready}
+                        locked={locked}
+                    />
+                </Section>
 
                 <ChallengesPreview />
             </div>
