@@ -57,7 +57,8 @@ import {
     BriefcaseBusiness,
     Brush,
     UndoDot,
-    Target
+    Target,
+    Pencil
 } from "lucide-react"
 
 export const appIcons = {
@@ -96,6 +97,7 @@ export const appIcons = {
     zap: Zap,
     tags: Tags,
     sparkles: Sparkles,
+    edit: Pencil,
 
     // category icons
     gamepad2: Gamepad2,
