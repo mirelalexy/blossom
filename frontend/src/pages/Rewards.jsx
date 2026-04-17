@@ -22,6 +22,7 @@ function Rewards() {
     const [rewardTitle, setRewardTitle] = useState("")
     const [selectedTaskId, setSelectedTaskId] = useState("")
     const [link, setLink] = useState("")
+    const [amount, setAmount] = useState("")
 
     const [editingTaskId, setEditingTaskId] = useState(null)
     const [editingRewardId, setEditingRewardId] = useState(null)
@@ -31,7 +32,8 @@ function Rewards() {
     const [editReward, setEditReward] = useState({
         title: "",
         taskId: "",
-        link: ""
+        link: "",
+        amount: ""
     })
 
     const taskOptions = [
@@ -74,12 +76,14 @@ function Rewards() {
         addReward({
             title: rewardTitle,
             taskId: selectedTaskId || null,
-            link: link || null
+            link: link || null,
+            amount: amount ? Number(amount) : null
         })
 
         setRewardTitle("")
         setSelectedTaskId("")
         setLink("")
+        setAmount("")
     }
 
     // edit handlers
@@ -100,7 +104,8 @@ function Rewards() {
         setEditReward({
             title: reward.title,
             taskId: reward.task_id || "",
-            link: reward.link || ""
+            link: reward.link || "",
+            amount: reward.amount || ""
         })
     }
 
@@ -110,7 +115,8 @@ function Rewards() {
         updateReward(editingRewardId, {
             title: editReward.title,
             taskId: editReward.taskId || null,
-            link: editReward.link || null
+            link: editReward.link || null,
+            amount: editReward.amount ? Number(editReward.amount) : null
         })
 
         setEditingRewardId(null)
@@ -129,6 +135,14 @@ function Rewards() {
                         type="text"
                         onChange={e => setRewardTitle(e.target.value)}
                         required
+                    />
+
+                    <Input 
+                        label="Amount"
+                        placeholder="Enter amount..."
+                        value={amount}
+                        type="number"
+                        onChange={e => setAmount(e.target.value)}
                     />
 
                     <Input 

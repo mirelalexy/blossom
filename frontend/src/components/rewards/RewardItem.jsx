@@ -27,7 +27,16 @@ function RewardItem({
                         value={editState.title}
                         type="text"
                         onChange={(e) =>
-                            setEditChange((prev) => ({ ...prev, title: e.target.value }))
+                            onEditChange((prev) => ({ ...prev, title: e.target.value }))
+                        }
+                    />
+
+                    <Input
+                        label="Amount"
+                        value={editState.amount}
+                        type="number"
+                        onChange={(e) =>
+                            onEditChange((prev) => ({ ...prev, amount: e.target.value }))
                         }
                     />
 
@@ -36,7 +45,7 @@ function RewardItem({
                         value={editState.link}
                         type="text"
                         onChange={(e) =>
-                            setEditChange((prev) => ({ ...prev, link: e.target.value }))
+                            onEditChange((prev) => ({ ...prev, link: e.target.value }))
                         }
                     />
 
@@ -44,7 +53,7 @@ function RewardItem({
                         label="Task"
                         value={editState.taskId}
                         onChange={(e) =>
-                            setEditChange((prev) => ({ ...prev, taskId: e.target.value }))
+                            onEditChange((prev) => ({ ...prev, taskId: e.target.value }))
                         }
                         options={taskOptions}
                     />
@@ -52,6 +61,10 @@ function RewardItem({
             ) : (
                 <div>
                     <p>{reward.title}</p>
+
+                    {reward.amount && (
+                        <p>{r.amount}</p>
+                    )}
 
                     {reward.link && (
                         <span
