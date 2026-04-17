@@ -10,6 +10,7 @@ import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
 import Button from "../components/ui/Button"
 import Icon from "../components/ui/Icon"
+import RewardItem from "../components/rewards/RewardItem"
 
 import "../styles/pages/Journey.css"
 
@@ -160,65 +161,20 @@ function Rewards() {
                                 <h3>Ready To Claim</h3>
 
                                 {ready.map(r => (
-                                    <div key={r.id}>
-                                        {editingRewardId === r.id ? (
-                                            <div className="edit-reward">
-                                                <Input
-                                                    label="Title"
-                                                    value={editReward.title}
-                                                    type="text"
-                                                    onChange={e => setEditReward(prev => ({ ...prev, title: e.target.value }))}
-                                                />
-
-                                                <Input
-                                                    label="Link"
-                                                    value={editReward.link}
-                                                    type="text"
-                                                    onChange={e => setEditReward(prev => ({ ...prev, link: e.target.value }))}
-                                                />
-
-                                                <Select
-                                                    label="Task"
-                                                    value={editReward.taskId}
-                                                    onChange={e => setEditReward(prev => ({ ...prev, taskId: e.target.value }))}
-                                                    options={taskOptions}
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <p>{r.title}</p>
-
-                                                {r.link && (
-                                                    <span 
-                                                        className="link" 
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            window.open(r.link, "_blank")}
-                                                        }
-                                                    
-                                                    >
-                                                        View
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        <div className="actions">
-                                            {editingRewardId === r.id ? (
-                                                <Button onClick={saveReward}>Save</Button>
-                                            ) : (
-                                                <>
-                                                    <Button onClick={() => claimReward(r.id)}>Claim</Button>
-                                                    <div onClick={() => startEditReward(r)}>
-                                                        <Icon name="edit"/>
-                                                    </div>
-                                                    <div onClick={() => deleteReward(r.id)}>
-                                                        <Icon name="delete"/>
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
+                                    <RewardItem 
+                                        key={r.id}
+                                        reward={r}
+                                        taskOptions={taskOptions}
+                                        onClaim={claimReward}
+                                        onEdit={startEditReward}
+                                        onDelete={deleteReward}
+                                        isEditing={editingRewardId === r.id}
+                                        editState={editReward}
+                                        onEditChange={setEditReward}
+                                        onSave={saveReward}
+                                        getTask={getTask}
+                                        showClaim={true}
+                                    />
                                 ))}
                             </div>
                         )}
@@ -228,61 +184,19 @@ function Rewards() {
                                 <h3>Locked</h3>
 
                                 {locked.map(r => {
-                                    const task = getTask(r.task_id)
-
-                                    return (
-                                        <div key={r.id}>
-                                            {editingRewardId === r.id ? (
-                                                <div className="edit-reward">
-                                                    <Input
-                                                        label="Title"
-                                                        value={editReward.title}
-                                                        type="text"
-                                                        onChange={e => setEditReward(prev => ({ ...prev, title: e.target.value }))}
-                                                    />
-
-                                                    <Input
-                                                        label="Link"
-                                                        value={editReward.link}
-                                                        type="text"
-                                                        onChange={e => setEditReward(prev => ({ ...prev, link: e.target.value }))}
-                                                    />
-
-                                                    <Select
-                                                        label="Task"
-                                                        value={editReward.taskId}
-                                                        onChange={e => setEditReward(prev => ({ ...prev, taskId: e.target.value }))}
-                                                        options={taskOptions}
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div>
-                                                    <p>{r.title}</p>
-
-                                                    {task && (
-                                                        <span className="secondary-text">
-                                                            Complete: {task.title}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            <div className="actions">
-                                                {editingRewardId === r.id ? (
-                                                    <Button onClick={saveReward}>Save</Button>
-                                                ) : (
-                                                    <>
-                                                        <div onClick={() => startEditReward(r)}>
-                                                            <Icon name="edit"/>
-                                                        </div>
-                                                        <div onClick={() => deleteReward(r.id)}>
-                                                            <Icon name="delete"/>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                    )
+                                    <RewardItem 
+                                        key={r.id}
+                                        reward={r}
+                                        taskOptions={taskOptions}
+                                        onEdit={startEditReward}
+                                        onDelete={deleteReward}
+                                        isEditing={editingRewardId === r.id}
+                                        editState={editReward}
+                                        onEditChange={setEditReward}
+                                        onSave={saveReward}
+                                        getTask={getTask}
+                                        showClaim={false}
+                                    />
                                 })}
                             </div>
                         )}
