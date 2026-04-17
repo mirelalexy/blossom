@@ -42,6 +42,20 @@ export async function claimReward(req, res) {
     const { id } = req.params
 
     try {
+        // check if reward has already been claimed
+        const check = await pool.query(
+            `SELECT claimed FROM rewards WHERE id = $1 AND user_id = $2`,
+            [id, userId]
+        )
+
+        if (!check.rows.length) {
+            return res.status(404).json({ error: "Reward not found" })
+        }
+
+        if (check.rows[0].claimed) {
+            return res.status(400).json({ error: "Already claimed" })
+        }
+
         const result = await pool.query(
             `UPDATE rewards
             SET
