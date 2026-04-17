@@ -58,7 +58,8 @@ import {
     Brush,
     UndoDot,
     Target,
-    Pencil
+    Pencil,
+    Gem
 } from "lucide-react"
 
 export const appIcons = {
@@ -125,5 +126,6 @@ export const appIcons = {
     brush: Brush,
     refund: UndoDot,
     target: Target,
+    gem: Gem,
     circle: Circle
 }

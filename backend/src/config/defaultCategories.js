@@ -7,6 +7,7 @@ export const defaultCategories = [
     { name: "Shopping", type: "expense", icon: "handbag" },
     { name: "Transport", type: "expense", icon: "car" },
     { name: "Goals", type: "expense", icon: "target" },
+    { name: "Rewards", type: "expense", icon: "gem" },
     { name: "Other", type: "expense", icon: "circle" },
 
     // income
