@@ -66,7 +66,7 @@ export async function updateReward(req, res) {
 
     try {
         const result = await pool.query(
-            `UPDATE tasks
+            `UPDATE rewards
             SET title = $1,
                 task_id = $2,
                 link = $3,
