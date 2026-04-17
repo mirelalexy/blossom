@@ -59,6 +59,7 @@ import DeleteAccount from "./pages/settings/account/DeleteAccount";
 import { ComposeProviders } from "./components/utils/ComposeProviders";
 import { TaskProvider } from "./store/TaskStore";
 import { RewardProvider } from "./store/RewardStore";
+import Rewards from "./pages/Rewards";
 
 const providers = [
   UserProvider,
@@ -136,6 +137,7 @@ function AppContent() {
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/rewards" element={<Rewards />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
