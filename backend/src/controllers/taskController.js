@@ -22,6 +22,8 @@ export async function createTask(req, res) {
     const userId = req.user.userId
     const { title } = req.body
 
+    if (!title?.trim()) return res.status(400).json({ error: "Title is required" })
+
     try {
         const result = await pool.query(
             `INSERT INTO tasks (user_id, title)
