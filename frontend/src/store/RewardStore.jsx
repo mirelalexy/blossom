@@ -34,7 +34,7 @@ export function RewardProvider({ children }) {
         fetchRewards()
     }, [user])
     
-    async function addReward({ title, taskId, link }) {
+    async function addReward({ title, taskId, link, amount }) {
         const token = localStorage.getItem("token")
 
         try {
@@ -44,7 +44,7 @@ export function RewardProvider({ children }) {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({ title, taskId, link })
+                body: JSON.stringify({ title, taskId, link, amount })
             })
 
             const data = await res.json()
