@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
+import { useTransactions } from "./TransactionStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -7,6 +8,7 @@ const RewardContext = createContext()
 
 export function RewardProvider({ children }) {
     const { user } = useUser()
+    const { fetchTransactions } = useTransactions()
     const [rewards, setRewards] = useState([])
 
     useEffect(() => {
@@ -70,6 +72,8 @@ export function RewardProvider({ children }) {
             setRewards(prev =>
                 prev.map(r => (r.id === id ? data : r))
             )
+
+            await fetchTransactions()
         } catch (err) {
             console.log("Claim reward failed: ", err)
         }

@@ -12,34 +12,34 @@ export function TransactionsProvider({ children }) {
     const [transactions, setTransactions] = useState([])
     const { refreshApp } = useAppRefresh()
 
+    async function fetchTransactions() {
+        const token = localStorage.getItem("token")
+
+        if (!token) return
+
+        try {
+            const res = await fetch(`${API_URL}/api/transactions`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            const data = await res.json()
+
+            const formatted = data.map(({ category_id, amount, ...rest }) => ({
+                ...rest,
+                amount: Number(amount),
+                categoryId: category_id
+            }))
+
+            setTransactions(formatted)
+        } catch (err) {
+            console.log("Fetch transactions failed: ", err)
+        }
+    }
+
     useEffect(() => {
         if (!user) return
-        
-        async function fetchTransactions() {
-            const token = localStorage.getItem("token")
-
-            if (!token) return
-
-            try {
-                const res = await fetch(`${API_URL}/api/transactions`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-
-                const data = await res.json()
-
-                const formatted = data.map(({ category_id, amount, ...rest }) => ({
-                    ...rest,
-                    amount: Number(amount),
-                    categoryId: category_id
-                }))
-
-                setTransactions(formatted)
-            } catch (err) {
-                console.log("Fetch transactions failed: ", err)
-            }
-        }
 
         fetchTransactions()
     }, [user])
@@ -146,7 +146,7 @@ export function TransactionsProvider({ children }) {
     }
 
     return (
-        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, reassignCategory }}>
+        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, reassignCategory, fetchTransactions }}>
             {children}
         </TransactionsContext.Provider>
     )

@@ -68,14 +68,14 @@ const providers = [
   CategoryBudgetProvider,
   ChallengeProvider,
   RuleProvider,
+  NotificationProvider,
+  TransactionsProvider,
   RewardProvider,
   TaskProvider,
   CategoryProvider,
   BudgetProvider,
-  NotificationProvider,
   ThemeProvider,
   CurrencyProvider,
-  TransactionsProvider,
   GoalsProvider
 ]
 
