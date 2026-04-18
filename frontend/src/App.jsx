@@ -1,65 +1,64 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import { TransactionsProvider } from "./store/TransactionStore";
-import { GoalsProvider } from "./store/GoalsStore";
-import { ThemeProvider } from "./store/ThemeStore";
-import { CurrencyProvider } from "./store/CurrencyStore";
-import { UserProvider } from "./store/UserStore";
-import { NotificationProvider } from "./store/NotificationStore";
-import { CategoryProvider } from "./store/CategoryStore";
-import { BudgetProvider } from "./store/BudgetStore";
-import { RuleProvider } from "./store/RuleStore";
-import { ChallengeProvider } from "./store/ChallengeStore";
-import { CategoryBudgetProvider } from "./store/CategoryBudgetStore";
-import { NotificationSettingsProvider } from "./store/NotificationSettingsStore";
+import { TransactionsProvider } from "./store/TransactionStore"
+import { GoalsProvider } from "./store/GoalsStore"
+import { ThemeProvider } from "./store/ThemeStore"
+import { CurrencyProvider } from "./store/CurrencyStore"
+import { UserProvider } from "./store/UserStore"
+import { NotificationProvider } from "./store/NotificationStore"
+import { CategoryProvider } from "./store/CategoryStore"
+import { BudgetProvider } from "./store/BudgetStore"
+import { RuleProvider } from "./store/RuleStore"
+import { ChallengeProvider } from "./store/ChallengeStore"
+import { CategoryBudgetProvider } from "./store/CategoryBudgetStore"
+import { NotificationSettingsProvider } from "./store/NotificationSettingsStore"
+import { ProfileProvider } from "./store/ProfileStore"
+import { TaskProvider } from "./store/TaskStore"
+import { RewardProvider } from "./store/RewardStore"
 
-import AppLayout from "./layouts/AppLayout";
-import ScrollToTop from "./components/utils/ScrollToTop";
+import { useUser } from "./store/UserStore"
+import { ComposeProviders } from "./components/utils/ComposeProviders"
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Transactions from "./pages/Transactions";
-import Goals from "./pages/Goals";
-import Journey from "./pages/Journey";
-import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
-import AddTransaction from "./pages/AddTransaction";
-import TransactionDetails from "./pages/TransactionDetails";
-import AddSavingGoal from "./pages/AddSavingGoal";
-import ThemeSettings from "./pages/settings/ThemeSettings";
-import AppTips from "./pages/settings/AppTips";
-import FAQ from "./pages/settings/FAQ";
-import CurrencySettings from "./pages/settings/CurrencySettings";
-import Account from "./pages/settings/account/Account";
-import DisplayName from "./pages/settings/account/DisplayName";
-import Email from "./pages/settings/account/Email";
-import Password from "./pages/settings/account/Password";
-import DataPrivacy from "./pages/settings/data-and-privacy/DataPrivacy";
-import ExportData from "./pages/settings/data-and-privacy/ExportData";
-import NotificationSettings from "./pages/settings/notifications/NotificationSettings";
-import Frequency from "./pages/settings/notifications/Frequency";
-import MonthlyBudget from "./pages/settings/budget/MonthlyBudget";
-import Amount from "./pages/settings/budget/Amount";
-import Categories from "./pages/settings/categories/Categories";
-import CategoryDetails from "./pages/settings/categories/CategoryDetails";
-import EditCategory from "./pages/settings/categories/EditCategory";
-import CustomSpendingRules from "./pages/settings/rules/CustomSpendingRules";
-import AddRule from "./pages/settings/rules/AddRule";
-import PrivacyPolicy from "./pages/settings/PrivacyPolicy";
-import Challenges from "./pages/Challenges";
-import Notifications from "./pages/Notifications";
-import Register from "./pages/Register";
+import AppLayout from "./layouts/AppLayout"
+import BlossomLoader from "./components/ui/BlossomLoader"
+import ScrollToTop from "./components/utils/ScrollToTop"
 
-import { useUser } from "./store/UserStore";
-
-import BlossomLoader from "./components/ui/BlossomLoader";
-import { ProfileProvider } from "./store/ProfileStore";
-import DeleteAccount from "./pages/settings/account/DeleteAccount";
-import { ComposeProviders } from "./components/utils/ComposeProviders";
-import { TaskProvider } from "./store/TaskStore";
-import { RewardProvider } from "./store/RewardStore";
-import Rewards from "./pages/Rewards";
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Transactions from "./pages/Transactions"
+import Goals from "./pages/Goals"
+import Journey from "./pages/Journey"
+import Settings from "./pages/Settings"
+import Profile from "./pages/Profile"
+import AddTransaction from "./pages/AddTransaction"
+import TransactionDetails from "./pages/TransactionDetails"
+import AddSavingGoal from "./pages/AddSavingGoal"
+import ThemeSettings from "./pages/settings/ThemeSettings"
+import AppTips from "./pages/settings/AppTips"
+import FAQ from "./pages/settings/FAQ"
+import CurrencySettings from "./pages/settings/CurrencySettings"
+import Account from "./pages/settings/account/Account"
+import DisplayName from "./pages/settings/account/DisplayName"
+import Email from "./pages/settings/account/Email"
+import Password from "./pages/settings/account/Password"
+import DataPrivacy from "./pages/settings/data-and-privacy/DataPrivacy"
+import ExportData from "./pages/settings/data-and-privacy/ExportData"
+import NotificationSettings from "./pages/settings/notifications/NotificationSettings"
+import Frequency from "./pages/settings/notifications/Frequency"
+import MonthlyBudget from "./pages/settings/budget/MonthlyBudget"
+import Amount from "./pages/settings/budget/Amount"
+import Categories from "./pages/settings/categories/Categories"
+import CategoryDetails from "./pages/settings/categories/CategoryDetails"
+import EditCategory from "./pages/settings/categories/EditCategory"
+import CustomSpendingRules from "./pages/settings/rules/CustomSpendingRules"
+import AddRule from "./pages/settings/rules/AddRule"
+import PrivacyPolicy from "./pages/settings/PrivacyPolicy"
+import Challenges from "./pages/Challenges"
+import Notifications from "./pages/Notifications"
+import Register from "./pages/Register"
+import Rewards from "./pages/Rewards"
+import DeleteAccount from "./pages/settings/account/DeleteAccount"
 
 const providers = [
   UserProvider,
@@ -143,7 +142,7 @@ function AppContent() {
         <Route path="register" element={<Register />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
 function App() {
@@ -154,4 +153,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
