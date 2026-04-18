@@ -1,20 +1,72 @@
 @import "./variables.css";
 
+/* -- RESET -- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* -- GENERAL -- */
 body {
     background: var(--bg-primary);
     margin: 0;
     font-family: var(--font-primary);
     color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-p {
+h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 600;
     color: var(--text-primary);
+    line-height: 1.25;
+}
+
+p, label {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+span, a {
+    color: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+svg {
+    display: block;
+    flex-shrink: 0;
 }
 
 button {
     font-family: var(--font-primary);
 }
 
+/* -- PAGE WRAPPER -- */
+.page {
+    padding: 24px 20px 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    animation: pageFadeIn 0.28s ease;
+}
+
+@media (min-width: 1024px) {
+    .page {
+        padding: 40px 48px 72px;
+        gap: 28px;
+    }
+}
+
+/* -- UNDER REVIEW -- */
 .bottom-add-icon {
     color: var(--accent);
 }
@@ -27,11 +79,6 @@ button {
     cursor: pointer;
 }
 
-h1, h2, h3, h4, label, span {
-    margin: 0;
-    color: var(--text-primary);
-}
-
 .form {
     display: flex;
     flex-direction: column;
@@ -42,10 +89,6 @@ h1, h2, h3, h4, label, span {
     color: var(--text-secondary);
     font-size: 13px;
     text-align: center;
-}
-
-svg {
-    display: block;
 }
 
 .secondary-text {
