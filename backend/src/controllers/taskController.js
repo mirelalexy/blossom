@@ -69,6 +69,8 @@ export async function updateTask(req, res) {
     const { id } = req.params
     const { title } = req.body
 
+    if (!title?.trim()) return res.status(400).json({ error: "Title is required" })
+
     try {
         const result = await pool.query(
             `UPDATE tasks
