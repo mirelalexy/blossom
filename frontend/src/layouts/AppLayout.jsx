@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useUser } from "../store/UserStore"
-import { useBudget } from "../store/BudgetStore"
 import { useNotifications } from "../store/NotificationStore"
 import { useNotificationSettings } from "../store/NotificationSettingsStore"
 
