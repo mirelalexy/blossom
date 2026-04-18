@@ -16,6 +16,7 @@ import { NotificationSettingsProvider } from "./store/NotificationSettingsStore"
 import { ProfileProvider } from "./store/ProfileStore"
 import { TaskProvider } from "./store/TaskStore"
 import { RewardProvider } from "./store/RewardStore"
+import { XPToastProvider } from "./store/XPToastStore"
 
 import { useUser } from "./store/UserStore"
 import { ComposeProviders } from "./components/utils/ComposeProviders"
@@ -62,6 +63,7 @@ import DeleteAccount from "./pages/settings/account/DeleteAccount"
 
 const providers = [
   UserProvider,
+  XPToastProvider,
   ProfileProvider,
   NotificationSettingsProvider,
   CategoryBudgetProvider,

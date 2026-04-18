@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
+import { useXPToast } from "./XPToastStore"
 
 import { useAppRefresh } from "../hooks/useAppRefresh"
 
@@ -9,6 +10,7 @@ const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
     const { user } = useUser()
+    const { showXPToast } = useXPToast()
     const [transactions, setTransactions] = useState([])
     const { refreshApp } = useAppRefresh()
 
@@ -64,13 +66,17 @@ export function TransactionsProvider({ children }) {
 
             const data = await res.json()
 
+            const transaction = data.transaction
+
             const formatted = {
-                ...data,
-                amount: Number(data.amount),
-                categoryId: data.category_id
+                ...transaction,
+                amount: Number(transaction.amount),
+                categoryId: transaction.category_id
             }
 
             setTransactions(prev => [formatted, ...prev])
+
+            showXPToast(data.xp)
 
             refreshApp()
         } catch (err) {
