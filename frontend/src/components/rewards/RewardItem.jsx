@@ -63,7 +63,7 @@ function RewardItem({
                     <p>{reward.title}</p>
 
                     {reward.amount && (
-                        <p>{r.amount}</p>
+                        <p>{reward.amount}</p>
                     )}
 
                     {reward.link && (
@@ -71,7 +71,7 @@ function RewardItem({
                             className="link"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                window.open(r.link, "_blank");
+                                window.open(reward.link, "_blank");
                             }}
                         >
                         View
