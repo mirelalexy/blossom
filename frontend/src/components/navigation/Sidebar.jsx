@@ -12,6 +12,7 @@ const navItems = [
     { to: "/add-transaction", icon: "add", label: "Add Transaction"},
     { to: "/goals", icon: "goals", label: "Saving Goals"},
     { to: "/challenges", icon: "profile", label: "Challenges"},
+    { to: "/rewards", icon: "gem", label: "Rewards"}
 ]
 
 function Sidebar() {
