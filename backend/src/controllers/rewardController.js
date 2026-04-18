@@ -71,12 +71,25 @@ export async function claimReward(req, res) {
 
         // create transaction if amount exists
         if (reward.amount) {
+            // find Rewards category ID
+            const categoryRes = await pool.query(
+                `SELECT id FROM categories WHERE name = $1 AND user_id = $2`,
+                ["Rewards", userId]
+            )
+
+            const category = categoryRes.rows[0].id
+
+            if (!category) {
+                await pool.query("ROLLBACK")
+                return res.status(404).json({ error: "Category not found" })
+            }
+
             const transactionRes = await pool.query(
                 `INSERT INTO transactions
-                (user_id, amount, type, method, title, date)
-                VALUES ($1, $2, 'expense', 'card', $3, NOW())
+                (user_id, amount, type, method, title, date, category_id)
+                VALUES ($1, $2, 'expense', 'card', $3, NOW(), $4)
                 RETURNING id`,
-                [userId, reward.amount, `Claimed reward: ${reward.title}`]
+                [userId, reward.amount, `Claimed reward: ${reward.title}`, category]
             )
 
             transactionId = transactionRes.rows[0].id
