@@ -1,4 +1,5 @@
 import pool from "../db.js"
+import { recalculateUserState } from "../utils/userStateUtils.js"
 
 export async function getRewards(req, res) {
     const userId = req.user.userId
@@ -107,6 +108,8 @@ export async function claimReward(req, res) {
         )
 
         await pool.query("COMMIT")
+
+        await recalculateUserState(userId)
 
         res.json(result.rows[0])
     } catch (err) {
