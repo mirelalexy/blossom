@@ -1,5 +1,8 @@
 import pool from "../db.js"
 import { recalculateUserState } from "../utils/userStateUtils.js"
+import { getLevelFromXP } from "../utils/levelUtils.js"
+
+import { XP } from "../utils/xpConfig.js"
 
 export async function getRewards(req, res) {
     const userId = req.user.userId
@@ -113,7 +116,29 @@ export async function claimReward(req, res) {
 
         await recalculateUserState(userId)
 
-        res.json(result.rows[0])
+        // get user xp and level
+        const userRes = await pool.query(
+            `SELECT xp, level FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const prevXP = userRes.rows[0]?.xp || 0
+        const prevLevel = userRes.rows[0]?.level || 1
+
+        const xpGain = XP.TRANSACTION
+
+        const newXP = prevXP + xpGain
+        const newLevel = getLevelFromXP(newXP)
+
+        res.json({
+            transaction: result.rows[0],
+            xp: {
+                gained: xpGain,
+                newXP,
+                newLevel,
+                leveledUp: newLevel > prevLevel
+            }
+        })
     } catch (err) {
         await pool.query("ROLLBACK")
         console.log(err)
