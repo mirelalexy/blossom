@@ -1,11 +1,3 @@
-.challenges-content {
-    padding: 5%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-bottom: 60px;
-}
-
 .challenges-filters {
     display: flex;
     gap: 10px;

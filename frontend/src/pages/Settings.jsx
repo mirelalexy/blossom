@@ -7,8 +7,6 @@ import Section from "../components/ui/Section"
 import SettingsCard from "../components/settings/SettingsCard"
 import SettingsItem from "../components/settings/SettingsItem"
 
-import "../styles/pages/Settings.css"
-
 function Settings() {
     const navigate = useNavigate()
     const { logout } = useUser()

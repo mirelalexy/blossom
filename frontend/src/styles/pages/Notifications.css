@@ -1,11 +1,3 @@
-.notifications-content {
-    padding: 5%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-bottom: 60px;
-}
-
 .notifications-list {
     display: flex;
     flex-direction: column;
