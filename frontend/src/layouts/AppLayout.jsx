@@ -14,7 +14,7 @@ import Bottombar from "../components/navigation/Bottombar"
 
 import "./AppLayout.css"
 
-function AppLayout({ children }) {    
+function AppLayout() {    
     const { user, loading } = useUser()
 
     if (!user && !loading) {
@@ -25,10 +25,10 @@ function AppLayout({ children }) {
         return <div>Loading...</div>
     }
 
-    return <AppLayoutInner>{children}</AppLayoutInner>
+    return <AppLayoutInner />
 }
 
-function AppLayoutInner({ children }) {
+function AppLayoutInner() {
     const { transactions } = useTransactions()
     const { addNotification } = useNotifications()
     const { notificationSettings: settings } = useNotificationSettings()
