@@ -98,7 +98,15 @@ export async function createTransaction(req, res) {
 
         await recalculateUserState(userId)
         
-        res.json(result.rows[0])
+        res.json({
+            transaction: result.rows[0],
+            xp: {
+                gained: xpGain,
+                newXP,
+                newLevel,
+                levelledUp: newLevel > prevLevel
+            }
+        })
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: "Create transaction failed" })
