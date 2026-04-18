@@ -60,6 +60,7 @@ export function RewardProvider({ children }) {
 
             showToast({ message: "Reward added" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Add reward failed: ", err)
         }
     }
@@ -87,6 +88,7 @@ export function RewardProvider({ children }) {
             await fetchTransactions()
             await fetchChallenges()
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Claim reward failed: ", err)
         }
     }
@@ -106,6 +108,7 @@ export function RewardProvider({ children }) {
 
             showToast({ message: "Reward deleted" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Delete reward failed: ", err)
         }        
     }
@@ -129,6 +132,7 @@ export function RewardProvider({ children }) {
                 prev.map(r => (r.id === id ? data : r))
             )
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Update reward failed: ", err)
         }
     }

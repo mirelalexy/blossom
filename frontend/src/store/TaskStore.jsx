@@ -52,6 +52,7 @@ export function TaskProvider({ children }) {
             const data = await res.json()
             setTasks(prev => [data, ...prev])
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Add task failed: ", err)
         }
     }
@@ -73,6 +74,7 @@ export function TaskProvider({ children }) {
                 prev.map(t => (t.id === id ? data : t))
             )
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Toggle task failed: ", err)
         }
     }
@@ -92,6 +94,7 @@ export function TaskProvider({ children }) {
 
             showToast({ message: "Task deleted" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Delete task failed: ", err)
         }        
     }
@@ -115,6 +118,7 @@ export function TaskProvider({ children }) {
                 prev.map(t => (t.id === id ? data : t))
             )
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Update task failed: ", err)
         }
     }

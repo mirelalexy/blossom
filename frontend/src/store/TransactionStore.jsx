@@ -83,6 +83,7 @@ export function TransactionsProvider({ children }) {
 
             refreshApp()
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Add transaction failed: ", err)
         }
     }
@@ -104,6 +105,7 @@ export function TransactionsProvider({ children }) {
 
             refreshApp()
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Delete transaction failed: ", err)
         }        
     }
@@ -144,6 +146,7 @@ export function TransactionsProvider({ children }) {
 
             refreshApp()
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Update transaction failed: ", err)
         }
     }

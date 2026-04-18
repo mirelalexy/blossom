@@ -61,6 +61,7 @@ export function GoalsProvider({ children }) {
 
             showToast({ message: "Goal added" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Add goal failed: ", err)
         }
     }
@@ -80,6 +81,7 @@ export function GoalsProvider({ children }) {
 
             showToast({ message: "Goal deleted" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Delete goal failed: ", err)
         }        
     }
@@ -107,6 +109,7 @@ export function GoalsProvider({ children }) {
 
             showToast({ message: "Goal updated" })
         } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
             console.log("Update goal failed: ", err)
         }
     }
