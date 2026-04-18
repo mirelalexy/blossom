@@ -1,40 +1,68 @@
 .button {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
-    padding: 10px 16px;
+    padding: 13px 20px;
     border: none;
-    border-radius: 30px;
+    border-radius: var(--r-full);
     background-color: var(--accent);
     color: #ffffff;
     font-size: 15px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    letter-spacing: -0.1px;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: background-color 0.15s ease, transform 0.1s ease;
     flex: 1;
+    white-space: nowrap;
 }
 
 .button:hover {
-    opacity: 0.85;
+    background-color: var(--hover);
 }
 
 .button:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
+    transform: none;
 }
 
-.button.active {
-    background-color: var(--active);
+.button:active {
+    transform: scale(0.98);
 }
 
 .button.secondary {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--accent);
+    background-color: transparent;
+    border: 1.5px solid var(--border-strong);
     color: var(--accent);
-    opacity: 0.8;
 }
 
 .button.secondary:hover {
-    opacity: 0.5;
+    background-color: var(--accent-dim);
+}
+
+.button.ghost {
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.button.ghost:hover { 
+    background-color: var(--bg-secondary); 
+    color: var(--text-primary); 
+}
+
+.button.danger {
+    background-color: var(--danger-soft);
+    color: var(--danger);
+}
+.button.danger:hover { 
+    background-color: var(--danger); 
+    color: #ffffff; 
+}
+
+.button.active { 
+    background-color: var(--active); 
 }

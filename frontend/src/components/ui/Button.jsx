@@ -1,6 +1,6 @@
 import "../../styles/components/Button.css"
 
-function Button({ icon, children, onClick, type="button", className, disabled }) {
+function Button({ icon, children, onClick, type = "button", className, disabled }) {
     return (
         <button
             type={type}
@@ -9,7 +9,7 @@ function Button({ icon, children, onClick, type="button", className, disabled })
             className={`button ${className || ""}`}
         >
             {icon && <div className="button-icon">
-                    {icon}
+                {icon}
             </div>}
 
             <span>
