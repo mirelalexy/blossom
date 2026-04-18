@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
+import { useXPToast } from "./XPToastStore"
 import { useTransactions } from "./TransactionStore"
 import { useChallenges } from "./ChallengeStore"
 
@@ -9,6 +10,7 @@ const RewardContext = createContext()
 
 export function RewardProvider({ children }) {
     const { user } = useUser()
+    const { showXPToast } = useXPToast()
     const { fetchTransactions } = useTransactions()
     const { fetchChallenges } = useChallenges()
     const [rewards, setRewards] = useState([])
@@ -74,6 +76,8 @@ export function RewardProvider({ children }) {
             setRewards(prev =>
                 prev.map(r => (r.id === id ? data : r))
             )
+
+            showXPToast(data.xp)
 
             await fetchTransactions()
             await fetchChallenges()
