@@ -9,6 +9,7 @@ import { useNotificationSettings } from "../store/NotificationSettingsStore"
 
 import { getReminderKey, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 
+import BlossomLoader from "../components/ui/BlossomLoader"
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
 
@@ -22,7 +23,7 @@ function AppLayout() {
     }
 
     if (loading) {
-        return <div>Loading...</div>
+        return <BlossomLoader />
     }
 
     return <AppLayoutInner />
