@@ -78,12 +78,14 @@ export async function claimReward(req, res) {
                 ["Rewards", userId]
             )
 
-            const category = categoryRes.rows[0].id
+            const categoryRow = categoryRes.rows[0]
 
-            if (!category) {
+            if (!categoryRow) {
                 await pool.query("ROLLBACK")
-                return res.status(404).json({ error: "Category not found" })
+                return res.status(404).json({ error: "Rewards category not found" })
             }
+
+            const category = categoryRow.id
 
             const transactionRes = await pool.query(
                 `INSERT INTO transactions
