@@ -20,6 +20,16 @@ function ThemeSettings() {
                     />
 
                     <SettingsItem 
+                        label={`Petal ${theme === "petal" ? "(current)" : ""}`}
+                        onClick={() => setTheme("petal")}
+                    />
+
+                    <SettingsItem 
+                        label={`Dusk ${theme === "dusk" ? "(current)" : ""}`}
+                        onClick={() => setTheme("dusk")}
+                    />
+
+                    <SettingsItem 
                         label={`Forest ${theme === "forest" ? "(current)" : ""}`}
                         onClick={() => setTheme("forest")}
                     />
