@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react"
 import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
 import { useRewards } from "../store/RewardStore"
+import { useTasks } from "../store/TaskStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
@@ -16,10 +17,23 @@ function Profile() {
     const [isEditing, setIsEditing] = useState(false)
     const { stats } = useProfile()
     const { rewards } = useRewards()
+    const { tasks } = useTasks()
 
     // get ready and locked rewards
-    const ready = rewards.filter(r => !r.task_id || r.completed).length
-    const locked = rewards.filter(r => !r.task_id && !r.completed).length
+    const getTask = (id) => tasks.find(t => t.id === id)
+
+    const isUnlocked = (reward) => {
+        if (!reward.task_id) return true
+
+        const task = getTask(reward.task_id)
+
+        if (!task) return true // fallback if task deleted
+
+        return task?.completed
+    }
+
+    const ready = rewards.filter(r => isUnlocked(r) && !r.claimed)
+    const locked = rewards.filter(r => !isUnlocked(r))
 
     const streak = stats?.streak || 0
     const level = stats?.level || 1

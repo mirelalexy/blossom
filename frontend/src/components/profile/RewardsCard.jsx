@@ -8,7 +8,7 @@ import "../../styles/components/RewardsCard.css"
 function RewardsCard({ ready = 0, locked = 0 }) {
     const navigate = useNavigate()
 
-    const hasRewards = ready > 0 || locked > 0
+    const hasRewards = ready.length > 0 || locked.length > 0
 
     return (
         <Card
@@ -24,12 +24,12 @@ function RewardsCard({ ready = 0, locked = 0 }) {
             ) : (
                 <>
                     <div className="rewards-card-info">
-                        { ready > 0 && (
-                            <p>{ready} ready to claim</p>
+                        {ready.length > 0 && (
+                            <p>{ready.length} ready to claim</p>
                         )}
 
-                        { locked > 0 && (
-                            <p>{locked} locked</p>
+                        {locked.length > 0 && (
+                            <p>{locked.length} locked</p>
                         )}
                     </div>
 
