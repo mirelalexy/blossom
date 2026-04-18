@@ -104,7 +104,7 @@ function Profile() {
     }
 
     return (
-        <div className="profile-page">
+        <div className="page">
             <ProfileHeader 
                 bannerSrc={bannerPreview || user?.banner}
                 avatarSrc={avatarPreview || user?.avatar}

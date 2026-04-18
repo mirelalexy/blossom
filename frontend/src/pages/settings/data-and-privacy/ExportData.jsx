@@ -45,7 +45,7 @@ function ExportData() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Export Data" />
 
             <PageIntro 

@@ -8,7 +8,7 @@ import Section from "../../components/ui/Section"
 
 function FAQ() {
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="FAQ" />
 
             <PageIntro

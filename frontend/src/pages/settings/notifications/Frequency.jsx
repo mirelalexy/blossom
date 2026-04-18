@@ -9,7 +9,7 @@ function Frequency() {
     const { settings, updateSetting } = useNotifications()
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Review Recurring Payments Frequency" />
 
             <Section title="Customize how often Blossom sends you reminders">

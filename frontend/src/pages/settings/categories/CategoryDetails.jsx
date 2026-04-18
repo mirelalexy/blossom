@@ -80,7 +80,7 @@ function CategoryDetails() {
         : null
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Category Details" />
 
             <div className="transaction-details-card">

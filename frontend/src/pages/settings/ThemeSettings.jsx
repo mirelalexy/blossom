@@ -9,7 +9,7 @@ function ThemeSettings() {
     const { theme, setTheme } = useTheme()
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Theme" />
 
             <Section title="Customize how Blossom looks and feels">

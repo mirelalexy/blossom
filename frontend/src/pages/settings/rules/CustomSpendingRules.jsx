@@ -16,7 +16,7 @@ function CustomSpendingRules() {
     const { getCategoryById } = useCategories()
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Custom Spending Rules" />
 
             <Section title="Spending Guidelines">

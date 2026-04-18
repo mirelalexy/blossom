@@ -61,7 +61,7 @@ function Journey() {
     const spendingStyle = getSpendingStyle({ moodData: moodChartData, intentData: intentChartData })
 
     return (
-        <div className="journey-content">
+        <div className="page">
             <PageHeader title="Journey" />
             
             <LevelCard variant="hero" title={levelTitle} level={level} progress={progress} />

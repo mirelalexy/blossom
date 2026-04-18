@@ -9,7 +9,7 @@ function DataPrivacy() {
     const navigate = useNavigate()
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Data & Privacy" />
 
             <Section>

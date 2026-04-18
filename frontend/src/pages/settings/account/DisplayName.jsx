@@ -19,7 +19,7 @@ function DisplayName() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Display Name" />
 
             <Input 

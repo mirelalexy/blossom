@@ -15,82 +15,88 @@ import Button from "../components/ui/Button"
 import "../styles/pages/TransactionDetails.css"
 
 function TransactionDetails() {
-    const navigate = useNavigate()
+	const navigate = useNavigate()
 
-    const { id } = useParams()
-    const { transactions, deleteTransaction } = useTransactions()
-    const { currency } = useCurrency()
-    const { getCategoryById } = useCategories()
+	const { id } = useParams()
+	const { transactions, deleteTransaction } = useTransactions()
+	const { currency } = useCurrency()
+	const { getCategoryById } = useCategories()
 
-    const transaction = transactions.find(t => t.id === id)
+	const transaction = transactions.find((t) => t.id === id)
 
-    if (!transaction) {
-            return <p>Transaction not found.</p>
-        }
+	if (!transaction) {
+		return <p>Transaction not found.</p>
+	}
 
-    const categoryData = getCategoryById(transaction.categoryId)
-    const Icon = appIcons[categoryData?.icon] || appIcons["circle"]
+	const categoryData = getCategoryById(transaction.categoryId)
+	const Icon = appIcons[categoryData?.icon] || appIcons["circle"]
 
-    
-    function handleDelete() {
-        const confirmed = window.confirm("Delete this transaction?")
+	function handleDelete() {
+		const confirmed = window.confirm("Delete this transaction?")
 
-        if(!confirmed) return
+		if (!confirmed) return
 
-        deleteTransaction(transaction.id)
-        navigate("/transactions")
-    }
+		deleteTransaction(transaction.id)
+		navigate("/transactions")
+	}
 
-    function handleEdit() {
-        navigate(`/edit-transaction/${transaction.id}`)
-    }
+	function handleEdit() {
+		navigate(`/edit-transaction/${transaction.id}`)
+	}
 
-    return (
-        <div className="transaction-details-layout">
-            <div className="transaction-details-content">
-                <PageHeader title="Transaction Details" onBack={() => navigate("/transactions")} />
+	return (
+		<div className="page">
+			<PageHeader
+				title="Transaction Details"
+				onBack={() => navigate("/transactions")}
+			/>
 
-                <div className="transaction-details-card">
-                    <Section className="transaction-section transaction-summary">
-                        <div>
-                            {Icon && <Icon size={35} />}
-                        </div>
-                        <div>
-                            <h2>{transaction.title}</h2>
-                            <p className="transaction-category">{categoryData?.name}</p>
+			<div className="transaction-details-card">
+				<Section className="transaction-section transaction-summary">
+					<div>{Icon && <Icon size={35} />}</div>
+					<div>
+						<h2>{transaction.title}</h2>
+						<p className="transaction-category">
+							{categoryData?.name}
+						</p>
 
-                            <p className="transaction-amount">
-                                {transaction.type === "expense" ? "-" : "+"}
-                                {formatCurrency(transaction.amount, currency)}
-                            </p>
-                        </div>      
-                    </Section>
+						<p className="transaction-amount">
+							{transaction.type === "expense" ? "-" : "+"}
+							{formatCurrency(transaction.amount, currency)}
+						</p>
+					</div>
+				</Section>
 
-                    <Section title="Details" className="transaction-section">
-                        <p>Type: {transaction.type}</p>
-                        <p>Method: {transaction.method}</p>
-                        <p>Date: {formatDate(transaction.date)}</p>
-                        <p>Recurring: {transaction.is_recurring ? "Yes" : "No"}</p>
-                    </Section>
+				<Section title="Details" className="transaction-section">
+					<p>Type: {transaction.type}</p>
+					<p>Method: {transaction.method}</p>
+					<p>Date: {formatDate(transaction.date)}</p>
+					<p>Recurring: {transaction.is_recurring ? "Yes" : "No"}</p>
+				</Section>
 
-                    <Section title="Reflection" className="transaction-section reflection-transaction-section">
-                        <p><span>{transaction.mood}</span> <span>{transaction.intent}</span></p>   
-                    </Section>
+				<Section
+					title="Reflection"
+					className="transaction-section reflection-transaction-section"
+				>
+					<p>
+						<span>{transaction.mood}</span>{" "}
+						<span>{transaction.intent}</span>
+					</p>
+				</Section>
 
-                    {transaction.notes && (
-                        <Section title="Notes" className="transaction-section" >
-                            <p>{transaction.notes}</p>
-                        </Section>
-                    )}
+				{transaction.notes && (
+					<Section title="Notes" className="transaction-section">
+						<p>{transaction.notes}</p>
+					</Section>
+				)}
 
-                    <div className="transaction-actions">
-                        <Button onClick={handleEdit}>Edit</Button>
-                        <Button onClick={handleDelete}>Delete</Button>
-                    </div>
-                </div>
-            </div>          
-        </div>
-    )
+				<div className="transaction-actions">
+					<Button onClick={handleEdit}>Edit</Button>
+					<Button onClick={handleDelete}>Delete</Button>
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default TransactionDetails

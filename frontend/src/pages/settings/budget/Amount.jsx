@@ -23,7 +23,7 @@ function Amount() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Amount" />
 
             <Input 

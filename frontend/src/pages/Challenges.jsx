@@ -33,7 +33,7 @@ function Challenges() {
     })
 
     return (
-        <div className="challenges-content">
+        <div className="page">
             <PageHeader title="Challenges"></PageHeader>
             
             <div className="challenges-filters">

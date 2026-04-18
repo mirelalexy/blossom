@@ -6,8 +6,21 @@ import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
 
-import { getNextMilestone, getStreakMessage, isHighSpending, getRecentMood } from "../utils/streakUtils"
-import { getNextMonthInfo, getGreeting, getTimeOfDay, getStartOfDay, parseLocalDate, getDayDiff } from "../utils/dateUtils"
+import {
+	getNextMilestone,
+	getStreakMessage,
+	isHighSpending,
+	getRecentMood,
+} from "../utils/streakUtils"
+
+import {
+	getNextMonthInfo,
+	getGreeting,
+	getTimeOfDay,
+	getStartOfDay,
+	parseLocalDate,
+	getDayDiff,
+} from "../utils/dateUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -23,114 +36,152 @@ import "../styles/pages/Home.css"
 import TipCard from "../components/tips/TipCard"
 
 function Home() {
-    const navigate = useNavigate()
+	const navigate = useNavigate()
 
-    const today = getStartOfDay(new Date())
+	const today = getStartOfDay(new Date())
 
-    const { transactions } = useTransactions()
-    const { getCategoryById } = useCategories()
-    const { user } = useUser()
-    const { stats } = useProfile()
+	const { transactions } = useTransactions()
+	const { getCategoryById } = useCategories()
+	const { user } = useUser()
+	const { stats } = useProfile()
 
-    const { goals } = useGoals()
-    const primaryGoal = goals.find(g => g.is_primary)
+	const { goals } = useGoals()
+	const primaryGoal = goals.find((g) => g.is_primary)
 
-    let streak = stats?.streak || 0
-    const timeOfDay = getTimeOfDay()
-    const recentMood = getRecentMood(transactions)
-    const streakMessage = getStreakMessage({ streak, recentMood, timeOfDay, isHighSpending, transactions })
-    const nextStreakMileStone = getNextMilestone(streak)
+	let streak = stats?.streak || 0
+	const timeOfDay = getTimeOfDay()
+	const recentMood = getRecentMood(transactions)
+	const streakMessage = getStreakMessage({
+		streak,
+		recentMood,
+		timeOfDay,
+		isHighSpending,
+		transactions,
+	})
+	const nextStreakMileStone = getNextMilestone(streak)
 
-    const recentTransactions = transactions
-        .filter((t) => {
-            if (!t.date) return false
+	const recentTransactions = transactions
+		.filter((t) => {
+			if (!t.date) return false
 
-            const transactionDate = getStartOfDay(parseLocalDate(t.date))
-            const diffDays = getDayDiff(today, transactionDate)
+			const transactionDate = getStartOfDay(parseLocalDate(t.date))
+			const diffDays = getDayDiff(today, transactionDate)
 
-            return diffDays >= 0 && diffDays <= 7
-        })
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 3)
+			return diffDays >= 0 && diffDays <= 7
+		})
+		.sort((a, b) => new Date(b.date) - new Date(a.date))
+		.slice(0, 3)
 
-    function calculateTopCategory(transactions) {
-        const now = new Date()
-        const monthlyExpenses = transactions.filter(t => {
-            const date = parseLocalDate(t.date)
+	function calculateTopCategory(transactions) {
+		const now = new Date()
+		const monthlyExpenses = transactions.filter((t) => {
+			const date = parseLocalDate(t.date)
 
-            return (
-                t.type === "expense" && t.categoryId && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
-            )
-        })
+			return (
+				t.type === "expense" &&
+				t.categoryId &&
+				date.getMonth() === now.getMonth() &&
+				date.getFullYear() === now.getFullYear()
+			)
+		})
 
-        const categoryTotals = {}
+		const categoryTotals = {}
 
-        monthlyExpenses.forEach(t => {
-            categoryTotals[t.categoryId] = (categoryTotals[t.categoryId] || 0) + t.amount
-        })
+		monthlyExpenses.forEach((t) => {
+			categoryTotals[t.categoryId] =
+				(categoryTotals[t.categoryId] || 0) + t.amount
+		})
 
-        let topCategoryId = null
-        let highestAmount = 0
+		let topCategoryId = null
+		let highestAmount = 0
 
-        Object.entries(categoryTotals).forEach(([categoryId, amount]) => {
-            if (amount > highestAmount) {
-                highestAmount = amount
-                topCategoryId = categoryId
-            }
-        })
+		Object.entries(categoryTotals).forEach(([categoryId, amount]) => {
+			if (amount > highestAmount) {
+				highestAmount = amount
+				topCategoryId = categoryId
+			}
+		})
 
-        return topCategoryId
-    }
+		return topCategoryId
+	}
 
-    const topCategoryId = calculateTopCategory(transactions)
-    const topCategory = getCategoryById(topCategoryId)
+	const topCategoryId = calculateTopCategory(transactions)
+	const topCategory = getCategoryById(topCategoryId)
 
-    const message = getNextMonthInfo()
-    const greeting = getGreeting(user?.displayName)
+	const message = getNextMonthInfo()
+	const greeting = getGreeting(user?.displayName)
 
-    return (
-        <div className="home-layout">
-            <div className="home-content">
-                <GreetingHeader greeting={greeting} message={message} avatarSrc={user?.avatar}/>
+	return (
+		<div className="page">
+			<GreetingHeader
+				greeting={greeting}
+				message={message}
+				avatarSrc={user?.avatar}
+			/>
 
-                <StreakCard streak={streak} message={streakMessage} nextMileStone={nextStreakMileStone} />
+			<StreakCard
+				streak={streak}
+				message={streakMessage}
+				nextMileStone={nextStreakMileStone}
+			/>
 
-                {transactions.length == 0 ? (
-                    <div className="new-user-home">
-                        <Section title="Get Started" className="get-started-section">
-                            <p className="secondary-text">Welcome to Blossom! This is where your habits begin to take shape. Ready to begin?</p>
-                            <Button onClick={() => navigate("/add-transaction")}>Add your first transaction</Button>
-                            <Button className="secondary" onClick={() => navigate("/add-goal")}>Set a goal</Button>
-                        </Section>
+			{transactions.length == 0 ? (
+				<div className="new-user-home">
+					<Section
+						title="Get Started"
+						className="get-started-section"
+					>
+						<p className="secondary-text">
+							Welcome to Blossom! This is where your habits begin
+							to take shape. Ready to begin?
+						</p>
+						<Button onClick={() => navigate("/add-transaction")}>
+							Add your first transaction
+						</Button>
+						<Button
+							className="secondary"
+							onClick={() => navigate("/add-goal")}
+						>
+							Set a goal
+						</Button>
+					</Section>
 
-                        <div className="new-user-info">
-                            <TipCard>
-                                <p className="secondary-text">Your insights will appear here as you start tracking.</p>
-                            </TipCard>
+					<div className="new-user-info">
+						<TipCard>
+							<p className="secondary-text">
+								Your insights will appear here as you start
+								tracking.
+							</p>
+						</TipCard>
 
-                            <Button className="secondary" onClick={() => navigate("/settings/faq")}>Learn how Blossom works</Button>
-                        </div>
-                        
-                    </div>
-                ) : (
-                    <>
-                        <Section title="Stats">
-                            <PrimaryGoalCard goal={primaryGoal} />
-                            <TopCategoryCard category={topCategory}/>
-                        </Section>
+						<Button
+							className="secondary"
+							onClick={() => navigate("/settings/faq")}
+						>
+							Learn how Blossom works
+						</Button>
+					</div>
+				</div>
+			) : (
+				<>
+					<Section title="Stats">
+						<PrimaryGoalCard goal={primaryGoal} />
+						<TopCategoryCard category={topCategory} />
+					</Section>
 
-                        <Section title="Recent">
-                            {recentTransactions.map((t) => (
-                                <TransactionCard key={t.id} {...t} />
-                            ))}
-                                
-                            <Button onClick={() => navigate("/transactions")}>View All Transactions</Button>
-                        </Section>
-                    </>
-                )}
-            </div>
-        </div>
-    )
+					<Section title="Recent">
+						{recentTransactions.map((t) => (
+							<TransactionCard key={t.id} {...t} />
+						))}
+
+						<Button onClick={() => navigate("/transactions")}>
+							View All Transactions
+						</Button>
+					</Section>
+				</>
+			)}
+		</div>
+	)
 }
 
 export default Home

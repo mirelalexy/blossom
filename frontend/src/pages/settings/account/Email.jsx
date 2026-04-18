@@ -20,7 +20,7 @@ function Email() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Email" />
 
             <form onSubmit={handleSave} className="form">

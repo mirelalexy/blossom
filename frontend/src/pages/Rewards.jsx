@@ -123,7 +123,7 @@ function Rewards() {
     }
 
     return (
-        <div className="journey-content">
+        <div className="page">
             <PageHeader title="Rewards" />
 
             <Section title="Your Rewards">

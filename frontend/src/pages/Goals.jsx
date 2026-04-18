@@ -25,33 +25,31 @@ function Goals() {
 
     const primaryGoal = goals.find(g => g.is_primary)
     return (
-        <div className="saving-goals-layout">
-            <div className="saving-goals-content">
-                <PageHeader title="Saving Goals"></PageHeader>
+        <div className="page">
+            <PageHeader title="Saving Goals" />
                 
-                <SearchBar className="search-bar-icon" value={search} onChange={setSearch} />
+            <SearchBar className="search-bar-icon" value={search} onChange={setSearch} />
 
-                {goals.length > 0 && (
-                    <AutosaveCard
-                        autosaveActive={isAutosaveActive}
-                        primaryGoal={primaryGoal}
-                        onAction={() => navigate("/settings/budget")}
-                    />
-                )}
+            {goals.length > 0 && (
+                <AutosaveCard
+                    autosaveActive={isAutosaveActive}
+                    primaryGoal={primaryGoal}
+                    onAction={() => navigate("/settings/budget")}
+                />
+            )}
                 
-                {filteredGoals.length === 0 ? (
-                    <EmptyState 
-                        title="No saving goals yet 🌸"
-                        subtitle="Start saving for something meaningful."
-                    />
-                ) : (
-                    filteredGoals.map(g => (
-                        <SavingGoalCard key={g.id} goal={g} />
-                    ))
-                )}
+            {filteredGoals.length === 0 ? (
+                <EmptyState 
+                    title="No saving goals yet 🌸"
+                    subtitle="Start saving for something meaningful."
+                />
+            ) : (
+                filteredGoals.map(g => (
+                    <SavingGoalCard key={g.id} goal={g} />
+                ))
+            )}
                 
-                <Button onClick={() => navigate("/add-goal")}>Add Saving Goal</Button>
-            </div>
+            <Button onClick={() => navigate("/add-goal")}>Add Saving Goal</Button>
         </div>
     )
 }

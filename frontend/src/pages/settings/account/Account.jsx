@@ -12,7 +12,7 @@ function Account() {
     const { user } = useUser()
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Account" />
 
             <Section title="Account Settings">

@@ -73,81 +73,79 @@ function AddSavingGoal() {
     }
 
     return (
-        <div className="add-goal-layout">
-            <div className="add-goal-content">
-                <PageHeader title="Add Saving Goal"></PageHeader>
+        <div className="page">
+            <PageHeader title="Add Saving Goal" />
 
-                <form className="add-goal-form" onSubmit={handleSubmit}>
-                    {/* Name */}
-                    <Input 
-                        label="Name"
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
+            <form className="add-goal-form" onSubmit={handleSubmit}>
+                {/* Name */}
+                <Input 
+                    label="Name"
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleChange("name", e.target.value)}
+                />
+
+                {/* Target */}
+                <Input 
+                    label="Target"
+                    type="number"
+                    placeholder="0"
+                    value={formData.target_amount}
+                    onChange={(e) => handleChange("target_amount", e.target.value)}
+                />
+
+                {/* Date */}
+                <Input 
+                    label="Deadline"
+                    type="date"
+                    value={formData.deadline}
+                    onChange={(e) => handleChange("deadline", e.target.value)}
+                />
+
+                {/* Monthly Contribution */}
+                <div className="saving-mode">
+                    <RadioGroup
+                        label="Saving Mode"
+                        name="saving_mode"
+                        value={formData.saving_mode}
+                        onChange={(val) => handleChange("saving_mode", val)}
+                        options={[
+                            { value: "auto", label: "Let Blossom calculate for me" },
+                            { value: "manual", label: "I'll decide manually" }
+                        ]}
                     />
 
-                    {/* Target */}
-                    <Input 
-                        label="Target"
-                        type="number"
-                        placeholder="0"
-                        value={formData.target_amount}
-                        onChange={(e) => handleChange("target_amount", e.target.value)}
-                    />
-
-                    {/* Date */}
-                    <Input 
-                        label="Deadline"
-                        type="date"
-                        value={formData.deadline}
-                        onChange={(e) => handleChange("deadline", e.target.value)}
-                    />
-
-                    {/* Monthly Contribution */}
-                    <div className="saving-mode">
-                        <RadioGroup
-                            label="Saving Mode"
-                            name="saving_mode"
-                            value={formData.saving_mode}
-                            onChange={(val) => handleChange("saving_mode", val)}
-                            options={[
-                                { value: "auto", label: "Let Blossom calculate for me" },
-                                { value: "manual", label: "I'll decide manually" }
-                            ]}
-                        />
-
-                        {formData.saving_mode === "auto" && formData.target_amount && formData.deadline && (
-                            <p>To reach {formatCurrency(formData.target_amount, currency)}, you'll need to save {formatCurrency(calculateMonthlyContribution(formData), currency)}/month.</p>
-                        )}
-                    </div>
+                    {formData.saving_mode === "auto" && formData.target_amount && formData.deadline && (
+                        <p>To reach {formatCurrency(formData.target_amount, currency)}, you'll need to save {formatCurrency(calculateMonthlyContribution(formData), currency)}/month.</p>
+                    )}
+                </div>
                     
-                    {/* Notes */}
-                    <Textarea 
-                        label="Notes"
-                        placeholder="Add a note (optional)"
-                        maxlength={200}
-                        value={formData.notes}
-                        onChange={(e) => handleChange("notes", e.target.value)}
-                    />
+                {/* Notes */}
+                <Textarea 
+                    label="Notes"
+                    placeholder="Add a note (optional)"
+                    maxlength={200}
+                    value={formData.notes}
+                    onChange={(e) => handleChange("notes", e.target.value)}
+                />
 
-                    {/* Link */}
-                    <Input 
-                        label="Link"
-                        type="url"
-                        value={formData.link}
-                        onChange={(e) => handleChange("link", e.target.value)}
-                    />
+                {/* Link */}
+                <Input 
+                    label="Link"
+                    type="url"
+                    value={formData.link}
+                    onChange={(e) => handleChange("link", e.target.value)}
+                />
 
-                    {/* Primary Goal */}
-                    <Toggle
-                        label="Primary Goal"
-                        checked={formData.is_primary}
-                        onChange={(val) => handleChange("is_primary", val)}    
-                    />
+                {/* Primary Goal */}
+                <Toggle
+                    label="Primary Goal"
+                    checked={formData.is_primary}
+                    onChange={(val) => handleChange("is_primary", val)}    
+                />
 
-                    <Button type="submit">Plant New Goal</Button>
-                </form>
-            </div>
+                <Button type="submit">Plant New Goal</Button>
+            </form>
         </div>
     )
 }

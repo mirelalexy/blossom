@@ -41,7 +41,7 @@ function MonthlyBudget() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Monthly Budget" />
 
             <Section title="Basics">

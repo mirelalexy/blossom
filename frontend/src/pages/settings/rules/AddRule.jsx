@@ -50,7 +50,7 @@ function AddRule() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Add Spending Rule" />
 
             <Section>

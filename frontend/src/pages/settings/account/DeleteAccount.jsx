@@ -38,7 +38,7 @@ function DeleteAccount() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Delete Account" />
 
             <PageIntro 

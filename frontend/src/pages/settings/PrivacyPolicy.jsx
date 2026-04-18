@@ -6,7 +6,7 @@ import "../../styles/pages/PrivacyPolicy.css"
 
 function PrivacyPolicy() {
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Privacy Policy" />
 
             <PageIntro

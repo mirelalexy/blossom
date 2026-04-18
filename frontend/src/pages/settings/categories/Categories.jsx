@@ -38,7 +38,7 @@ function Categories() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Categories" />
 
             <Section title="Add Category">

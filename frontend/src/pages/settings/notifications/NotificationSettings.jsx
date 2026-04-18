@@ -13,7 +13,7 @@ function NotificationSettings() {
     const { notificationSettings: settings, updateNotificationSetting: updateSetting } = useNotificationSettings() 
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Notifications" />
 
             <Section title="Budget">

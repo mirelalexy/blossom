@@ -61,7 +61,7 @@ function Register() {
     }
 
     return (
-        <div className="page-content">
+        <div className="page">
             <h2 className="login-title">Create your Blossom account</h2>
 
             <form onSubmit={handleRegister} className="login-form">

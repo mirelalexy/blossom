@@ -19,7 +19,7 @@ function Settings() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Settings" />
 
             <Section title="Account Settings">

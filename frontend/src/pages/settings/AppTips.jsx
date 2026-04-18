@@ -8,7 +8,7 @@ import Section from "../../components/ui/Section"
 
 function AppTips() {
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="App Tips" />
 
             <PageIntro

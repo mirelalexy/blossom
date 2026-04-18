@@ -50,7 +50,7 @@ function Login() {
     }
 
     return (
-        <div className="page-content">
+        <div className="page">
             <h2 className="login-title">Login to Blossom</h2>
 
             <form onSubmit={handleLogin} className="login-form">

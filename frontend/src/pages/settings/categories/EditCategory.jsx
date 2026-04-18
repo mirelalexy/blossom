@@ -46,7 +46,7 @@ function EditCategory() {
     }
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Edit Category" />
 
             <Input 

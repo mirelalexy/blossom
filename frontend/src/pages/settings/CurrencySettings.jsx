@@ -18,7 +18,7 @@ function CurrencySettings() {
     ]
 
     return (
-        <div className="settings-content">
+        <div className="page">
             <PageHeader title="Currency" />
 
             <Select 

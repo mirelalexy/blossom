@@ -14,8 +14,8 @@ function Notifications() {
     const { today, yesterday, older } = groupNotifications(notifications)
 
     return (
-        <div className="notifications-content">
-            <PageHeader title="Notifications"></PageHeader>
+        <div className="page">
+            <PageHeader title="Notifications" />
             
             {notifications.length > 0 ? (
                 <>
