@@ -186,7 +186,7 @@ function AddTransaction() {
 				}
 			/>
 
-			<form className="add-transaction-form" onSubmit={handleSubmit}>
+			<form className="form" onSubmit={handleSubmit}>
 				{/* Amount */}
 				<Input
 					label="Amount"

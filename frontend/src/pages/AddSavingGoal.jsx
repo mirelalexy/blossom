@@ -76,7 +76,7 @@ function AddSavingGoal() {
         <div className="page">
             <PageHeader title="Add Saving Goal" />
 
-            <form className="add-goal-form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
                 {/* Name */}
                 <Input 
                     label="Name"

@@ -66,6 +66,61 @@ button {
     }
 }
 
+/* -- FORM SYSTEM -- */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="date"] {
+    width: 100%;
+    padding: 13px 14px;
+    box-sizing: border-box;
+    border-radius: var(--r-md);
+    border: 1.5px solid transparent;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-family: var(--font-primary);
+    appearance: none;
+    outline: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="url"]:focus,
+input[type="date"]:focus {
+    border-color: var(--border-strong);
+    background-color: var(--input-focus);
+}
+
+input::placeholder {
+    color: var(--text-tertiary); 
+}
+
 /* -- UNDER REVIEW -- */
 .bottom-add-icon {
     color: var(--accent);
@@ -77,12 +132,6 @@ button {
 
 .card.clickable {
     cursor: pointer;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .additional-info {
@@ -98,25 +147,6 @@ button {
 
 .error-text {
     color: #ff0000;
-}
-
-.page-content {
-    padding: 24px 20px;
-    padding-bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 680px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    width: 100%;
-}
-
-@media (min-width: 1024px) {
-    .page-content {
-        padding: 36px 40px;
-        padding-bottom: 60px;
-    }
 }
 
 .red-text {

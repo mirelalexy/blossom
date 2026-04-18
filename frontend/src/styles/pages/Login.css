@@ -1,9 +1,3 @@
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 .login-title {
     text-align: center;
 }

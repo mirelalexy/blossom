@@ -53,7 +53,7 @@ function Login() {
         <div className="page">
             <h2 className="login-title">Login to Blossom</h2>
 
-            <form onSubmit={handleLogin} className="login-form">
+            <form onSubmit={handleLogin} className="form">
                 <Input 
                     label="Email"
                     type="email"

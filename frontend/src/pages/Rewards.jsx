@@ -127,7 +127,7 @@ function Rewards() {
             <PageHeader title="Rewards" />
 
             <Section title="Your Rewards">
-                <form onSubmit={handleAddReward}>
+                <form className="form" onSubmit={handleAddReward}>
                     <Input 
                         label="Title"
                         placeholder="New reward..."
@@ -235,7 +235,7 @@ function Rewards() {
             </Section>
 
             <Section title="Tasks">
-                <form onSubmit={handleAddTask}>
+                <form className="form" onSubmit={handleAddTask}>
                     <Input 
                         label="Title"
                         placeholder="New task..."
