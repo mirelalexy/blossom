@@ -104,7 +104,7 @@ export async function createTransaction(req, res) {
                 gained: xpGain,
                 newXP,
                 newLevel,
-                levelledUp: newLevel > prevLevel
+                leveledUp: newLevel > prevLevel
             }
         })
     } catch (err) {
