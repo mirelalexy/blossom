@@ -197,7 +197,7 @@ function Rewards() {
                             <div className="reward-group">
                                 <h3>Locked</h3>
 
-                                {locked.map(r => {
+                                {locked.map(r => (
                                     <RewardItem 
                                         key={r.id}
                                         reward={r}
@@ -211,7 +211,7 @@ function Rewards() {
                                         getTask={getTask}
                                         showClaim={false}
                                     />
-                                })}
+                                ))}
                             </div>
                         )}
 
