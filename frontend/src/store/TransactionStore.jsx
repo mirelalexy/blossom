@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
 import { useXPToast } from "./XPToastStore"
+import { useToast } from "./ToastStore"
 
 import { useAppRefresh } from "../hooks/useAppRefresh"
 
@@ -11,6 +12,7 @@ const TransactionsContext = createContext()
 export function TransactionsProvider({ children }) {
     const { user } = useUser()
     const { showXPToast } = useXPToast()
+    const { showToast } = useToast()
     const [transactions, setTransactions] = useState([])
     const { refreshApp } = useAppRefresh()
 
@@ -76,6 +78,7 @@ export function TransactionsProvider({ children }) {
 
             setTransactions(prev => [formatted, ...prev])
 
+            showToast({ message: "Transaction added" })
             showXPToast(data.xp)
 
             refreshApp()
@@ -96,6 +99,8 @@ export function TransactionsProvider({ children }) {
             })
 
             setTransactions(prev => prev.filter(t => t.id !== id))
+
+            showToast({ message: "Transaction deleted" })
 
             refreshApp()
         } catch (err) {
@@ -134,6 +139,8 @@ export function TransactionsProvider({ children }) {
                     t.id === formatted.id ? formatted : t
                 )
             )
+
+            showToast({ message: "Transaction updated" })
 
             refreshApp()
         } catch (err) {

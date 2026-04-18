@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
 import { useXPToast } from "./XPToastStore"
+import { useToast } from "./ToastStore"
 import { useTransactions } from "./TransactionStore"
 import { useChallenges } from "./ChallengeStore"
 
@@ -11,6 +12,7 @@ const RewardContext = createContext()
 export function RewardProvider({ children }) {
     const { user } = useUser()
     const { showXPToast } = useXPToast()
+    const { showToast } = useToast()
     const { fetchTransactions } = useTransactions()
     const { fetchChallenges } = useChallenges()
     const [rewards, setRewards] = useState([])
@@ -55,6 +57,8 @@ export function RewardProvider({ children }) {
 
             const data = await res.json()
             setRewards(prev => [data, ...prev])
+
+            showToast({ message: "Reward added" })
         } catch (err) {
             console.log("Add reward failed: ", err)
         }
@@ -77,6 +81,7 @@ export function RewardProvider({ children }) {
                 prev.map(r => (r.id === id ? data : r))
             )
 
+            showToast({ message: "Reward claimed" })
             showXPToast(data.xp)
 
             await fetchTransactions()
@@ -98,6 +103,8 @@ export function RewardProvider({ children }) {
             })
 
             setRewards(prev => prev.filter(r => r.id !== id))
+
+            showToast({ message: "Reward deleted" })
         } catch (err) {
             console.log("Delete reward failed: ", err)
         }        

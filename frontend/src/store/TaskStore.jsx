@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
+import { useToast } from "./ToastStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -7,6 +8,7 @@ const TaskContext = createContext()
 
 export function TaskProvider({ children }) {
     const { user } = useUser()
+    const { showToast } = useToast()
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
@@ -87,6 +89,8 @@ export function TaskProvider({ children }) {
             })
 
             setTasks(prev => prev.filter(t => t.id !== id))
+
+            showToast({ message: "Task deleted" })
         } catch (err) {
             console.log("Delete task failed: ", err)
         }        

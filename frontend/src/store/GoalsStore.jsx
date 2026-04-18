@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
+import { useToast } from "./ToastStore"
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -7,6 +8,7 @@ const GoalsContext = createContext()
 
 export function GoalsProvider({ children }) {
     const { user } = useUser()
+    const { showToast } = useToast()
     const [goals, setGoals] = useState([])
 
     useEffect(() => {
@@ -56,6 +58,8 @@ export function GoalsProvider({ children }) {
 
             const data = await res.json()
             setGoals(prev => [data, ...prev])
+
+            showToast({ message: "Goal added" })
         } catch (err) {
             console.log("Add goal failed: ", err)
         }
@@ -73,6 +77,8 @@ export function GoalsProvider({ children }) {
             })
 
             setGoals(prev => prev.filter(g => g.id !== id))
+
+            showToast({ message: "Goal deleted" })
         } catch (err) {
             console.log("Delete goal failed: ", err)
         }        
@@ -98,6 +104,8 @@ export function GoalsProvider({ children }) {
                     g.id === data.id ? data : g
                 )
             )
+
+            showToast({ message: "Goal updated" })
         } catch (err) {
             console.log("Update goal failed: ", err)
         }
