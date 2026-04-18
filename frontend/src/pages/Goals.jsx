@@ -11,8 +11,6 @@ import SavingGoalCard from "../components/goals/SavingGoalCard"
 import Button from "../components/ui/Button"
 import EmptyState from "../components/ui/EmptyState"
 
-import "../styles/pages/Goals.css"
-
 function Goals() {
     const navigate = useNavigate()
     const [search, setSearch] = useState("") 
