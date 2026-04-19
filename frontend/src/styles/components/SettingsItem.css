@@ -2,32 +2,41 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 14px 16px;
     cursor: pointer;
+    transition: background-color 0.12s ease;
+    background-color: var(--card);
 }
 
 .settings-item:not(:last-child) {
     border-bottom: 1px solid var(--border);
 }
 
+.settings-item:hover {
+    background-color: var(--bg-secondary);
+}
+
 .settings-item-left {
     display: flex;
     align-items: center;
     gap: 12px;
+    color: var(--text-secondary);
 }
 
 .settings-item-right {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: var(--text-tertiary);
 }
 
 .settings-item-label {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 .settings-item-value {
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     font-size: 14px;
 }
