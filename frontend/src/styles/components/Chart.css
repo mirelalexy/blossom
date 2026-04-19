@@ -1,27 +1,36 @@
+.chart-legend {
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .legend-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
+    color: var(--text-secondary);
 }
 
-.legend-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+.legend-item span:last-child { 
+    font-weight: 600; 
+    color: var(--text-primary); 
 }
 
-.chart-legend {
-    background-color: var(--bg-secondary);
-    padding: 20px;
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.category-info { 
+    display: flex; 
+    gap: 10px; 
+    align-items: center; 
 }
 
-.category-info {
-    display: flex;
-    gap: 12px;
-    align-items: center;
+.legend-color { 
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%; 
+    flex-shrink: 0; 
 }
