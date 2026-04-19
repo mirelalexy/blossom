@@ -1,72 +1,56 @@
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0,0,0,0.45);
     z-index: 200;
     animation: fadeIn 0.18s ease;
+    backdrop-filter: blur(3px);
 }
 
 .modal {
     position: fixed;
-    left: 50%;
-    top: 50%;
+    left: 50%; top: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--bg-primary);
+    background-color: var(--card);
     border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 24px;
-    width: min(90vw, 360px);
-    box-sizing: border-box;
+    border-radius: var(--r-xl);
+    padding: 28px 24px 24px;
+    width: min(92vw, 380px);
     z-index: 201;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    animation: scaleIn 0.2s cubic-bezier(0.35, 1.55, 0.65, 1);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+}
+.modal-title { 
+    font-size: 18px; 
+    font-weight: 600; 
+    letter-spacing: -0.2px; 
 }
 
-.modal-title {
-    font-size: 17px;
+.modal-body { 
+    font-size: 15px; 
+    color: var(--text-secondary); 
+    line-height: 1.6; 
+    white-space: pre-line; 
 }
 
-.modal-body {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.6;
+.modal-body p { 
+    margin: 0; 
+    color: var(--text-secondary); 
 }
 
-.modal-body p {
-    margin: 0;
+.modal-actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    margin-top: 4px; 
 }
 
-.modal-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 4px;
+.modal.warning { 
+    border-color: var(--border-strong); 
 }
 
-.modal.warning {
-    border-color: var(--accent);
-}
-
-.modal.warning .modal-title {
-    color: var(--accent);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-    from { 
-        opacity: 0; 
-        transform: translate(-50%, -50%) scale(0.92);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale (1);
-    }
-    
+.modal.warning .modal-title { 
+    color: var(--accent); 
 }
