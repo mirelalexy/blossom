@@ -1,39 +1,43 @@
-.level-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.level-card-content { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
 }
 
-.level-card-content .level-title {
-    font-size: 15px;
+.level-card-content .level-title { 
+    font-size: 16px; 
+    font-weight: 600; 
 }
 
-.level-card-content .level-subtitle {
-    font-size: 14px;
-    font-weight: 400;
+.level-card-content .level-subtitle { 
+    font-size: 14px; 
+    font-weight: 400; 
+    color: var(--text-secondary); 
+}
+
+.level-card-content .level-level { 
+    font-size: 12px; 
+    color: var(--text-tertiary); 
 }
 
 .level-card-content.hero {
     align-items: center;
     text-align: center;
     background-color: var(--focus-card);
-    border: 1px solid var(--accent);
+    border-color: var(--border-strong);
 }
 
-.level-card-content.hero .card-content {
-    align-items: center;
-    width: 100%;
+.level-card-content.hero .card-content { 
+    align-items: center; 
+    width: 100%; 
 }
 
-.level-card-content.hero .progress-bar {
-    width: 100%;
+.level-card-content.hero .progress-bar { 
+    width: 100%; 
 }
 
-.level-card-content.hero .level-title {
-    font-size: 22px;
-}
-
-.level-card-content.hero .level-level {
-    font-size: 13px;
-    opacity: 0.6;
+.level-card-content.hero .level-title { 
+    font-size: 24px; 
+    font-weight: 700; 
+    letter-spacing: -0.4px; 
 }
