@@ -14,7 +14,7 @@ function PageHeader({ title, rightIcon, onRightClick }) {
 
             <h1 className="page-title">{title}</h1>
         
-            <div className="page-header-right">
+            <div className={`page-header-right ${!rightIcon ? "page-header-right-empty" : ""}`} >
                 {rightIcon && (
                     <button onClick={onRightClick}>
                         <Icon name={rightIcon} />
