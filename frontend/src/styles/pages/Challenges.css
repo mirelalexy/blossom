@@ -1,12 +1,11 @@
 .challenges-filters {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .challenges-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 30px;
 }
