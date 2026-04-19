@@ -63,8 +63,8 @@ function NotificationSettings() {
                     />
 
                     <SettingsItem 
-                        label="Review Recurring Payments Frequency"
-                        value={settings.recurring_frequency}
+                        label="Review reminder frequency"
+                        value={settings.recurring_frequency === "monthly" ? "Monthly" : "Weekly"}
                         onClick={() => navigate("/settings/notifications/frequency")}
                     />
                 </SettingsCard>
