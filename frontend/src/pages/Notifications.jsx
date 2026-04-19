@@ -64,7 +64,10 @@ function Notifications() {
                     )}
                 </>
             ) : (
-                <EmptyState title="No notifications yet" />
+                <EmptyState 
+                    title="All quiet here" 
+                    subtitle="Notifications for level-ups, challenges, budget milestones, and reminders will appear here."
+                />
             )}
             
         </div>
