@@ -2,38 +2,45 @@
     display: flex;
     flex-direction: column;
     background-color: var(--card);
-    padding: 20px;
-    border-radius: 15px;
+    padding: 18px 20px;
+    border-radius: var(--r-lg);
     border: 1px solid var(--card-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--card-shadow);
     gap: 10px;
+    transition: border-color 0.15s ease;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
 }
 
 .card-content p {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 20px;
+    letter-spacing: -0.3px;
 }
 
 .card-header {
     display: flex;
     gap: 6px;
     align-items: center;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .card-header p {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--text-primary);
 }
 
-.card-icon svg {
-    display: block;
+.card-icon {
+    display: flex;
+    align-items: center;
 }
 
 .card-content .secondary-text {

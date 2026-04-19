@@ -1,6 +1,6 @@
 import "../../styles/components/Card.css"
 
-function Card({ icon, title, children, className="", onClick }) {
+function Card({ icon, title, children, className = "", onClick }) {
     return (
         <div className={`card ${className} ${onClick ? "clickable" : ""}`} onClick={onClick}>
             <div className="card-header">
