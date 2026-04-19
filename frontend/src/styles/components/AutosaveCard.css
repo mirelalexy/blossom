@@ -1,19 +1,20 @@
 .autosave-card {
-    background-color: var(--bg-secondary);
-    border-radius: 14px;
+    background-color: var(--accent-dim);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-lg);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 20px;
+    gap: 8px;
+    padding: 18px 20px;
 
 }
 
 .autosave-card h3 {
-    font-size: 16px;
-    margin: 0;
+    font-size: 15px;
 }
 
 .autosave-card p {
     font-size: 14px;
     color: var(--text-secondary);
+    line-height: 1.55;
 }
