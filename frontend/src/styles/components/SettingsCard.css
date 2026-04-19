@@ -1,5 +1,7 @@
 .settings-card {
-    background-color: var(--card2);
-    border-radius: 14px;
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
     overflow: hidden;
+    box-shadow: var(--card-shadow);
 }
