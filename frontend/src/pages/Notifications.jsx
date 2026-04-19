@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { useNotifications } from "../store/NotificationStore"
 
 import { groupNotifications } from "../utils/notificationUtils"
@@ -6,12 +8,21 @@ import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
 import EmptyState from "../components/ui/EmptyState"
 import Section from "../components/ui/Section"
+import Button from "../components/ui/Button"
 
 import "../styles/pages/Notifications.css"
 
+const PAGE_SIZE = 15
+
 function Notifications() {
     const { notifications } = useNotifications()
-    const { today, yesterday, older } = groupNotifications(notifications)
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+
+    // paginate before grouping
+    const visible = notifications.slice(0, visibleCount)
+    const hasMore = notifications.length > visibleCount
+
+    const { today, yesterday, older } = groupNotifications(visible)
 
     return (
         <div className="page">
@@ -41,6 +52,15 @@ function Notifications() {
                                 <NotificationItem key={n.id} notification={n} />
                             ))}
                         </Section>
+                    )}
+
+                    {hasMore && (
+                        <Button
+                            className="secondary"
+                            onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+                        >
+                            Show more ({notifications.length - visibleCount} remaining)
+                        </Button>
                     )}
                 </>
             ) : (
