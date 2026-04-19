@@ -121,34 +121,53 @@ input::placeholder {
     color: var(--text-tertiary); 
 }
 
+/* -- TEXT -- */
+.secondary-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.tertiary-text {
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+.italic-p {
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.additional-info {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    text-align: center;
+}
+
+.error-text {
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.normal-text {
+    font-size: 15px;
+    font-weight: 400;
+}
+
 /* -- UNDER REVIEW -- */
 .bottom-add-icon {
     color: var(--accent);
 }
 
-.italic-p {
-    font-style: italic;
-}
-
 .card.clickable {
     cursor: pointer;
-}
-
-.additional-info {
-    color: var(--text-secondary);
-    font-size: 13px;
-    text-align: center;
-}
-
-.secondary-text {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
-.error-text {
-    color: #ff0000;
-}
-
-.red-text {
-    color: red;
 }
