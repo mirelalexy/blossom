@@ -1,18 +1,61 @@
-.login-form { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 20px; 
+.auth-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
 }
-
-.login-title { 
-    text-align: center; 
-    font-size: 26px; 
-    font-weight: 700; 
-    letter-spacing: -0.4px; 
+ 
+.auth-flower {
+    font-size: 52px;
+    animation: authFlower 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 18px rgba(var(--accent-rgb), 0.35));
+    margin-bottom: 4px;
 }
-
-.login-subtitle { 
-    text-align: center; 
-    font-size: 15px; color: 
-    var(--text-secondary); 
+ 
+@keyframes authFlower {
+    0%, 100% { 
+        transform: rotate(-8deg) scale(1); 
+    }
+    50% { 
+        transform: rotate(8deg) scale(1.08); 
+    }
+}
+ 
+.auth-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+    color: var(--text-primary);
+}
+ 
+.auth-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 280px;
+}
+ 
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+ 
+.auth-switch {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+ 
+.auth-link {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+}
+ 
+.auth-link:hover { 
+    opacity: 0.75; 
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom" 
+import { useNavigate, Link } from "react-router-dom" 
 
 import { useUser } from "../store/UserStore"
 
@@ -45,19 +45,23 @@ function Login() {
 
            navigate("/")
         } catch (err) {
-            setError("Something went wrong")
+            setError("Something went wrong. Please try again.")
         }
     }
 
     return (
         <div className="page">
-            <h2 className="login-title">Login to Blossom</h2>
+            <div className="auth-intro">
+                <div className="auth-flower">🌸</div>
+                <h1 className="auth-title">Welcome back</h1>
+                <p className="auth-subtitle">Your garden is waiting for you.</p>
+            </div>
 
             <form onSubmit={handleLogin} className="form">
                 <Input 
                     label="Email"
                     type="email"
-                    placeholder="example@blossom.com"
+                    placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -71,12 +75,17 @@ function Login() {
                     required
                 />
 
+                {error && <p className="error-text">{error}</p>}
+
                 <Button type="submit" disabled={loading}>
                     {loading ? "Logging in..." : "Login"}
                 </Button>
             </form>
 
-            {error && <p className="error-text">{error}</p>}
+            <p className="auth-switch">
+                New to Blossom?{" "}
+                <Link to="/register" className="auth-link">Create an account</Link>
+            </p>
         </div>
     )
 }
