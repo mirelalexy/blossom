@@ -4,13 +4,17 @@
 
 .select-wrapper select {
     width: 100%;
-    padding: 14px 42px 14px 16px;
-    border-radius: 14px;
-    border: none;
-    background-color: var(--input);
-    font-size: 14px;
+    padding: 13px 44px 13px 14px;
+    border-radius: var(--r-md);
+    border: 1.5px solid transparent;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
     color: var(--text-secondary);
     appearance: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .select-arrow {
@@ -19,9 +23,10 @@
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
 }
 
 .select-wrapper select:focus {
-    outline: none;
+    border-color: var(--border-strong);
+    background-color: var(--input-focus);
 }
