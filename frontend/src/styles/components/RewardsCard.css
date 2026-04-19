@@ -4,11 +4,21 @@
     gap: 8px;
 }
 
-.rewards-card-content .rewards-card-title {
+.rewards-card-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.rewards-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     font-size: 15px;
 }
 
-.rewards-card-content .rewards-card-subtitle {
-    font-size: 14px;
-    font-weight: 400;
+.rewards-card-empty {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }

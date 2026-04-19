@@ -14,8 +14,9 @@ function RewardsCard({ ready = 0, locked = 0 }) {
         <Card
             className={`rewards-card-content`}
             onClick={() => navigate("/rewards")}
+            title="Rewards"
+            icon={<Icon name="gem" size="20" />}
         >
-            <h3 className="rewards-card-title">Rewards</h3>
             {!hasRewards ? (
                 <div className="rewards-card-empty">
                     <p className="rewards-card-subtitle">You haven't added any rewards yet</p>
@@ -33,7 +34,7 @@ function RewardsCard({ ready = 0, locked = 0 }) {
                         )}
                     </div>
 
-                    <p className="rewards-card-subtitle">Keep going. You're earning it.</p>
+                    <p className="secondary-text">Keep going. You're earning it.</p>
                 </>
             )}
         </Card>
