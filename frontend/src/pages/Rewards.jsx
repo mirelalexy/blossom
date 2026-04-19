@@ -2,6 +2,9 @@ import { useState } from "react"
 
 import { useTasks } from "../store/TaskStore"
 import { useRewards } from "../store/RewardStore"
+import { useCurrency } from "../store/CurrencyStore"
+
+import { formatCurrency } from "../utils/currencyUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
@@ -12,11 +15,12 @@ import Button from "../components/ui/Button"
 import Icon from "../components/ui/Icon"
 import RewardItem from "../components/rewards/RewardItem"
 
-import "../styles/pages/Journey.css"
+import "../styles/pages/Rewards.css"
 
 function Rewards() {
     const { tasks, addTask, toggleTask, deleteTask, updateTask } = useTasks()
     const { rewards, addReward, claimReward, deleteReward, updateReward } = useRewards()
+    const { currency } = useCurrency()
 
     const [taskTitle, setTaskTitle] = useState("")
     const [rewardTitle, setRewardTitle] = useState("")
@@ -126,11 +130,11 @@ function Rewards() {
         <div className="page">
             <PageHeader title="Rewards" />
 
-            <Section title="Your Rewards">
+            <Section title="Rewards">
                 <form className="form" onSubmit={handleAddReward}>
                     <Input 
-                        label="Title"
-                        placeholder="New reward..."
+                        label="Reward"
+                        placeholder="What will you treat yourself to?"
                         value={rewardTitle}
                         type="text"
                         onChange={e => setRewardTitle(e.target.value)}
@@ -138,8 +142,8 @@ function Rewards() {
                     />
 
                     <Input 
-                        label="Amount"
-                        placeholder="Enter amount..."
+                        label="Amount (optional)"
+                        placeholder="How much will it cost?"
                         value={amount}
                         type="number"
                         onChange={e => setAmount(e.target.value)}
@@ -147,33 +151,32 @@ function Rewards() {
 
                     <Input 
                         label="Link (optional)"
-                        placeholder="Link..."
+                        placeholder="Product link..."
                         value={link}
                         type="text"
                         onChange={e => setLink(e.target.value)}
                     />
 
                     <Select
-                        label="Task"
+                        label="Unlock when task is complete"
                         value={selectedTaskId}
                         onChange={e => setSelectedTaskId(e.target.value)}
                         options={taskOptions}
                     />
                     
-                    <Button type="submit">Add</Button>
+                    <Button type="submit">Add Reward</Button>
                 </form>
+                
 
                 {rewards.length === 0  ? (
                     <EmptyState
                         title="No rewards yet"
-                        subtitle="Add something you'd love to earn."
+                        subtitle="Add something meaningful to work toward. You deserve it."
                     />
                 ) : (
                     <>
                         {ready.length > 0 && (
-                            <div className="reward-group">
-                                <h3>Ready To Claim</h3>
-
+                            <Section title={`Ready to claim · ${ready.length}`}>
                                 {ready.map(r => (
                                     <RewardItem 
                                         key={r.id}
@@ -188,15 +191,14 @@ function Rewards() {
                                         onSave={saveReward}
                                         getTask={getTask}
                                         showClaim={true}
+                                        currency={currency}
                                     />
                                 ))}
-                            </div>
+                            </Section>
                         )}
 
                         {locked.length > 0 && (
-                            <div className="reward-group">
-                                <h3>Locked</h3>
-
+                            <Section title={`Locked · ${locked.length}`}>
                                 {locked.map(r => (
                                     <RewardItem 
                                         key={r.id}
@@ -210,25 +212,32 @@ function Rewards() {
                                         onSave={saveReward}
                                         getTask={getTask}
                                         showClaim={false}
+                                        currency={currency}
                                     />
                                 ))}
-                            </div>
+                            </Section>
                         )}
 
                         {claimed.length > 0 && (
-                            <div className="reward-group">
-                                <h3>Claimed</h3>
-
+                            <Section title={`Claimed · ${claimed.length}`}>
                                 {claimed.map(r => (
-                                    <div key={r.id}>
-                                        <p>{r.title}</p>
+                                    <div key={r.id} className="claimed-reward">
+                                        <div className="claimed-reward-info">
+                                            <p className="claimed-reward-title">{r.title}</p>
 
-                                        <div onClick={() => deleteReward(r.id)}>
-                                            <Icon name="delete"/>
+                                            {r.amount && (
+                                                <p className="claimed-reward-amount">{formatCurrency(r.amount, currency)}</p>
+                                            )}
                                         </div>
+
+                                        <span className="claimed-badge">✓ Claimed</span>
+
+                                        <button className="icon-btn" onClick={() => deleteReward(r.id)}>
+                                            <Icon name="delete" size={16} />
+                                        </button>
                                     </div>
                                 ))}
-                            </div>
+                            </Section>
                         )}
                     </>
                 )}
@@ -237,58 +246,67 @@ function Rewards() {
             <Section title="Tasks">
                 <form className="form" onSubmit={handleAddTask}>
                     <Input 
-                        label="Title"
-                        placeholder="New task..."
+                        label="Task"
+                        placeholder="What do you need to accomplish?"
                         value={taskTitle}
                         type="text"
                         onChange={e => setTaskTitle(e.target.value)}
                         required
                     />
 
-                    <Button type="submit">Add</Button>
+                    <Button type="submit">Add Task</Button>
                 </form>
 
                 {tasks.length === 0 ? (
                     <EmptyState
                         title="No tasks yet"
-                        subtitle="Add a task to unlock rewards."
+                        subtitle="Add a task to gate a reward, complete it to unlock your treat."
                     />
                 ) : (
-                    tasks.map(t => (
-                        <div key={t.id}>
-                            <input 
-                                type="checkbox"
-                                checked={t.completed}
-                                onChange={() => toggleTask(t.id)}
-                            />
-
-                            {editingTaskId === t.id ? (
-                                <Input 
-                                    label="Title"
-                                    value={editTaskValue}
-                                    type="text"
-                                    onChange={e => setEditTaskValue(e.target.value)}
-                                />
-                            ) : (
-                                <p className={t.completed ? "completed" : ""}>{t.title}</p>
-                            )}
-
-                            <div className="actions">
+                    <div className="task-list">
+                        {tasks.map(t => (
+                            <div key={t.id} className={`task-item ${t.completed ? "task-done" : ""}`}>
+                                <label className="task-checkbox-wrapper">
+                                    <input
+                                        type="checkbox"
+                                        className="task-checkbox"
+                                        checked={t.completed}
+                                        onChange={() => toggleTask(t.id)}
+                                    />
+                                    <span className="task-checkmark">
+                                        {t.completed && "✓" }
+                                    </span>
+                                </label>
+ 
                                 {editingTaskId === t.id ? (
-                                    <Button onClick={() => saveTask(t.id)}>Save</Button>
+                                    <div className="task-edit-row">
+                                        <Input 
+                                            label="" 
+                                            value={editTaskValue} 
+                                            type="text" 
+                                            onChange={e => setEditTaskValue(e.target.value)} 
+                                        />
+
+                                        <Button onClick={() => saveTask(t.id)}>Save</Button>
+                                    </div>
                                 ) : (
-                                    <>
-                                        <div onClick={() => startEditTask(t)}>
-                                            <Icon name="edit"/>
-                                        </div>
-                                        <div onClick={() => deleteTask(t.id)}>
-                                            <Icon name="delete"/>
-                                        </div>
-                                    </>
+                                    <p className="task-title">{t.title}</p>
+                                )}
+ 
+                                {editingTaskId !== t.id && (
+                                    <div className="task-actions">
+                                        <button className="icon-btn" onClick={() => startEditTask(t)}>
+                                            <Icon name="edit" size={16} />
+                                        </button>
+
+                                        <button className="icon-btn" onClick={() => deleteTask(t.id)}>
+                                            <Icon name="delete" size={16} />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
-                        </div>
-                    ))
+                        ))}
+                    </div>
                 )}
             </Section>
         </div>

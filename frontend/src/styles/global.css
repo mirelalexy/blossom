@@ -222,6 +222,25 @@ input::placeholder {
     }
 }
 
+/* -- ICON BUTTONS -- */
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: var(--r-sm);
+    transition: color 0.15s ease, background-color 0.15s ease;
+    flex-shrink: 0;
+}
+.icon-btn:hover { 
+    color: var(--text-primary); 
+    background: var(--bg-secondary); 
+}
+
 /* -- UNDER REVIEW -- */
 .bottom-add-icon {
     color: var(--accent);

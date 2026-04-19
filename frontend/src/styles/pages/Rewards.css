@@ -1,0 +1,117 @@
+.claimed-reward {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    opacity: 0.75;
+}
+
+.claimed-reward-info { 
+    flex: 1; 
+    min-width: 0; 
+}
+
+.claimed-reward-title { 
+    font-size: 15px; 
+    font-weight: 500; 
+}
+.claimed-reward-amount { 
+    font-size: 13px; 
+    color: var(--text-tertiary); 
+    margin-top: 2px; 
+}
+
+.claimed-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--success);
+    background: var(--success-soft);
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-md);
+    box-shadow: var(--card-shadow);
+    transition: opacity 0.2s ease;
+    animation: pageFadeIn 0.2s ease;
+}
+
+.task-item.task-done { 
+    opacity: 0.55; 
+}
+
+.task-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.task-checkbox { 
+    display: none; 
+}
+
+.task-checkmark {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--r-sm);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.task-checkbox:checked + .task-checkmark {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.task-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-item.task-done .task-title {
+    text-decoration: line-through;
+    color: var(--text-tertiary);
+}
+
+.task-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.task-edit-row {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    align-items: center;
+}
