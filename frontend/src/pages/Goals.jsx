@@ -39,7 +39,7 @@ function Goals() {
             {filteredGoals.length === 0 ? (
                 <EmptyState 
                     title="No saving goals yet 🌸"
-                    subtitle="Start saving for something meaningful."
+                    subtitle="Every big achievement starts with a single intention. What are you saving for?"
                 />
             ) : (
                 filteredGoals.map(g => (
