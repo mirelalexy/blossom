@@ -1,3 +1,18 @@
-.login-title {
-    text-align: center;
+.login-form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+.login-title { 
+    text-align: center; 
+    font-size: 26px; 
+    font-weight: 700; 
+    letter-spacing: -0.4px; 
+}
+
+.login-subtitle { 
+    text-align: center; 
+    font-size: 15px; color: 
+    var(--text-secondary); 
 }
