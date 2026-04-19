@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom" 
+import { useNavigate, Link } from "react-router-dom" 
 
 import { useUser } from "../store/UserStore"
 
@@ -54,7 +54,7 @@ function Register() {
 
             navigate("/")
         } catch (err) {
-            setError("Something went wrong")
+            setError("Something went wrong. Please try again.")
         } finally {
             setIsSubmitting(false)
         }
@@ -62,12 +62,17 @@ function Register() {
 
     return (
         <div className="page">
-            <h2 className="login-title">Create your Blossom account</h2>
+            <div className="auth-intro">
+                <div className="auth-flower">🌸</div>
+                <h1 className="auth-title">Your garden starts here</h1>
+                <p className="auth-subtitle">Track spending with intention. Build habits that bloom.</p>
+            </div>
 
             <form onSubmit={handleRegister} className="form">
                 <Input 
-                    label="Display Name"
+                    label="Your Name"
                     type="text"
+                    placeholder="How should we call you?"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     required
@@ -76,7 +81,7 @@ function Register() {
                 <Input 
                     label="Email"
                     type="email"
-                    placeholder="example@blossom.com"
+                    placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -90,12 +95,17 @@ function Register() {
                     required
                 />
 
+                {error && <p className="error-text">{error}</p>}
+
                 <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? "Creating account..." : "Register"}
                 </Button>
-            </form>
 
-            {error && <p className="error-text">{error}</p>}
+                <p className="auth-switch">
+                    Already have an account?{" "}
+                    <Link to="/login" className="auth-link">Log in</Link>
+                </p>
+            </form>
         </div>
     )
 }
