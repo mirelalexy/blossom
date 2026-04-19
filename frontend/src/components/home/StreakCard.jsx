@@ -13,7 +13,7 @@ function StreakCard({ streak, message, nextMileStone }) {
             <div>
                 <h3 className="streak-number">{streak} day streak together</h3> 
                 <p className="streak-message">{message}</p>
-                <p className="streak-milestone">Next milestone: {nextMileStone} {nextMileStone === 1 ? "day" : "days"}</p>
+                <p className="streak-milestone">Next milestone: {nextMileStone} {nextMileStone === 1 ? "day" : "days"} together</p>
             </div>
         </Card>
     )

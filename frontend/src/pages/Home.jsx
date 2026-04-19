@@ -132,25 +132,24 @@ function Home() {
 						className="get-started-section"
 					>
 						<p className="secondary-text">
-							Welcome to Blossom! This is where your habits begin
-							to take shape. Ready to begin?
+							I'll help you grow something meaningful. 
+							We'll take it one step at a time.
 						</p>
 						<Button onClick={() => navigate("/add-transaction")}>
-							Add your first transaction
+							Log your first moment
 						</Button>
 						<Button
 							className="secondary"
 							onClick={() => navigate("/add-goal")}
 						>
-							Set a goal
+							Choose something to grow
 						</Button>
 					</Section>
 
 					<div className="new-user-info">
 						<TipCard>
 							<p className="secondary-text">
-								Your insights will appear here as you start
-								tracking.
+								I'll share little insights with you as we go.
 							</p>
 						</TipCard>
 
@@ -158,7 +157,7 @@ function Home() {
 							className="secondary"
 							onClick={() => navigate("/settings/faq")}
 						>
-							Learn how Blossom works
+							Let me show you how I work
 						</Button>
 					</div>
 				</div>
