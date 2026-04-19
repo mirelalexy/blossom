@@ -1,13 +1,21 @@
 .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 48px 24px;
     text-align: center;
-    color: var(--text-secondary);
-    margin: 16px 0;
+    animation: pageFadeIn 0.3s ease;
 }
 
 .empty-title {
     font-weight: 500;
+    font-size: 15px;
+    color: var(--text-secondary);
 }
 
 .empty-subtitle {
-    font-size: 14px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
 }
