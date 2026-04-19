@@ -1,7 +1,14 @@
 .tip-card-content {
-    background: var(--bg-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 2px solid rgba(var(--accent-rgb), 0.3);
-    border-radius: 16px;
-    padding: 16px;
+    background-color: var(--accent-dim);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-lg);
+    box-shadow: none;
+}
+
+.tip-card-content .card-header {
+    opacity: 1; 
+}
+
+.tip-card-content .card-header p { 
+    color: var(--accent); 
 }
