@@ -1,4 +1,4 @@
-import { useNotifications } from "../../../store/NotificationStore"
+import { useNotificationSettings } from "../../../store/NotificationSettingsStore"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Section from "../../../components/ui/Section"
@@ -6,22 +6,22 @@ import SettingsCard from "../../../components/settings/SettingsCard"
 import SettingsItem from "../../../components/settings/SettingsItem"
 
 function Frequency() {
-    const { settings, updateSetting } = useNotifications()
+    const { notificationSettings: settings, updateNotificationSetting } = useNotificationSettings()
 
     return (
         <div className="page">
-            <PageHeader title="Review Recurring Payments Frequency" />
+            <PageHeader title="Recurring Payments" />
 
-            <Section title="Customize how often Blossom sends you reminders">
+            <Section title="How often should Blossom remind you to review recurring payments?">
                 <SettingsCard>
                     <SettingsItem 
-                        label={`Weekly ${settings.frequency === "weekly" ? "(current)" : ""}`}
-                        onClick={() => updateSetting("frequency", "weekly")}
+                        label={`Weekly ${settings.recurring_frequency === "weekly" ? "(current)" : ""}`}
+                        onClick={() => updateNotificationSetting("recurring_frequency", "weekly")}
                     />
 
                     <SettingsItem 
-                        label={`Monthly ${settings.frequency === "monthly" ? "(current)" : ""}`}
-                        onClick={() => updateSetting("frequency", "monthly")}
+                        label={`Monthly ${settings.recurring_frequency === "monthly" ? "(current)" : ""}`}
+                        onClick={() => updateNotificationSetting("recurring_frequency", "monthly")}
                     />
                 </SettingsCard>
             </Section>
