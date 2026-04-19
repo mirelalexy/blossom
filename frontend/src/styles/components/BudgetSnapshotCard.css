@@ -1,0 +1,33 @@
+.budget-snapshot { 
+    gap: 12px; 
+}
+
+.budget-snapshot-amounts {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.budget-snapshot-spent {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+}
+
+.budget-snapshot-limit { 
+    font-size: 14px; 
+}
+
+.budget-snapshot-label { 
+    font-size: 13px; 
+    line-height: 1.5; 
+}
+
+.budget-snapshot--warn .progress-fill {
+    background: linear-gradient(90deg, var(--warning), #c09040);
+}
+
+.budget-snapshot--over .progress-fill {
+    background: linear-gradient(90deg, var(--danger), #c25050);
+}

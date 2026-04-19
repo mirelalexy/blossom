@@ -5,6 +5,8 @@ import { useGoals } from "../store/GoalsStore"
 import { useCategories } from "../store/CategoryStore"
 import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
+import { useBudget } from "../store/BudgetStore"
+import { useCurrency } from "../store/CurrencyStore"
 
 import {
 	getNextMilestone,
@@ -31,6 +33,7 @@ import Button from "../components/ui/Button"
 import StreakCard from "../components/home/StreakCard"
 import Card from "../components/ui/Card"
 import Icon from "../components/ui/Icon"
+import BudgetSnapshotCard from "../components/home/BudgetSnapshotCard"
 
 import "../styles/pages/Home.css"
 import TipCard from "../components/tips/TipCard"
@@ -44,6 +47,8 @@ function Home() {
 	const { getCategoryById } = useCategories()
 	const { user } = useUser()
 	const { stats } = useProfile()
+	const { budget } = useBudget()
+	const { currency } = useCurrency()
 
 	const { goals } = useGoals()
 	const primaryGoal = goals.find((g) => g.is_primary)
@@ -124,6 +129,14 @@ function Home() {
 				message={streakMessage}
 				nextMileStone={nextStreakMileStone}
 			/>
+
+			{budget?.monthly_limit > 0 && (
+                <BudgetSnapshotCard
+                    transactions={transactions}
+                    budget={budget}
+                    currency={currency}
+                />
+            )}
 
 			{transactions.length == 0 ? (
 				<div className="new-user-home">
