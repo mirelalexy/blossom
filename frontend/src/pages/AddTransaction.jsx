@@ -20,8 +20,6 @@ import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
 import ConfirmModal from "../components/ui/ConfirmModal"
 
-import "../styles/pages/AddTransaction.css"
-
 function AddTransaction() {
 	const navigate = useNavigate()
 
