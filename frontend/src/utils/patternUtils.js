@@ -40,24 +40,34 @@ export function getUserPatterns(transactions, currency = "") {
         }
     }    
 
-    // mood pattern
-    const moodCount = {}
+    // mood vs amount spent
+    const moodAmounts = {}
 
-    transactions.forEach(t => {
+    expenses.forEach(t => {
         if (!t.mood) return
+        if (!moodAmounts[t.mood]) {
+            moodAmounts[t.mood] = []
+        }
 
-        moodCount[t.mood] = (moodCount[t.mood] || 0) + 1
+        moodAmounts[t.mood].push(t.amount)
     })
 
-    const topMood = Object.entries(moodCount).sort((a, b) => b[1] - a[1])[0]
-
-    if (topMood) {
-        const [mood] = topMood
-
-        patterns.push({
-            icon: "leaf",
-            text: `You tend to spend more when feeling ${mood}.`
-        })    
+    const moodAvgs = Object.entries(moodAmounts)
+        .map(([mood, amounts]) => ({ mood, avg: amounts.reduce((s, a) => s + a, 0) / amounts.length, count: amounts.length }))
+        .filter(m => m.count >= 2)
+        .sort((a, b) => b.avg - a.avg)
+    if (moodAvgs.length >= 2) {
+        const highest = moodAvgs[0]
+        const lowest = moodAvgs[moodAvgs.length - 1]
+        const gap = highest.avg - lowest.avg
+        
+        if (gap > 10) {
+            patterns.push({
+                icon: "leaf",
+                text: `You spend the most when you're ${highest.mood}.`,
+                detail: `${cap(highest.mood)} spending averages ${fmt(highest.avg, currency)} per transaction - ${fmt(gap, currency)} more than when you're ${lowest.mood} (${fmt(lowest.avg, currency)}). That gap is worth noticing.`
+            })
+        }
     }
 
     // intent pattern
@@ -106,4 +116,8 @@ function fmt(amount, currency) {
     } catch { 
         return `${amount.toFixed(0)} ${currency}` 
     }
+}
+
+function cap(s) { 
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : s 
 }
