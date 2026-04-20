@@ -185,24 +185,24 @@ export function getSpendingStyle({ moodData, intentData }) {
         return "Still figuring you out"
     }
 
-    const mood = moodData[0].name
-    const intent = intentData[0].name
+    const mood = moodData[0].name?.toLowerCase()
+    const intent = intentData[0].name?.toLowerCase()
 
-    if (mood === "Calm" && intent === "Planned") {
+    if (mood === "calm" && intent === "planned") {
         return "Intentional Spender"
-    } else if (mood === "Anxious" && intent === "Impulse") {
+    } else if (mood === "anxious" && intent === "impulse") {
         return "Emotional Spender"
-    } else if (intent === "Necessary") {
+    } else if (intent === "necessary") {
         return "Practical Spender"
-    } else if (intent === "Planned") {
+    } else if (intent === "planned") {
         return "Organized Spender"
-    } else if (intent === "Impulse") {
+    } else if (intent === "impulse") {
         return "Spontaneous Spender"
-    } else if (mood === "Happy") {
+    } else if (mood === "happy") {
         return "Reward-Driven Spender"
-    } else if (mood === "Calm") {
+    } else if (mood === "calm") {
         return "Routine Spender"
-    } else if (mood === "Anxious") {
+    } else if (mood === "anxious") {
         return "Emotion-Driven Spender"
     } else {
         return "Balanced Spender"
