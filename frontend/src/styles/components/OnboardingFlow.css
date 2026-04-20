@@ -1,0 +1,50 @@
+.onboarding {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    animation: pageFadeIn 0.3s ease;
+}
+
+.onboarding-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.onboarding-progress-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: var(--text-primary);
+}
+
+.onboarding-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.onboarding-xp-hint {
+    line-height: 1.6;
+    padding: 14px 16px;
+    background: var(--accent-dim);
+    border-radius: var(--r-md);
+    border-left: 3px solid var(--accent);
+}
+
+.feature-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.onboarding-questions {
+    background: var(--accent-dim) !important;
+    border-color: var(--border-strong) !important;
+}
+
+.onboarding-questions-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}

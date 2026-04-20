@@ -1,5 +1,7 @@
 import Icon from "../ui/Icon"
 
+import "../../styles/components/FeatureCard.css"
+
 function FeatureCard({ icon, title, body }) {
     return (
         <div className="feature-card">

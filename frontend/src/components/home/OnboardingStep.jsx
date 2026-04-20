@@ -1,6 +1,8 @@
 import Button from "../ui/Button"
 import Icon from "../ui/Icon"
 
+import "../../styles/components/OnboardingStep.css"
+
 function OnboardingStep({ done, icon, label, cta, hint, onAction }) {
     return (
         <div className={`onboarding-step ${done ? "onboarding-step-done" : ""}`}>

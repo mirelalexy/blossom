@@ -1,0 +1,40 @@
+.feature-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    animation: pageFadeIn 0.3s ease;
+}
+
+.feature-card-icon {
+    width: 36px; 
+    height: 36px;
+    border-radius: var(--r-md);
+    background: var(--accent-dim);
+    color: var(--accent);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.feature-card-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.feature-card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}

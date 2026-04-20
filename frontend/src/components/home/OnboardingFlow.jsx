@@ -8,6 +8,8 @@ import Section from "../ui/Section"
 import OnboardingStep from "./OnboardingStep"
 import FeatureCard from "./FeatureCard"
 
+import "../../styles/components/OnboardingFlow.css"
+
 const FEATURE_CARDS = [
     {
         icon: "transactions",

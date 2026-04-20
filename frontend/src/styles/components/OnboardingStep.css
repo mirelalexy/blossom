@@ -1,0 +1,73 @@
+.onboarding-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.2s ease;
+    animation: pageFadeIn 0.25s ease;
+}
+
+.onboarding-step-done {
+    opacity: 0.6;
+    border-color: var(--success-soft);
+    background: var(--success-soft);
+}
+
+.onboarding-step-check {
+    width: 36px; 
+    height: 36px;
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    background: var(--accent-dim);
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.onboarding-step-done .onboarding-step-check {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.onboarding-step-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.onboarding-step-label {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.onboarding-step-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.onboarding-step-cta {
+    background: none;
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--r-full);
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    font-family: var(--font-primary);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.onboarding-step-cta:hover {
+    background-color: var(--accent-dim);
+    border-color: var(--accent);
+}
