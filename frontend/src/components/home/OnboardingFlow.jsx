@@ -98,7 +98,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
                 
                 <p className="onboarding-xp-hint secondary-text">
                     You earn <strong>5 XP</strong> for every transaction you log,
-                    <strong>2 XP</strong> per streak day, 
+                    <strong> 2 XP</strong> per streak day, 
                     and up to <strong>30 XP</strong> for completing a challenge.
                     Your title grows as you do.
                 </p>
