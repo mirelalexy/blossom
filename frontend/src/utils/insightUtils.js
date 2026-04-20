@@ -1,14 +1,22 @@
-export function getCategoryInsight(data) {
+export function getCategoryInsight(data, currency = "") {
     if (!data || data.length === 0) return {
-        insight: "No spending data yet.",
-        tip: ""
+        insight: null,
+        tip: null
     }
 
-    const topCategory = data[0]
+    const top = data[0]
+    const total = data.reduce((s, d) => s + d.value, 0)
+    const pct = total > 0 ? Math.round((top.value / total) * 100) : 0
 
-    const insight = `Most of your spending goes to ${topCategory.name}.`
+    const insight = pct >= 50
+        ? `${top.name} alone accounts for ${pct}% of your spending - more than everything else combined.`
+        : `${top.name} leads at ${pct}% of your total spending this period.`
 
-    const tip = `Consider setting a small limit for ${topCategory.name.toLowerCase()} to keep things balanced.`
+    const tip = pct >= 60
+        ? `When one category takes that much, it's worth asking whether it reflects a real priority or a pattern that grew unnoticed.`
+        : data.length <= 2
+        ? `You're spending in ${data.length === 1 ? "one category" : "two categories"}. That's focused - just make sure it's intentional.`
+        : `Your spending is spread across ${data.length} categories. Healthy as long as the proportions match your priorities.`
 
     return { insight, tip }
 }
