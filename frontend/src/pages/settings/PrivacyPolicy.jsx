@@ -24,7 +24,7 @@ function PrivacyPolicy() {
                     Blossom only collects what you give it directly. That includes:
                 </p>
 
-                <ul className="policy-list">
+                <ul>
                     <li>
                         <strong>Account information</strong> - your display name,
                         email address, and hashed password. We store a hash of your
@@ -70,7 +70,7 @@ function PrivacyPolicy() {
                     Your data is used exclusively to make Blossom work for you:
                 </p>
 
-                <ul className="policy-list">
+                <ul>
                     <li>Displaying your transactions, goals, and budget in the app</li>
                     <li>Calculating your streak, XP, level, and challenge progress</li>
                     <li>Generating insights and patterns on your Journey page</li>
@@ -98,7 +98,7 @@ function PrivacyPolicy() {
                     You are in full control of your data at all times:
                 </p>
                 
-                <ul className="policy-list">
+                <ul>
                     <li>
                         <strong>Export</strong> - download your full transaction
                         history as a CSV file from Settings → Data & Privacy.
