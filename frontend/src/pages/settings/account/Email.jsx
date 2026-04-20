@@ -35,6 +35,7 @@ function Email() {
 
                 <Button 
                     type="submit"
+                    disabled={!email.trim() || email === user.email}
                 >
                     Save
                 </Button>
