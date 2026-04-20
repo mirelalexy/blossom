@@ -234,7 +234,7 @@ export async function resetApp(req, res) {
         await client.query(`DELETE FROM goals WHERE user_id = $1`, [userId])
         await client.query(`DELETE FROM category_budgets WHERE user_id = $1`, [userId])
         await client.query(`DELETE FROM budgets WHERE user_id = $1`, [userId])
-        await client.query(`DELETE FROM spending_rules WHERE user_id = $1`, [userId])
+        await client.query(`DELETE FROM rules WHERE user_id = $1`, [userId])
         await client.query(`DELETE FROM challenges WHERE user_id = $1`, [userId])
 
         // reset default categories
