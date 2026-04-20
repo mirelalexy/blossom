@@ -3,7 +3,7 @@ import { useCategories } from "../../../store/CategoryStore"
 
 import PageHeader from "../../../components/ui/PageHeader"
 import Button from "../../../components/ui/Button"
-import PageIntro from "../../../components/ui/PageIntro"
+import Section from "../../../components/ui/Section"
 
 function ExportData() {
     const { transactions } = useTransactions()
@@ -48,14 +48,31 @@ function ExportData() {
         <div className="page">
             <PageHeader title="Export Data" />
 
-            <PageIntro 
-                title="Export your data"
-                text="You can download a copy of your Blossom data at any time. Your export will include transactions."
-            />
+            <Section>
+                <p className="secondary-text">
+                    Your export includes every transaction you've ever logged -
+                    date, title, category, type, amount, mood, intent, and notes.
+                    One row per transaction. Opens in any spreadsheet app.
+                </p>
+ 
+                <p className="secondary-text">
+                    {transactions.length === 0
+                        ? "You haven't logged any transactions yet, so there's nothing to export."
+                        : `You have ${transactions.length} transaction${transactions.length === 1 ? "" : "s"} ready to export.`
+                    }
+                </p>
+            </Section>
 
-            <Button onClick={handleExport}>Export Data as CSV</Button>
+            <Button 
+                onClick={handleExport}
+                disabled={transactions.length === 0}
+            >
+                Download CSV
+            </Button>
 
-            <p className="additional-info">Your file will download automatically. Exports may take up to a few minutes depending on file size.</p>
+            <p className="additional-info">
+                Your file will download right away. Large exports may take a moment.
+            </p>
         </div>
     )
 }
