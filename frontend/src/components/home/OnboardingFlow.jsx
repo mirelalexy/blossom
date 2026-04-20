@@ -6,6 +6,7 @@ import Card from "../ui/Card"
 import Icon from "../ui/Icon"
 import Section from "../ui/Section"
 import OnboardingStep from "./OnboardingStep"
+import FeatureCard from "./FeatureCard"
 
 const FEATURE_CARDS = [
     {
@@ -105,7 +106,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
             <Section title="What We'll Do Together">
                 <div className="feature-cards">
                     {FEATURE_CARDS.map(card => (
-                        {/* TO DO */}
+                        <FeatureCard key={card.icon} {...card} />
                     ))}
                 </div>
             </Section>
