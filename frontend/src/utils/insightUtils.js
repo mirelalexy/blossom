@@ -91,27 +91,35 @@ export function getMoodInsight(data, currency = "") {
     return { insight, tip }
 }
 
-export function getTimeInsight(data) {
+export function getTimeInsight(data, currency = "") {
     if (!data || data.length < 2) return {
-        insight: "Not enough data to detect a trend yet.",
-        tip: ""
+        insight: null,
+        tip: null
     }
 
-    const first = data[0].value
-    const last = data[data.length - 1].value
+    const values = data.map(d => d.value)
+    const first = values[0]
+    const last = values[values.length - 1]
+    const recentAvg = values.slice(-3).reduce((s, v) => s + v, 0) / Math.min(3, values.length)
+    const avg = values.reduce((s, v) => s + v, 0) / values.length
 
     let insight = ""
     let tip = ""
 
-    if (last > first) {
-        insight = "Your spending has increased over time."
-        tip = "Try identifying what caused the increase to stay in control."
-    } else if (last < first) {
-        insight = "Your spending has decreased recently."
-        tip = "You're moving in a good direction. Keep it up."
+    if (last > first * 1.4) {
+        const pct = Math.round(((last - first) / first) * 100)
+        insight = `Your spending climbed through the period - ending ${pct}% higher than it started.`
+        tip = `The trend is upward. Check whether the increase was intentional or whether spending gradually drifted without a clear reason.`
+    } else if (last < first * 0.7) {
+        const pct = Math.round(((first - last) / first) * 100)
+        insight = `Your spending dropped through the period - ending ${pct}% lower than it started.`
+        tip = `That's a meaningful improvement. Whether it came from habits changing or circumstances shifting, the direction is worth reinforcing.`
+    } else if (recentAvg > avg * 1.3) {
+        insight = `Spending picked up toward the end of the period.`
+        tip = `The recent days are running above your period average. It might be end-of-period catch-up, or a pattern worth watching next month.`
     } else {
-        insight = "Your spending has remained relatively stable."
-        tip = "Consistency is good. Just make sure it aligns with your goals."
+        insight = `Your spending was fairly consistent across the period.`
+        tip = `Consistency usually signals deliberate habits rather than reactive spending. As long as the level itself makes sense, this is a good sign.`
     }
 
     return { insight, tip }
