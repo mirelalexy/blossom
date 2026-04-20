@@ -211,15 +211,15 @@ export function getSpendingStyle({ moodData, intentData }) {
 
 export function getSpendingStyleDetails(style) {
     const map = {
-        "Intentional Spender": "You plan your spending and stay in control.",
-        "Emotional Spender": "Your spending is often influenced by emotions.",
-        "Practical Spender": "You focus on essentials and needs.",
-        "Organized Spender": "You tend to think ahead before spending.",
-        "Spontaneous Spender": "You enjoy making quick, unplanned purchases.",
-        "Reward-Driven Spender": "You like to treat yourself when feeling good.",
-        "Routine Spender": "Your spending follows consistent habits.",
-        "Emotion-Driven Spender": "Your emotions influence your decisions.",
-        "Balanced Spender": "You show a mix of different spending behaviors."
+        "Intentional Spender": "You plan before you spend and your emotional state is usually calm when you do. That combination is rare and worth keeping.",
+        "Emotional Spender": "Your spending is often triggered by anxiety and tends to be unplanned. The feelings that cause it don't go away when the purchase does - but noticing the pattern is already progress.",
+        "Practical Spender": "Essentials lead your spending. You prioritize what's needed. The challenge is usually making space for what's wanted.",
+        "Organized Spender": "You think before you spend. Most purchases were planned, which means you're less likely to regret them.",
+        "Spontaneous Spender": "You make quick decisions and act on them. Some of those purchases turn out great. The ones that don't are worth tracking.",
+        "Reward-Driven Spender": "You spend most when you're happy - often as a form of reward. That can be healthy self-care or a habit that grows quietly. Worth checking which.",
+        "Routine Spender": "Your spending follows consistent patterns. Calm, regular, predictable. Make sure those routines are still serving you.",
+        "Emotion-Driven Spender": "Emotions are shaping your spending decisions. Knowing that is the first step. Logging the mood before you spend, not just after, is the next one.",
+        "Balanced Spender": "No single strong pattern dominates - which either means things are genuinely balanced, or there isn't enough data yet to see a clear picture."
     }
 
     return map[style] || ""
