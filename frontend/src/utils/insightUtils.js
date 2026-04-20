@@ -21,26 +21,35 @@ export function getCategoryInsight(data, currency = "") {
     return { insight, tip }
 }
 
-export function getIntentInsight(data) {
+export function getIntentInsight(data, currency = "") {
     if (!data || data.length === 0) return {
-        insight: "No intent data yet.",
-        tip: ""
+        insight: null,
+        tip: null
     }
 
-    const topIntent = data[0].name
+    const topIntent = data[0].name.toLowerCase()
+    const total = data.reduce((s, d) => s + d.value, 0)
+    const topPct = total > 0 ? Math.round((data[0].value / total) * 100) : 0
+    const impulsePct = Math.round(((data.find(d => d.name.toLowerCase() === "impulse")?.value || 0) / total) * 100)
 
     let insight = ""
     let tip = ""
 
-    if (topIntent === "Planned") {
-        insight = "Most of your spending is planned, which shows strong control over your finances."
-        tip = "Keep planning ahead. It's clearly working for you."
-    } else if (topIntent === "Impulse") {
-        insight = "A large part of your spending happens on impulse."
-        tip = "Try pausing before purchases to reduce impulsive spending."
-    } else if (topIntent === "Necessary") {
-        insight = "Most of your spending goes toward essentials."
-        tip = "You're prioritizing needs well. Just keep it balanced."
+    if (topIntent === "planned") {
+        insight = `${topPct}% of your spending was planned in advance this period.`
+        tip = topPct >= 70
+            ? `That's a high level of intentionality. If it feels right, keep going. If it feels restrictive, leave some room for spontaneity.`
+            : `Planning ahead is working. The ${impulsePct}% impulse spending isn't alarming - some always exists.`
+    } else if (topIntent === "impulse") {
+        insight = `${topPct}% of your tagged spending happened on impulse - the largest category by amount.`
+        tip = topPct >= 60
+            ? `That's a significant share. Try logging before you buy - the act of pausing tends to slow things down.`
+            : `A mix of impulse and planned is normal. The question is whether those impulse purchases felt worth it afterward.`
+    } else if (topIntent === "necessary") {
+        insight = `Most of your spending (${topPct}%) went toward necessities this period.`
+        tip = topPct >= 70
+            ? `Your budget is carrying a lot of essential weight. That's real - it just leaves less room for goals and discretionary choices.`
+            : `Covering necessities is the baseline. The remaining ${100 - topPct}% is where choice lives.`
     }
 
     return { insight, tip }
