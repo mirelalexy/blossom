@@ -20,6 +20,10 @@ export const faq = [
         content: "Every expense can be tagged as necessary (rent, groceries), planned (something you thought about before buying), or impulse (bought it in the moment). Over time, your Journey page will show you what portion of your spending falls into each category. The goal isn't to eliminate impulse purchases - it's just to know they're happening."
     },
     {
+        title: "Why do I log whether I paid by card or cash?",
+        content: "Because they behave differently - not in terms of what you buy, but in terms of how it feels to spend. Cash is physical. You feel it leave your hand. That friction tends to make purchases feel more real, which is why cash spending tends to be smaller and more deliberate. Card spending is easier and faster, which is why it's also easier to overspend without noticing. I track which method you use so I can show you whether there's a gap in your averages - and whether that gap reflects unconscious spending or just how your life is structured. Neither card nor cash is better. But knowing which dominates your habits, and what that costs you on average, is useful."
+    },
+    {
         title: "What are challenges?",
         content: "Challenges are monthly and weekly goals I set for you automatically - things like logging 10 transactions, keeping your spending under budget, or tagging your mood on every purchase. Completing a challenge earns you 30 XP."
     },
