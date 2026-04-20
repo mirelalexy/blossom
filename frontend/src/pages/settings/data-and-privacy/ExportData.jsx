@@ -13,18 +13,20 @@ function ExportData() {
         const headers = ["date", "title", "category", "type", "amount", "mood", "intent", "notes"]
 
         const rows = transactions.map(t => {
-            const category = getCategoryById(t.category_id)?.name || ""
+            const category = getCategoryById(t.categoryId)?.name || ""
         
-            return [
+            const fields = [
                 t.date,
-                t.title,
-                category,
+                `"${(t.title || "").replace(/"/g, '""')}"`,
+                `"${category.replace(/"/g, '""')}"`,
                 t.type,
                 t.amount,
                 t.mood || "",
                 t.intent || "",
-                t.notes || ""
-            ].join(",")
+                `"${(t.notes || "").replace(/"/g, '""')}"`
+            ]
+            
+            return fields.join(",")
         })
 
         return [headers.join(","), ...rows].join("\n")
@@ -33,7 +35,7 @@ function ExportData() {
     function handleExport() {
         const csv = convertToCSV(transactions)
 
-        const blob = new Blob([csv], { type: "text/csv" })
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
         const url = URL.createObjectURL(blob)
 
         const a = document.createElement("a")
