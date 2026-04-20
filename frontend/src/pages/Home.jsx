@@ -34,6 +34,7 @@ import StreakCard from "../components/home/StreakCard"
 import Card from "../components/ui/Card"
 import Icon from "../components/ui/Icon"
 import BudgetSnapshotCard from "../components/home/BudgetSnapshotCard"
+import LevelCard from "../components/profile/LevelCard"
 
 import "../styles/pages/Home.css"
 import TipCard from "../components/tips/TipCard"
@@ -53,6 +54,10 @@ function Home() {
 	const { goals } = useGoals()
 	const primaryGoal = goals.find((g) => g.is_primary)
 
+	const level = stats?.level || 1
+    const levelTitle = stats?.levelTitle || "Mindful Seed"
+    const levelProgress = stats?.progress || 0
+	
 	let streak = stats?.streak || 0
 	const timeOfDay = getTimeOfDay()
 	const recentMood = getRecentMood(transactions)
@@ -137,6 +142,14 @@ function Home() {
                     currency={currency}
                 />
             )}
+
+			<LevelCard
+				title={levelTitle}
+				level={level}
+				progress={levelProgress}
+				variant="default"
+				clickable
+			/>
 
 			{transactions.length == 0 ? (
 				<div className="new-user-home">
