@@ -53,7 +53,7 @@ function Journey() {
     const { insight: intentInsight, tip: intentTip } = getIntentInsight(intentChartData)
     const { insight: moodInsight, tip: moodTip } = getMoodInsight(moodChartData)
     const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData)
-    const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData)
+    const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData, currency)
 
     const topSpendingSources = getTopSpendingSourcesData(monthlyTransactions)
 

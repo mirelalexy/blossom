@@ -1,3 +1,5 @@
+import { formatCurrency } from "./currencyUtils.js"
+
 export function getCategoryInsight(data, currency = "") {
     if (!data || data.length === 0) return {
         insight: null,
@@ -125,30 +127,46 @@ export function getTimeInsight(data, currency = "") {
     return { insight, tip }
 }
 
-export function getIncomeExpenseInsight(data) {
+export function getIncomeExpenseInsight(data, currency = "") {
     if (!data || data.length === 0) return {
-        insight: "No data yet.",
-        tip: ""
+        insight: null,
+        tip: null
     }
 
     const income = data.find(d => d.name === "Income")?.value || 0
     const expenses = data.find(d => d.name === "Expenses")?.value || 0
 
+    if (income === 0 && expenses === 0) return {
+        insight: null,
+        tip: null
+    }
+
     let insight = ""
     let tip = ""
 
-    if (income === 0 && expenses > 0) {
-        insight = "You have recorded expenses but no income."
-        tip = "Try logging your income to get a complete financial picture."
-    } else if (income > expenses) {
-        insight = "Your income is higher than your expenses."
-        tip = "You're in a good position. Consider saving or investing the difference."
-    } else if (income < expenses) {
-        insight = "Your expenses exceed your income."
-        tip = "You may want to review your spending to avoid long-term imbalance."
+    if (income === 0) {
+        insight = "No income has been logged this period - only expenses."
+        tip = "Logging your income gives me a complete picture. Without it, I can only see one side."
+    } else if (expenses === 0) {
+        insight = "You've logged income but no expenses this period."
+        tip = "Either expenses haven't been logged yet, or this was an unusually quiet spending period."
     } else {
-        insight = "Your income and expenses are balanced."
-        tip = "This is stable. Just make sure you're also saving if possible."
+        const surplus = income - expenses
+        const ratio = Math.round((expenses / income) * 100)
+        const savePct = Math.max(0, 100 - ratio)
+
+        if (surplus > 0) {
+            insight = `You spent ${ratio}% of your logged income - keeping ${savePct}% (${formatCurrency(surplus, currency)}) unspent.`
+            tip = savePct >= 20
+                ? `A savings rate above 20% is considered healthy. The question is whether that unspent amount is being directed somewhere intentional.`
+                : `You're spending most of what you earn. Having even a small buffer makes a difference over time.`
+        } else if (surplus < 0) {
+            insight = `Your expenses (${formatCurrency(expenses, currency)}) exceeded your logged income (${formatCurrency(income, currency)}) this period.`
+            tip = `A deficit isn't always a problem - some income may not be logged yet. But if it reflects reality, it's worth understanding what drove it.`
+        } else {
+            insight = "Your income and expenses are exactly balanced this period."
+            tip = "Balanced is stable, but leaves no margin. Even a small gap builds resilience over time."
+        }
     }
 
     return { insight, tip }
