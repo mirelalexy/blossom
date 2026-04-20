@@ -59,7 +59,9 @@ import {
     UndoDot,
     Target,
     Pencil,
-    Gem
+    Gem,
+    PiggyBank,
+    Heart
 } from "lucide-react"
 
 export const appIcons = {
@@ -99,6 +101,8 @@ export const appIcons = {
     tags: Tags,
     sparkles: Sparkles,
     edit: Pencil,
+    piggyBank: PiggyBank,
+    heart: Heart,
 
     // category icons
     gamepad2: Gamepad2,

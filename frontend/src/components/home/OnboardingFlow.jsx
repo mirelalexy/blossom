@@ -27,7 +27,7 @@ const FEATURE_CARDS = [
         body: "Every transaction earns you 5 XP. Streaks, challenges, and completed goals add more. As you grow, so does your title - from Mindful Seed all the way to Eternal Bloom."
     },
     {
-        icon: "journey",
+        icon: "heart",
         title: "Your Journey page",
         body: "Once you've logged a few things, I'll start drawing patterns. Mood vs spending. Impulse vs planned. Your best and hardest moments. It all lives in Journey."
     },
@@ -68,7 +68,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
 
                     <OnboardingStep 
                         done={steps.hasGoal}
-                        icon="goals"
+                        icon="piggyBank"
                         label="Set a saving goal"
                         cta="Let's go"
                         hint="What are you working toward? Even a small goal changes how you see money."
@@ -77,7 +77,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
 
                     <OnboardingStep 
                         done={steps.hasBudget}
-                        icon="budget"
+                        icon="monthlyBudget"
                         label="Set a monthly budget"
                         cta="Do it now"
                         hint="I'll use this to warn you gently, not shame you."
