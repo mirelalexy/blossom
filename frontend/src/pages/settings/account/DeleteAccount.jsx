@@ -16,10 +16,13 @@ function DeleteAccount() {
     const { deleteAccount } = useUser()
     const [password, setPassword] = useState("")
     const [showConfirm, setShowConfirm] = useState(false)
+
+    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
     function handleDeleteClick() {
         if (!password) return
+        setError("")
         setShowConfirm(true)
     }
 
@@ -30,10 +33,10 @@ function DeleteAccount() {
             await deleteAccount(password)
             navigate("/login")
         } catch (err) {
-            alert(err.message)
+            setError(err.message || "Couldn't verify your password. Please try again.")
+            setShowConfirm(false)
         } finally {
             setLoading(false)
-            setShowConfirm(false)
         }
     }
 
@@ -43,8 +46,16 @@ function DeleteAccount() {
 
             <PageIntro 
                 title="Ready to say goodbye?"
-                text="If you no longer wish to use Blossom, you can delete your account here."
+                text="This action is permanent."
             />
+
+            <Section>
+                <p className="secondary-text">
+                    Deleting your account will <strong>permanently</strong> remove all your data - including
+                    transactions, goals, challenges, rewards, and settings.
+                    This cannot be undone.
+                </p>
+            </Section>
 
             <Section>
                 <Input 
@@ -55,6 +66,8 @@ function DeleteAccount() {
                     required
                 />
             </Section>
+
+            {error && <p className="error-text">{error}</p>}
 
             <Button 
                 onClick={handleDeleteClick}
@@ -67,8 +80,8 @@ function DeleteAccount() {
                 <ConfirmModal
                     title="Delete account?"
                     message={`This action cannot be undone.\nAll your data will be permanently deleted.`}
-                    confirmLabel="Delete"
-                    cancelLabel="Cancel"
+                    confirmLabel="Yes, delete everything"
+                    cancelLabel="Keep my account"
                     onConfirm={handleConfirmDelete}
                     onCancel={() => setShowConfirm(false)}
                     variant="warning"
