@@ -101,6 +101,37 @@ export function getUserPatterns(transactions, currency = "") {
         })
     }
 
+    // payment method (card vs cash)
+    const cardExp = expenses.filter(t => t.method === "card")
+    const cashExp = expenses.filter(t => t.method === "cash")
+
+    if (cardExp.length > 0 && cashExp.length > 0) {
+        const cardAvg = cardExp.reduce((s, t) => s + t.amount, 0) / cardExp.length
+        const cashAvg = cashExp.reduce((s, t) => s + t.amount, 0) / cashExp.length
+        
+        const cardPct = Math.round((cardExp.length / expenses.length) * 100)
+        
+        if (cardAvg > cashAvg * 1.5) {
+            patterns.push({
+                icon: "transactions",
+                text: `Card transactions average ${fmt(cardAvg - cashAvg, currency)} more than cash.`,
+                detail: `${cardPct}% of your expenses are by card. Card purchases tend to feel less real - the gap between card and cash averages is often where unconscious spending hides.`
+            })
+        } else {
+            patterns.push({
+                icon: "transactions",
+                text: `${cardPct}% of your spending is by card.`,
+                detail: `Your card and cash averages are similar (${fmt(cardAvg, currency)} vs ${fmt(cashAvg, currency)}), which suggests you're equally intentional with both payment methods.`
+            })
+        }
+    } else if (cardExp.length > 0 && cashExp.length === 0) {
+        patterns.push({
+            icon: "transactions",
+            text: "All of your tracked spending is by card.",
+            detail: "Card spending is precise and traceable. Just know that the distance from physical money can make it easier to spend without noticing."
+        })
+    }
+
     return patterns
 }
 
