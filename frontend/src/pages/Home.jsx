@@ -35,6 +35,7 @@ import Card from "../components/ui/Card"
 import Icon from "../components/ui/Icon"
 import BudgetSnapshotCard from "../components/home/BudgetSnapshotCard"
 import LevelCard from "../components/profile/LevelCard"
+import OnboardingFlow from "../components/home/OnboardingFlow"
 
 import "../styles/pages/Home.css"
 import TipCard from "../components/tips/TipCard"
@@ -57,7 +58,7 @@ function Home() {
 	const level = stats?.level || 1
     const levelTitle = stats?.levelTitle || "Mindful Seed"
     const levelProgress = stats?.progress || 0
-	
+
 	let streak = stats?.streak || 0
 	const timeOfDay = getTimeOfDay()
 	const recentMood = getRecentMood(transactions)
@@ -121,6 +122,17 @@ function Home() {
 	const message = getNextMonthInfo()
 	const greeting = getGreeting(user?.displayName)
 
+	const isNewUser = transactions.length === 0
+
+	// see how many onboarding steps are done
+	const onboardingSteps = {
+		hasTransaction: transactions.length > 0,
+		hasGoal: goals.length > 0,
+		hasBudget: budget?.monthly_limit > 0
+	}
+
+	const stepsCompleted = Object.values(onboardingSteps).filter(Boolean).length
+
 	return (
 		<div className="page">
 			<GreetingHeader
@@ -135,73 +147,68 @@ function Home() {
 				nextMileStone={nextStreakMileStone}
 			/>
 
-			{budget?.monthly_limit > 0 && (
-                <BudgetSnapshotCard
-                    transactions={transactions}
-                    budget={budget}
-                    currency={currency}
-                />
-            )}
-
-			<LevelCard
-				title={levelTitle}
-				level={level}
-				progress={levelProgress}
-				variant="default"
-				clickable
-			/>
-
-			{transactions.length == 0 ? (
-				<div className="new-user-home">
-					<Section
-						title="Get Started"
-						className="get-started-section"
-					>
-						<p className="secondary-text">
-							I'll help you grow something meaningful. 
-							We'll take it one step at a time.
-						</p>
-						<Button onClick={() => navigate("/add-transaction")}>
-							Log your first moment
-						</Button>
-						<Button
-							className="secondary"
-							onClick={() => navigate("/add-goal")}
-						>
-							Choose something to grow
-						</Button>
-					</Section>
-
-					<div className="new-user-info">
-						<TipCard>
-							<p className="secondary-text">
-								I'll share little insights with you as we go.
-							</p>
-						</TipCard>
-
-						<Button
-							className="secondary"
-							onClick={() => navigate("/settings/faq")}
-						>
-							Let me show you how I work
-						</Button>
-					</div>
-				</div>
+			{isNewUser ? (
+				/* NEW USER FLOW */
+				<OnboardingFlow
+					steps={onboardingSteps}
+					stepsCompleted={stepsCompleted}
+					level={level}
+					levelTitle={levelTitle}
+					levelProgress={levelProgress}
+					onNavigate={navigate}
+				/>
 			) : (
+				/* RETURNING USER FLOW */
 				<>
-					<Section title="Stats">
+					<LevelCard
+						title={levelTitle}
+						level={level}
+						progress={levelProgress}
+						variant="default"
+						clickable
+					/>
+
+					<Section title="This Month">
+						{budget?.monthly_limit > 0 && (
+							<BudgetSnapshotCard
+								transactions={transactions}
+								budget={budget}
+								currency={currency}
+							/>
+						)}
+
 						<PrimaryGoalCard goal={primaryGoal} />
-						<TopCategoryCard category={topCategory} />
+						{topCategory && (
+							<TopCategoryCard category={topCategory} />
+						)}
 					</Section>
 
 					<Section title="Recent">
-						{recentTransactions.map((t) => (
-							<TransactionCard key={t.id} {...t} />
-						))}
+						{recentTransactions.length === 0 ? (
+							<div className="home-no-recent">
+								<p className="secondary-text">Nothing logged in the last 7 days. Whenever you're ready, I'm here.</p>
+							
+								<Button
+									className="secondary"
+									onClick={() => navigate("/add-transaction")}
+								>
+									Log something
+								</Button>
+							</div>	
+						) : (
+							<>
+								{recentTransactions.map((t) => (
+									<TransactionCard key={t.id} {...t} />
+								))}
 
-						<Button onClick={() => navigate("/transactions")}>
-							View All Transactions
-						</Button>
+								<Button
+									className="ghost" 
+									onClick={() => navigate("/transactions")}
+								>
+									See everything →
+								</Button>
+							</>
+						)}
 					</Section>
 				</>
 			)}

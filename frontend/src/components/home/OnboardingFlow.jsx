@@ -130,3 +130,5 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
         </div>
     )
 }
+
+export default OnboardingFlow
