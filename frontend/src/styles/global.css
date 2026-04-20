@@ -236,9 +236,32 @@ input::placeholder {
     transition: color 0.15s ease, background-color 0.15s ease;
     flex-shrink: 0;
 }
+
 .icon-btn:hover { 
     color: var(--text-primary); 
     background: var(--bg-secondary); 
+}
+
+/* -- LISTS -- */
+ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: disc;
+}
+
+ul li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    padding-left: 4px;
+}
+
+ul strong {
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 /* -- UNDER REVIEW -- */

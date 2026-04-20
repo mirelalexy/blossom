@@ -25,6 +25,7 @@ function DataPrivacy() {
                 <SettingsCard>
                     <SettingsItem 
                         label="Reset App (Clear Data)"
+                        onClick={() => navigate("/settings/data-and-privacy/reset")}
                     />
                 </SettingsCard>
             </Section>

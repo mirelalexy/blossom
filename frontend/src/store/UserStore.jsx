@@ -175,13 +175,41 @@ export function UserProvider({ children }) {
         }
     }
 
+    async function resetApp(password) {
+        const token = localStorage.getItem("token")
+
+        if (!token) return
+
+        try {
+            const res = await fetch(`${API_URL}/api/users/reset-app`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.error || "Reset failed")
+            }
+
+            window.location.reload()
+        } catch (err) {
+            console.log("Reset app failed: ", err)
+            throw err
+        }
+    }
+
     function logout() {
         localStorage.removeItem("token")
         setUser(null)
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount, logout }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount, resetApp, logout }}>
             {children}
         </UserContext.Provider>
     )

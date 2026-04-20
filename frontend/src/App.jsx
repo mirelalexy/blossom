@@ -61,6 +61,7 @@ import Notifications from "./pages/Notifications"
 import Register from "./pages/Register"
 import Rewards from "./pages/Rewards"
 import DeleteAccount from "./pages/settings/account/DeleteAccount"
+import ResetApp from "./pages/settings/data-and-privacy/ResetApp"
 
 const providers = [
   UserProvider,
@@ -128,6 +129,7 @@ function AppContent() {
           <Route path="/settings/account/delete" element={<DeleteAccount />} />
           <Route path="/settings/data-and-privacy" element={<DataPrivacy />} />
           <Route path="/settings/data-and-privacy/export" element={<ExportData />} />
+          <Route path="/settings/data-and-privacy/reset" element={<ResetApp />} />
           <Route path="/settings/notifications" element={<NotificationSettings />} />
           <Route path="/settings/notifications/frequency" element={<Frequency />} />
           <Route path="/settings/budget" element={<MonthlyBudget />} />
