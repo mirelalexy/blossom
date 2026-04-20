@@ -132,6 +132,23 @@ export function getUserPatterns(transactions, currency = "") {
         })
     }
 
+    // recurring transactions (impact)
+    const recurringExp = expenses.filter(t => t.is_recurring || t.recurring_parent_id)
+    const totalExpenses = expenses.reduce((s, t) => s + t.amount, 0)
+
+    const recurringTotal = recurringExp.reduce((s, t) => s + t.amount, 0)
+    const nonRecurringTotal = totalExpenses - recurringTotal
+
+    if (recurringExp.length >= 2 && totalExpenses > 0) {
+        const pct = Math.round((recurringTotal / totalExpenses) * 100)
+        
+        patterns.push({
+            icon: "transactions",
+            text: `Recurring expenses account for ${pct}% of your spending.`,
+            detail: `${fmt(recurringTotal, currency)} of your ${fmt(totalExpenses, currency)} total is locked in before you make a single discretionary decision. That leaves ${fmt(nonRecurringTotal, currency)} you actually choose where to spend.`
+        })
+    }
+
     return patterns
 }
 
