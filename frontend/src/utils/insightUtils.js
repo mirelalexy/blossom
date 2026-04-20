@@ -55,25 +55,37 @@ export function getIntentInsight(data, currency = "") {
     return { insight, tip }
 }
 
-export function getMoodInsight(data) {
+export function getMoodInsight(data, currency = "") {
     if (!data || data.length === 0) return {
-        insight: "No mood data yet.",
-        tip: ""
+        insight: null,
+        tip: null
     }
 
-    const topMood = data[0].name
+    const topMood = data[0].name.toLowerCase()
+    const total = data.reduce((s, d) => s + d.value, 0)
+    const topPct = total > 0 ? Math.round((data[0].value / total) * 100) : 0
+    const anxiousPct = Math.round(((data.find(d => d.name.toLowerCase() === "anxious")?.value || 0) / total) * 100)
 
-    let insight = `You tend to spend more when feeling ${topMood.toLowerCase()}.`
+    let insight = ""
     let tip = ""
 
-    if (topMood === "Anxious") {
-        tip = "You might be using spending as a coping mechanism. Try noticing this pattern."
-    } else if (topMood === "Calm") {
-        tip = "Your spending seems to be tied to routine rather than emotional spikes."
-    } else if (topMood === "Happy") {
-        tip = "You might be rewarding yourself. That's good. Just keep it intentional."
+    if (topMood === "anxious") {
+        insight = `${topPct}% of your tracked spending happened when you were anxious - the highest of any mood.`
+        tip = `Anxious spending is often about relief, not the thing being bought. Noticing the moment before you spend is more useful than reviewing it after.`
+    } else if (topMood === "happy") {
+        insight = `You tend to spend the most when you're happy - ${topPct}% of tracked spending.`
+        tip = anxiousPct > 20
+            ? `Happy spending is usually fine, but you also have ${anxiousPct}% anxious spending in there. Keep an eye on that.`
+            : `Spending when happy tends to be more intentional. Just make sure celebration spending stays proportionate.`
+    } else if (topMood === "calm") {
+        insight = `${topPct}% of your tagged spending happened when you felt calm.`
+        tip = `Calm spending is usually the most deliberate - buying things you've thought about, not things you're reacting to. That's a good pattern.`
+    } else if (topMood === "sad") {
+        insight = `${topPct}% of your spending was logged when you were feeling low.`
+        tip = `Spending when sad is worth watching - not because it's always wrong, but because it's the mood most likely to lead to regret. Be gentle with yourself about it.`
     } else {
-        tip = "Try noticing how your emotions influence your spending decisions."
+        insight = `Most of your spending (${topPct}%) happens in a neutral state.`
+        tip = `Neutral spending is routine spending - not driven by emotion, which is generally stable. Just make sure routine doesn't become invisible.`
     }
 
     return { insight, tip }
