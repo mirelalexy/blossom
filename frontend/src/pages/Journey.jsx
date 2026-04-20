@@ -24,6 +24,7 @@ import "../styles/pages/Journey.css"
 function Journey() {
     const { transactions } = useTransactions()
     const { stats: profileStats } = useProfile()
+    const { currency } = useCurrency()
     
     const streak = profileStats?.streak || 0
     const level = profileStats?.level || 1
@@ -35,10 +36,9 @@ function Journey() {
     const monthlyTransactions = transactions.filter(t => isCurrentMonth(t.date))
     const recentTransactions = transactions.filter(t => isLast30Days(t.date))
 
-    const patterns = getUserPatterns(recentTransactions)
+    const patterns = getUserPatterns(recentTransactions, currency)
 
     const stats = getStatistics(monthlyTransactions)
-    const { currency } = useCurrency()
 
     const { categories } = useCategories()
     const colors = getChartColors()
