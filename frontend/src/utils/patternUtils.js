@@ -70,36 +70,35 @@ export function getUserPatterns(transactions, currency = "") {
         }
     }
 
-    // intent pattern
-    const intentCount = {}
+    // impulse vs planned
+    const byIntent = {}
 
-    transactions.forEach(t => {
+    expenses.forEach(t => {
         if (!t.intent) return
+        if (!byIntent[t.intent]) {
+            byIntent[t.intent] = []
+        }
 
-        intentCount[t.intent] = (intentCount[t.intent] || 0) + 1
+        byIntent[t.intent].push(t.amount)
     })
 
-    const topIntent = Object.entries(intentCount).sort((a, b) => b[1] - a[1])[0]
+    const impulseArr = byIntent["impulse"]  || []
+    const plannedArr = byIntent["planned"]  || []
 
-    if (topIntent) {
-        const [intent] = topIntent
-
-        if (intent === "necessary") {
-            patterns.push({
-                icon: "tags",
-                text: "Most of your spending goes toward essentials."
-            })    
-        } else if (intent === "planned") {
-            patterns.push({
-                icon: "sparkles",
-                text: "You tend to plan your spending ahead."
-            })   
-        } else if (intent === "impulse") {
-            patterns.push({
-                icon: "zap",
-                text: "Most of your spending happens on impulse."
-            })    
-        }
+    if (impulseArr.length >= 2 && plannedArr.length >= 2) {
+        const impulseAvg = impulseArr.reduce((s, a) => s + a, 0) / impulseArr.length
+        const plannedAvg = plannedArr.reduce((s, a) => s + a, 0) / plannedArr.length
+        
+        const taggedTotal = Object.values(byIntent).reduce((s, a)=> s + a.length, 0)
+        const impulsePct = Math.round((impulseArr.length / taggedTotal) * 100)
+        
+        patterns.push({
+            icon: "zap",
+            text: impulseArr.length > plannedArr.length
+                ? `More than half your tagged expenses are impulse purchases.`
+                : `Impulse purchases average ${fmt(impulseAvg, currency)} each.`,
+            detail: `${impulsePct}% of your tagged expenses are impulse. They average ${fmt(impulseAvg, currency)} - ${impulseAvg > plannedAvg ? fmt(impulseAvg - plannedAvg, currency) + " more" : fmt(plannedAvg - impulseAvg, currency) + " less"} than your planned purchases (${fmt(plannedAvg, currency)}).`
+        })
     }
 
     return patterns
