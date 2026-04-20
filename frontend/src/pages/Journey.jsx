@@ -66,6 +66,10 @@ function Journey() {
             
             <LevelCard variant="hero" title={levelTitle} level={level} progress={progress} />
 
+            <Section title="Your Journey So Far">
+                <p className="journey-story">{levelStory}</p>
+            </Section>
+
             {spendingStyle && (
                 <div className="highlight-card">
                     <p className="highlight-title">Your Spending Style</p>
@@ -73,13 +77,9 @@ function Journey() {
                     <p>{getSpendingStyleDetails(spendingStyle)}</p>
                 </div>
             )}
-
-            <Section title="Your Journey So Far">
-                <p className="journey-story">{levelStory}</p>
-            </Section>
             
             <Section title="Your Patterns">
-                {patterns.length > 0 ? (
+                {patterns.length > 0 && (
                     patterns.map((p, index) => (
                         <PatternCard
                             key={index}
@@ -87,8 +87,6 @@ function Journey() {
                             text={p.text}
                         />
                     ))
-                ) : (
-                    <EmptyState title="Not enough data yet to show patterns." />
                 )}
             </Section>
 
