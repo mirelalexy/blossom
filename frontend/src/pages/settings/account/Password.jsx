@@ -6,7 +6,6 @@ import { useUser } from "../../../store/UserStore"
 import PageHeader from "../../../components/ui/PageHeader"
 import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
-import PageIntro from "../../../components/ui/PageIntro"
 import Section from "../../../components/ui/Section"
 
 function Password() {
@@ -15,10 +14,16 @@ function Password() {
     const { changePassword } = useUser()
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
+    
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const isValid = currentPassword.length > 0 && newPassword.length >= 6
 
     async function handleSave() {
-        if (!currentPassword || !newPassword) return
-        if (newPassword.length < 6) return
+        if (!isValid) return
+        setError("")
+        setLoading(true)
 
         try {
             await changePassword(currentPassword, newPassword)
@@ -29,7 +34,9 @@ function Password() {
 
             navigate(-1)
         } catch (err) {
-            alert(err.message)
+            setError(err.message || "That didn't work. Double-check your current password.")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -37,10 +44,12 @@ function Password() {
         <div className="page">
             <PageHeader title="Password" />
 
-            <PageIntro 
-                title="Update your password"
-                text="Please enter your current password and your new password."
-            />
+            <Section>
+                <p className="secondary-text">
+                    Enter your current password to confirm it's you, then choose
+                    a new one. It needs to be at least 6 characters.
+                </p>
+            </Section>
 
             <Section>
                 <Input 
@@ -55,16 +64,20 @@ function Password() {
                     label="New Password"
                     type="password"
                     value={newPassword}
+                    placeholder="At least 6 characters"
                     minLength={6}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                 />
             </Section>
 
+            {error && <p className="error-text">{error}</p>}
+
             <Button 
                 onClick={handleSave}
+                disabled={!isValid || loading}
             >
-                Change Password
+                {loading ? "Updating..." : "Update password"}
             </Button>
         </div>
     )
