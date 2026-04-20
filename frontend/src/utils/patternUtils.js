@@ -141,11 +141,32 @@ export function getUserPatterns(transactions, currency = "") {
 
     if (recurringExp.length >= 2 && totalExpenses > 0) {
         const pct = Math.round((recurringTotal / totalExpenses) * 100)
-        
+
         patterns.push({
             icon: "transactions",
             text: `Recurring expenses account for ${pct}% of your spending.`,
             detail: `${fmt(recurringTotal, currency)} of your ${fmt(totalExpenses, currency)} total is locked in before you make a single discretionary decision. That leaves ${fmt(nonRecurringTotal, currency)} you actually choose where to spend.`
+        })
+    }
+
+    // peak spending day
+    const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const dayTotals = {}
+        
+    expenses.forEach(t => {
+        const d = parseLocalDate(t.date).getDay()
+        dayTotals[d] = (dayTotals[d] || 0) + t.amount
+    })
+        
+    const sortedDays = Object.entries(dayTotals).sort((a, b) => b[1] - a[1])
+    
+    if (sortedDays.length >= 3) {
+        const [peakDay, peakTotal] = sortedDays[0]
+            
+        patterns.push({
+            icon: "calendar",
+            text: `${DAYS[peakDay]} is your highest spending day.`,
+            detail: `You've spent ${fmt(peakTotal, currency)} across all ${DAYS[peakDay]}s this period. If that's a surprise, it's useful to know.`
         })
     }
 
