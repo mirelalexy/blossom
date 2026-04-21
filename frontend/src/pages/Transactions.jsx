@@ -196,34 +196,44 @@ function Transactions() {
 			)}
 
 			{!hasActiveFilters && (
-				<Section title="Overall" className="transactions-overall">
-					<div>
-						<p>
-							Budget left:{" "}
-							<span className={isOverBudget ? "red-text" : ""}>
-								{formatCurrency(budgetLeft, currency)}
-							</span>
-						</p>
-
-						{budget?.rollover === "next_month" &&
-							rolloverAmount > 0 && (
-								<p>
-									Includes{" "}
-									{formatCurrency(rolloverAmount, currency)}{" "}
-									rolled over
-								</p>
-							)}
-
-						<p>
-							This month spent:{" "}
-							<span>{formatCurrency(expenses, currency)}</span>
-						</p>
-						<p>
-							This month gained:{" "}
-							<span>{formatCurrency(income, currency)}</span>
-						</p>
+				<div className="transactions-overview">
+					<div className="overview-stat">
+						<span className="overview-stat-label">Spent</span>
+						<span className={`overview-stat-value ${isOverBudget ? "over-budget" : ""}`}>
+							{formatCurrency(expenses, currency)}
+						</span>
 					</div>
-				</Section>
+					
+					<div className="overview-divider" />
+					
+					<div className="overview-stat">
+						<span className="overview-stat-label">Income</span>
+						<span className="overview-stat-value">
+							{formatCurrency(income, currency)}
+						</span>
+					</div>
+					
+					{baseBudget > 0 && (
+						<>
+							<div className="overview-divider" />
+								<div className="overview-stat">
+									<span className="overview-stat-label">
+										{isOverBudget ? "Over by" : "Left"}
+									</span>
+									
+									<span className={`overview-stat-value ${isOverBudget ? "over-budget" : "under-budget"}`}>
+										{formatCurrency(Math.abs(budgetLeft), currency)}
+									</span>
+							</div>
+						</>
+					)}
+					
+					{budget?.rollover === "next_month" && rolloverAmount > 0 && (
+						<p className="overview-rollover">
+							Includes {formatCurrency(rolloverAmount, currency)} rolled over from last month
+						</p>
+					)}
+				</div>
 			)}
 
 			{hasActiveFilters ? (
