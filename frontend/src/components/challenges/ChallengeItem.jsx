@@ -11,19 +11,25 @@ function ChallengeItem({ challenge }) {
 
     return (
         <Card className={`challenge-item ${challenge.completed ? "completed" : ""}`}>
-            <div>
+            <div className="challenge-top">
                 <div className="challenge-header">
                     <p className="challenge-title">{challenge.title}</p>
-                    {challenge.completed && (
-                        <Icon name="completed" size={17} className="challenge-check"/>
-                    )} 
+                    <span className={`challenge-period-badge period-${challenge.period}`}>
+                        {challenge.period}
+                    </span>
                 </div>
+
+                {challenge.completed && (
+                    <Icon name="completed" size={18} className="challenge-check"/>
+                )}
+            </div>
                 
                 <p className="challenge-description">{challenge.description}</p>
-                <p className="challenge-progress">{formatProgress(challenge)}</p>
-            </div>
 
-            <ProgressBar progress={progress} />
+                <div className="challenge-footer">
+                    <ProgressBar progress={progress} />
+                    <p className="challenge-progress">{formatProgress(challenge)}</p>
+                </div>
         </Card>
     )
 }
