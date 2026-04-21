@@ -168,15 +168,18 @@ function Journey() {
                             <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.title}.</p>
                         </div>
                     )}
-
-                    <Section title="Where Your Money Goes Most">
-                        {topSpendingSources.map((source, i) => (
-                            <div key={i} className="source-item">
-                                <span>{source.name}</span>
-                                <span>{source.value} {currency} </span>
-                            </div>
-                        ))}
-                    </Section>
+                    
+                    {topSpendingSources.length > 0 && (
+                        <Section title="Where Your Money Went">
+                            {topSpendingSources.map((source, i) => (
+                                <div key={i} className="source-item">
+                                    <span className="source-rank">{i + 1}</span>
+                                    <span className="source-name">{source.name}</span>
+                                    <span className="source-amount">{formatCurrency(source.value, currency)}</span>
+                                </div>
+                            ))}
+                        </Section>
+                    )}
 
                     <Section title="Insights">
                         <InsightChart 
