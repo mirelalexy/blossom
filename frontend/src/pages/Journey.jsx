@@ -80,17 +80,18 @@ function Journey() {
                 </div>
             )}
             
-            <Section title="Your Patterns">
-                {patterns.length > 0 && (
-                    patterns.map((p, index) => (
+            {patterns.length > 0 && (
+                <Section title="Your Patterns">
+                    {patterns.map((p, index) => (
                         <PatternCard
                             key={index}
                             icon={p.icon}
                             text={p.text}
+                            detail={p.detail}
                         />
-                    ))
-                )}
-            </Section>
+                    ))}
+                </Section>
+            )}
 
             <Section title="Statistics">
                 <div className="stats-grid">

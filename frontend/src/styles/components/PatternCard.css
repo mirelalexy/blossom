@@ -1,17 +1,42 @@
 .pattern-card {
+    display: flex;
     align-items: flex-start;
     gap: 14px;
     padding: 14px 16px;
-    flex-direction: row;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    animation: pageFadeIn 0.2s ease;
 }
 
-.pattern-text {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-}
-
-.pattern-icon {
-    margin-top: 1px;
+.pattern-icon-wrap {
+    width: 36px; 
+    height: 36px;
+    border-radius: var(--r-md);
+    background: var(--accent-dim);
+    color: var(--accent);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
     flex-shrink: 0;
+}
+
+.pattern-body { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px; 
+    flex: 1; 
+    min-width: 0; 
+}
+
+.pattern-text { 
+    font-size: 15px; 
+    font-weight: 600; 
+    line-height: 1.4; 
+}
+
+.pattern-detail { 
+    font-size: 13px; 
+    line-height: 1.6; 
 }
