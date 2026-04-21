@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-import { useXPToast } from "./XPToastStore"
 import { useToast } from "./ToastStore"
 import { useTransactions } from "./TransactionStore"
 import { useChallenges } from "./ChallengeStore"
@@ -11,8 +10,7 @@ const RewardContext = createContext()
 
 export function RewardProvider({ children }) {
     const { user } = useUser()
-    const { showXPToast } = useXPToast()
-    const { showToast } = useToast()
+    const { showToast, showXPToast } = useToast()
     const { fetchTransactions } = useTransactions()
     const { fetchChallenges } = useChallenges()
     const [rewards, setRewards] = useState([])

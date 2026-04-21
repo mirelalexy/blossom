@@ -1,10 +1,10 @@
-import "../../styles/components/XPToast.css"
+import "../../styles/components/Toast.css"
 
-function XPToast({ xp }) {
+function XPToast({ gained, leveledUp }) {
     return (
-        <div className="xp-toast">
-            +{xp.gained} XP ✦
-            {xp.leveledUp && <span>Level up!</span>}
+        <div className="toast-pill toast-pill--xp" role="status">
+            <span className="xp-pill-gain">+{gained} XP ✦</span>
+            {leveledUp && <span className="xp-pill-level">Level up!</span>}
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-import { useXPToast } from "./XPToastStore"
 import { useToast } from "./ToastStore"
 
 import { useAppRefresh } from "../hooks/useAppRefresh"
@@ -11,8 +10,7 @@ const TransactionsContext = createContext()
 
 export function TransactionsProvider({ children }) {
     const { user } = useUser()
-    const { showXPToast } = useXPToast()
-    const { showToast } = useToast()
+    const { showToast, showXPToast } = useToast()
     const [transactions, setTransactions] = useState([])
     const { refreshApp } = useAppRefresh()
 
