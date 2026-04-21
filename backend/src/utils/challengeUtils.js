@@ -26,11 +26,13 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 })
                         
                 progress = Math.min(withMood.length, c.target)
+                completed = progress >= c.target
                 break
             }
 
             case "streak": {
                 progress = Math.min(streak, c.target)
+                completed = progress >= c.target
                 break
             }
 
@@ -59,11 +61,13 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
 
             case "expense_count": {
                 progress = Math.min(expenseTransactions.length, c.target)
+                completed = progress >= c.target
                 break
             }
 
             case "income_count": {
                 progress = Math.min(incomeTransactions.length, c.target)
+                completed = progress >= c.target
                 break
             }
 
@@ -71,6 +75,7 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 const small  = expenseTransactions.filter(t => Number(t.amount) < 50)
 
                 progress = Math.min(small.length, c.target)
+                completed = progress >= c.target
                 break
             }
 
@@ -78,6 +83,7 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 const big = expenseTransactions.filter(t => Number(t.amount) >= 70)
 
                 progress = Math.min(big.length, c.target)
+                completed = progress >= c.target
                 break
             }
 
