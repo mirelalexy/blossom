@@ -12,7 +12,7 @@ import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { formatCurrency } from "../utils/currencyUtils"
-import { toKey, isInMonth } from "../utils/journeyUtils"
+import { toKey, isInMonth, prevMonthKey, labelFromKey, nextMonthKey } from "../utils/journeyUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
@@ -108,6 +108,29 @@ function Journey() {
                     <p className="journey-style-detail secondary-text">{getSpendingStyleDetails(spendingStyle)}</p>
                 </div>
             )}
+
+            <div className="month-selector">
+                <button
+                    className="month-arrow"
+                    onClick={() => setSelectedMonth(prevMonthKey(selectedMonth))}
+                    disabled={!canGoPrev}
+                >
+                    ←
+                </button>
+
+                <span className="month-label">
+                    {labelFromKey(selectedMonth)}
+                    {isCurrentMonth && <span className="month-current-badge">Current</span>}
+                </span>
+
+                <button
+                    className="month-arrow"
+                    onClick={() => setSelectedMonth(nextMonthKey(selectedMonth))}
+                    disabled={!canGoNext}
+                >
+                    →
+                </button>
+            </div>
             
             {patterns.length > 0 && (
                 <Section title="Your Patterns">
