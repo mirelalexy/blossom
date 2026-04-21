@@ -1,42 +1,65 @@
-import { Pie, PieChart as RechartsPieChart, ResponsiveContainer } from "recharts"
+import { Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from "recharts"
 
 import { useCurrency } from "../../store/CurrencyStore"
+import { formatCurrency } from "../../utils/currencyUtils"
 
 import EmptyState from "../ui/EmptyState"
 
 import "../../styles/components/Chart.css"
 
 function PieChart({ data }) {
-    if (!data) return <EmptyState title="No data yet." />
-
     const { currency } = useCurrency()
+
+    if (!data || data.length === 0) return <EmptyState title="Not enough data to show this chart yet." />
+
+    const total = data.reduce((s, d) => s + d.value, 0)
 
     return (
         <div className="chart-container">
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={200}>
                 <RechartsPieChart>
+                    <Tooltip 
+                        formatter={(value, name) => [formatCurrency(value, currency), name]}
+                        contentStyle={{
+                            backgroundColor: "var(--card)",
+                            border: "1px solid var(--card-border)",
+                            borderRadius: "var(--r-md)",
+                            fontSize: "13px",
+                            color: "var(--text-primary)",
+                            boxShadow: "var(--card-shadow)"
+                        }}
+                        itemStyle={{ color: "var(--text-primary)" }}
+                        itemStyle={{ color: "var(--text-secondary)" }}
+                    />
                     <Pie
                         data={data}
                         dataKey="value"
                         nameKey="name"
                         innerRadius="50%"
-                        label
-                    >
-                    </Pie>
+                        outerRadius="80%"
+                        paddingAngle={2}
+                        label={false}
+                    />
                 </RechartsPieChart>
             </ResponsiveContainer>
 
             <div className="chart-legend">
-                {data.map((item, i) => (
-                    <div key={i} className="legend-item">
-                        <div className="category-info">
-                            <div className="legend-color" style={{ background: item.fill }}></div>
-                            <span>{item.name}</span>
-                        </div>
+                {data.map((item, i) => {
+                    const pct = total > 0 ? Math.round((item.value / total) * 100) : 0
+                    return (
+                        <div key={i} className="legend-item">
+                            <div className="category-info">
+                                <div className="legend-dot" style={{ background: item.fill }} />
+                                <span className="legend-name">{item.name}</span>
+                            </div>
                         
-                        <span>{item.value} {currency}</span>
-                    </div>
-                ))}
+                            <div className="legend-values">
+                                <span className="legend-amount">{formatCurrency(item.value, currency)}</span>
+                                <span className="legend-pct">{pct}%</span>
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )
