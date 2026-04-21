@@ -164,8 +164,10 @@ function Journey() {
                     </Section>
 
                     {biggestExpense && (
-                        <div className="highlight-card">
-                            <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.title}.</p>
+                        <div className="journey-highlight">
+                            <p className="journey-highlight-label">Biggest Expense</p>
+                            <p className="journey-highlight-value">{formatCurrency(biggestExpense.amount, currency)}</p>
+                            <p className="secondary-text">{biggestExpense.title}</p>
                         </div>
                     )}
                     
