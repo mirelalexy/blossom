@@ -91,6 +91,8 @@ function Journey() {
     const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData, currency)
     const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData, currency)
 
+    const hasData = monthlyTransactions.length > 0
+
     return (
         <div className="page">
             <PageHeader title="Journey" />
@@ -145,66 +147,75 @@ function Journey() {
                 </Section>
             )}
 
-            <Section title="Statistics">
-                <div className="stats-grid">
-                    <StatCard label="Spent" value={formatCurrency(stats.totalExpenses, currency)} />
-                    <StatCard label="Income" value={formatCurrency(stats.totalIncome, currency)} />
-                    <StatCard label="Transactions" value={stats.count} />
-                    <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
-                </div>
-            </Section>
-
-            {biggestExpense && (
-                <div className="highlight-card">
-                    <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.title}.</p>
-                </div>
-            )}
-
-            <Section title="Where Your Money Goes Most">
-                {topSpendingSources.map((source, i) => (
-                    <div key={i} className="source-item">
-                        <span>{source.name}</span>
-                        <span>{source.value} {currency} </span>
-                    </div>
-                ))}
-            </Section>
-
-            <Section title="Insights">
-                <InsightChart 
-                    title="Spending By Category"
-                    chart={<PieChart data={categoryChartData} />}
-                    insight={categoryInsight}
-                    tip={categoryTip}
+            {!hasData ? (
+                <EmptyState 
+                    title="Nothing logged this month"
+                    subtitle="Switch to a month with transactions to see your insights."
                 />
+            ) : (
+                <>
+                    <Section title="Statistics">
+                        <div className="stats-grid">
+                            <StatCard label="Spent" value={formatCurrency(stats.totalExpenses, currency)} />
+                            <StatCard label="Income" value={formatCurrency(stats.totalIncome, currency)} />
+                            <StatCard label="Transactions" value={stats.count} />
+                            <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
+                        </div>
+                    </Section>
 
-                <InsightChart 
-                    title="Spending Over Time"
-                    chart={<LineChart data={spendingChartData} />}
-                    insight={timeInsight}
-                    tip={timeTip}
-                />
+                    {biggestExpense && (
+                        <div className="highlight-card">
+                            <p>Your biggest expense this month was {biggestExpense.amount} {currency} at {biggestExpense.title}.</p>
+                        </div>
+                    )}
 
-                <InsightChart 
-                    title="Spending By Intent"
-                    chart={<PieChart data={intentChartData} />}
-                    insight={intentInsight}
-                    tip={intentTip}
-                />
+                    <Section title="Where Your Money Goes Most">
+                        {topSpendingSources.map((source, i) => (
+                            <div key={i} className="source-item">
+                                <span>{source.name}</span>
+                                <span>{source.value} {currency} </span>
+                            </div>
+                        ))}
+                    </Section>
 
-                <InsightChart 
-                    title="Spending By Mood"
-                    chart={<PieChart data={moodChartData} />}
-                    insight={moodInsight}
-                    tip={moodTip}
-                />
+                    <Section title="Insights">
+                        <InsightChart 
+                            title="Spending By Category"
+                            chart={<PieChart data={categoryChartData} />}
+                            insight={categoryInsight}
+                            tip={categoryTip}
+                        />
 
-                <InsightChart 
-                    title="Income vs Expenses"
-                    chart={<PieChart data={incomeExpenseChartData} />}
-                    insight={typeInsight}
-                    tip={typeTip}
-                />
-            </Section>
+                        <InsightChart 
+                            title="Spending Over Time"
+                            chart={<LineChart data={spendingChartData} />}
+                            insight={timeInsight}
+                            tip={timeTip}
+                        />
+
+                        <InsightChart 
+                            title="Spending By Intent"
+                            chart={<PieChart data={intentChartData} />}
+                            insight={intentInsight}
+                            tip={intentTip}
+                        />
+
+                        <InsightChart 
+                            title="Spending By Mood"
+                            chart={<PieChart data={moodChartData} />}
+                            insight={moodInsight}
+                            tip={moodTip}
+                        />
+
+                        <InsightChart 
+                            title="Income vs Expenses"
+                            chart={<PieChart data={incomeExpenseChartData} />}
+                            insight={typeInsight}
+                            tip={typeTip}
+                        />
+                    </Section>
+                </>
+            )}            
         </div>
     )
 }
