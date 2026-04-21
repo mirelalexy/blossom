@@ -62,11 +62,13 @@ function NotificationSettings() {
                         onChange={(val) => updateSetting("recurring_reminder", val)}
                     />
 
-                    <SettingsItem 
-                        label="Review reminder frequency"
-                        value={settings.recurring_frequency === "monthly" ? "Monthly" : "Weekly"}
-                        onClick={() => navigate("/settings/notifications/frequency")}
-                    />
+                    {settings.recurring_reminder && (
+                        <SettingsItem 
+                            label="Frequency"
+                            value={settings.recurring_frequency === "monthly" ? "Monthly" : "Weekly"}
+                            onClick={() => navigate("/settings/notifications/frequency")}
+                        />
+                    )}
                 </SettingsCard>
             </Section>
         </div>

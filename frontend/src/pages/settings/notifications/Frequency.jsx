@@ -10,7 +10,7 @@ function Frequency() {
 
     return (
         <div className="page">
-            <PageHeader title="Recurring Payments" />
+            <PageHeader title="Frequency" />
 
             <Section title="How often should Blossom remind you to review recurring payments?">
                 <SettingsCard>
