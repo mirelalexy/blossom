@@ -1,9 +1,44 @@
-.challenges-filters {
+/* -- FILTER PILLS -- */
+.challenge-filters {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
 }
 
+.challenge-filter-pill {
+    padding: 8px 18px;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.challenge-filter-pill:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+}
+
+.challenge-filter-pill.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* -- SUMMARY -- */
+.challenge-summary {
+    font-size: 13px;
+    padding-left: 2px;
+}
+
+/* -- LIST -- */
 .challenges-list {
     display: flex;
     flex-direction: column;
