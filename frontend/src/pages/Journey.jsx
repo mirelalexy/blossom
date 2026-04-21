@@ -9,6 +9,7 @@ import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
 import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
+import { formatCurrency } from "../utils/currencyUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
@@ -93,8 +94,8 @@ function Journey() {
 
             <Section title="Statistics">
                 <div className="stats-grid">
-                    <StatCard label="Spent" value={`${stats.totalExpenses} ${currency}`} />
-                    <StatCard label="Income" value={`${stats.totalIncome} ${currency}`} />
+                    <StatCard label="Spent" value={formatCurrency(stats.totalExpenses, currency)} />
+                    <StatCard label="Income" value={formatCurrency(stats.totalIncome, currency)} />
                     <StatCard label="Transactions" value={stats.count} />
                     <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
                 </div>
@@ -143,7 +144,7 @@ function Journey() {
                     insight={moodInsight}
                     tip={moodTip}
                 />
-                
+
                 <InsightChart 
                     title="Income vs Expenses"
                     chart={<PieChart data={incomeExpenseChartData} />}
