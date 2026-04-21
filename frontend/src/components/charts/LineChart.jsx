@@ -2,38 +2,67 @@ import { CartesianGrid, LineChart as RechartsLineChart, ResponsiveContainer, XAx
 
 import { useCurrency } from "../../store/CurrencyStore"
 
+import { formatCurrency } from "../../utils/currencyUtils"
+
 import EmptyState from "../ui/EmptyState"
 
 function LineChart({ data }) {
     const { currency } = useCurrency()
 
-    if (!data) return <EmptyState title="No data yet." />
+    if (!data) return <EmptyState title="Not enough data to show this chart yet." />
+
+    function formatTick(dateStr) {
+        try {
+            return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric"
+            })
+        } catch { 
+            return dateStr 
+        }
+    }
 
     return (
         <div className="chart-container">
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={200}>
                 <RechartsLineChart data={data}>
-                    <CartesianGrid stroke="var(--border)" vertical={false} />
+                    <CartesianGrid stroke="var(--border)" vertical={false} strokeDasharray="3 3" />
 
                     <XAxis 
                         dataKey="date"
-                        tickFormatter={(date) => new Date(date).getDate()}
-                        padding={{ left: 20, right: 20 }}
+                        tickFormatter={formatTick}
+                        tick={{ fontSize: 11, fill: "var(--text-tertiary)" }}
+                        axisLine={false}
+                        tickLine={false}
+                        interval="preserveStartEnd"
+                        padding={{ left: 12, right: 12 }}
                     />
 
-                    <YAxis width={30} />
+                    <YAxis 
+                        width={44}
+                        tick={{ fontSize: 11, fill: "var(--text-tertiary)" }}
+                        tickFormatter={(v) => {
+                            if (v >= 1000) return `${(v / 1000).toFixed(1)}k`
+                            return v
+                        }}
+                        axisLine={false}
+                        tickLine={false}
+                    />
 
                     <Tooltip
-                        formatter={(value) => `${value} ${currency}`}
-                        labelFormatter={(date) => new Date(date).toLocaleDateString("en-US", {
-                            day: "numeric",
-                            month: "short"
-                        })}
+                        formatter={(value) => [formatCurrency(value, currency), "Spent"]}
+                        labelFormatter={formatTick}
                         contentStyle={{
-                            backgroundColor: "var(--bg-secondary",
-                            border: "1px solid var(--border)",
-                            borderRadius: "10px"
+                            backgroundColor: "var(--card)",
+                            border: "1px solid var(--card-border)",
+                            borderRadius: "var(--r-md)",
+                            fontSize: "13px",
+                            color: "var(--text-primary)",
+                            boxShadow: "var(--card-shadow)"
                         }}
+                        itemStyle={{ color: "var(--accent)" }}
+                        labelStyle={{ color: "var(--text-secondary)", marginBottom: 4 }}
+                        cursor={{ stroke: "var(--border)", strokeWidth: 1 }}
                     />
 
                     <Line 
@@ -41,8 +70,8 @@ function LineChart({ data }) {
                         dataKey="value"
                         stroke="var(--accent)"
                         strokeWidth={2.5}
-                        dot={{ r: 3 }}
-                        activeDot={{ r: 6 }}
+                        dot={{ r: 3, fill: "var(--accent)", strokeWidth: 0 }}
+                        activeDot={{ r: 5, fill: "var(--accent)", strokeWidth: 2, stroke: "var(--card)" }}
                     />
                 </RechartsLineChart>
             </ResponsiveContainer>
