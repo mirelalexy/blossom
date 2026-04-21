@@ -1,3 +1,5 @@
+import { useState, useMemo } from "react"
+
 import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useCategories } from "../store/CategoryStore"
@@ -5,11 +7,12 @@ import { useProfile } from "../store/ProfileStore"
 
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
-import { isCurrentMonth, isLast30Days } from "../utils/dateUtils"
+import { isCurrentMonth, isLast30Days, parseLocalDate } from "../utils/dateUtils"
 import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { formatCurrency } from "../utils/currencyUtils"
+import { toKey, isInMonth } from "../utils/journeyUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
@@ -27,40 +30,66 @@ function Journey() {
     const { transactions } = useTransactions()
     const { stats: profileStats } = useProfile()
     const { currency } = useCurrency()
+    const { categories } = useCategories()
     
     const streak = profileStats?.streak || 0
     const level = profileStats?.level || 1
     const levelTitle = profileStats?.levelTitle || "Mindful Seed"
     const progress = profileStats?.progress || 0
-
     const levelStory = getLevelNarrative(level)
 
-    const monthlyTransactions = transactions.filter(t => isCurrentMonth(t.date))
-    const recentTransactions = transactions.filter(t => isLast30Days(t.date))
+    // month selector state
+    const currentMonthKey = toKey(new Date())
+    const [selectedMonth, setSelectedMonth] = useState(currentMonthKey)
+    const isCurrentMonth = selectedMonth === currentMonthKey
 
-    const patterns = getUserPatterns(recentTransactions, currency)
+    // find earliest month that has data
+    const earliestKey = useMemo(() => {
+        if (!transactions.length) return currentMonthKey
 
-    const stats = getStatistics(monthlyTransactions)
+        const sorted = [...transactions]
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-    const { categories } = useCategories()
+        const d = parseLocalDate(sorted[0].date)
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`
+    }, [transactions])
+
+    const canGoPrev = selectedMonth > earliestKey
+    const canGoNext = selectedMonth < currentMonthKey
+
+    // filter transactions to selected month
+    const monthlyTransactions = useMemo(
+        () => transactions.filter(t => isInMonth(t.date, selectedMonth)),
+        [transactions, selectedMonth]
+    )
+
+    // filter transactions from last 30 days
+    const recentTransactions = useMemo(() => {
+        const now = new Date()
+
+        return transactions.filter(t => {
+            const d = parseLocalDate(t.date)
+            return d && (now - d) / 86400000 <= 30
+        })
+    }, [transactions])
+
     const colors = getChartColors()
-
+    const patterns = getUserPatterns(recentTransactions, currency)
+    const stats = getStatistics(monthlyTransactions)
     const categoryChartData = getCategoryData(monthlyTransactions, categories, colors)
     const spendingChartData = getSpendingOverTime(monthlyTransactions)
     const intentChartData = getIntentData(monthlyTransactions, colors)
     const moodChartData = getMoodData(monthlyTransactions, colors)
     const incomeExpenseChartData = getIncomeExpenseData(monthlyTransactions, colors)
-
-    const { insight: categoryInsight, tip: categoryTip } = getCategoryInsight(categoryChartData)
-    const { insight: intentInsight, tip: intentTip } = getIntentInsight(intentChartData)
-    const { insight: moodInsight, tip: moodTip } = getMoodInsight(moodChartData)
-    const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData)
-    const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData, currency)
-
     const topSpendingSources = getTopSpendingSourcesData(monthlyTransactions)
-
     const biggestExpense = getBiggestExpense(monthlyTransactions)
     const spendingStyle = getSpendingStyle({ moodData: moodChartData, intentData: intentChartData })
+
+    const { insight: categoryInsight, tip: categoryTip } = getCategoryInsight(categoryChartData, currency)
+    const { insight: intentInsight, tip: intentTip } = getIntentInsight(intentChartData, currency)
+    const { insight: moodInsight, tip: moodTip } = getMoodInsight(moodChartData, currency)
+    const { insight: timeInsight, tip: timeTip } = getTimeInsight(spendingChartData, currency)
+    const { insight: typeInsight, tip: typeTip } = getIncomeExpenseInsight(incomeExpenseChartData, currency)
 
     return (
         <div className="page">
