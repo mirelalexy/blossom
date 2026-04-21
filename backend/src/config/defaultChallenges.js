@@ -24,7 +24,6 @@ export const defaultChallenges = [
         period: "weekly"
     },
     {
-        id: "through_the_storm",
         title: "Through The Storm",
         description: "Acknowledge 2 anxious moments this week. You don't have to fix them, just stay observant.",
         type: "mood",
@@ -33,7 +32,6 @@ export const defaultChallenges = [
         period: "weekly"
     },
     {
-        id: "takes_time_to_blossom",
         title: "Takes Time To Blossom",
         description: "Acknowledge 2 sad moments this week. Logging on hard days is harder, but more valuable.",
         type: "mood",
@@ -42,7 +40,6 @@ export const defaultChallenges = [
         period: "weekly"
     },
     {
-        id: "neutral_ground",
         title: "Neutral Ground",
         description: "Log 4 neutral-mood transactions this week. Routine spending deserves attention too.",
         type: "mood",
@@ -71,7 +68,6 @@ export const defaultChallenges = [
 
     // -- TRANSACTION COUNT (2) -------------------------------------
     {
-        id: "money_goes",
         title: "Money Goes",
         description: "Log 10 expense transactions this week. Visibility is the first step.",
         type: "expense_count",
@@ -79,7 +75,6 @@ export const defaultChallenges = [
         period: "weekly"
     },
     {
-        id: "counting_money",
         title: "Counting Money",
         description: "Log 5 income transactions this week. Income matters as much as expenses.",
         type: "income_count",
@@ -89,7 +84,6 @@ export const defaultChallenges = [
 
     // -- TRANSACTION AMOUNT (2) -------------------------------------
     {
-        id: "little_steps",
         title: "Little Steps",
         description: "Log 3 expenses under 50 this week. Remember small purchases add up.",
         type: "small_expense",
@@ -97,7 +91,6 @@ export const defaultChallenges = [
         period: "weekly"
     },
     {
-        id: "big_waves",
         title: "Big Waves",
         description: "Log 2 expenses over 70 this week. Large purchases deserve to be seen and named.",
         type: "big_expense",
