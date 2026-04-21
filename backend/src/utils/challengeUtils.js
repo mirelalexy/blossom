@@ -4,8 +4,13 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
 
     const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
 
+    // Steady Gardener uses a completion gate (the 25th)
+    const today = new Date()
+    const isLateInMonth = today.getDate() >= 25
+
     return challenges.map(c => {
         let progress = 0
+        let completed = false
 
         switch (c.type) {
             case "mood": {
@@ -30,11 +35,25 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
             }
 
             case "budget": {
-                if (!budget?.monthly_limit) break
+                if (!budget?.monthly_limit || budget.monthly_limit <= 0) break
 
-                const percentUsed = (expenses / budget.monthly_limit) * 100
+                const limit = Number(budget.monthly_limit)
+                const used = expenses / limit
 
-                progress = Math.min(percentUsed, c.target)
+                if (used >= 1) {
+                    // over budget
+                    progress = Math.round(Math.min(used * 50, 99)) // cap below 100
+                    completed = false
+                } else {
+                    // under budget
+                    const dayOfMonth = today.getDate()
+                    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+                    const monthProgress = Math.round((dayOfMonth / daysInMonth) * 100)
+                    
+                    progress = Math.min(monthProgress, 99) // never go to 100 before end of month
+                    completed = isLateInMonth && used < 1
+                }
+
                 break
             }
 
@@ -64,12 +83,6 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
 
             default:
                 break
-        }
-
-        let completed = progress >= c.target
-
-        if (c.type === "budget") {
-            completed = expenses > 0 && expenses <= budget?.monthly_limit
         }
 
         return {
