@@ -1,0 +1,13 @@
+.category-budget-status {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border-radius: var(--r-md);
+    line-height: 1.5;
+}
+
+.category-budget-status.over {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
