@@ -1,5 +1,5 @@
 export const defaultChallenges = [
-    // -- MOOD CHALLENGES (6) -------------------------------------
+    // -- MOOD (6) -------------------------------------
     {
         title: "Moody",
         description: "Tag your mood on 10 transactions this week. The picture gets clearer the more honest you are.",
@@ -48,13 +48,20 @@ export const defaultChallenges = [
         period: "weekly"
     },
 
-    // -- STREAK (1) -------------------------------------
+    // -- STREAK (2) -------------------------------------
     {
         title: "On Fire!",
         description: "Log transactions 3 days in a row. Showing up consistently is the whole point.",
         type: "streak",
         target: 3,
         period: "weekly"
+    },
+    {
+        title: "Committed",
+        description: "Keep your streak alive for 7 days. A week of showing up is already something real.",
+        type: "streak",
+        target: 7,
+        period: "monthly"
     },
 
     // -- BUDGET (1) -------------------------------------
@@ -66,7 +73,7 @@ export const defaultChallenges = [
         period: "monthly"
     },
 
-    // -- TRANSACTION COUNT (2) -------------------------------------
+    // -- TRANSACTION COUNT (3) -------------------------------------
     {
         title: "Money Goes",
         description: "Log 10 expense transactions this week. Visibility is the first step.",
@@ -80,6 +87,13 @@ export const defaultChallenges = [
         type: "income_count",
         target: 5,
         period: "weekly"
+    },
+    {
+        title: "Big Picture",
+        description: "Log 30 expense transactions this month. At 30 entries, patterns start becoming visible.",
+        type: "expense_count",
+        target: 30,
+        period: "monthly"
     },
 
     // -- TRANSACTION AMOUNT (2) -------------------------------------
@@ -96,5 +110,58 @@ export const defaultChallenges = [
         type: "big_expense",
         target: 2,
         period: "weekly"
+    },
+
+    // -- INTENT (3) -------------------------------------
+    {
+        title: "Planner",
+        description: "Log 5 planned expenses this week. Planned spending is deliberate spending.",
+        type: "intent",
+        intent_type: "planned",
+        target: 5,
+        period: "weekly"
+    },
+    {
+        title: "Essentials First",
+        description: "Log 3 necessary expenses this week. Knowing what you genuinely need is useful on its own.",
+        type: "intent",
+        intent_type: "necessary",
+        target: 3,
+        period: "weekly"
+    },
+    {
+        title: "Ah... Impulse Again",
+        description: "Log 2 impulse purchases this week. Be honest. Naming them is the first step to understanding them.",
+        type: "intent",
+        intent_type: "impulse",
+        target: 2,
+        period: "weekly"
+    },
+
+    // -- CASH VS CARD (2) -------------------------------------
+    {
+        title: "Go Cash",
+        description: "Log 3 cash transactions this week. Cash tends to feel more real - try it intentionally.",
+        type: "method",
+        method_type: "cash",
+        target: 3,
+        period: "weekly"
+    },
+    {
+        title: "Card Tracker",
+        description: "Log 5 card transactions this week with a mood and intent. Card spending is easy to lose track of, so make sure to tag it all.",
+        type: "method_tagged",
+        method_type: "card",
+        target: 5,
+        period: "weekly"
+    },
+
+    // -- GOALS (1) -------------------------------------
+    {
+        title: "Growing",
+        description: "Add to your primary saving goal this month. Even a small deposit keeps the momentum alive.",
+        type: "goal_deposit",
+        target: 1,
+        period: "monthly"
     }
 ]
