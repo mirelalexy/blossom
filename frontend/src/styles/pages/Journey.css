@@ -40,28 +40,34 @@
     box-shadow: var(--card-shadow);
 }
 
-.highlight-card {
-    display: flex; 
-    flex-direction: column;
-    border-radius: var(--r-lg);
-    background-color: var(--accent-dim);
-    padding: 16px; 
-    font-size: 14px;
+/* -- SPENDING STYLE CARD -- */
+.journey-style-card {
+    background: var(--accent-dim);
     border: 1px solid var(--border-strong);
-    gap: 4px;
+    border-radius: var(--r-lg);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.highlight-title { 
-    font-weight: 600; 
-    font-size: 12px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em; 
-    color: var(--text-tertiary); 
+.journey-style-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
 }
 
-.highlight-value { 
-    color: var(--accent); 
-    font-weight: 700; 
-    font-size: 22px; 
-    letter-spacing: -0.4px; 
+.journey-style-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.4px;
+}
+
+.journey-style-detail {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 2px;
 }

@@ -102,10 +102,10 @@ function Journey() {
             </Section>
 
             {spendingStyle && (
-                <div className="highlight-card">
-                    <p className="highlight-title">Your Spending Style</p>
-                    <p className="highlight-value">{spendingStyle}</p>
-                    <p>{getSpendingStyleDetails(spendingStyle)}</p>
+                <div className="journey-style-card">
+                    <p className="journey-style-label">Your Spending Style</p>
+                    <p className="journey-style-value">{spendingStyle}</p>
+                    <p className="journey-style-detail secondary-text">{getSpendingStyleDetails(spendingStyle)}</p>
                 </div>
             )}
             
