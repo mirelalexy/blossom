@@ -87,6 +87,37 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 break
             }
 
+            case "intent": {
+                const matches = expenseTransactions.filter(t => t.intent === c.intent_type)
+
+                progress = Math.min(matches.length, c.target)
+                completed = progress >= c.target
+                break
+            }
+
+            case "method": {
+                const matches = expenseTransactions.filter(t => t.method === c.method_type)
+
+                progress = Math.min(matches.length, c.target)
+                completed = progress >= c.target
+                break
+            }
+
+            case "method_tagged": {
+                const matches = expenseTransactions.filter(t => t.method === c.method_type && t.mood && t.intent)
+
+                progress = Math.min(matches.length, c.target)
+                completed = progress >= c.target
+                break
+            }
+
+            case "goal_deposit": {
+                // evaluate separately in user state utils based on history
+                progress = Math.min(c.progress || 0, c.target)
+                completed = progress >= c.target
+                break
+            }
+
             default:
                 break
         }
