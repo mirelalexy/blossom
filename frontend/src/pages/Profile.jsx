@@ -9,15 +9,22 @@ import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
 import ChallengesPreview from "../components/challenges/ChallengesPreview"
 import RewardsCard from "../components/profile/RewardsCard"
+import Button from "../components/ui/Button"
 
 import "../styles/pages/Profile.css"
 
 function Profile() {
     const { user, uploadAvatar, uploadBanner } = useUser()
-    const [isEditing, setIsEditing] = useState(false)
     const { stats } = useProfile()
     const { rewards } = useRewards()
     const { tasks } = useTasks()
+
+    const [isEditing, setIsEditing] = useState(false)
+    const [avatarPreview, setAvatarPreview] = useState(null)
+    const [bannerPreview, setBannerPreview] = useState(null)
+
+    const avatarRef = useRef()
+    const bannerRef = useRef()
 
     // get ready and locked rewards
     const getTask = (id) => tasks.find(t => t.id === id)
@@ -39,11 +46,6 @@ function Profile() {
     const level = stats?.level || 1
     const levelTitle = stats?.levelTitle || "Mindful Seed"
     const progress = stats?.progress || 0
-
-    const avatarRef = useRef()
-    const bannerRef = useRef()
-    const [avatarPreview, setAvatarPreview] = useState(null)
-    const [bannerPreview, setBannerPreview] = useState(null)
 
     // prevent memory leaks
     useEffect(() => {
@@ -82,12 +84,15 @@ function Profile() {
                 setAvatarPreview(preview)
                 await uploadAvatar(file)
                 setAvatarPreview(null)
+                showToast({ message: "Avatar updated" })
             } else {
                 setBannerPreview(preview)
                 await uploadBanner(file)
                 setBannerPreview(null)
+                showToast({ message: "Banner updated" })
             }
         } catch (err) {
+            showToast({ message: "Upload failed", type: "error" })
             console.log(err)
             alert("Upload failed.")
 
@@ -104,7 +109,7 @@ function Profile() {
     }
 
     return (
-        <div className="page">
+        <div className="profile-page">
             <ProfileHeader 
                 bannerSrc={bannerPreview || user?.banner}
                 avatarSrc={avatarPreview || user?.avatar}
@@ -134,6 +139,12 @@ function Profile() {
                 style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "banner")}
             />
+
+            <div className="profile-edit-toggle-container">
+                <Button className="profile-edit-toggle" onClick={() => setIsEditing(prev => !prev)}>
+                    {isEditing ? "Done" : "Edit profile"}
+                </Button>
+            </div>
 
             <div className="profile-content">
                 <LevelCard title={levelTitle} level={level} progress={progress} />

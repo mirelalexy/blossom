@@ -7,12 +7,13 @@ import "../../styles/components/ProfileHeader.css"
 
 function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditToggle, onAvatarClick, onBannerClick, onRemoveAvatar, onRemoveBanner, streak }) {
     const navigate = useNavigate()
+    const initial  = name ? name.charAt(0).toUpperCase() : "?"
 
     return (
         <div className="profile-header">
             <div className="profile-banner">
                 { bannerSrc ? (
-                    <img src={bannerSrc} alt="profile banner" />
+                    <img src={bannerSrc} alt="Profile banner" />
                 ) : (
                     <div className="banner-placeholder"></div>
                 )}
@@ -81,10 +82,6 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
                         
                         <p className="profile-email">{email}</p>
                     </div>
-
-                    <Button onClick={onEditToggle}>
-                        {isEditing ? "Done" : "Edit profile"}
-                    </Button>
                 </div>        
             </div>            
         </div>

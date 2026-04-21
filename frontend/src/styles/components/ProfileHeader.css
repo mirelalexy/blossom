@@ -14,12 +14,14 @@
         rgba(0, 0, 0, 0.05)
     );
     z-index: 1;
+    pointer-events: none;
 }
 
 .profile-banner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .banner-placeholder {
@@ -56,7 +58,7 @@
     flex-direction: column;
     padding: 0 24px;
     position: absolute;
-    top: 190px;
+    top: 155px;
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
@@ -69,7 +71,6 @@
         max-width: 625px;
      }
 }
-
 
 .profile-email {
     color: var(--text-secondary);
@@ -173,4 +174,9 @@
     font-weight: 600;
     gap: 4px; 
     color: var(--accent);
+}
+
+.profile-header {
+    position: relative;
+    padding-bottom: 100px;
 }
