@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { appTips } from "../../data/appTips"
 
 import PageHeader from "../../components/ui/PageHeader"
@@ -7,6 +9,12 @@ import SettingsCard from "../../components/settings/SettingsCard"
 import Section from "../../components/ui/Section"
 
 function AppTips() {
+    const [openIndex, setOpenIndex] = useState(null)
+
+    function handleToggle(index) {
+        setOpenIndex(prev => prev === index ? null : index)
+    }
+
     return (
         <div className="page">
             <PageHeader title="App Tips" />
@@ -19,7 +27,7 @@ function AppTips() {
             <Section>
                 <SettingsCard>
                     {appTips.map((tip, index) => (
-                        <AccordionItem key={index} title={tip.title}>
+                        <AccordionItem key={index} title={tip.title} open={openIndex === index} onToggle={() => handleToggle(index)}>
                             {tip.content}
                         </AccordionItem>
                     ))}

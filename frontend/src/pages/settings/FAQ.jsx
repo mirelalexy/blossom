@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { faq } from "../../data/faq"
 
 import PageHeader from "../../components/ui/PageHeader"
@@ -7,6 +9,12 @@ import SettingsCard from "../../components/settings/SettingsCard"
 import Section from "../../components/ui/Section"
 
 function FAQ() {
+    const [openIndex, setOpenIndex] = useState(null)
+    
+    function handleToggle(index) {
+        setOpenIndex(prev => prev === index ? null : index)
+    }
+
     return (
         <div className="page">
             <PageHeader title="FAQ" />
@@ -18,9 +26,9 @@ function FAQ() {
 
             <Section>
                 <SettingsCard>
-                    {faq.map((tip, index) => (
-                        <AccordionItem key={index} title={tip.title}>
-                            {tip.content}
+                    {faq.map((question, index) => (
+                        <AccordionItem key={index} title={question.title} open={openIndex === index} onToggle={() => handleToggle(index)}>
+                            {question.content}
                         </AccordionItem>
                     ))}
                 </SettingsCard>
