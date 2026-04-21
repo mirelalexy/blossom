@@ -10,8 +10,13 @@ export function ThemeProvider({ children }) {
     const [theme, setTheme] = useState("blossom")
 
     useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme)
+    }, [theme])
+
+    useEffect(() => {
         if (!user) {
             setTheme("blossom")
+            document.documentElement.setAttribute("data-theme", "blossom")
             return
         }
 
@@ -37,10 +42,6 @@ export function ThemeProvider({ children }) {
     
         fetchTheme()
     }, [user])
-
-    useEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme)
-    }, [theme])
 
     async function updateTheme(newTheme) {
         const token = localStorage.getItem("token")
