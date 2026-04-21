@@ -18,6 +18,7 @@ import PatternCard from "../components/journey/PatternCard"
 import StatCard from "../components/journey/StatCard"
 import PieChart from "../components/charts/PieChart"
 import LineChart from "../components/charts/LineChart"
+import InsightChart from "../components/charts/InsightChart"
 
 import "../styles/pages/Journey.css"
 
@@ -114,40 +115,41 @@ function Journey() {
                 ))}
             </Section>
 
-            <Section title="Insights" className="insights-section" >
-                <div className="insights-chart">
-                    <p className="subsection-title">Spending By Category</p>
-                    <PieChart data={categoryChartData} />
-                    <p>{categoryInsight}</p>
-                    <p>{categoryTip}</p>
-                </div>
+            <Section title="Insights">
+                <InsightChart 
+                    title="Spending By Category"
+                    chart={<PieChart data={categoryChartData} />}
+                    insight={categoryInsight}
+                    tip={categoryTip}
+                />
 
-                <div className="insights-chart">
-                    <p className="subsection-title">Spending Over Time</p>
-                    <LineChart data={spendingChartData} />
-                    <p>{timeInsight}</p>
-                    <p>{timeTip}</p>
-                </div>
+                <InsightChart 
+                    title="Spending Over Time"
+                    chart={<LineChart data={spendingChartData} />}
+                    insight={timeInsight}
+                    tip={timeTip}
+                />
 
-                <div className="insights-chart">
-                    <p className="subsection-title">Spending By Intent</p>
-                    <PieChart data={intentChartData} />
-                    <p>{intentInsight}</p>
-                    <p>{intentTip}</p>
-                </div>
+                <InsightChart 
+                    title="Spending By Intent"
+                    chart={<PieChart data={intentChartData} />}
+                    insight={intentInsight}
+                    tip={intentTip}
+                />
 
-                <div className="insights-chart">
-                    <p className="subsection-title">Spending By Mood</p>
-                    <PieChart data={moodChartData} />
-                    <p>{moodInsight}</p>
-                    <p>{moodTip}</p>
-                </div>
-                <div className="insights-chart">
-                    <p className="subsection-title">Income vs Expenses</p>
-                    <PieChart data={incomeExpenseChartData} />
-                    <p>{typeInsight}</p>
-                    <p>{typeTip}</p>
-                </div>
+                <InsightChart 
+                    title="Spending By Mood"
+                    chart={<PieChart data={moodChartData} />}
+                    insight={moodInsight}
+                    tip={moodTip}
+                />
+                
+                <InsightChart 
+                    title="Income vs Expenses"
+                    chart={<PieChart data={incomeExpenseChartData} />}
+                    insight={typeInsight}
+                    tip={typeTip}
+                />
             </Section>
         </div>
     )
