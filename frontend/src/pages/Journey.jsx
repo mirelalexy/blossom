@@ -154,7 +154,7 @@ function Journey() {
                 />
             ) : (
                 <>
-                    <Section title="Statistics">
+                    <Section title="At a Glance">
                         <div className="stats-grid">
                             <StatCard label="Spent" value={formatCurrency(stats.totalExpenses, currency)} />
                             <StatCard label="Income" value={formatCurrency(stats.totalIncome, currency)} />
