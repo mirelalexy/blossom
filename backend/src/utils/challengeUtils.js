@@ -1,4 +1,4 @@
-export function evaluateChallenges({ transactions, streak = 0, budget, challenges }) {
+export function evaluateChallenges({ transactions, streak = 0, budget, challenges, goalCategoryId }) {
     const expenseTransactions = transactions.filter(t => t.type === "expense")
     const incomeTransactions = transactions.filter(t => t.type === "income")
 
@@ -112,8 +112,8 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
             }
 
             case "goal_deposit": {
-                // evaluate separately in user state utils based on history
-                progress = Math.min(c.progress || 0, c.target)
+                const goalDeposits = expenseTransactions.filter(t => t.category_id === goalCategoryId)
+                progress = Math.min(goalDeposits.length, c.target)
                 completed = progress >= c.target
                 break
             }

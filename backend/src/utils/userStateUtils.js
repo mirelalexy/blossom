@@ -32,12 +32,21 @@ export async function recalculateUserState(userId) {
 
     const streak = calculateStreak(transactions)
 
+    // get goals category to update Growing challenge 
+    const goalCategoryRes = await pool.query(
+        `SELECT * FROM categories WHERE user_id = $1 AND is_default = true AND name = 'Goals' AND type = 'expense'`,
+        [userId]
+    )
+
+    const goalCategoryId = goalCategoryRes?.rows[0].id
+
     // evaluate challenges
     const updatedChallenges = evaluateChallenges({
         transactions,
         streak,
         budget,
-        challenges
+        challenges,
+        goalCategoryId
     })
 
     // create challenge notifications
