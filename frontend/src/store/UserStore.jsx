@@ -96,6 +96,26 @@ export function UserProvider({ children }) {
         return data.avatar
     }
 
+    async function removeAvatar() {
+        const token = localStorage.getItem("token")
+
+        const res = await fetch (`${API_URL}/api/users/avatar`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        if (!res.ok) {
+            throw new Error("Remove avatar failed")
+        }
+
+        setUser(prev => ({
+            ...prev,
+            avatar: null
+        }))
+    }
+
     async function uploadBanner(file) {
         const token = localStorage.getItem("token")
 
@@ -118,6 +138,26 @@ export function UserProvider({ children }) {
         }))
 
         return data.banner
+    }
+
+    async function removeBanner() {
+        const token = localStorage.getItem("token")
+
+        const res = await fetch (`${API_URL}/api/users/banner`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        if (!res.ok) {
+            throw new Error("Remove banner failed")
+        }
+
+        setUser(prev => ({
+            ...prev,
+            banner: null
+        }))
     }
 
     async function changePassword(currentPassword, newPassword) {
@@ -209,7 +249,7 @@ export function UserProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, uploadBanner, changePassword, deleteAccount, resetApp, logout }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, deleteAccount, resetApp, logout }}>
             {children}
         </UserContext.Provider>
     )
