@@ -5,6 +5,17 @@ import Section from "../../components/ui/Section"
 import SettingsCard from "../../components/settings/SettingsCard"
 import SettingsItem from "../../components/settings/SettingsItem"
 
+const THEMES = [
+    { id: "blossom", label: "Blossom", description: "Warm blush rose, the default" },
+    { id: "petal", label: "Petal", description: "Soft lavender" },
+    { id: "forest", label: "Forest", description: "Earthy sage green" },
+    { id: "dusk", label: "Dusk", description: "Warm amber terracotta" },
+    { id: "night", label: "Night", description: "Deep charcoal with violet" },
+    { id: "velvet-rose", label: "Velvet Rose", description: "Dark deep magenta" },
+    { id: "abyss", label: "Abyss", description: "Intense dark blue" },
+    { id: "evil-blossom", label: "Evil Blossom", description: "I get a little... different in the dark" }
+]
+
 function ThemeSettings() {
     const { theme, setTheme } = useTheme()
 
@@ -14,47 +25,22 @@ function ThemeSettings() {
 
             <Section title="Customize how Blossom looks and feels">
                 <SettingsCard>
-                    <SettingsItem 
-                        label={`Blossom ${theme === "blossom" ? "(current)" : ""}`}
-                        onClick={() => setTheme("blossom")}
-                    />
-
-                    <SettingsItem 
-                        label={`Petal ${theme === "petal" ? "(current)" : ""}`}
-                        onClick={() => setTheme("petal")}
-                    />
-
-                    <SettingsItem 
-                        label={`Dusk ${theme === "dusk" ? "(current)" : ""}`}
-                        onClick={() => setTheme("dusk")}
-                    />
-
-                    <SettingsItem 
-                        label={`Forest ${theme === "forest" ? "(current)" : ""}`}
-                        onClick={() => setTheme("forest")}
-                    />
-
-                    <SettingsItem 
-                        label={`Night ${theme === "night" ? "(current)" : ""}`}
-                        onClick={() => setTheme("night")}
-                    />
-
-                    <SettingsItem 
-                        label={`Velvet Rose ${theme === "velvet-rose" ? "(current)" : ""}`}
-                        onClick={() => setTheme("velvet-rose")}
-                    />
-
-                    <SettingsItem 
-                        label={`Abyss ${theme === "abyss" ? "(current)" : ""}`}
-                        onClick={() => setTheme("abyss")}
-                    />
-
-                    <SettingsItem 
-                        label={`Evil Blossom ${theme === "evil-blossom" ? "(current)" : ""}`}
-                        onClick={() => setTheme("evil-blossom")}
-                    />
+                    {THEMES.map(t => (
+                        <SettingsItem
+                            key={t.id}
+                            label={t.label}
+                            value={theme === t.id ? "Current" : t.description}
+                            onClick={() => setTheme(t.id)}
+                        />
+                    ))}
                 </SettingsCard>
             </Section>
+
+            {theme === "evil-blossom" && (
+                <p className="secondary-text" style={{ textAlign: "center", fontSize: 13, fontStyle: "italic" }}>
+                    You chose this. I'm not complaining.
+                </p>
+            )}
         </div>
     )
 }
