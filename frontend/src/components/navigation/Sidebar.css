@@ -95,4 +95,12 @@
         border: none;
         background: none;
     }
+
+    .sidebar-avatar-initial {
+        font-size: 15px; 
+        font-weight: 700; 
+        color: #ffffff;
+        line-height: 1; 
+        letter-spacing: -0.5px;
+    }
  }

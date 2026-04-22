@@ -1,9 +1,14 @@
 import { Link, useNavigate } from "react-router-dom"
 
+import { useUser } from "../../store/UserStore"
+
 import Icon from "../ui/Icon"
 
 function GreetingHeader({ greeting, message, avatarSrc }) {
     const navigate = useNavigate()
+    const { user } = useUser()
+
+    const initial  = user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"
 
     return (
         <div className="greeting-header">
@@ -12,7 +17,9 @@ function GreetingHeader({ greeting, message, avatarSrc }) {
                     { avatarSrc ? (
                         <img src={avatarSrc} className="home-avatar"/>
                     ) : (
-                        <div className="avatar-placeholder"></div>
+                        <div className="avatar-placeholder">
+                            <span className="avatar-initial">{initial}</span>
+                        </div>
                     )}
                 </div>
                 

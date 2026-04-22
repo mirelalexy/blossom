@@ -20,6 +20,8 @@ function Sidebar() {
 
     const { user } = useUser()
 
+    const initial  = user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"
+
     return (
         <aside className="sidebar">
             <div className="sidebar-logo" onClick={() => navigate("/")}>
@@ -47,7 +49,9 @@ function Sidebar() {
                         { user?.avatar ? (
                             <img src={user.avatar} className="home-avatar"/>
                         ) : (
-                            <div className="avatar-placeholder"></div>
+                            <div className="avatar-placeholder">
+                                <span className="sidebar-avatar-initial">{initial}</span>
+                            </div>
                         )}
                     </div>
                     
