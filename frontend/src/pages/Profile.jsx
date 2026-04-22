@@ -4,6 +4,7 @@ import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
 import { useRewards } from "../store/RewardStore"
 import { useTasks } from "../store/TaskStore"
+import { useToast } from "../store/ToastStore"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
@@ -14,10 +15,11 @@ import Button from "../components/ui/Button"
 import "../styles/pages/Profile.css"
 
 function Profile() {
-    const { user, uploadAvatar, uploadBanner } = useUser()
+    const { user, uploadAvatar, uploadBanner, removeAvatar, removeBanner } = useUser()
     const { stats } = useProfile()
     const { rewards } = useRewards()
     const { tasks } = useTasks()
+    const { showToast } = useToast()
 
     const [isEditing, setIsEditing] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState(null)
@@ -73,7 +75,7 @@ function Profile() {
             : 2 * 1024 * 1024
         
         if (file.size > maxSize) {
-            alert("File too large.")
+            showToast({ message: `File too large (max ${type === "banner" ? "5" : "2"}MB)`, type: "error" })
             return
         }
 
@@ -94,7 +96,6 @@ function Profile() {
         } catch (err) {
             showToast({ message: "Upload failed", type: "error" })
             console.log(err)
-            alert("Upload failed.")
 
             // reset preview on failure
             if (type === "avatar") {
@@ -108,6 +109,24 @@ function Profile() {
         e.target.value = ""
     }
 
+    async function handleRemoveAvatar() {
+        try {
+            await removeAvatar()
+            showToast({ message: "Avatar removed" })
+        } catch {
+            showToast({ message: "Couldn't remove avatar", type: "error" })
+        }
+    }
+
+    async function handleRemoveBanner() {
+        try {
+            await removeBanner()
+            showToast({ message: "Banner removed" })
+        } catch {
+            showToast({ message: "Couldn't remove banner", type: "error" })
+        }
+    }
+
     return (
         <div className="profile-page">
             <ProfileHeader 
@@ -119,8 +138,8 @@ function Profile() {
                 onEditToggle={() => setIsEditing(prev => !prev)} 
                 onAvatarClick={() => avatarRef.current.click()}
                 onBannerClick={() => bannerRef.current.click()}
-                onRemoveAvatar={null}
-                onRemoveBanner={null}
+                onRemoveAvatar={handleRemoveAvatar}
+                onRemoveBanner={handleRemoveBanner}
                 streak={streak}
             />
 
