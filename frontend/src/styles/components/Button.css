@@ -19,10 +19,6 @@
     white-space: nowrap;
 }
 
-.button:hover {
-    background-color: var(--hover);
-}
-
 .button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -39,30 +35,38 @@
     color: var(--accent);
 }
 
-.button.secondary:hover {
-    background-color: var(--accent-dim);
-}
-
 .button.ghost {
     background-color: transparent;
     border: none;
     color: var(--text-secondary);
     font-weight: 500;
 }
-.button.ghost:hover { 
-    background-color: var(--bg-secondary); 
-    color: var(--text-primary); 
-}
 
 .button.danger {
     background-color: var(--danger-soft);
     color: var(--danger);
 }
-.button.danger:hover { 
-    background-color: var(--danger); 
-    color: #ffffff; 
-}
 
 .button.active { 
     background-color: var(--active); 
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .button:hover { 
+        background-color: var(--hover); 
+    }
+
+    .button.secondary:hover { 
+        background-color: var(--accent-dim); 
+    }
+
+    .button.ghost:hover { 
+        background-color: var(--bg-secondary); 
+        color: var(--text-primary); 
+    }
+
+    .button.danger:hover { 
+        background-color: var(--danger); 
+        color: #ffffff; 
+    }
 }

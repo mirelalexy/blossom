@@ -12,8 +12,10 @@
     border-bottom: 1px solid var(--border);
 }
 
-.settings-item:hover {
-    background-color: var(--bg-secondary);
+@media (hover: hover) and (pointer: fine) {
+    .settings-item:hover { 
+        background-color: var(--bg-secondary); 
+    }
 }
 
 .settings-item-left {
