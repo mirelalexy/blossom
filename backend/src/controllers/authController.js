@@ -3,11 +3,23 @@ import jwt from "jsonwebtoken"
 
 import pool from "../db.js"
 
+import { validatePasswordStrength } from "../utils/passwordUtils.js"
+
 import { defaultCategories } from "../config/defaultCategories.js"
 import { defaultChallenges } from "../config/defaultChallenges.js"
 
 export async function register(req, res) {
     const { email, password, displayName } = req.body
+
+    if (!email || !password || !displayName) {
+        return res.status(400).json({ error: "All fields are required." })
+    }
+
+    // validate password strength
+    const strengthError = validatePasswordStrength(password)
+    if (strengthError) {
+        return res.status(400).json({ error: strengthError })
+    }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10)

@@ -3,6 +3,8 @@ import { useState } from "react"
 
 import { useUser } from "../../../store/UserStore"
 
+import { validatePasswordStrength } from "../../../utils/passwordUtils"
+
 import PageHeader from "../../../components/ui/PageHeader"
 import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
@@ -10,18 +12,20 @@ import Section from "../../../components/ui/Section"
 
 function Password() {
     const navigate = useNavigate()
-
     const { changePassword } = useUser()
+
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
-    
+
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const isValid = currentPassword.length > 0 && newPassword.length >= 6
+    // password validation
+    const strengthError = newPassword ? validatePasswordStrength(newPassword) : null
+    const canSubmit = currentPassword.length > 0 && newPassword.length > 0 && !strengthError
 
     async function handleSave() {
-        if (!isValid) return
+        if (!canSubmit) return
         setError("")
         setLoading(true)
 
@@ -47,7 +51,7 @@ function Password() {
             <Section>
                 <p className="secondary-text">
                     Enter your current password to confirm it's you, then choose
-                    a new one. It needs to be at least 6 characters.
+                    a new one. It needs to be at least 8 characters.
                 </p>
             </Section>
 
@@ -64,18 +68,21 @@ function Password() {
                     label="New Password"
                     type="password"
                     value={newPassword}
-                    placeholder="At least 6 characters"
-                    minLength={6}
+                    placeholder="At least 8 characters"
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                 />
+
+                {strengthError && newPassword.length > 0 && (
+                    <p className="error-text">{strengthError}</p>
+                )}
             </Section>
 
             {error && <p className="error-text">{error}</p>}
 
             <Button 
                 onClick={handleSave}
-                disabled={!isValid || loading}
+                disabled={!canSubmit || loading}
             >
                 {loading ? "Updating..." : "Update password"}
             </Button>

@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt"
 import pool from "../db.js"
 import cloudinary from "../config/cloudinary.js"
+
+import { validatePasswordStrength } from "../utils/passwordUtils.js"
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
 
 import { defaultChallenges } from "../config/defaultChallenges.js"
@@ -156,6 +158,12 @@ export async function changePassword(req, res) {
 
     if (!currentPassword || !newPassword) {
         return res.status(400).json({ error: "Missing fields" })
+    }
+
+    // validate password strength
+    const strengthError = validatePasswordStrength(newPassword)
+    if (strengthError) {
+        return res.status(400).json({ error: strengthError })
     }
 
     try {
