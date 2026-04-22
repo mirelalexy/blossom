@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import pool from "../db.js"
-
+import cloudinary from "../config/cloudinary.js"
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
 
 import { defaultChallenges } from "../config/defaultChallenges.js"
@@ -85,6 +85,24 @@ export async function uploadAvatar(req, res) {
     }
 } 
 
+export async function removeAvatar(req, res) {
+    const userId = req.user.userId
+
+    try {
+        await cloudinary.uploader.destroy(`blossom/avatars/avatar_${userId}`)
+
+        await pool.query(
+            `UPDATE users SET avatar = NULL WHERE id = $1`,
+            [userId]
+        )
+
+        res.json({ avatar: null })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Remove avatar failed" })
+    }
+} 
+
 export async function uploadBanner(req, res) {
     const userId = req.user.userId
 
@@ -111,6 +129,24 @@ export async function uploadBanner(req, res) {
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: "Banner upload failed" })
+    }
+} 
+
+export async function removeBanner(req, res) {
+    const userId = req.user.userId
+
+    try {
+        await cloudinary.uploader.destroy(`blossom/banners/banner_${userId}`)
+
+        await pool.query(
+            `UPDATE users SET banner = NULL WHERE id = $1`,
+            [userId]
+        )
+
+        res.json({ banner: null })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: "Remove banner failed" })
     }
 } 
 
