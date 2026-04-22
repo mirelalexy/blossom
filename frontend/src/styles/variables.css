@@ -334,3 +334,50 @@
     --chart-4: #1830a0; 
     --chart-5: #6090ff;
 }
+
+/* EVIL BLOSSOM - dark crimson */
+[data-theme="evil-blossom"] {
+    --bg-primary:    #0e0608;
+    --bg-secondary:  #180a0c;
+    --bg-tertiary:   #220e10;
+
+    --text-primary:   #f0e8e8;
+    --text-secondary: #a07080;
+    --text-tertiary:  #684858;
+
+    --accent:       #c02020;
+    --accent-soft:  #280808;
+    --accent-dim:   rgba(192, 32, 32, 0.2);
+    --accent-rgb:   192, 32, 32;
+    --hover:        #e02828;
+    --active:       #a01818;
+
+    --success:       #408858; 
+    --success-soft:  #102018;
+    --danger:        #e04040; 
+    --danger-soft:   #300808;
+    --warning:       #c08030; 
+    --warning-soft:  #281808;
+
+    --card:         #180a0c; 
+    --card-raised:  #220e10;
+    --card-border:  rgba(192, 32, 32, 0.15);
+    --card-shadow:  0 1px 3px rgba(0,0,0,0.5), 0 4px 24px rgba(40,0,0,0.4);
+
+    --border:        rgba(192, 32, 32, 0.18);
+    --border-strong: rgba(192, 32, 32, 0.45);
+    --input-bg:      #1e0a0c; 
+    --input-focus:   #280e10;
+
+    --nav-bg:     #180a0c; 
+    --nav-border: rgba(192, 32, 32, 0.1);
+
+    --progress-track: #2e1010; 
+    --focus-card:     #200808;
+
+    --chart-1: #c02020; 
+    --chart-2: #e03030;
+    --chart-3: #a01010; 
+    --chart-4: #800808; 
+    --chart-5: #e05050;
+}
