@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { useNotifications } from "../store/NotificationStore"
 
@@ -15,8 +15,21 @@ import "../styles/pages/Notifications.css"
 const PAGE_SIZE = 15
 
 function Notifications() {
-    const { notifications } = useNotifications()
+    const { notifications, markAsRead } = useNotifications()
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+
+    // mark all unread notifications as read when the page opens
+    useEffect(() => {
+        const unread = notifications.filter(n => !n.read)
+        if (unread.length === 0) return
+
+        // add small delay so user sees the unread state briefly
+        const timer = setTimeout(() => {
+            unread.forEach(n => markAsRead(n.id))
+        }, 800)
+
+        return () => clearTimeout(timer)
+    }, []) // only fire on mount, not on every update
 
     // paginate before grouping
     const visible = notifications.slice(0, visibleCount)
