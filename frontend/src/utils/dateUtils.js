@@ -69,6 +69,17 @@ export function getGreeting(name) {
     return `Still here, ${name}?`
 }
 
+// Evil Blossom greeting override
+export function getEvilGreeting(name,) {
+    const time = getTimeOfDay()
+
+    if (time === "morning") return `Up early, ${name}...`
+    if (time === "afternoon") return `${name}.`
+    if (time === "evening") return `Evening, ${name}.`
+    return `Still awake, ${name}?`
+}
+
+
 export function getCurrentMonthYear() {
     const today = new Date()
 

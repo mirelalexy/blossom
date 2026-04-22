@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useTransactions } from "../store/TransactionStore"
@@ -7,6 +8,7 @@ import { useUser } from "../store/UserStore"
 import { useProfile } from "../store/ProfileStore"
 import { useBudget } from "../store/BudgetStore"
 import { useCurrency } from "../store/CurrencyStore"
+import { useTheme } from "../store/ThemeStore"
 
 import {
 	getNextMilestone,
@@ -22,6 +24,7 @@ import {
 	getStartOfDay,
 	parseLocalDate,
 	getDayDiff,
+	getEvilGreeting
 } from "../utils/dateUtils"
 
 import GreetingHeader from "../components/home/GreetingHeader"
@@ -42,6 +45,8 @@ import TipCard from "../components/tips/TipCard"
 
 function Home() {
 	const navigate = useNavigate()
+	const { theme } = useTheme()
+	const isEvil = theme === "evil-blossom"
 
 	const today = getStartOfDay(new Date())
 
@@ -120,7 +125,9 @@ function Home() {
 	const topCategory = getCategoryById(topCategoryId)
 
 	const message = getNextMonthInfo()
-	const greeting = getGreeting(user?.displayName)
+	const greeting = isEvil 
+		? getEvilGreeting(user?.displayName)
+		: getGreeting(user?.displayName)
 
 	const isNewUser = transactions.length === 0
 
