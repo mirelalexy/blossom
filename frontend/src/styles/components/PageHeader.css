@@ -33,8 +33,10 @@
 }
 
 .page-header-right-empty {
-    background: none;
+    background: transparent;
     cursor: none;
+    width: 36px;
+    height: 36px;
 }
 
 .page-header-right-empty:hover {

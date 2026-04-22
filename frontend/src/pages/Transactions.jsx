@@ -18,6 +18,7 @@ import Icon from "../components/ui/Icon"
 import EmptyState from "../components/ui/EmptyState"
 import FilterSheet from "../components/filters/FilterSheet"
 import SearchBar from "../components/ui/SearchBar"
+import PageHeader from "../components/ui/PageHeader"
 
 import "../styles/pages/Transactions.css"
 
@@ -168,28 +169,28 @@ function Transactions() {
 
 	return (
 		<div className="page">
-			<div className="transactions-header">
-				<div className="transactions-header-first-row">
-					<div
-						className="filter-icon"
-						onClick={() => setShowFilters(true)}
-					>
-						<Icon name="filter" size={22} />
-					</div>
-					<h1>Transactions</h1>
-					<div
-						className="search-icon"
-						onClick={() => setShowSearch((prev) => !prev)}
-					>
-						<Icon name="search" size={22} />
-					</div>
-				</div>
-				{!hasActiveFilters && (
-					<h2 className="transactions-header-second-row">
-						{currentMonthYear}
-					</h2>
-				)}
-			</div>
+			<PageHeader
+                title={hasActiveFilters ? "Filtered" : currentMonthYear}
+                left={
+                    <button
+                        className={`page-header-left ${hasActiveFilters ? "header-btn-active" : ""}`}
+                        onClick={() => setShowFilters(true)}
+                    >
+                        <Icon name="filter" size={18} />
+                    </button>
+                }
+                right={
+                    <button
+                        className={`page-header-right ${showSearch ? "header-btn-active" : ""}`}
+                        onClick={() => { 
+							setShowSearch(p => !p); 
+							setSearchQuery("") 
+						}}
+                    >
+                        <Icon name="search" size={18} />
+                    </button>
+                }
+            />
 
 			{showSearch && (
 				<SearchBar value={searchQuery} onChange={setSearchQuery} />
