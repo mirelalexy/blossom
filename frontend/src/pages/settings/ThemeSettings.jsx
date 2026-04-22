@@ -43,6 +43,11 @@ function ThemeSettings() {
                         label={`Velvet Rose ${theme === "velvet-rose" ? "(current)" : ""}`}
                         onClick={() => setTheme("velvet-rose")}
                     />
+
+                    <SettingsItem 
+                        label={`Abyss ${theme === "abyss" ? "(current)" : ""}`}
+                        onClick={() => setTheme("abyss")}
+                    />
                 </SettingsCard>
             </Section>
         </div>

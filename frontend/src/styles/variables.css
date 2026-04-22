@@ -287,3 +287,50 @@
     --chart-4: #7c2860; 
     --chart-5: #d878b0;
 }
+
+/* ABYSS - intense dark blue */
+[data-theme="abyss"] {
+    --bg-primary:    #080c14;
+    --bg-secondary:  #0e1420;
+    --bg-tertiary:   #141c2c;
+
+    --text-primary:   #e8edf8;
+    --text-secondary: #7888b0;
+    --text-tertiary:  #485878;
+
+    --accent:       #3060e0;
+    --accent-soft:  #0e1840;
+    --accent-dim:   rgba(48, 96, 224, 0.2);
+    --accent-rgb:   48, 96, 224;
+    --hover:        #4878f8;
+    --active:       #2048c8;
+
+    --success:       #38907a; 
+    --success-soft:  #0a2820;
+    --danger:        #c84040; 
+    --danger-soft:   #280808;
+    --warning:       #b07820; 
+    --warning-soft:  #241808;
+
+    --card:         #0e1420; 
+    --card-raised:  #141c2c;
+    --card-border:  rgba(48, 96, 224, 0.15);
+    --card-shadow:  0 1px 3px rgba(0,0,0,0.5), 0 4px 24px rgba(0,0,0,0.4);
+
+    --border:        rgba(48, 96, 224, 0.18);
+    --border-strong: rgba(48, 96, 224, 0.45);
+    --input-bg:      #121828; 
+    --input-focus:   #1a2238;
+
+    --nav-bg:     #0e1420; 
+    --nav-border: rgba(48, 96, 224, 0.12);
+
+    --progress-track: #182040; 
+    --focus-card: #0a1030;
+
+    --chart-1: #3060e0; 
+    --chart-2: #4878f8;
+    --chart-3: #2048b8; 
+    --chart-4: #1830a0; 
+    --chart-5: #6090ff;
+}
