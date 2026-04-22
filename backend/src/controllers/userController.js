@@ -205,7 +205,7 @@ export async function deleteAccount(req, res) {
     try {
         // get current password hash
         const userRes = await pool.query(
-            `SELECT password_hash FROM users WHERE id = $1`,
+            `SELECT password_hash, avatar, banner FROM users WHERE id = $1`,
             [userId]
         )
 
@@ -216,6 +216,15 @@ export async function deleteAccount(req, res) {
 
         if (!isMatch) {
             return res.status(400).json({ error: "Incorrect password" })
+        }
+
+        // delete Cloudinary assets before removing DB row
+        try {
+            if (user.avatar) await cloudinary.uploader.destroy(`blossom/avatars/avatar_${userId}`)
+            if (user.banner) await cloudinary.uploader.destroy(`blossom/banners/banner_${userId}`)
+        } catch (cdnErr) {
+            // proceed with account deletion even if cleanup fails
+            console.log("Cloudinary cleanup failed (non-fatal):", cdnErr.message)
         }
 
         await pool.query(
