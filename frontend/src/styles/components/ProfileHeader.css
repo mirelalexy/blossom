@@ -128,34 +128,6 @@
     color: #ffffff;
 }
 
-.overlay {
-    width: 100%; 
-    height: 100%;
-    inset: 0;
-    background-color: rgba(0,0,0,0.38);
-    position: absolute;
-    color: #ffffff;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    font-size: 13px; 
-    font-weight: 500;
-    z-index: 3; 
-    cursor: pointer;
-    flex-direction: column; 
-    gap: 6px;
-    backdrop-filter: blur(2px);
-}
-
-.remove {
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.remove:hover {
-    text-decoration: underline;
-}
-
 .profile-identity {
     display: flex;
     align-items: center;
@@ -179,4 +151,56 @@
 .profile-header {
     position: relative;
     padding-bottom: 100px;
+}
+
+.profile-banner-actions {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 4;
+    animation: pageFadeIn 0.2s ease;
+}
+
+.profile-avatar-actions {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 5;
+    animation: pageFadeIn 0.2s ease;
+    white-space: nowrap;
+    flex-direction: column;
+}
+
+.profile-media-btn {
+    padding: 6px 14px;
+    border-radius: var(--r-full);
+    border: none;
+    background: rgba(0,0,0,0.55);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background-color 0.15s ease;
+}
+.profile-media-btn:hover { 
+    background: rgba(0, 0, 0, 0.75); 
+}
+
+.profile-media-btn--sm { 
+    font-size: 11px; 
+    padding: 4px 10px; 
+}
+
+.profile-media-btn--remove {
+    background: rgba(180, 40, 40, 0.65);
+}
+.profile-media-btn--remove:hover { 
+    background: rgba(180, 40, 40, 0.9); 
 }

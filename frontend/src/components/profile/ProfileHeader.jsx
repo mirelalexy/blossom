@@ -12,30 +12,32 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
     return (
         <div className="profile-header">
             <div className="profile-banner">
-                { bannerSrc ? (
+                {bannerSrc ? (
                     <img src={bannerSrc} alt="Profile banner" />
                 ) : (
                     <div className="banner-placeholder"></div>
                 )}
                 
-                <div className="settings-btn" onClick={() => navigate("/settings")}>
+                <button className="settings-btn" onClick={() => navigate("/settings")}>
                     <Icon name="settings"/>
-                </div>
+                </button>
 
                 {isEditing && (
-                    <div className="overlay">
-                        <span onClick={onBannerClick}>Change Banner</span>
+                    <div className="profile-banner-actions">
+                        <button className="profile-media-btn" onClick={onBannerClick}>
+                            {bannerSrc ? "Change banner" : "Add banner"}
+                        </button>
 
                         {bannerSrc && (
-                            <span
-                                className="remove"
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    onRemoveBanner()
+                            <button
+                                className="profile-media-btn profile-media-btn--remove"
+                                onClick={e => { 
+                                    e.stopPropagation(); 
+                                    onRemoveBanner() 
                                 }}
                             >
                                 Remove
-                            </span>
+                            </button>
                         )}
                     </div>
                 )}
@@ -43,28 +45,32 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onEditTog
 
             <div className="profile-header-content">
                 <div className="profile-avatar">
-                    { avatarSrc ? (
+                    {avatarSrc ? (
                         <img src={avatarSrc} alt="avatar" />
                     ) : (
-                        <div className="avatar-placeholder"></div>
+                        <div className="avatar-placeholder">
+                            <span className="avatar-initial">{initial}</span>
+                          </div>
                     )}
                     
                     {isEditing && (
-                        <div className="overlay">
-                        <span onClick={onAvatarClick}>Change</span>
+                        <div className="profile-avatar-actions">
+                            <button className="profile-media-btn profile-media-btn--sm" onClick={onAvatarClick}>
+                                {avatarSrc ? "Change" : "Add"}
+                            </button>
 
-                        {avatarSrc && (
-                            <span
-                                className="remove"
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    onRemoveAvatar()
-                                }}
-                            >
-                                Remove
-                            </span>
-                        )}
-                    </div>
+                            {avatarSrc && (
+                                <button
+                                    className="profile-media-btn profile-media-btn--sm profile-media-btn--remove"
+                                    onClick={e => { 
+                                        e.stopPropagation(); 
+                                        onRemoveAvatar() 
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            )}
+                        </div>
                     )}
                 </div>
                 
