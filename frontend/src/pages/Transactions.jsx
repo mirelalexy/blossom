@@ -39,6 +39,7 @@ function Transactions() {
 	const { budget } = useBudget()
 
 	const today = getStartOfDay(new Date())
+	console.log("TODAY:", today)
 
 	const recentTransactions = transactions
 		.filter((t) => {
@@ -52,8 +53,18 @@ function Transactions() {
 		.sort((a, b) => new Date(b.date) - new Date(a.date))
 
 	const upcomingTransactions = transactions
-		.filter((t) => !t.is_recurring)
-		.filter((t) => getStartOfDay(parseLocalDate(t.date)) > today)
+		.filter((t) => {
+			if (t.is_recurring) return false
+			
+			const d = getStartOfDay(parseLocalDate(t.date))
+			if (d <= today) return false
+
+			// show only for this month
+			return (
+				d.getMonth() === today.getMonth() &&
+				d.getFullYear() === today.getFullYear()
+			)
+		})
 		.sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date))
 
 	const monthlyTransactions = transactions
