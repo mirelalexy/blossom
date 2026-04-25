@@ -39,7 +39,6 @@ function Transactions() {
 	const { budget } = useBudget()
 
 	const today = getStartOfDay(new Date())
-	console.log("TODAY:", today)
 
 	const recentTransactions = transactions
 		.filter((t) => {
