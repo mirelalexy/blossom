@@ -1,9 +1,9 @@
 import pool from "../db.js"
-import { getStartOfDay, parseLocalDate } from "./dateUtils.js"
+import { getStartOfDay, parseLocalDate, toDateStringLocal } from "./dateUtils.js"
 
 export async function processRecurringTransactions(userId) {
     const today = getStartOfDay(new Date())
-
+    
     // get all recurring templates
     const recurringRes = await pool.query(
         `SELECT * FROM transactions WHERE user_id = $1 AND is_recurring = true`,
@@ -58,7 +58,7 @@ export async function processRecurringTransactions(userId) {
                     `SELECT id FROM transactions
                     WHERE user_id = $1 AND recurring_parent_id = $2
                     AND date = $3 LIMIT 1`,
-                    [userId, t.id, next.toISOString().slice(0, 10)]
+                    [userId, t.id, toDateStringLocal(next)]
                 )
                     
                 if (exists.rows.length === 0) {
@@ -96,7 +96,7 @@ async function insertOccurrence(template, userId, date) {
             template.method.toLowerCase(),
             template.title,
             template.category_id,
-            date.toISOString().slice(0, 10),
+            toDateStringLocal(date),
             template.mood,
             template.intent,
             template.notes,

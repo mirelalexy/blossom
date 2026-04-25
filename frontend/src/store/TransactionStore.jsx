@@ -28,8 +28,9 @@ export function TransactionsProvider({ children }) {
 
             const data = await res.json()
 
-            const formatted = data.map(({ category_id, amount, ...rest }) => ({
+            const formatted = data.map(({ category_id, amount, date, ...rest }) => ({
                 ...rest,
+                date: date ? date.slice(0, 10) : null,
                 amount: Number(amount),
                 categoryId: category_id
             }))
@@ -70,6 +71,7 @@ export function TransactionsProvider({ children }) {
 
             const formatted = {
                 ...transaction,
+                date: transaction.date?.slice(0, 10),
                 amount: Number(transaction.amount),
                 categoryId: transaction.category_id
             }
@@ -130,6 +132,7 @@ export function TransactionsProvider({ children }) {
 
             const formatted = {
                 ...data,
+                date: data.date?.slice(0, 10),
                 amount: Number(data.amount),
                 categoryId: data.category_id
             }
