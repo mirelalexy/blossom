@@ -18,7 +18,7 @@ export async function createGoal(req, res) {
             `INSERT INTO goals
             (user_id, name, target_amount, deadline, notes, link, is_primary, saving_mode)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING *`,
+            RETURNING *, deadline::text AS deadline`,
             [
                 userId,
                 name,
@@ -89,7 +89,7 @@ export async function updateGoal(req, res) {
                 is_completed = $8,
                 saving_mode = $9
             WHERE id = $10 AND user_id = $11
-            RETURNING *`,
+            RETURNING *, deadline::text AS deadline`,
             [
                 name,
                 target_amount,
