@@ -95,7 +95,7 @@ function EditSavingGoal() {
             <PageHeader title="Edit Goal" />
 
             <form className="form" onSubmit={handleSave}>
-                <Section title="Goal details">
+                <Section title="What are you saving for?">
                     <Input
                         label="Name"
                         type="text"
@@ -127,9 +127,9 @@ function EditSavingGoal() {
                     />
                 </Section>
 
-                <Section title="Saving mode">
+                <Section title="How do you want to save?">
                     <RadioGroup
-                        label="How do you want to save?"
+                        label="Saving Mode"
                         name="saving_mode"
                         value={formData.saving_mode}
                         onChange={val => handleChange("saving_mode", val)}
@@ -142,7 +142,7 @@ function EditSavingGoal() {
                     {formData.saving_mode === "auto" && monthly > 0 && (
                         <p className="secondary-text">
                             Based on what's left to save, I'd deposit
-                            <strong>{formatCurrency(monthly, currency)}/month</strong>
+                            <strong> {formatCurrency(monthly, currency)}/month </strong>
                             until the deadline.
                         </p>
                     )}
@@ -154,7 +154,7 @@ function EditSavingGoal() {
                     )}
                 </Section>
 
-                <Section title="Extra details">
+                <Section title="Extra details (optional)">
                     <Textarea
                         label="Notes"
                         placeholder="Why does this matter to you?"
