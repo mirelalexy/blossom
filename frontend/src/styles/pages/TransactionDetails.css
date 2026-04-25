@@ -1,50 +1,143 @@
-.transaction-details-card {
-    background-color: var(--card);
-    padding: 22px;
-    border-radius: var(--r-lg);
-    display: flex; 
+/* HERO SECTION */
+.td-hero {
+    display: flex;
     flex-direction: column;
-    gap: 20px;
-    box-shadow: var(--card-shadow);
-    border: 1px solid var(--card-border);
-}
-
-.transaction-summary {
-    display: flex; 
-    flex-direction: row;
-    gap: 16px; 
     align-items: center;
+    gap: 8px;
+    padding: 16px 0 24px;
+    text-align: center;
 }
 
-.transaction-summary h2 { 
-    font-size: 24px; 
-    font-weight: 700; 
-    letter-spacing: -0.5px; 
+.td-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
 }
 
-.transaction-category { 
-    font-size: 14px; 
+.td-icon-wrap--expense { 
+    background: var(--danger-soft);  
+    color: var(--danger); 
+}
+
+.td-icon-wrap--income { 
+    background: var(--success-soft); 
+    color: var(--success); 
+}
+
+.td-amount {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+}
+
+.td-amount--expense { 
+    color: var(--danger); 
+}
+.td-amount--income { 
+    color: var(--success); 
+}
+
+.td-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+}
+
+.td-meta-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.td-badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.td-badge--upcoming { 
+    background: var(--warning-soft); 
+    color: var(--warning); 
+    border-color: var(--warning-soft); 
+}
+
+.td-badge--recurring { 
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: var(--border-strong);
+}
+
+/* DETAILS SECTION */
+.td-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+.td-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    font-size: 14px;
+}
+
+.td-row:not(:last-child) { 
+    border-bottom: 1px solid var(--border); 
+}
+
+.td-label { 
     color: var(--text-tertiary); 
-    margin-top: 2px; 
-}
-.transaction-notes { 
-    font-size: 14px; 
-    line-height: 1.6; 
-    color: var(--text-secondary); 
+    font-weight: 500; 
 }
 
-.transaction-actions { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
+.td-value { 
+    color: var(--text-primary); 
+    font-weight: 500; 
+    text-align: right; 
 }
 
-.transaction-section p { 
-    color: var(--text-secondary); 
-    font-size: 14px; 
+/* NOTES SECTION */
+.td-notes {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.reflection-transaction-section p { 
-    display: flex; 
-    gap: 16px; 
+.td-notes-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.td-notes-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+/* ACTIONS SECTION */
+.td-actions {
+    display: flex;
+    gap: 10px;
 }
