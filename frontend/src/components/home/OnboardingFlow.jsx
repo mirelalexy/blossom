@@ -72,7 +72,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
                         label="Set a saving goal"
                         cta="Let's go"
                         hint="What are you working toward? Even a small goal changes how you see money."
-                        onAction={() => navigate("/add-goal")}
+                        onAction={() => navigate("/goals/add")}
                     />
 
                     <OnboardingStep 
