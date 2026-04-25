@@ -3,25 +3,55 @@
     inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 100;
-    animation: fadeIn 0.2s ease;
+    animation: fadeIn 0.2s ease forwards;
     backdrop-filter: blur(2px);
+}
+
+.filter-overlay--out {
+    animation: fadeOut 0.28s ease forwards;
 }
 
 .filter-sheet {
     position: fixed;
-    left: 0; 
-    right: 0; 
     bottom: 0;
+    left: 0;
+    right: 0;
     background-color: var(--card);
     border: 1px solid var(--card-border);
     border-radius: var(--r-xl) var(--r-xl) 0 0;
-    padding: 0 24px 40px;
-    box-sizing: border-box;
     z-index: 101;
-    max-height: 88vh;
-    overflow-y: auto;
-    animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-    box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.18);
+    animation: sheetSlideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+
+    @media (min-width: 600px) {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 480px;
+        border-radius: var(--r-xl);
+        bottom: 32px;
+        max-height: 85vh;
+    }
+}
+
+.filter-sheet--out {
+    animation: sheetSlideDown 0.28s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.filter-handle-area {
+    display: flex;
+    justify-content: center;
+    padding: 14px 0 6px;
+    cursor: grab;
+    flex-shrink: 0;
+    touch-action: none;
+}
+
+.filter-handle-area:active { 
+    cursor: grabbing; 
 }
 
 .filter-handle {
@@ -29,25 +59,130 @@
     height: 4px;
     background: var(--border);
     border-radius: var(--r-full);
-    margin: 14px auto 20px;
 }
 
-.filter-sheet-header { 
-    display: flex; 
-    justify-content: center; 
-    margin-bottom: 4px; 
+/* hide handle on desktop, use close button instead */
+@media (min-width: 600px) {
+    .filter-handle-area { 
+        display: none;
+    }
+}
+
+.filter-sheet-inner {
+    overflow-y: auto;
+    padding: 0 24px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    overscroll-behavior: contain;
+
+    @media (min-width: 600px) {
+        padding-top: 8px;
+    }
+}
+
+.filter-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 4px;
+}
+
+.filter-sheet-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.filter-close-btn {
+    display: none; /* mobile uses drag */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: var(--r-sm);
+    font-family: var(--font-primary);
+    transition: color 0.12s ease;
+
+    @media (min-width: 600px) {
+        display: block; /* show on desktop */
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .filter-close-btn:hover { 
+        color: var(--text-primary); 
+    }
 }
 
 .filter-actions {
-    margin-top: 8px; 
-    display: flex; 
-    gap: 10px; 
+    display: flex;
+    gap: 10px;
 }
 
-.filter-sheet > * { 
-    margin-bottom: 20px; 
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+    }
+    to { 
+        opacity: 1; 
+    }
 }
 
-.filter-sheet > *:last-child { 
-    margin-bottom: 0; 
+@keyframes fadeOut {
+    from { 
+        opacity: 1; 
+    }
+    to { 
+        opacity: 0; 
+    }
+}
+
+@keyframes sheetSlideUp {
+    from { 
+        transform: translateY(100%); 
+    }
+    to { 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes sheetSlideDown {
+    from { 
+        transform: translateY(0); 
+    }
+    to { 
+        transform: translateY(110%); 
+    }
+}
+
+@media (min-width: 600px) {
+    @keyframes sheetSlideUp {
+        from { 
+            opacity: 0; 
+            transform: translateX(-50%) translateY(12px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateX(-50%) translateY(0); 
+        }
+    }
+
+    @keyframes sheetSlideDown {
+        from { 
+            opacity: 1; 
+            transform: translateX(-50%) translateY(0); 
+        }
+        to { 
+            opacity: 0; 
+            transform: translateX(-50%) translateY(12px); 
+        }
+    }
+    
+    .filter-sheet--out {
+        animation: sheetSlideDown 0.2s ease forwards;
+    }
 }
