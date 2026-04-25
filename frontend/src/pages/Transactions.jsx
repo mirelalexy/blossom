@@ -273,7 +273,7 @@ function Transactions() {
 						subtitle="Start by adding your first one."
 						action={
 							<Button
-								onClick={() => navigate("/add-transaction")}
+								onClick={() => navigate("/transactions/add")}
 							>
 								Add Transaction
 							</Button>
@@ -316,7 +316,7 @@ function Transactions() {
 							</>
 						)}
 
-						<Button onClick={() => navigate("/add-transaction")}>
+						<Button onClick={() => navigate("/transactions/add")}>
 							Add Transaction
 						</Button>
 					</Section>

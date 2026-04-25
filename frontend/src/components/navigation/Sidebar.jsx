@@ -9,7 +9,7 @@ import "./Sidebar.css"
 const navItems = [
     { to: "/", icon: "home", label: "Home"},
     { to: "/transactions", icon: "transactions", label: "Transactions"},
-    { to: "/add-transaction", icon: "add", label: "Add Transaction"},
+    { to: "/transactions/add", icon: "add", label: "Add Transaction"},
     { to: "/goals", icon: "goals", label: "Saving Goals"},
     { to: "/challenges", icon: "profile", label: "Challenges"},
     { to: "/rewards", icon: "gem", label: "Rewards"}

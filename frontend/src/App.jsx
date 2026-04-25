@@ -110,7 +110,7 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/transactions/:id" element={<TransactionDetails />} />
-          <Route path="/add-transaction" element={<AddTransaction />} />
+          <Route path="/transactions/add" element={<AddTransaction />} />
           <Route path="/edit-transaction/:id" element={<AddTransaction />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/goals/add" element={<AddSavingGoal />} />

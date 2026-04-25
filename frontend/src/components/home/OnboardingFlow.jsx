@@ -63,7 +63,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
                         label="Log your first transaction"
                         cta="I'm ready"
                         hint="This is the most important thing I can learn from you."
-                        onAction={() => navigate("/add-transaction")}
+                        onAction={() => navigate("/transactions/add")}
                     />
 
                     <OnboardingStep 

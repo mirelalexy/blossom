@@ -18,7 +18,7 @@ function Bottombar({ onAddTransaction }) {
             </NavLink>
 
             {/* Add transaction */}
-            <NavLink to="/add-transaction" className="nav-item">
+            <NavLink to="/transactions/add" className="nav-item">
                 <Icon name="add" size={45} className="bottom-add-icon"/>
             </NavLink>
 

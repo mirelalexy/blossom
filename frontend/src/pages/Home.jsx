@@ -197,7 +197,7 @@ function Home() {
 							
 								<Button
 									className="secondary"
-									onClick={() => navigate("/add-transaction")}
+									onClick={() => navigate("/transactions/add")}
 								>
 									Log something
 								</Button>
