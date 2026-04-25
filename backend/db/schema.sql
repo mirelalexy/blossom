@@ -68,7 +68,8 @@ CREATE TABLE goals (
 	saving_mode VARCHAR(10) NOT NULL DEFAULT 'auto' CHECK (saving_mode IN ('auto', 'manual')),
 	is_primary BOOLEAN NOT NULL DEFAULT FALSE,
 	is_completed BOOLEAN NOT NULL DEFAULT FALSE,
-	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	last_auto_deposit_month DATE
 );
 
 -- ================= BUDGETS =================
@@ -78,7 +79,7 @@ CREATE TABLE budgets (
 	monthly_limit NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (monthly_limit >= 0),
 	rollover VARCHAR(20) NOT NULL DEFAULT 'none' CHECK (rollover IN ('none', 'next_month', 'primary_goal')),
 	budget_structure VARCHAR(20) NOT NULL DEFAULT 'total' CHECK (budget_structure IN ('total', 'category')),
-	last_rollover_month VARCHAR(7),
+	last_rollover_month DATE,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
