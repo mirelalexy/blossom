@@ -10,7 +10,7 @@ import Button from "../../../components/ui/Button"
 function Amount() {
     const navigate = useNavigate()
     const { budget, updateBudget } = useBudget() 
-    const [amount, setAmount] = useState(budget?.monthly_budget)
+    const [amount, setAmount] = useState(budget?.monthly_limit)
     const [error, setError] = useState("")
 
     function handleSave() {
