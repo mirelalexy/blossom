@@ -31,7 +31,8 @@ export function GoalsProvider({ children }) {
                 const formatted = data.map(g => ({
                     ...g,
                     current_amount: Number(g.current_amount),
-                    target_amount: Number(g.target_amount)
+                    target_amount: Number(g.target_amount),
+                    deadline: g.deadline?.slice(0, 10)
                 }))
 
                 setGoals(formatted)
