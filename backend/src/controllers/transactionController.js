@@ -197,6 +197,16 @@ export async function editTransaction(req, res) {
     } = req.body
 
     try {
+        // if this is (becoming) a recurring parent, delete all future children before updating
+        // also available for case when user turns off recurring
+        await pool.query(
+            `DELETE FROM transactions
+            WHERE user_id = $1
+            AND recurring_parent_id = $2
+            AND date > CURRENT_DATE`,
+            [userId, id]
+        )
+
         const result = await pool.query(
             `UPDATE transactions SET
                 amount = $1,
@@ -253,6 +263,7 @@ export async function editTransaction(req, res) {
             return res.status(404).json({ error: "Transaction not found" })
         }
 
+        await processRecurringTransactions(userId)
         await recalculateUserState(userId)
 
         res.json(result.rows[0])

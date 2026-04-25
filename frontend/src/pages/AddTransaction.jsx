@@ -60,6 +60,8 @@ function AddTransaction() {
 		setFormData({
 			...existingTransaction,
 			date: formatLocalDate(existingTransaction.date),
+			recurring: existingTransaction.is_recurring || false,
+        	frequency: existingTransaction.recur_frequency || "monthly"
 		})
 	}, [existingTransaction])
 
