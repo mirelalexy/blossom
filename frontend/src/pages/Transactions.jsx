@@ -68,7 +68,6 @@ function Transactions() {
 		.sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date))
 
 	const monthlyTransactions = transactions
-		.filter((t) => !t.is_recurring)
 		.filter((t) => {
 			if (!t.date) return false
 
