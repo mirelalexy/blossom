@@ -60,6 +60,9 @@ export async function getBudget(req, res) {
                 )
             }
 
+            // monthly deposit to primary goal
+            await processAutoGoalDeposits(userId, currentMonth)
+
             // mark as applied for next month rollover
             await pool.query(
                 `UPDATE budgets
@@ -118,5 +121,74 @@ export async function upsertBudget(req, res) {
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: "Create/update budget failed" })
+    }
+}
+
+export async function processAutoGoalDeposits(userId, currentMonth) {
+    const goalsRes = await pool.query(
+        `SELECT * FROM goals
+        WHERE user_id = $1
+        AND saving_mode = 'auto'
+        AND is_completed = false
+        AND deadline IS NOT NULL
+        AND (last_auto_deposit_month IS NULL OR last_auto_deposit_month != $2)`,
+        [userId, currentMonth]
+    )
+
+    const now = new Date()
+
+    for (const goal of goalsRes.rows) {
+        const deadline = new Date(goal.deadline)
+        const remaining = Number(goal.target_amount) - Number(goal.current_amount)
+
+        // skip if already reached
+        if (remaining <= 0) continue
+
+        // months remaining (include current month)
+        const monthsLeft = (deadline.getFullYear() - now.getFullYear()) * 12 + (deadline.getMonth() - now.getMonth())
+
+        // skip if past deadline
+        if (monthsLeft <= 0) continue
+
+        const monthlyAmount = Math.ceil(remaining / monthsLeft)
+
+        // deposit to goal (cap at remaining)
+        const deposit = Math.min(monthlyAmount, remaining)
+
+        await pool.query(
+            `UPDATE goals
+            SET current_amount = current_amount + $1,
+                last_auto_deposit_month = $2
+            WHERE id = $3 AND user_id = $4`,
+            [deposit, currentMonth, goal.id, userId]
+        )
+
+        // find Goals category to log transaction
+        const categoryRes = await pool.query(
+            `SELECT id FROM categories
+            WHERE user_id = $1 AND name = 'Goals' AND type = 'expense' AND is_default = true`,
+            [userId]
+        )
+
+        if (categoryRes.rows.length === 0) continue
+
+        const categoryId = categoryRes.rows[0].id
+        
+        const today = now.toISOString().slice(0, 10)
+
+        // create a transaction for deposit
+        await pool.query(
+            `INSERT INTO transactions
+             (user_id, amount, type, method, title, category_id, date, intent, notes)
+             VALUES ($1, $2, 'expense', 'card', $3, $4, $5, 'planned', $6)`,
+            [
+                userId,
+                deposit,
+                `Auto-saved for ${goal.name}`,
+                categoryId,
+                today,
+                `Blossom auto-deposit: ${monthsLeft} month${monthsLeft === 1 ? "" : "s"} remaining to reach your goal.`
+            ]
+        )
     }
 }
