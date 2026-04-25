@@ -1,9 +1,13 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 import { useGoals } from "../../store/GoalsStore"
 import { useCurrency } from "../../store/CurrencyStore"
 import { useTransactions } from "../../store/TransactionStore"
 import { useCategories } from "../../store/CategoryStore"
 
 import { formatCurrency } from "../../utils/currencyUtils"
+import { parseLocalDate } from "../../utils/dateUtils"
 
 import Button from "../ui/Button"
 import ProgressBar from "../ui/ProgressBar"
@@ -12,10 +16,16 @@ import Icon from "../ui/Icon"
 import "../../styles/components/SavingGoalCard.css"
 
 function SavingGoalCard({ goal }) {
+    const navigate = useNavigate()
+
     const { deleteGoal, addToGoal, withdrawFromGoal } = useGoals()
     const { currency } = useCurrency()
     const { addTransaction } = useTransactions()
     const { categories } = useCategories()
+
+    const [mode, setMode] = useState(null)  // null / add / withdraw
+    const [amount, setAmount] = useState("")
+    const [error, setError] = useState("")
 
     const goalsExpenseCategory = categories.find(
         cat => cat.name === "Goals" && cat.type === "expense"
@@ -30,97 +40,173 @@ function SavingGoalCard({ goal }) {
         : 0
 
     const remaining = goal.target_amount - goal.current_amount
+    const isComplete = progress >= 100
+
+    function openMode(mode) {
+        setMode(mode)
+        setAmount("")
+        setError("")
+    }
+
+    function handleAction() {
+        const val = Number(amount)
+
+        if (!val || val <= 0) {
+            setError("Enter a valid amount.")
+            return
+        }
+
+        if (mode === "add") {
+            if (val > remaining) {
+                setError(`That would exceed your goal by ${formatCurrency(val - remaining, currency)}.`)
+                return
+            }
+
+            if (!goalsExpenseCategory) {
+                setError("Goals expense category missing.")
+                return
+            }
+
+            addToGoal(goal.id, val)
+
+            addTransaction({
+                title: `Saved for ${goal.name}`,
+                amount: val,
+                type: "expense",
+                categoryId: goalsExpenseCategory.id,
+                date: new Date().toISOString().slice(0, 10),
+                method: "card",
+                mood: null,
+                intent: "planned",
+                notes: ""
+            })
+        } else {
+            if (val > goal.current_amount) {
+                setError(`Only ${formatCurrency(goal.current_amount, currency)} available to withdraw.`)
+                return
+            }
+
+            if (!goalsIncomeCategory) {
+                setError("Goals income category missing.")
+                return
+            }
+
+            withdrawFromGoal(goal.id, val)
+
+            addTransaction({
+                title: `Withdrew from ${goal.name}`,
+                amount: val,
+                type: "income",
+                categoryId: goalsIncomeCategory.id,
+                date: new Date().toISOString().slice(0, 10),
+                method: "card",
+                mood: null,
+                intent: null,
+                notes: ""
+            })
+        }
+
+        setMode(null)
+        setAmount("")
+        setError("")
+    }
 
     return (
-        <div className="goal-card">
+        <div className={`goal-card ${isComplete ? "goal-card--complete" : ""}`}>
             <div className="goal-header">
                 <div className="goal-header-first-row">
                     <h3>{goal.name}</h3>
-                    <button onClick={() => deleteGoal(goal.id)} className="delete-goal-btn">
-                        <Icon name="delete" size={18} />
-                    </button>
+
+                    <div className="goal-header-btns">
+                        <button
+                            className="goal-icon-btn"
+                            onClick={() => navigate(`/goals/edit/${goal.id}`)}
+                            aria-label="Edit goal"
+                        >
+                            <Icon name="edit" size={16} />
+                        </button>
+                        <button
+                            className="goal-icon-btn goal-icon-btn--delete"
+                            onClick={() => deleteGoal(goal.id)}
+                            aria-label="Delete goal"
+                        >
+                            <Icon name="delete" size={16} />
+                        </button>
+                    </div>
                 </div>
 
-                <p className="goal-header-second-row">Target: <strong>{formatCurrency(goal.target_amount, currency)}</strong></p>
+                <div className="goal-meta-row">
+                    {goal.deadline && (
+                        <span className="goal-meta-chip">
+                            <Icon name="calendar" size={12} />
+                            {parseLocalDate(goal.deadline)?.toLocaleDateString("en-US", {
+                                month: "short", day: "numeric", year: "numeric"
+                            })}
+                        </span>
+                    )}
+
+                    {goal.is_primary && (
+                        <span className="goal-meta-chip goal-meta-chip--primary">Primary</span>
+                    )}
+
+                    {isComplete && (
+                        <span className="goal-meta-chip goal-meta-chip--done">Reached 🎉</span>
+                    )}
+                </div>
             </div>
             
             <div className="goal-stats">
-                <ProgressBar progress={progress} />
-
                 <div className="goal-stats-info">
-                    <span>{formatCurrency(goal.current_amount, currency)} saved</span>
+                    <span>{formatCurrency(goal.current_amount, currency)}</span>
                     <span>{progress}%</span>
                 </div>
+                <ProgressBar progress={progress} />
+                <div className="goal-target-row">
+                    <span className="secondary-text">of {formatCurrency(goal.target_amount, currency)}</span>
+                    {!isComplete && (
+                        <span className="secondary-text">{formatCurrency(remaining, currency)} to go</span>
+                    )}
+                </div>
             </div>
-            
-            <p className="italic-p"><strong>{formatCurrency(remaining, currency)}</strong> remaining</p>
 
-            <div className="goal-actions">
-                <Button 
-                    onClick={() => {
-                        const amount = Number(prompt("Add funds"))
-                        if (!amount || isNaN(amount) || amount <= 0) return
+            {mode && (
+                <div className="goal-inline-input">
+                    <p className="goal-inline-label">
+                        {mode === "add" ? `Add to ${goal.name}` : `Withdraw from ${goal.name}`}
+                    </p>
+                    <div className="goal-inline-row">
+                        <input
+                            className="goal-amount-input"
+                            type="number"
+                            min={0.01}
+                            step="any"
+                            placeholder={`Amount in ${currency}`}
+                            value={amount}
+                            onChange={e => { 
+                                setAmount(e.target.value); 
+                                setError("") 
+                            }}
+                            autoFocus
+                        />
+                        <button className="goal-confirm-btn" onClick={handleAction}>
+                            <Icon name="completed" size={18} />
+                        </button>
+                        <button className="goal-cancel-btn" onClick={() => setMode(null)}>
+                            <Icon name="delete" size={18} />
+                        </button>
+                    </div>
+                    {error && <p className="error-text">{error}</p>}
+                </div>
+            )}
 
-                        if (goal.current_amount + amount > goal.target_amount) {
-                            alert("You exceeded your goal!")
-                            return
-                        }
-
-                        if (!goalsExpenseCategory) {
-                            alert("Goals category missing")
-                            return
-                        }
-
-                        addToGoal(goal.id, amount)
-
-                        addTransaction({
-                            title: `Saved for ${goal.name}`,
-                            amount: amount,
-                            type: "expense",
-                            categoryId: goalsExpenseCategory.id,
-                            date: new Date().toISOString(),
-                            method: "card",
-                            mood: null,
-                            intent: null,
-                            notes: ""
-                        })
-                    }}
-                >
-                    Add Funds
-                </Button>
-                <Button 
-                    onClick={() => {
-                        const amount = Number(prompt("Withdraw funds"))
-                        if (!amount || isNaN(amount) || amount <= 0) return
-
-                        if (goal.current_amount - amount < 0) {
-                            alert("Amount not available!")
-                            return
-                        }
-
-                        if (!goalsIncomeCategory) {
-                            alert("Goals category missing")
-                            return
-                        }
-
-                        withdrawFromGoal(goal.id, amount)
-
-                        addTransaction({
-                            title: `Withdrew from ${goal.name}`,
-                            amount: amount,
-                            type: "income",
-                            categoryId: goalsIncomeCategory.id,
-                            date: new Date().toISOString(),
-                            method: "card",
-                            mood: null,
-                            intent: null,
-                            notes: ""
-                        })
-                    }}
-                >
-                    Withdraw Funds
-                </Button>
-            </div>
+            {!mode && !isComplete && (
+                <div className="goal-actions">
+                    <Button onClick={() => openMode("add")}>Add Funds</Button>
+                    <Button className="secondary" onClick={() => openMode("withdraw")}>
+                        Withdraw
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }

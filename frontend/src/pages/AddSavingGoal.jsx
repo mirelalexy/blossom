@@ -5,6 +5,7 @@ import { useGoals } from "../store/GoalsStore"
 import { useCurrency } from "../store/CurrencyStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
+import { parseLocalDate } from "../utils/dateUtils"
 
 import PageHeader from "../components/ui/PageHeader"
 import Input from "../components/forms/Input"
@@ -20,7 +21,8 @@ function AddSavingGoal() {
     const { addGoal } = useGoals()
     const { currency } = useCurrency()
 
-    const today = new Date().toISOString().split("T")[0]
+    // avoid timezone bug
+    const today = new Date().toLocaleDateString("en-CA")
 
     const [formData, setFormData] = useState({
         name: "",
@@ -44,7 +46,7 @@ function AddSavingGoal() {
         if (!target_amount || !deadline) return 0
 
         const start = new Date()
-        const end = new Date(deadline)
+        const end = parseLocalDate(deadline)
 
         const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
 

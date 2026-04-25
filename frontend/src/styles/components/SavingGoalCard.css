@@ -10,65 +10,189 @@
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.goal-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.goal-card--complete {
+    border-color: var(--success);
+    background: var(--success-soft);
+}
+
+/* HEADER SECTION */
+.goal-header { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px; 
 }
 
 .goal-header-first-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: flex-start;
 }
 
-.goal-header-first-row h3 {
-    font-size: 16px;
-    font-weight: 600;
+.goal-header-first-row h3 { 
+    font-size: 17px; 
+    font-weight: 600; 
+    letter-spacing: -0.2px; 
 }
 
-.goal-header-second-row {
-    color: var(--text-tertiary);
-    font-size: 13px;
-    margin-top: 2px;
+.goal-header-btns { 
+    display: flex; 
+    gap: 4px;
 }
 
-.goal-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.goal-stats-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-
-.goal-stats-info span:first-child {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -0.4px;
-}
-
-.goal-stats-info span:last-child {
-    font-size: 14px;
-    color: var(--text-tertiary);
-}
-
-.goal-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.delete-goal-btn {
-    border: none;
-    background: none;
+.goal-icon-btn {
+    background: none; 
+    border: none; 
     cursor: pointer;
     color: var(--text-tertiary);
+    padding: 4px; 
+    border-radius: var(--r-sm);
+    display: flex; 
+    align-items: center;
+    transition: color 0.15s ease, background-color 0.15s ease;
 }
 
-.delete-goal-btn:hover {
-    color: var(--danger);
+@media (hover: hover) and (pointer: fine) {
+    .goal-icon-btn:hover { 
+        color: var(--text-primary); 
+        background: var(--bg-secondary); 
+    }
+
+    .goal-icon-btn--delete:hover { 
+        color: var(--danger); 
+    }
+}
+
+/* META CHIPS */
+.goal-meta-row { 
+    display: flex; 
+    gap: 6px; 
+    flex-wrap: wrap; 
+}
+
+.goal-meta-chip {
+    font-size: 11px; 
+    font-weight: 500;
+    padding: 2px 8px; 
+    border-radius: var(--r-full);
+    background: var(--bg-secondary);
+    color: var(--text-tertiary);
+    display: flex; 
+    align-items: center; 
+    gap: 4px;
+}
+
+.goal-meta-chip--primary {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+.goal-meta-chip--done {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+/* STATS */
+.goal-stats { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px; 
+}
+
+.goal-stats-info { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: baseline; 
+}
+
+.goal-stats-info span:first-child { 
+    font-size: 22px; 
+    font-weight: 700; 
+    letter-spacing: -0.4px; 
+    color: var(--accent); 
+}
+
+.goal-stats-info span:last-child { 
+    font-size: 14px; 
+    color: var(--text-tertiary); 
+}
+
+.goal-target-row { 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 12px; 
+}
+
+/* INLINE INPUT */
+.goal-inline-input { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+}
+
+.goal-inline-label { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--text-secondary); 
+}
+
+.goal-inline-row {
+    display: flex; 
+    gap: 8px; 
+    align-items: center;
+}
+
+.goal-amount-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--r-md);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-family: var(--font-primary);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+.goal-amount-input:focus { 
+    border-color: var(--accent); 
+    background: var(--input-focus); 
+}
+
+.goal-confirm-btn, .goal-cancel-btn {
+    width: 40px; 
+    height: 40px;
+    border: none; 
+    border-radius: var(--r-md);
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-family: var(--font-primary);
+    flex-shrink: 0;
+    transition: background-color 0.15s ease;
+}
+
+.goal-confirm-btn { 
+    background: var(--accent); 
+    color: #ffffff; 
+}
+.goal-cancel-btn { 
+    background: var(--bg-secondary); 
+    color: var(--text-tertiary); 
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .goal-confirm-btn:hover { 
+        background: var(--hover); 
+    }
+
+    .goal-cancel-btn:hover { 
+        background: var(--bg-tertiary); 
+    }
+}
+
+/* ACTIONS */
+.goal-actions { 
+    display: flex; 
+    gap: 10px;
 }

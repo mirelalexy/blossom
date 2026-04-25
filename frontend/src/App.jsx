@@ -61,6 +61,7 @@ import Register from "./pages/Register"
 import Rewards from "./pages/Rewards"
 import DeleteAccount from "./pages/settings/account/DeleteAccount"
 import ResetApp from "./pages/settings/data-and-privacy/ResetApp"
+import EditSavingGoal from "./pages/EditSavingGoal"
 
 const providers = [
   UserProvider,
@@ -113,6 +114,7 @@ function AppContent() {
           <Route path="/edit-transaction/:id" element={<AddTransaction />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/add-goal" element={<AddSavingGoal />} />
+          <Route path="/goals/edit/:id" element={<EditSavingGoal />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/journey" element={<Journey />} />
           <Route path="/settings" element={<Settings />} />
