@@ -20,14 +20,16 @@ function AddRule() {
     const [type, setType] = useState("single_limit")
     const [value, setValue] = useState("")
 
+    const [error, setError] = useState("")
+
     function handleSave() {
         if (!categoryId) {
-            alert("Please select a category.")
+            setError("Please select a category.")
             return
         }
 
         if (!value || Number(value) <= 0) {
-            alert("Enter a valid value.")
+            setError("Enter a valid value.")
             return
         }
 
@@ -36,7 +38,7 @@ function AddRule() {
         )
 
         if (exists) {
-            alert("Rule of this type already exists for this category.")
+            setError("Rule of this type already exists for this category.")
             return
         }
 
@@ -90,6 +92,8 @@ function AddRule() {
                     onChange={(e) => setValue(e.target.value)}
                 />
             </Section>
+
+            {error && <p className="error-text">{error}</p>}
 
             <Button 
                 onClick={handleSave}

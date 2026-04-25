@@ -9,6 +9,8 @@ import Button from "../../../components/ui/Button"
 
 function EditCategory() {
     const navigate = useNavigate()
+    const [error, setError] = setState("")
+
     const { id } = useParams()
 
     const { categories, getCategoryById, renameCategory } = useCategories() 
@@ -25,7 +27,7 @@ function EditCategory() {
         const trimmed = name.trim()
 
         if (!trimmed) {
-            alert("Category name cannot be empty.")
+            setError("Category name cannot be empty.")
             return
         }
 
@@ -37,7 +39,7 @@ function EditCategory() {
         )
 
         if (exists) {
-            alert("Category already exists.")
+            setError("Category already exists.")
             return
         }
 
@@ -55,6 +57,8 @@ function EditCategory() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
+
+            {error && <p className="error-text">{error}</p>}
 
             <Button 
                 onClick={handleSave}

@@ -38,6 +38,8 @@ function AddTransaction() {
 	const [pendingTransaction, setPendingTransaction] = useState(null)
 	const [warningMessage, setWarningMessage] = useState("")
 
+	const [error, setError] = useState("")
+
 	const [formData, setFormData] = useState({
 		amount: "",
 		type: "expense",
@@ -87,12 +89,12 @@ function AddTransaction() {
 		const amount = Number(formData.amount)
 
 		if (!amount || amount <= 0) {
-			alert("Enter a valid amount.")
+			setError("Enter a valid amount.")
 			return
 		}
 
 		if (!formData.categoryId) {
-			alert("Select a category.")
+			setError("Select a category.")
 			return
 		}
 
@@ -295,6 +297,8 @@ function AddTransaction() {
 					value={formData.notes}
 					onChange={(e) => handleChange("notes", e.target.value)}
 				/>
+
+				{error && <p className="error-text">{error}</p>}
 
 				<Button type="submit">Save Transaction</Button>
 			</form>

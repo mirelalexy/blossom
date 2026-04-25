@@ -11,10 +11,11 @@ function Amount() {
     const navigate = useNavigate()
     const { budget, updateBudget } = useBudget() 
     const [amount, setAmount] = useState(budget?.monthly_budget)
+    const [error, setError] = useState("")
 
     function handleSave() {
         if (!amount || amount <= 0) {
-            alert("Please enter a valid budget amount.")
+            setError("Please enter a valid budget amount.")
             return
         }
 
@@ -33,6 +34,8 @@ function Amount() {
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
             />
+
+            {error && <p className="error-text">{error}</p>}
 
             <Button 
                 onClick={handleSave}

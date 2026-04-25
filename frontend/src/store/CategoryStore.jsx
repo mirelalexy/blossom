@@ -8,6 +8,7 @@ const CategoryContext = createContext()
 export function CategoryProvider({ children }) {
     const { user } = useUser()
     const [categories, setCategories] = useState([])
+    const [error, setError] = useState("")
 
     useEffect(() => {
         if (!user) return
@@ -53,7 +54,7 @@ export function CategoryProvider({ children }) {
             const data = await res.json()
 
             if (!res.ok) {
-                alert(data.error)
+                setError("Error: ", data.error)
                 return
             }
 
@@ -102,7 +103,7 @@ export function CategoryProvider({ children }) {
             const data = await res.json()
 
             if (!res.ok) {
-                alert(data.error)
+                setError("Error: ", data.error)
                 return
             }
 
