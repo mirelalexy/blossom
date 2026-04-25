@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { parseLocalDate } from "../../utils/dateUtils"
 import { formatCurrency } from "../../utils/currencyUtils"
 import { isCurrentMonth } from "../../utils/dateUtils"
+import { isEvilMode, getEvilBudgetMessage } from "../../utils/evilBlossom"
 
 import Card from "../ui/Card"
 import Icon from "../ui/Icon"
@@ -24,19 +25,19 @@ function BudgetSnapshotCard({ transactions, budget, currency }) {
         let label, tone
 
         if (pct === 0) {
-            label = "You haven't spent anything yet this month."
+            label = isEvilMode() ? getEvilBudgetMessage({ pct, remaining, currency }) : "You haven't spent anything yet this month."
             tone = "calm"
         } else if (pct < 50) {
-            label = `${formatCurrency(remaining, currency)} still with us - you're doing well.`
+            label = isEvilMode() ? getEvilBudgetMessage({ pct, remaining, currency }) : `${formatCurrency(remaining, currency)} still with us - you're doing well.`
             tone = "calm"
         } else if (pct < 80) {
-            label = `Halfway through your budget. Still room to move gently.`
+            label = isEvilMode() ? getEvilBudgetMessage({ pct, remaining, currency }) : `Halfway through your budget. Still room to move gently.`
             tone = "neutral"
         } else if (pct < 100) {
-            label = `Getting close... ${formatCurrency(remaining, currency)} remaining.`
+            label = isEvilMode() ? getEvilBudgetMessage({ pct, remaining, currency }) : `Getting close... ${formatCurrency(remaining, currency)} remaining.`
             tone = "warn"
         } else {
-            label = `You've gone over this month - that's okay. Noticing it is what matters.`
+            label = isEvilMode() ? getEvilBudgetMessage({ pct, remaining, currency }) : `You've gone over this month - that's okay. Noticing it is what matters.`
             tone = "over"
         }
 
