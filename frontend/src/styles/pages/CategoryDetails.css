@@ -1,0 +1,146 @@
+/* HERO SECTION */
+.cd-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0 20px;
+    text-align: center;
+}
+
+.cd-icon-wrap {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.cd-icon-wrap--expense { 
+    background: var(--danger-soft); 
+    color: var(--danger); 
+}
+
+.cd-icon-wrap--income { 
+    background: var(--success-soft); 
+    color: var(--success); 
+}
+
+.cd-name {
+    font-size: 24px; 
+    font-weight: 700; 
+    letter-spacing: -0.4px;
+    color: var(--text-primary);
+}
+
+.cd-type-badge, .cd-default-badge {
+    font-size: 12px; 
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.cd-default-badge {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: var(--border-strong);
+}
+
+/* CARD SECTION */
+.cd-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-shadow);
+    padding: 18px 20px;
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px;
+}
+
+.cd-card-title {
+    font-size: 11px; 
+    font-weight: 600;
+    letter-spacing: 0.06em; 
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+/* STATS SECTION */
+.cd-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.cd-stat {
+    display: flex; 
+    flex-direction: column; 
+    gap: 3px;
+}
+
+.cd-stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.cd-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+}
+
+/* BUDGET SECTION */
+.cd-budget-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.cd-budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cd-budget-remaining {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--success);
+}
+
+.cd-budget-over { 
+    color: var(--danger);
+}
+
+.cd-budget-meta { 
+    font-size: 12px; 
+}
+
+/* NO BUDGET LINK */
+.cd-no-budget {
+    font-size: 13px;
+    line-height: 1.5; 
+}
+
+.cd-set-budget-link {
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cd-set-budget-link:hover { 
+        text-decoration: underline; 
+    }
+}
