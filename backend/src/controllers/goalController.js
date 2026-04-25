@@ -43,7 +43,7 @@ export async function getGoals(req, res) {
     
     try {
         const result = await pool.query(
-            `SELECT * FROM goals
+            `SELECT *, deadline::text AS deadline FROM goals
             WHERE user_id = $1
             ORDER BY created_at DESC`,
             [userId]
