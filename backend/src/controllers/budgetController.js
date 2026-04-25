@@ -14,9 +14,8 @@ export async function getBudget(req, res) {
             return res.json(null)
         }
 
-        const budget = budgetRes.rows[0]
-
-        const currentMonth = new Date().toISOString().slice(0, 7)
+        const now = new Date()
+        const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
 
         // run rollover only once per month
         if (budget.last_rollover_month !== currentMonth) {
