@@ -26,6 +26,7 @@ function SavingGoalCard({ goal }) {
     const [mode, setMode] = useState(null)  // null / add / withdraw
     const [amount, setAmount] = useState("")
     const [error, setError] = useState("")
+    const [expanded, setExpanded] = useState(false)
 
     const goalsExpenseCategory = categories.find(
         cat => cat.name === "Goals" && cat.type === "expense"
@@ -41,6 +42,8 @@ function SavingGoalCard({ goal }) {
 
     const remaining = goal.target_amount - goal.current_amount
     const isComplete = progress >= 100
+
+    const hasDetails = goal.notes || goal.link || goal.saving_mode
 
     function openMode(mode) {
         setMode(mode)
@@ -149,8 +152,12 @@ function SavingGoalCard({ goal }) {
                         <span className="goal-meta-chip goal-meta-chip--primary">Primary</span>
                     )}
 
+                    {goal.saving_mode === "auto" && !isComplete && (
+                        <span className="goal-meta-chip goal-meta-chip--auto">Auto</span>
+                    )}
+
                     {isComplete && (
-                        <span className="goal-meta-chip goal-meta-chip--done">Reached 🎉</span>
+                        <span className="goal-meta-chip goal-meta-chip--done">Reached</span>
                     )}
                 </div>
             </div>
@@ -160,14 +167,65 @@ function SavingGoalCard({ goal }) {
                     <span>{formatCurrency(goal.current_amount, currency)}</span>
                     <span>{progress}%</span>
                 </div>
+
                 <ProgressBar progress={progress} />
+
                 <div className="goal-target-row">
                     <span className="secondary-text">of {formatCurrency(goal.target_amount, currency)}</span>
+                    
                     {!isComplete && (
                         <span className="secondary-text">{formatCurrency(remaining, currency)} to go</span>
                     )}
                 </div>
             </div>
+
+            {hasDetails && (
+                <div className="goal-details">
+                    <button
+                        className="goal-details-toggle"
+                        onClick={() => setExpanded(v => !v)}
+                    >
+                        <span>{expanded ? "Hide Details" : "Show Details"}</span>
+                        <Icon name={expanded ? "hideDetails" : "seeDetails"} size={14} />
+                    </button>
+
+                    {expanded && (
+                        <div className="goal-details-body">
+                            {goal.saving_mode && (
+                                <div className="goal-detail-row">
+                                    <span className="goal-detail-label">Saving Mode</span>
+                                    <span className="goal-detail-value" style={{ textTransform: "capitalize" }}>
+                                        {goal.saving_mode}
+                                    </span>
+                                </div>
+                            )}
+
+                            {goal.notes && (
+                                <div className="goal-detail-row goal-detail-row--notes">
+                                    <span className="goal-detail-label">Notes</span>
+                                    <p className="goal-detail-value goal-detail-notes">
+                                        {goal.notes}
+                                    </p>
+                                </div>
+                            )}
+
+                            {goal.link && (
+                                <div className="goal-detail-row">
+                                    <span className="goal-detail-label">Link</span>
+                                    <a
+                                        href={goal.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="goal-detail-link"
+                                    >
+                                        Open →
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            )}
 
             {mode && (
                 <div className="goal-inline-input">
