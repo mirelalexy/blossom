@@ -124,7 +124,7 @@ function TransactionDetails() {
 			<div className="td-actions">
                 <Button
                     className="secondary"
-                    onClick={() => navigate(`/edit-transaction/${transaction.id}`)}
+                    onClick={() => navigate(`/transactions/edit/${transaction.id}`)}
                 >
                     Edit
                 </Button>
