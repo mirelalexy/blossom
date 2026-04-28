@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useRules } from "../../../store/RuleStore"
@@ -8,12 +9,20 @@ import Section from "../../../components/ui/Section"
 import SettingsCard from "../../../components/settings/SettingsCard"
 import SettingsItem from "../../../components/settings/SettingsItem"
 import RuleItem from "../../../components/settings/RuleItem"
+import ConfirmModal from "../../../components/ui/ConfirmModal"
 
 function CustomSpendingRules() {
     const navigate = useNavigate()
 
     const { rules, deleteRule } = useRules()
     const { getCategoryById } = useCategories()
+
+    const [pendingDeleteId, setPendingDeleteId] = useState(null)
+
+    function handleDeleteConfirm() {
+        deleteRule(pendingDeleteId)
+        setPendingDeleteId(null)
+    }
 
     return (
         <div className="page">
@@ -32,10 +41,7 @@ function CustomSpendingRules() {
                                     key={rule.id}
                                     rule={rule}
                                     category={category}
-                                    onDelete={(id) => {
-                                        const confirmed = window.confirm("Delete this rule?")
-                                        if (confirmed) deleteRule(id)
-                                    }}
+                                    onDelete={(id) => setPendingDeleteId(id)}
                                 />
                             )
                         })
@@ -47,6 +53,18 @@ function CustomSpendingRules() {
                     />
                 </SettingsCard>
             </Section>
+
+            {pendingDeleteId && (
+                <ConfirmModal
+                    title="Remove this rule?"
+                    message="The spending limit for this category will be removed. You can always add it back."
+                    confirmLabel="Remove"
+                    cancelLabel="Keep it"
+                    onConfirm={handleDeleteConfirm}
+                    onCancel={() => setPendingDeleteId(null)}
+                    variant="warning"
+                />
+            )}
         </div>
     )
 }
