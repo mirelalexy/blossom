@@ -23,11 +23,12 @@ import StatCard from "../components/journey/StatCard"
 import PieChart from "../components/charts/PieChart"
 import LineChart from "../components/charts/LineChart"
 import InsightChart from "../components/charts/InsightChart"
+import BlossomLoader from "../components/ui/BlossomLoader"
 
 import "../styles/pages/Journey.css"
 
 function Journey() {
-    const { transactions } = useTransactions()
+    const { transactions, loading } = useTransactions()
     const { stats: profileStats } = useProfile()
     const { currency } = useCurrency()
     const { categories } = useCategories()
@@ -37,6 +38,8 @@ function Journey() {
     const levelTitle = profileStats?.levelTitle || "Mindful Seed"
     const progress = profileStats?.progress || 0
     const levelStory = getLevelNarrative(level)
+
+    if (loading) return <BlossomLoader />
 
     // month selector state
     const currentMonthKey = toKey(new Date())
