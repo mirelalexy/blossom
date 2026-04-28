@@ -11,13 +11,24 @@ export function GoalsProvider({ children }) {
     const { showToast } = useToast()
     const [goals, setGoals] = useState([])
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            setGoals([])
+            setLoading(false)
+            return
+        }
         
         async function fetchGoals() {
             const token = localStorage.getItem("token")
 
-            if (!token) return
+            if (!token) {
+                setLoading(false)
+                return
+            }
+
+            setLoading(true)
 
             try {
                 const res = await fetch(`${API_URL}/api/goals`, {
@@ -38,6 +49,8 @@ export function GoalsProvider({ children }) {
                 setGoals(formatted)
             } catch (err) {
                 console.log("Fetch goals failed: ", err)
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -163,7 +176,7 @@ export function GoalsProvider({ children }) {
     }
 
     return (
-        <GoalsContext.Provider value={{ goals, addGoal, deleteGoal, updateGoal, addToGoal, withdrawFromGoal }}>
+        <GoalsContext.Provider value={{ goals, loading, addGoal, deleteGoal, updateGoal, addToGoal, withdrawFromGoal }}>
             {children}
         </GoalsContext.Provider>
     )
