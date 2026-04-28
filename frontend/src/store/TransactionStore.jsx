@@ -112,7 +112,10 @@ export function TransactionsProvider({ children }) {
                 },
             })
 
-            setTransactions(prev => prev.filter(t => t.id !== id))
+            // remove parent and future children from local state (recurring transactions)
+            const today = new Date().toISOString().slice(0, 10)
+
+            setTransactions(prev => prev.filter(t => t.id !== id && !(t.recurring_parent_id === id && t.date > today)))
 
             showToast({ message: "Transaction deleted" })
 
