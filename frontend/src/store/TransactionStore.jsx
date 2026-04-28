@@ -12,12 +12,19 @@ export function TransactionsProvider({ children }) {
     const { user } = useUser()
     const { showToast, showXPToast } = useToast()
     const [transactions, setTransactions] = useState([])
+
+    const [loading, setLoading] = useState(true)
     const { refreshApp } = useAppRefresh()
 
     async function fetchTransactions() {
         const token = localStorage.getItem("token")
 
-        if (!token) return
+        if (!token) {
+            setLoading(false)
+            return
+        }
+
+        setLoading(true)
 
         try {
             const res = await fetch(`${API_URL}/api/transactions`, {
@@ -38,11 +45,17 @@ export function TransactionsProvider({ children }) {
             setTransactions(formatted)
         } catch (err) {
             console.log("Fetch transactions failed: ", err)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            setTransactions([])
+            setLoading(false)
+            return
+        }
 
         fetchTransactions()
     }, [user])
@@ -163,7 +176,7 @@ export function TransactionsProvider({ children }) {
     }
 
     return (
-        <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, reassignCategory, fetchTransactions }}>
+        <TransactionsContext.Provider value={{ transactions, loading, addTransaction, deleteTransaction, updateTransaction, reassignCategory, fetchTransactions }}>
             {children}
         </TransactionsContext.Provider>
     )
