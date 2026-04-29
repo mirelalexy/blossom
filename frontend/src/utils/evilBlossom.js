@@ -88,3 +88,39 @@ export const evilStreakTiers = [
         ]
     }
 ]
+
+export const evilOnboarding = {
+    steps: {
+        0: "So you've decided to try this.",
+        1: "Good start. Two more things and you're set.",
+        2: "Almost there. One more.",
+        3: "Ready. This is where it begins. Or doesn't."
+    },
+    featureCards: [
+        {
+            icon: "transactions",
+            title: "Log with honesty",
+            body: "Every transaction you log tells me something. I track what you spend, how you felt, and why. The picture I build is only as good as what you give me. Don't lie to me."
+        },
+        {
+            icon: "goals",
+            title: "Save for something real",
+            body: "Set a primary goal. I'll keep it visible. Whether you actually work toward it is up to you."
+        },
+        {
+            icon: "profile",
+            title: "Earn your way up",
+            body: "Every transaction earns XP. Streaks and challenges add more. Levels are a way of tracking how long you've been honest with yourself."
+        },
+        {
+            icon: "heart",
+            title: "Your Journey page",
+            body: "Once you've logged enough, I'll show you what I've noticed. Mood vs spending. Impulse vs planned. It won't always be flattering. That's the point."
+        },
+        {
+            icon: "gem",
+            title: "Earn your rewards",
+            body: "Set a task. Complete it. Then claim what you promised yourself - guilt-free, because you actually earned it."
+        }
+    ]
+}

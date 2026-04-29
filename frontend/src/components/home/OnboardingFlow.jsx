@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { evilOnboarding } from "../../utils/evilBlossom"
 
 import LevelCard from "../profile/LevelCard"
 import Button from "../ui/Button"
@@ -38,21 +39,24 @@ const FEATURE_CARDS = [
     },
 ]
 
-function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgress, onNavigate }) {
+function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgress, onNavigate, evil }) {
     const navigate = useNavigate()
+    const content = evil ? evilOnboarding : null
 
     return (
         <div className="onboarding">
             {/* STEP PROGRESS */}
             <div className="onboarding-progress">
                 <p className="onboarding-progress-label">
-                    {stepsCompleted === 0
-                        ? "Let's set things up together."
-                        : stepsCompleted === 1
-                        ? "Good start. Two more things and you're ready."
-                        : stepsCompleted === 2
-                        ? "Almost there - one more step."
-                        : "You're all set. This is where it begins."
+                    {evil
+                        ? content.steps[stepsCompleted]
+                        : stepsCompleted === 0
+                            ? "Let's set things up together."
+                            : stepsCompleted === 1
+                            ? "Good start. Two more things and you're ready."
+                            : stepsCompleted === 2
+                            ? "Almost there - one more step."
+                            : "You're all set. This is where it begins."
                     }
                 </p>
 
@@ -62,25 +66,37 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
                         icon="transactions"
                         label="Log your first transaction"
                         cta="I'm ready"
-                        hint="This is the most important thing I can learn from you."
+                        hint={
+                            evil
+                                ? "This is where I start understanding you. What you log matters."
+                                : "This is the most important thing I can learn from you."
+                        }
                         onAction={() => navigate("/transactions/add")}
                     />
 
                     <OnboardingStep 
                         done={steps.hasGoal}
                         icon="piggyBank"
-                        label="Set a saving goal"
+                        label={evil ? "Choose a goal" : "Set a saving goal"}
                         cta="Let's go"
-                        hint="What are you working toward? Even a small goal changes how you see money."
+                        hint={
+                            evil
+                                ? "Pick something you say matters. We'll see if you treat it that way."
+                                : "What are you working toward? Even a small goal changes how you see money."
+                        }
                         onAction={() => navigate("/goals/add")}
                     />
 
                     <OnboardingStep 
                         done={steps.hasBudget}
                         icon="monthlyBudget"
-                        label="Set a monthly budget"
+                        label={evil ? "Define your limit" : "Set a monthly budget"}
                         cta="Do it now"
-                        hint="I'll use this to warn you gently, not shame you."
+                        hint={
+                            evil
+                                ? "I'll use this to tell you when you're going off track. What you do with that is your problem."
+                                : "I'll use this to warn you gently, not shame you."
+                        }
                         onAction={() => navigate("/settings/budget")}
                     />
                 </div>
@@ -107,7 +123,7 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
             {/* WHAT BLOSSOM CAN DO */}
             <Section title="What We'll Do Together">
                 <div className="feature-cards">
-                    {FEATURE_CARDS.map(card => (
+                    {(evil ? content.featureCards : FEATURE_CARDS).map(card => (
                         <FeatureCard key={card.icon} {...card} />
                     ))}
                 </div>
@@ -118,8 +134,10 @@ function OnboardingFlow({ steps, stepsCompleted, level, levelTitle, levelProgres
                 <p className="onboarding-questions-title">Do you have any questions?</p>
                 
                 <p className="secondary-text">
-                    I know this is a lot to take in. Check out my FAQ - it covers
-                    everything from how XP works to what the mood tags are for.
+                    {evil
+                        ? "If you're confused, read the FAQ. It's all there."
+                        : "I know this is a lot to take in. Check out my FAQ - it covers everything from how XP works to what the mood tags are for."
+                    }
                 </p>
 
                 <Button 

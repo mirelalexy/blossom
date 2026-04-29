@@ -163,6 +163,7 @@ function Home() {
 					levelTitle={levelTitle}
 					levelProgress={levelProgress}
 					onNavigate={navigate}
+					evil={isEvilMode()}
 				/>
 			) : (
 				/* RETURNING USER FLOW */
