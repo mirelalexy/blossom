@@ -43,7 +43,6 @@ import LevelCard from "../components/profile/LevelCard"
 import OnboardingFlow from "../components/home/OnboardingFlow"
 
 import "../styles/pages/Home.css"
-import TipCard from "../components/tips/TipCard"
 
 function Home() {
 	const navigate = useNavigate()
