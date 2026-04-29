@@ -8,23 +8,10 @@ export function UserProvider({ children }) {
     const [loading, setLoading] = useState(true)
 
     async function fetchUser() {
-        const token = localStorage.getItem("token")
-
-        if (!token) {
-            setUser(null)
-            setLoading(false)
-            return
-        }
+        setLoading(true)
 
         try {
             const res = await apiFetch("/api/users/me")
-
-            if (res.status === 401) {
-                localStorage.removeItem("token")
-                setUser(null)
-                setLoading(false)
-                return
-            }
 
             const data = await res.json()
 
@@ -36,6 +23,7 @@ export function UserProvider({ children }) {
             })
         } catch (err) {
             console.log("Failed to fetch user: ", err)
+            setUser(null)
         } finally {
             setLoading(false)
         }
@@ -46,7 +34,7 @@ export function UserProvider({ children }) {
     }, [])
 
     async function updateUser(field, value) {
-        const token = localStorage.getItem("token")
+        const prevUser = user
 
         setUser(prev => ({
             ...prev,
@@ -60,12 +48,11 @@ export function UserProvider({ children }) {
             })
         } catch (err) {
             console.log("Update user failed: ", err)
+            setUser(prevUser) // rollback
         }
     }
 
     async function uploadAvatar(file) {
-        const token = localStorage.getItem("token")
-
         const formData = new FormData()
         formData.append("image", file)
 
@@ -73,6 +60,10 @@ export function UserProvider({ children }) {
             method: "POST",
             body: formData
         })
+
+        if (!res.ok) {
+            throw new Error("Upload failed")
+        }
 
         const data = await res.json()
 
@@ -85,8 +76,6 @@ export function UserProvider({ children }) {
     }
 
     async function removeAvatar() {
-        const token = localStorage.getItem("token")
-
         const res = await apiFetch("/api/users/avatar", {
             method: "DELETE"
         })
@@ -102,8 +91,6 @@ export function UserProvider({ children }) {
     }
 
     async function uploadBanner(file) {
-        const token = localStorage.getItem("token")
-
         const formData = new FormData()
         formData.append("image", file)
 
@@ -111,6 +98,10 @@ export function UserProvider({ children }) {
             method: "POST",
             body: formData
         })
+
+        if (!res.ok) {
+            throw new Error("Upload failed")
+        }
 
         const data = await res.json()
 
@@ -123,8 +114,6 @@ export function UserProvider({ children }) {
     }
 
     async function removeBanner() {
-        const token = localStorage.getItem("token")
-
         const res = await apiFetch("/api/users/banner", {
             method: "DELETE"
         })
@@ -140,8 +129,6 @@ export function UserProvider({ children }) {
     }
 
     async function changePassword(currentPassword, newPassword) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/users/password", {
                 method: "PATCH",
@@ -162,8 +149,6 @@ export function UserProvider({ children }) {
     } 
 
     async function deleteAccount(password) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/users/account", {
                 method: "DELETE",
@@ -187,10 +172,6 @@ export function UserProvider({ children }) {
     }
 
     async function resetApp(password) {
-        const token = localStorage.getItem("token")
-
-        if (!token) return
-
         try {
             const res = await apiFetch("/api/users/reset-app", {
                 method: "POST",

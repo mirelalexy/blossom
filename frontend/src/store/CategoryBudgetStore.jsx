@@ -31,8 +31,6 @@ export function CategoryBudgetProvider({ children }) {
     }, [user])
 
     async function updateCategoryBudget(categoryId, amount) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/category-budgets/${categoryId}`, {
                 method: "PUT",

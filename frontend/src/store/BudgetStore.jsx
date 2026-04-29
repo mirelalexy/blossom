@@ -11,11 +11,7 @@ export function BudgetProvider({ children }) {
     useEffect(() => {
         if (!user) return
 
-        async function fetchBudget() {
-            const token = localStorage.getItem("token")
-    
-            if (!token) return
-    
+        async function fetchBudget() {    
             try {
                 const res = await apiFetch("/api/budget")
     
@@ -45,8 +41,6 @@ export function BudgetProvider({ children }) {
     }, [user])
 
     async function saveBudget(updatedBudget) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/budget", {
                 method: "PUT",

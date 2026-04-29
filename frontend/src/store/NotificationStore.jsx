@@ -9,10 +9,6 @@ export function NotificationProvider({ children }) {
     const [notifications, setNotifications] = useState([])
 
     async function fetchNotifications() {
-        const token = localStorage.getItem("token")
-        
-        if (!token) return
-        
         try { 
             const res = await apiFetch("/api/notifications")
         
@@ -31,8 +27,6 @@ export function NotificationProvider({ children }) {
     }, [user])
 
     async function addNotification(notification, eventKey = null) {
-        const token = localStorage.getItem("token")
-        
         // guard to prevent spam before request
         if (eventKey) {
             const alreadyExists = notifications.some(n => n.event_key === eventKey)
@@ -54,8 +48,6 @@ export function NotificationProvider({ children }) {
     }
 
     async function markAsRead(id) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/notifications/${id}`, {
                 method: "PATCH"

@@ -12,11 +12,7 @@ export function CategoryProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchCategories() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-        
+        async function fetchCategories() {      
             try { 
                 const res = await apiFetch("/api/categories")
         
@@ -32,7 +28,6 @@ export function CategoryProvider({ children }) {
     }, [user])
 
     async function addCategory(name, type = "expense") {
-        const token = localStorage.getItem("token")
         const trimmed = name.trim()
         if (!trimmed) return
 
@@ -56,8 +51,6 @@ export function CategoryProvider({ children }) {
     }
 
     async function renameCategory(id, newName) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/categories/${id}`, {
                 method: "PUT",
@@ -77,8 +70,6 @@ export function CategoryProvider({ children }) {
     }
 
     async function deleteCategory(id) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/categories/${id}`, {
                 method: "DELETE"

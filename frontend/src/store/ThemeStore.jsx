@@ -19,11 +19,7 @@ export function ThemeProvider({ children }) {
             return
         }
 
-        async function fetchTheme() {
-            const token = localStorage.getItem("token")
-    
-            if (!token) return
-    
+        async function fetchTheme() {    
             try { 
                 const res = await apiFetch("/api/users/me")
     
@@ -39,8 +35,6 @@ export function ThemeProvider({ children }) {
     }, [user])
 
     async function updateTheme(newTheme) {
-        const token = localStorage.getItem("token")
-
         // instant UI update then save in DB
         setTheme(newTheme)
 

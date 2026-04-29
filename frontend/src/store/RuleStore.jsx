@@ -11,11 +11,7 @@ export function RuleProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchRules() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-        
+        async function fetchRules() {        
             try { 
                 const res = await apiFetch("/api/rules")
         
@@ -35,8 +31,6 @@ export function RuleProvider({ children }) {
     }, [user])
     
     async function addRule(rule) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/rules", {
                 method: "POST",
@@ -54,8 +48,6 @@ export function RuleProvider({ children }) {
     }
 
     async function deleteRule(id) {
-        const token = localStorage.getItem("token")
-
         try {
             await apiFetch(`/api/rules/${id}`, {
                 method: "DELETE"
@@ -68,8 +60,6 @@ export function RuleProvider({ children }) {
     }
 
     async function updateRule(rule) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/rules/${rule.id}`, {
                 method: "PUT",

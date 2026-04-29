@@ -20,13 +20,6 @@ export function GoalsProvider({ children }) {
         }
         
         async function fetchGoals() {
-            const token = localStorage.getItem("token")
-
-            if (!token) {
-                setLoading(false)
-                return
-            }
-
             setLoading(true)
 
             try {
@@ -53,8 +46,6 @@ export function GoalsProvider({ children }) {
     }, [user])
 
     async function addGoal(goal) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/goals", {
                 method: "POST",
@@ -72,8 +63,6 @@ export function GoalsProvider({ children }) {
     }
 
     async function deleteGoal(id) {
-        const token = localStorage.getItem("token")
-
         try {
             await apiFetch(`/api/goals/${id}`, {
                 method: "DELETE",
@@ -89,8 +78,6 @@ export function GoalsProvider({ children }) {
     }
 
     async function updateGoal(goal) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/goals/${goal.id}`, {
                 method: "PUT",

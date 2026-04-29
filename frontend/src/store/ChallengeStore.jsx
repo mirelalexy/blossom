@@ -11,11 +11,7 @@ export function ChallengeProvider({ children }) {
     const [challenges, setChallenges] = useState([])
     const prevChallengesRef = useRef([])
 
-    async function fetchChallenges() {
-        const token = localStorage.getItem("token")
-            
-        if (!token) return
-            
+    async function fetchChallenges() {            
         try { 
             const res = await apiFetch("/api/challenges")
             

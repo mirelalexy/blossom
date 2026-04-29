@@ -11,11 +11,7 @@ export function NotificationSettingsProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchNotificationSettings() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-        
+        async function fetchNotificationSettings() {        
             try { 
                 const res = await apiFetch("/api/notification-settings")
         
@@ -32,8 +28,6 @@ export function NotificationSettingsProvider({ children }) {
 
     async function updateNotificationSetting(field, value) {
         if (!notificationSettings) return
-
-        const token = localStorage.getItem("token")
 
         // instant UI update then save in DB
         const updated = { ...notificationSettings, [field]: value }

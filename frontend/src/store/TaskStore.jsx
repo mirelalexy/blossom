@@ -13,11 +13,7 @@ export function TaskProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchTasks() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-        
+        async function fetchTasks() {        
             try { 
                 const res = await apiFetch("/api/tasks")
         
@@ -32,8 +28,6 @@ export function TaskProvider({ children }) {
     }, [user])
     
     async function addTask(title) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/tasks", {
                 method: "POST",
@@ -49,8 +43,6 @@ export function TaskProvider({ children }) {
     }
 
     async function toggleTask(id) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/tasks/${id}`, {
                 method: "PATCH"
@@ -68,8 +60,6 @@ export function TaskProvider({ children }) {
     }
 
     async function deleteTask(id) {
-        const token = localStorage.getItem("token")
-
         try {
             await apiFetch(`/api/tasks/${id}`, {
                 method: "DELETE"
@@ -85,8 +75,6 @@ export function TaskProvider({ children }) {
     }
 
     async function updateTask(id, title) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/tasks/${id}`, {
                 method: "PUT",

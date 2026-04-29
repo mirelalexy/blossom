@@ -9,11 +9,7 @@ export function ProfileProvider({ children }) {
     const [stats, setStats] = useState(null)
     const [loading, setLoading] = useState(true)
     
-    async function fetchStats() {
-        const token = localStorage.getItem("token")
-            
-        if (!token) return
-            
+    async function fetchStats() { 
         try { 
             const res = await apiFetch("/api/profile/stats")
             

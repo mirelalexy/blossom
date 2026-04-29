@@ -17,11 +17,7 @@ export function RewardProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchRewards() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-        
+        async function fetchRewards() {        
             try { 
                 const res = await apiFetch("/api/rewards")
         
@@ -36,8 +32,6 @@ export function RewardProvider({ children }) {
     }, [user])
     
     async function addReward({ title, taskId, link, amount }) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch("/api/rewards", {
                 method: "POST",
@@ -55,8 +49,6 @@ export function RewardProvider({ children }) {
     }
 
     async function claimReward(id) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/rewards/${id}/claim`, {
                 method: "PATCH"
@@ -80,8 +72,6 @@ export function RewardProvider({ children }) {
     }
 
     async function deleteReward(id) {
-        const token = localStorage.getItem("token")
-
         try {
             await apiFetch(`/api/rewards/${id}`, {
                 method: "DELETE"
@@ -97,8 +87,6 @@ export function RewardProvider({ children }) {
     }
 
     async function updateReward(id, updates) {
-        const token = localStorage.getItem("token")
-
         try {
             const res = await apiFetch(`/api/rewards/${id}`, {
                 method: "PUT",

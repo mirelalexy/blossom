@@ -16,13 +16,6 @@ export function TransactionsProvider({ children }) {
     const { refreshApp } = useAppRefresh()
 
     async function fetchTransactions() {
-        const token = localStorage.getItem("token")
-
-        if (!token) {
-            setLoading(false)
-            return
-        }
-
         setLoading(true)
 
         try {
@@ -56,8 +49,6 @@ export function TransactionsProvider({ children }) {
     }, [user])
 
     async function addTransaction(transaction) {
-        const token = localStorage.getItem("token")
-
         const payload = {
             ...transaction,
             category_id: transaction.categoryId
@@ -93,8 +84,6 @@ export function TransactionsProvider({ children }) {
     }
 
     async function deleteTransaction(id) {
-        const token = localStorage.getItem("token")
-
         try {
             await apiFetch(`/api/transactions/${id}`, {
                 method: "DELETE"
@@ -115,8 +104,6 @@ export function TransactionsProvider({ children }) {
     }
 
     async function updateTransaction(transaction) {
-        const token = localStorage.getItem("token")
-
         const payload = {
             ...transaction,
             category_id: transaction.categoryId

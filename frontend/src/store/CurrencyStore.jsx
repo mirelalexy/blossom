@@ -12,10 +12,6 @@ export function CurrencyProvider({ children }) {
         if (!user) return
 
         async function fetchCurrency() {
-            const token = localStorage.getItem("token")
-        
-            if (!token) return
-
             const res = await apiFetch("/api/users/me")
         
             const data = await res.json()
@@ -27,8 +23,6 @@ export function CurrencyProvider({ children }) {
     }, [user])
 
     async function updateCurrency(newCurrency) {
-        const token = localStorage.getItem("token")
-
         // instant UI update then save in DB
         setCurrency(newCurrency)
 
