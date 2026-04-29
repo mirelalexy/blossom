@@ -206,3 +206,15 @@ export const EVIL_FAQ = [
         content: "Yes. Go to Settings → Data & Privacy → Export Data. You'll get a CSV file with your full transaction history - date, title, category, type, amount, mood, intent, and notes. You can open it in any spreadsheet app."
     }
 ]
+
+export function getEvilIdleMessage() {
+    const messages = [
+        "Still thinking about it?",
+        "You can log it. I'm not stopping you...",
+        "It's just a number. Add it.",
+        "Waiting doesn't make it disappear.",
+        "Whenever you're ready..."
+    ]
+
+    return messages[Math.floor(Math.random() * messages.length)]
+}

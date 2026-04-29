@@ -264,7 +264,13 @@ ul strong {
     font-weight: 600;
 }
 
-/* -- UNDER REVIEW -- */
+.idle-nudge {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
 .bottom-add-icon {
     color: var(--accent);
 }

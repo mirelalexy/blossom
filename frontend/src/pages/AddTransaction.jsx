@@ -10,6 +10,8 @@ import { useCategoryBudgets } from "../store/CategoryBudgetStore"
 import { checkSpendingWarnings } from "../utils/checkSpendingWarnings"
 import { formatLocalDate } from "../utils/dateUtils"
 
+import useIdleNudge from "../hooks/useIdleNudge"
+
 import Button from "../components/ui/Button"
 import Input from "../components/forms/Input"
 import Select from "../components/forms/Select"
@@ -22,6 +24,9 @@ import ConfirmModal from "../components/ui/ConfirmModal"
 
 function AddTransaction() {
 	const navigate = useNavigate()
+
+	const [interactionCount, setInteractionCount] = useState(0)
+    const [nudge, setNudge] = useState(null)
 
 	const { id } = useParams()
 
@@ -65,7 +70,19 @@ function AddTransaction() {
 		})
 	}, [existingTransaction])
 
+	function handleInteraction() {
+		setInteractionCount(prev => prev + 1)
+		setNudge(null)
+	}
+
+	useIdleNudge({
+        hasInteracted: interactionCount,
+        onTrigger: (msg) => setNudge(msg)
+    })
+
 	function handleChange(field, value) {
+		handleInteraction()
+
 		setFormData((prev) => {
 			if (field === "type") {
 				return {
@@ -188,7 +205,13 @@ function AddTransaction() {
 				}
 			/>
 
-			<form className="form" onSubmit={handleSubmit}>
+			{nudge && (
+                <p className="idle-nudge italic-p">
+                    {nudge}
+                </p>
+            )}
+
+			<form className="form" onSubmit={handleSubmit} onFocus={handleInteraction} onChange={handleInteraction}>
 				{/* Amount */}
 				<Input
 					label="Amount"
