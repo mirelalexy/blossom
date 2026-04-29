@@ -11,16 +11,6 @@ export const levelMilestones = {
     100: "Eternal Bloom"
 }
 
-export function calculateXP({ transactions, streak = 0, goalsCompleted = 0, weeklyLimitsHit = 0, completedChallenges = 0 }) {
-    const transactionXP = transactions.length * XP.TRANSACTION
-    const streakXP = streak * XP.STREAK_PER_DAY
-    const goalsXP = goalsCompleted * XP.GOAL_COMPLETED
-    const limitsXP = weeklyLimitsHit * XP.WEEKLY_LIMIT_RESPECTED
-    const challengesXP = completedChallenges * XP.CHALLENGE_COMPLETED
-
-    return transactionXP + streakXP + goalsXP + limitsXP + challengesXP
-}
-
 export function getXPForLevel(level) {
     if (level <= 3) return level * 30 // fast early
 
