@@ -48,7 +48,7 @@ export function BudgetProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await apiFetch("/api/goals", {
+            const res = await apiFetch("/api/budget", {
                 method: "PUT",
                 body: JSON.stringify(updatedBudget)
             })
