@@ -27,6 +27,7 @@ import {
 } from "../utils/dateUtils"
 
 import { isEvilMode, getEvilBudgetMessage, getEvilGreeting } from "../utils/evilBlossom"
+import { pickVoice } from "../utils/voice"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -125,7 +126,7 @@ function Home() {
 	const topCategory = getCategoryById(topCategoryId)
 
 	const message = getNextMonthInfo()
-	const greeting = isEvilMode
+	const greeting = isEvilMode()
 		? getEvilGreeting(user?.displayName)
 		: getGreeting(user?.displayName)
 
@@ -194,7 +195,12 @@ function Home() {
 					<Section title="Recent">
 						{recentTransactions.length === 0 ? (
 							<div className="home-no-recent">
-								<p className="secondary-text">Nothing logged in the last 7 days. Whenever you're ready, I'm here.</p>
+								<p className="secondary-text">
+									{pickVoice(
+										"Nothing logged in the last 7 days. Whenever you're ready, I'm here.",
+										"Nothing logged in the last 7 days. I noticed."
+									)}
+								</p>
 							
 								<Button
 									className="secondary"
