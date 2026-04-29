@@ -23,9 +23,10 @@ import {
 	getTimeOfDay,
 	getStartOfDay,
 	parseLocalDate,
-	getDayDiff,
-	getEvilGreeting
+	getDayDiff
 } from "../utils/dateUtils"
+
+import { isEvilMode, getEvilBudgetMessage, getEvilGreeting } from "../utils/evilBlossom"
 
 import GreetingHeader from "../components/home/GreetingHeader"
 import PrimaryGoalCard from "../components/home/PrimaryGoalCard"
@@ -46,7 +47,6 @@ import TipCard from "../components/tips/TipCard"
 function Home() {
 	const navigate = useNavigate()
 	const { theme } = useTheme()
-	const isEvil = theme === "evil-blossom"
 
 	const today = getStartOfDay(new Date())
 
@@ -125,7 +125,7 @@ function Home() {
 	const topCategory = getCategoryById(topCategoryId)
 
 	const message = getNextMonthInfo()
-	const greeting = isEvil 
+	const greeting = isEvilMode
 		? getEvilGreeting(user?.displayName)
 		: getGreeting(user?.displayName)
 

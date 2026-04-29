@@ -1,4 +1,5 @@
 import { formatCurrency } from "./currencyUtils"
+import { getTimeOfDay } from "./dateUtils"
 
 export function isEvilMode() {
     return document.documentElement.getAttribute("data-theme") === "evil-blossom"
@@ -10,4 +11,13 @@ export function getEvilBudgetMessage({ pct, remaining, currency }) {
     else if (pct < 80) return `${Math.round(pct)}% gone. Halfway through the budget, roughly.`
     else if (pct < 100) return `${Math.round(pct)}% used. You can see the edge from here.`
     else return `Over by ${formatCurrency(remaining, currency)}. It happened.`
+}
+
+export function getEvilGreeting(name) {
+    const time = getTimeOfDay()
+
+    if (time === "morning") return `Up early, ${name}...`
+    if (time === "afternoon") return `${name}.`
+    if (time === "evening") return `Evening, ${name}.`
+    return `Still awake, ${name}?`
 }
