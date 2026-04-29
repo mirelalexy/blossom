@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const ThemeContext = createContext()
 
@@ -26,11 +25,7 @@ export function ThemeProvider({ children }) {
             if (!token) return
     
             try { 
-                const res = await fetch(`${API_URL}/api/users/me`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/users/me")
     
                 const data = await res.json()
         
@@ -50,12 +45,8 @@ export function ThemeProvider({ children }) {
         setTheme(newTheme)
 
         try {
-            await fetch(`${API_URL}/api/users/settings`, {
+            await apiFetch("/api/users/settings", {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ theme: newTheme })
             })
         } catch (err) {

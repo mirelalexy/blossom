@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const UserContext = createContext()
 
@@ -18,11 +17,7 @@ export function UserProvider({ children }) {
         }
 
         try {
-            const res = await fetch(`${API_URL}/api/users/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await apiFetch("/api/users/me")
 
             if (res.status === 401) {
                 localStorage.removeItem("token")
@@ -59,12 +54,8 @@ export function UserProvider({ children }) {
         }))
 
         try {
-            await fetch(`${API_URL}/api/users/settings`, {
+            await apiFetch("/api/users/settings", {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ [field]: value })
             })
         } catch (err) {
@@ -78,11 +69,8 @@ export function UserProvider({ children }) {
         const formData = new FormData()
         formData.append("image", file)
 
-        const res = await fetch (`${API_URL}/api/users/avatar`, {
+        const res = await apiFetch("/api/users/avatar", {
             method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
             body: formData
         })
 
@@ -99,11 +87,8 @@ export function UserProvider({ children }) {
     async function removeAvatar() {
         const token = localStorage.getItem("token")
 
-        const res = await fetch (`${API_URL}/api/users/avatar`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+        const res = await apiFetch("/api/users/avatar", {
+            method: "DELETE"
         })
 
         if (!res.ok) {
@@ -122,11 +107,8 @@ export function UserProvider({ children }) {
         const formData = new FormData()
         formData.append("image", file)
 
-        const res = await fetch (`${API_URL}/api/users/banner`, {
+        const res = await apiFetch("/api/users/banner", {
             method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
             body: formData
         })
 
@@ -143,11 +125,8 @@ export function UserProvider({ children }) {
     async function removeBanner() {
         const token = localStorage.getItem("token")
 
-        const res = await fetch (`${API_URL}/api/users/banner`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+        const res = await apiFetch("/api/users/banner", {
+            method: "DELETE"
         })
 
         if (!res.ok) {
@@ -164,12 +143,8 @@ export function UserProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/users/password`, {
+            const res = await apiFetch("/api/users/password", {
                 method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ currentPassword, newPassword })
             })
 
@@ -190,12 +165,8 @@ export function UserProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/users/account`, {
+            const res = await apiFetch("/api/users/account", {
                 method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ password })
             })
 
@@ -221,12 +192,8 @@ export function UserProvider({ children }) {
         if (!token) return
 
         try {
-            const res = await fetch(`${API_URL}/api/users/reset-app`, {
+            const res = await apiFetch("/api/users/reset-app", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ password })
             })
 

@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const NotificationSettingsContext = createContext()
 
@@ -18,11 +17,7 @@ export function NotificationSettingsProvider({ children }) {
             if (!token) return
         
             try { 
-                const res = await fetch(`${API_URL}/api/notification-settings`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/notification-settings")
         
                 const data = await res.json()
             
@@ -44,12 +39,8 @@ export function NotificationSettingsProvider({ children }) {
         const updated = { ...notificationSettings, [field]: value }
         setNotificationSettings(updated)
 
-        await fetch(`${API_URL}/api/notification-settings`, {
+        await apiFetch("/api/notification-settings", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
             body: JSON.stringify(updated)
         })
     }

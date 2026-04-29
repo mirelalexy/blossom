@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const CategoryContext = createContext()
 
@@ -19,11 +18,7 @@ export function CategoryProvider({ children }) {
             if (!token) return
         
             try { 
-                const res = await fetch(`${API_URL}/api/categories`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/categories")
         
                 const data = await res.json()
             
@@ -42,12 +37,8 @@ export function CategoryProvider({ children }) {
         if (!trimmed) return
 
         try {
-            const res = await fetch(`${API_URL}/api/categories`, {
+            const res = await apiFetch("/api/categories", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ name: trimmed, type })
             })
 
@@ -68,12 +59,8 @@ export function CategoryProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/categories/${id}`, {
+            const res = await apiFetch(`/api/categories/${id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ name: newName })
             })
 
@@ -93,11 +80,8 @@ export function CategoryProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/categories/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const res = await apiFetch(`/api/categories/${id}`, {
+                method: "DELETE"
             })
 
             const data = await res.json()

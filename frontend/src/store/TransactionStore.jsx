@@ -3,8 +3,7 @@ import { useUser } from "./UserStore"
 import { useToast } from "./ToastStore"
 
 import { useAppRefresh } from "../hooks/useAppRefresh"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const TransactionsContext = createContext()
 
@@ -27,11 +26,7 @@ export function TransactionsProvider({ children }) {
         setLoading(true)
 
         try {
-            const res = await fetch(`${API_URL}/api/transactions`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await apiFetch("/api/transactions")
 
             const data = await res.json()
 
@@ -69,12 +64,8 @@ export function TransactionsProvider({ children }) {
         }
 
         try {
-            const res = await fetch(`${API_URL}/api/transactions`, {
+            const res = await apiFetch("/api/transactions", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(payload)
             })
 
@@ -105,11 +96,8 @@ export function TransactionsProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`${API_URL}/api/transactions/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
+            await apiFetch(`/api/transactions/${id}`, {
+                method: "DELETE"
             })
 
             // remove parent and future children from local state (recurring transactions)
@@ -135,12 +123,8 @@ export function TransactionsProvider({ children }) {
         }
 
         try {
-            const res = await fetch(`${API_URL}/api/transactions/${transaction.id}`, {
+            const res = await apiFetch(`$/api/transactions/${transaction.id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(payload)
             })
 

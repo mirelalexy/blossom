@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react"
 import { useUser } from "./UserStore"
 import { useToast } from "./ToastStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const ChallengeContext = createContext()
 
@@ -18,11 +17,7 @@ export function ChallengeProvider({ children }) {
         if (!token) return
             
         try { 
-            const res = await fetch(`${API_URL}/api/challenges`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await apiFetch("/api/challenges")
             
             const data = await res.json()
 

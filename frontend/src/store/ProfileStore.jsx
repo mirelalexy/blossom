@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const ProfileContext = createContext()
 
@@ -16,11 +15,7 @@ export function ProfileProvider({ children }) {
         if (!token) return
             
         try { 
-            const res = await fetch(`${API_URL}/api/profile/stats`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await apiFetch("/api/profile/stats")
             
             const data = await res.json()
                 

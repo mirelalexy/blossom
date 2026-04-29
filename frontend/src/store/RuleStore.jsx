@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const RuleContext = createContext()
 
@@ -18,11 +17,7 @@ export function RuleProvider({ children }) {
             if (!token) return
         
             try { 
-                const res = await fetch(`${API_URL}/api/rules`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/rules")
         
                 const data = await res.json()
                 setRules(
@@ -43,12 +38,8 @@ export function RuleProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/rules`, {
+            const res = await apiFetch("/api/rules", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(rule)
             })
 
@@ -66,11 +57,8 @@ export function RuleProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`${API_URL}/api/rules/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
+            await apiFetch(`/api/rules/${id}`, {
+                method: "DELETE"
             })
 
             setRules(prev => prev.filter(r => r.id !== id))
@@ -83,12 +71,8 @@ export function RuleProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/rules/${rule.id}`, {
+            const res = await apiFetch(`/api/rules/${rule.id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(rule)
             })
 

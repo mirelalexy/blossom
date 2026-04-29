@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const BudgetContext = createContext()
 
@@ -18,11 +17,7 @@ export function BudgetProvider({ children }) {
             if (!token) return
     
             try {
-                const res = await fetch(`${API_URL}/api/budget`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/budget")
     
                 const data = await res.json()
 
@@ -53,12 +48,8 @@ export function BudgetProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/budget`, {
+            const res = await apiFetch("/api/goals", {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(updatedBudget)
             })
 

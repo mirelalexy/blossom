@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const CategoryBudgetContext = createContext()
 
@@ -18,11 +17,7 @@ export function CategoryBudgetProvider({ children }) {
             if (!token) return
     
             try {
-                const res = await fetch(`${API_URL}/api/category-budgets`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/category-budgets")
     
                 const data = await res.json()
     
@@ -39,12 +34,8 @@ export function CategoryBudgetProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/category-budgets/${categoryId}`, {
+            const res = await apiFetch(`/api/category-budgets/${categoryId}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({
                     monthly_limit: Number(amount)
                 })

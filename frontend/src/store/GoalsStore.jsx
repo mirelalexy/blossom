@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
 import { useToast } from "./ToastStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const GoalsContext = createContext()
 
@@ -31,11 +30,7 @@ export function GoalsProvider({ children }) {
             setLoading(true)
 
             try {
-                const res = await fetch(`${API_URL}/api/goals`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/goals")
 
                 const data = await res.json()
 
@@ -61,12 +56,8 @@ export function GoalsProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/goals`, {
+            const res = await apiFetch("/api/goals", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(goal)
             })
 
@@ -84,11 +75,8 @@ export function GoalsProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`${API_URL}/api/goals/${id}`, {
+            await apiFetch(`/api/goals/${id}`, {
                 method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
             })
 
             setGoals(prev => prev.filter(g => g.id !== id))
@@ -104,12 +92,8 @@ export function GoalsProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/goals/${goal.id}`, {
+            const res = await apiFetch(`/api/goals/${goal.id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(goal)
             })
 

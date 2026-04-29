@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const NotificationContext = createContext()
 
@@ -15,11 +14,7 @@ export function NotificationProvider({ children }) {
         if (!token) return
         
         try { 
-            const res = await fetch(`${API_URL}/api/notifications`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await apiFetch("/api/notifications")
         
             const data = await res.json()
             
@@ -45,12 +40,8 @@ export function NotificationProvider({ children }) {
         }
 
         try {
-            const res = await fetch(`${API_URL}/api/notifications`, {
+            const res = await apiFetch("/api/notifications", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ ...notification, eventKey })
             })
 
@@ -66,11 +57,8 @@ export function NotificationProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/notifications/${id}`, {
-                method: "PATCH",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const res = await apiFetch(`/api/notifications/${id}`, {
+                method: "PATCH"
             })
 
             if (!res.ok) throw new Error("Failed to mark as read")

@@ -3,8 +3,7 @@ import { useUser } from "./UserStore"
 import { useToast } from "./ToastStore"
 import { useTransactions } from "./TransactionStore"
 import { useChallenges } from "./ChallengeStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const RewardContext = createContext()
 
@@ -24,11 +23,7 @@ export function RewardProvider({ children }) {
             if (!token) return
         
             try { 
-                const res = await fetch(`${API_URL}/api/rewards`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/rewards")
         
                 const data = await res.json()
                 setRewards(data)
@@ -44,12 +39,8 @@ export function RewardProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/rewards`, {
+            const res = await apiFetch("/api/rewards", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ title, taskId, link, amount })
             })
 
@@ -67,11 +58,8 @@ export function RewardProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/rewards/${id}/claim`, {
-                method: "PATCH",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const res = await apiFetch(`/api/rewards/${id}/claim`, {
+                method: "PATCH"
             })
 
             const data = await res.json()
@@ -95,11 +83,8 @@ export function RewardProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`${API_URL}/api/rewards/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            await apiFetch(`/api/rewards/${id}`, {
+                method: "DELETE"
             })
 
             setRewards(prev => prev.filter(r => r.id !== id))
@@ -115,12 +100,8 @@ export function RewardProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/rewards/${id}`, {
+            const res = await apiFetch(`/api/rewards/${id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(updates)
             })
 

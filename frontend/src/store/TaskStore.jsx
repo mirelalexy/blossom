@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useUser } from "./UserStore"
 import { useToast } from "./ToastStore"
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from "../utils/apiFetch"
 
 const TaskContext = createContext()
 
@@ -20,11 +19,7 @@ export function TaskProvider({ children }) {
             if (!token) return
         
             try { 
-                const res = await fetch(`${API_URL}/api/tasks`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await apiFetch("/api/tasks")
         
                 const data = await res.json()
                 setTasks(data)
@@ -40,12 +35,8 @@ export function TaskProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/tasks`, {
+            const res = await apiFetch("/api/tasks", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ title })
             })
 
@@ -61,11 +52,8 @@ export function TaskProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/tasks/${id}`, {
-                method: "PATCH",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const res = await apiFetch(`/api/tasks/${id}`, {
+                method: "PATCH"
             })
 
             const data = await res.json()
@@ -83,11 +71,8 @@ export function TaskProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            await fetch(`${API_URL}/api/tasks/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            await apiFetch(`/api/tasks/${id}`, {
+                method: "DELETE"
             })
 
             setTasks(prev => prev.filter(t => t.id !== id))
@@ -103,12 +88,8 @@ export function TaskProvider({ children }) {
         const token = localStorage.getItem("token")
 
         try {
-            const res = await fetch(`${API_URL}/api/tasks/${id}`, {
+            const res = await apiFetch(`/api/tasks/${id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify({ title })
             })
 
