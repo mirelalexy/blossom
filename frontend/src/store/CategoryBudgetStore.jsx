@@ -11,11 +11,7 @@ export function CategoryBudgetProvider({ children }) {
     useEffect(() => {
         if (!user) return
         
-        async function fetchCategoryBudgets() {
-            const token = localStorage.getItem("token")
-    
-            if (!token) return
-    
+        async function fetchCategoryBudgets() {    
             try {
                 const res = await apiFetch("/api/category-budgets")
     
