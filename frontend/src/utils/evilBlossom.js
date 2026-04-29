@@ -159,3 +159,50 @@ export const EVIL_APP_TIPS = [
         content: "Maybe you overspend on weekends. Maybe anxiety spending is real for you. See it first. Then decide what to do about it."
     }
 ]
+
+export const EVIL_FAQ = [
+    {
+        title: "What actually are you?",
+        content: "I'm a budget tracker, but I'm built around the idea that money is emotional. Most apps show you what you spent. I focus on why. You log transactions with a mood and a purchase intent, and over time I build a picture of your habits that goes deeper than numbers. I won't block any purchases or connect to your bank. I show you what's there. What you do with it is up to you."
+    },
+    {
+        title: "How does XP and levelling up work?",
+        content: "Every transaction you log earns you 5 XP. Each day you keep your streak alive adds 2 XP. Completing a challenge is worth 30 XP. Your XP total determines your level, and your level unlocks a title - from Mindful Seed all the way to Eternal Bloom. The levels get harder to reach as you go, so early progress feels fast and rewarding. You can see your full breakdown on your Journey page."
+    },
+    {
+        title: "What is a streak?",
+        content: "A streak counts how many consecutive days you've logged at least one transaction. It resets if you miss a day. It doesn't measure perfection - just whether you showed up. Break it if you want. You'll see the difference."
+    },
+    {
+        title: "What do the mood tags actually do?",
+        content: "When you log a transaction, you can tag how you were feeling - happy, calm, neutral, anxious, or sad. I track these over time. On your Journey page, you'll see a mood chart that shows spending patterns by emotional state. The patterns are usually clearer than people expect."
+    },
+    {
+        title: "What's purchase intent?",
+        content: "Every expense can be tagged as necessary, planned, or impulse. Over time, your Journey page will show you what portion of your spending falls into each category. The goal isn't to eliminate impulse purchases - it's just to know they're happening."
+    },
+    {
+        title: "Why do I log whether I paid by card or cash?",
+        content: "Because they behave differently - not in terms of what you buy, but in terms of how it feels to spend. Cash is physical. You feel it leave your hand. That friction tends to make purchases feel more real, which is why cash spending tends to be smaller and more deliberate. Card spending is easier and faster, which is why it's also easier to overspend without noticing. I track which method you use so I can show you whether there's a gap in your averages - and whether that gap reflects unconscious spending or just how your life is structured. Neither is inherently better, but they affect behavior differently."
+    },
+    {
+        title: "What are challenges?",
+        content: "Challenges are monthly and weekly goals I set for you automatically - things like logging 10 transactions, keeping your spending under budget, or tagging your mood on every purchase. Completing a challenge earns you 30 XP."
+    },
+    {
+        title: "How do Rewards and Tasks work?",
+        content: "You create a task and link it to a reward. When you mark the task complete, the reward unlocks and you can claim it. If the reward has a price, claiming it automatically logs an expense. Rewards without a price are just for you. The system only works if you use it honestly."
+    },
+    {
+        title: "What is the Journey page?",
+        content: "Journey is where I show you what I've noticed. It has charts for spending by category, mood, and intent - plus your income vs expenses for the current month. There's also a narrative section that describes where you are in your growth stage and what it means. The more you log, the more useful Journey becomes. I'd suggest giving it a proper look after your first full month."
+    },
+    {
+        title: "Do you connect to my bank?",
+        content: "No. Everything here is manual. You log what you spend, when you spent it, and how you felt. That friction is part of the point - the act of logging something forces a moment of awareness that automatic import never would. Your data lives in your account and isn't shared with anyone."
+    },
+    {
+        title: "Can I export my data?",
+        content: "Yes. Go to Settings → Data & Privacy → Export Data. You'll get a CSV file with your full transaction history - date, title, category, type, amount, mood, intent, and notes. You can open it in any spreadsheet app."
+    }
+]
