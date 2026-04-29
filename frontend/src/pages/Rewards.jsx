@@ -6,6 +6,8 @@ import { useCurrency } from "../store/CurrencyStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
 
+import { getEmpty } from "../data/emptyStates"
+
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
 import Section from "../components/ui/Section"
@@ -169,10 +171,7 @@ function Rewards() {
                 
 
                 {rewards.length === 0  ? (
-                    <EmptyState
-                        title="No rewards yet"
-                        subtitle="Add something meaningful to work toward. You deserve it."
-                    />
+                    <EmptyState {...getEmpty("rewards")} />
                 ) : (
                     <>
                         {ready.length > 0 && (
@@ -258,10 +257,7 @@ function Rewards() {
                 </form>
 
                 {tasks.length === 0 ? (
-                    <EmptyState
-                        title="No tasks yet"
-                        subtitle="Add a task to gate a reward, complete it to unlock your treat."
-                    />
+                    <EmptyState {...getEmpty("tasks")} />
                 ) : (
                     <div className="task-list">
                         {tasks.map(t => (

@@ -11,6 +11,8 @@ import { getCurrentMonthYear, getDayDiff, getStartOfDay, parseLocalDate } from "
 import { searchTransactions } from "../utils/searchTransactions"
 import { calculateBudgetWithRollover } from "../utils/budgetUtils"
 
+import { getEmpty } from "../data/emptyStates"
+
 import TransactionCard from "../components/home/TransactionCard"
 import Section from "../components/ui/Section"
 import Button from "../components/ui/Button"
@@ -250,11 +252,11 @@ function Transactions() {
 				<Section title={`Results (${searchedTransactions.length})`}>
 					{searchedTransactions.length === 0 ? (
 						<EmptyState
-							title={
+							{...(
 								searchQuery
-									? `No transactions found for "${searchQuery}".`
-									: "No transactions match your filters."
-							}
+									? getEmpty("transactionsSearch", searchQuery)
+									: getEmpty("transactionsFiltered")
+							)}
 						/>
 					) : (
 						<>
@@ -278,13 +280,12 @@ function Transactions() {
 			) : noTransactions ? (
 				<Section title="Transactions">
 					<EmptyState
-						title="You haven't added any transactions yet 🌸"
-						subtitle="Start by adding your first one."
+						{...getEmpty("transactions")}
 						action={
 							<Button
 								onClick={() => navigate("/transactions/add")}
 							>
-								Add Transaction
+								Log something
 							</Button>
 						}
 					/>
@@ -293,7 +294,7 @@ function Transactions() {
 				<>
 					<Section title="Upcoming">
 						{upcomingTransactions.length === 0 ? (
-							<EmptyState title="No upcoming transactions." />
+							<EmptyState {...getEmpty("transactionsUpcoming")} />
 						) : (
 							upcomingTransactions.map((t) => (
 								<TransactionCard key={t.id} {...t} />
@@ -303,7 +304,7 @@ function Transactions() {
 
 					<Section title="Recent">
 						{recentTransactions.length === 0 ? (
-							<EmptyState title="No recent transactions yet." />
+							<EmptyState {...getEmpty("transactionsRecent")} />
 						) : (
 							<>
 								{paginatedRecent.map((t) => (

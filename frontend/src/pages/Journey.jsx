@@ -14,6 +14,8 @@ import { getStatistics } from "../utils/statisticsUtils"
 import { formatCurrency } from "../utils/currencyUtils"
 import { toKey, isInMonth, prevMonthKey, labelFromKey, nextMonthKey } from "../utils/journeyUtils"
 
+import { getEmpty } from "../data/emptyStates"
+
 import PageHeader from "../components/ui/PageHeader"
 import EmptyState from "../components/ui/EmptyState"
 import Section from "../components/ui/Section"
@@ -151,10 +153,7 @@ function Journey() {
             )}
 
             {!hasData ? (
-                <EmptyState 
-                    title="Nothing logged this month"
-                    subtitle="Switch to a month with transactions to see your insights."
-                />
+                <EmptyState {...getEmpty("journeyEmpty")} />
             ) : (
                 <>
                     <Section title="At a Glance">

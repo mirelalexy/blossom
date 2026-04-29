@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useNotifications } from "../store/NotificationStore"
 
 import { groupNotifications } from "../utils/notificationUtils"
+import { getEmpty } from "../data/emptyStates"
 
 import PageHeader from "../components/ui/PageHeader"
 import NotificationItem from "../components/notifications/NotificationItem"
@@ -77,10 +78,7 @@ function Notifications() {
                     )}
                 </>
             ) : (
-                <EmptyState 
-                    title="All quiet here" 
-                    subtitle="Notifications for level-ups, challenges, budget milestones, and reminders will appear here."
-                />
+                <EmptyState {...getEmpty("notifications")} />
             )}
             
         </div>

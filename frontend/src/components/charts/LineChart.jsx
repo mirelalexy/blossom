@@ -3,13 +3,14 @@ import { CartesianGrid, LineChart as RechartsLineChart, ResponsiveContainer, XAx
 import { useCurrency } from "../../store/CurrencyStore"
 
 import { formatCurrency } from "../../utils/currencyUtils"
+import { getEmpty } from "../../data/emptyStates"
 
 import EmptyState from "../ui/EmptyState"
 
 function LineChart({ data }) {
     const { currency } = useCurrency()
 
-    if (!data) return <EmptyState title="Not enough data to show this chart yet." />
+    if (!data || data.length < 2) return <EmptyState {...getEmpty("journeyPatterns")} />
 
     function formatTick(dateStr) {
         try {

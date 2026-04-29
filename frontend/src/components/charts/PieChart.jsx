@@ -2,6 +2,7 @@ import { Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from 
 
 import { useCurrency } from "../../store/CurrencyStore"
 import { formatCurrency } from "../../utils/currencyUtils"
+import { getEmpty } from "../../data/emptyStates"
 
 import EmptyState from "../ui/EmptyState"
 
@@ -9,10 +10,10 @@ import "../../styles/components/Chart.css"
 
 function PieChart({ data }) {
     const { currency } = useCurrency()
-
-    if (!data || data.length === 0) return <EmptyState title="Not enough data to show this chart yet." />
-
+    
     const total = data.reduce((s, d) => s + d.value, 0)
+
+    if (!data || data.length === 0 || total === 0) return <EmptyState {...getEmpty("journeyPatterns")} />
 
     return (
         <div className="chart-container">

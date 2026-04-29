@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { useGoals } from "../store/GoalsStore"
 import { useBudget } from "../store/BudgetStore"
 
+import { getEmpty } from "../data/emptyStates"
+
 import AutosaveCard from "../components/goals/AutosaveCard"
 import PageHeader from "../components/ui/PageHeader"
 import SearchBar from "../components/ui/SearchBar"
@@ -42,11 +44,10 @@ function Goals() {
                 
             {filteredGoals.length === 0 ? (
                 <EmptyState
-                    title={search ? "Nothing matches" : "What are you saving for?"}
-                    subtitle={search
-                        ? "I'm afraid I found no goals for that search."
-                        : "A goal gives your spending a direction. Even a small one makes the day-to-day feel different."
-                    }
+                    {...(search
+                        ? getEmpty("goalsSearch")
+                        : getEmpty("goals")
+                    )}
                 />
             ) : (
                 filteredGoals.map(g => (
@@ -54,7 +55,7 @@ function Goals() {
                 ))
             )}
                 
-            <Button onClick={() => navigate("/goals/add")}>Add Saving Goal</Button>
+            <Button onClick={() => navigate("/goals/add")}>Add saving goal</Button>
         </div>
     )
 }
