@@ -24,7 +24,7 @@ function FAQ() {
 
             <PageIntro
                 title="Frequently Asked Questions"
-                text="Answers to common questions about Blossom."
+                text="If something feels unclear, this should help."
             />
 
             <Section>
