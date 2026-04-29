@@ -124,3 +124,38 @@ export const evilOnboarding = {
         }
     ]
 }
+
+export const EVIL_APP_TIPS = [
+    {
+        title: "Log it, especially when you don't want to",
+        content: "The transaction you're pretending didn't happen is the most useful one to log. I'm not going to shame you for it. But I need the data."
+    },
+    {
+        title: "Mood tags are not decorative",
+        content: "Tag how you felt when you spent. Over time you'll see it: the anxiety purchases, the happy splurges, the 'necessary' thing that wasn't. It's uncomfortable data. That's the point."
+    },
+    {
+        title: "Going over budget isn't failure, but ignoring it is",
+        content: "I'll note when you exceed your limit. I won't make it dramatic. But you need to acknowledge it - not wallow, just see. Budgets are meant to inform, not imprison."
+    },
+    {
+        title: "Your primary goal should make you slightly uncomfortable",
+        content: "If it's too easy, it's not a goal. It's a schedule. Set something that requires actual choices. I'll keep it visible."
+    },
+    {
+        title: "The task system only works if you're honest about it",
+        content: "Don't reward yourself for something you'd do anyway. The friction is the feature. Earn the reward. Then take it without guilt."
+    },
+    {
+        title: "Streaks measure showing up",
+        content: "You don't need a perfect financial day to extend your streak. You just need to log something real. Some of your most useful days will be the ugly ones."
+    },
+    {
+        title: "Journey is most useful when you don't want to look",
+        content: "At the end of a month where things went sideways, that's where you face it. The charts don't soften the numbers. But they give you something to learn from."
+    },
+    {
+        title: "Notice your patterns, but remember you don't have to fix them all at once",
+        content: "Maybe you overspend on weekends. Maybe anxiety spending is real for you. See it first. Then decide what to do about it."
+    }
+]

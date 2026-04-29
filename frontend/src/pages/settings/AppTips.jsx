@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import { appTips } from "../../data/appTips"
+import { EVIL_APP_TIPS, isEvilMode } from "../../utils/evilBlossom"
 
 import PageHeader from "../../components/ui/PageHeader"
 import PageIntro from "../../components/ui/PageIntro"
@@ -9,6 +10,8 @@ import SettingsCard from "../../components/settings/SettingsCard"
 import Section from "../../components/ui/Section"
 
 function AppTips() {
+    const tips = isEvilMode() ? EVIL_APP_TIPS : appTips
+
     const [openIndex, setOpenIndex] = useState(null)
 
     function handleToggle(index) {
@@ -26,7 +29,7 @@ function AppTips() {
 
             <Section>
                 <SettingsCard>
-                    {appTips.map((tip, index) => (
+                    {tips.map((tip, index) => (
                         <AccordionItem key={index} title={tip.title} open={openIndex === index} onToggle={() => handleToggle(index)}>
                             {tip.content}
                         </AccordionItem>
