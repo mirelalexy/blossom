@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
 
 import { TransactionsProvider } from "./store/TransactionStore"
 import { GoalsProvider } from "./store/GoalsStore"
@@ -20,6 +20,7 @@ import { ToastProvider } from "./store/ToastStore"
 
 import { useUser } from "./store/UserStore"
 import { ComposeProviders } from "./components/utils/ComposeProviders"
+import { setUnauthorizedHandler } from "./utils/apiFetch"
 
 import AppLayout from "./layouts/AppLayout"
 import BlossomLoader from "./components/ui/BlossomLoader"
@@ -84,8 +85,17 @@ const providers = [
 ]
 
 function AppContent() {
+  const navigate = useNavigate()
+
   const { loading } = useUser()
   const [showLoader, setShowLoader] = useState(true)
+
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      localStorage.removeItem("token")
+      navigate("/login")
+    })
+  }, [])
 
   useEffect(() => {
     if (!loading) {
@@ -103,7 +113,7 @@ function AppContent() {
   }
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
 
       <Routes>
@@ -149,14 +159,16 @@ function AppContent() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 
 function App() {
   return (
     <ComposeProviders providers={providers}>
-      <AppContent />
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </ComposeProviders>
   )
 }
