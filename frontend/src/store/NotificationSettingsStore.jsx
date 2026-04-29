@@ -19,7 +19,7 @@ export function NotificationSettingsProvider({ children }) {
             
                 setNotificationSettings(data)
             } catch (err) {
-                console.log("Fetch notification settings failed: ", err)
+                console.error("Fetch notification settings failed: ", err)
             }
         }
         

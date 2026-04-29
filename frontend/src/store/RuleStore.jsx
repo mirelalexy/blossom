@@ -23,7 +23,7 @@ export function RuleProvider({ children }) {
                     }))
                 )
             } catch (err) {
-                console.log("Fetch rules failed: ", err)
+                console.error("Fetch rules failed: ", err)
             }
         }
         
@@ -43,7 +43,7 @@ export function RuleProvider({ children }) {
                 value: Number(data.value)
             }])
         } catch (err) {
-            console.log("Add rule failed: ", err)
+            console.error("Add rule failed: ", err)
         }
     }
 
@@ -55,7 +55,7 @@ export function RuleProvider({ children }) {
 
             setRules(prev => prev.filter(r => r.id !== id))
         } catch (err) {
-            console.log("Delete rule failed: ", err)
+            console.error("Delete rule failed: ", err)
         }        
     }
 
@@ -76,7 +76,7 @@ export function RuleProvider({ children }) {
                 )
             )
         } catch (err) {
-            console.log("Update rule failed: ", err)
+            console.error("Update rule failed: ", err)
         }
     }
 

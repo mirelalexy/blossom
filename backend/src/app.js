@@ -34,7 +34,7 @@ app.get("/api/protected", authMiddleware, (req, res) => {
 
 pool.query("SELECT NOW()")
     .then(res => console.log("DB connected:", res.rows[0]))
-    .catch(err => console.log("DB error:", err))
+    .catch(err => console.error("DB error:", err))
 
 app.use("/api/auth", authRoutes)
 app.use("/api/transactions", transactionRoutes)

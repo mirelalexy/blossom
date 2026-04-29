@@ -11,7 +11,7 @@ export async function getCategoryBudgets(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Failed to fetch category budgets" })
     }
 }
@@ -39,7 +39,7 @@ export async function upsertCategoryBudget(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Upsert category budget failed" })
     }
 }

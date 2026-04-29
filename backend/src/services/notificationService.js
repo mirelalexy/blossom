@@ -9,6 +9,6 @@ export async function createSystemNotification({ userId, type, title, message, e
             [userId, type, title, message, eventKey]
         )
     } catch (err) {
-        console.log("Create notification failed: ", err)
+        console.error("Create notification failed: ", err)
     }
 }

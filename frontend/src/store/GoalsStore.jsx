@@ -36,7 +36,7 @@ export function GoalsProvider({ children }) {
 
                 setGoals(formatted)
             } catch (err) {
-                console.log("Fetch goals failed: ", err)
+                console.error("Fetch goals failed: ", err)
             } finally {
                 setLoading(false)
             }
@@ -58,7 +58,7 @@ export function GoalsProvider({ children }) {
             showToast({ message: "Goal added" })
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Add goal failed: ", err)
+            console.error("Add goal failed: ", err)
         }
     }
 
@@ -73,7 +73,7 @@ export function GoalsProvider({ children }) {
             showToast({ message: "Goal deleted" })
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Delete goal failed: ", err)
+            console.error("Delete goal failed: ", err)
         }        
     }
 
@@ -95,7 +95,7 @@ export function GoalsProvider({ children }) {
             showToast({ message: "Goal updated" })
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Update goal failed: ", err)
+            console.error("Update goal failed: ", err)
         }
     }
 

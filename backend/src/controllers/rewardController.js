@@ -17,7 +17,7 @@ export async function getRewards(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch rewards failed" })
     }
 }
@@ -40,7 +40,7 @@ export async function createReward(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create reward failed" })
     }
 }
@@ -141,7 +141,7 @@ export async function claimReward(req, res) {
         })
     } catch (err) {
         await pool.query("ROLLBACK")
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Claim reward failed" })
     }
 }
@@ -169,7 +169,7 @@ export async function updateReward(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update reward failed" })
     }
 }
@@ -187,7 +187,7 @@ export async function deleteReward(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete reward failed" })
     }
 }

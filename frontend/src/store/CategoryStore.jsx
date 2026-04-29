@@ -20,7 +20,7 @@ export function CategoryProvider({ children }) {
             
                 setCategories(data)
             } catch (err) {
-                console.log("Fetch categories failed: ", err)
+                console.error("Fetch categories failed: ", err)
             }
         }
         
@@ -46,7 +46,7 @@ export function CategoryProvider({ children }) {
 
             setCategories(prev => [...prev, data])
         } catch (err) {
-            console.log("Add category failed: ", err)
+            console.error("Add category failed: ", err)
         }
     }
 
@@ -65,7 +65,7 @@ export function CategoryProvider({ children }) {
                 )
             )
         } catch (err) {
-            console.log("Rename category failed: ", err)
+            console.error("Rename category failed: ", err)
         }
     }
 
@@ -86,7 +86,7 @@ export function CategoryProvider({ children }) {
                 prev.filter(cat => cat.id !== id)
             )
         } catch (err) {
-            console.log("Delete category failed: ", err)
+            console.error("Delete category failed: ", err)
         }
     }
 

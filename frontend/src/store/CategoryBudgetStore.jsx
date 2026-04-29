@@ -19,7 +19,7 @@ export function CategoryBudgetProvider({ children }) {
     
                 setCategoryBudgets(data)
             } catch (err) {
-                console.log("Fetch category budgets failed: ", err)
+                console.error("Fetch category budgets failed: ", err)
             }
         }
 
@@ -49,7 +49,7 @@ export function CategoryBudgetProvider({ children }) {
                 return [...prev, data]
             })
         } catch (err) {
-            console.log("Update category budget failed: ", err)
+            console.error("Update category budget failed: ", err)
         }
     }
 

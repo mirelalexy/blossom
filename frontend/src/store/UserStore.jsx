@@ -22,7 +22,7 @@ export function UserProvider({ children }) {
                 banner: data.banner
             })
         } catch (err) {
-            console.log("Failed to fetch user: ", err)
+            console.error("Failed to fetch user: ", err)
             setUser(null)
         } finally {
             setLoading(false)
@@ -47,7 +47,7 @@ export function UserProvider({ children }) {
                 body: JSON.stringify({ [field]: value })
             })
         } catch (err) {
-            console.log("Update user failed: ", err)
+            console.error("Update user failed: ", err)
             setUser(prevUser) // rollback
         }
     }
@@ -143,7 +143,7 @@ export function UserProvider({ children }) {
 
             return data
         } catch (err) {
-            console.log("Change password failed: ", err)
+            console.error("Change password failed: ", err)
             throw err
         }
     } 
@@ -166,7 +166,7 @@ export function UserProvider({ children }) {
 
             return data
         } catch (err) {
-            console.log("Delete account failed: ", err)
+            console.error("Delete account failed: ", err)
             throw err
         }
     }
@@ -186,7 +186,7 @@ export function UserProvider({ children }) {
 
             window.location.reload()
         } catch (err) {
-            console.log("Reset app failed: ", err)
+            console.error("Reset app failed: ", err)
             throw err
         }
     }

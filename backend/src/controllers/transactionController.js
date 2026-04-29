@@ -108,7 +108,7 @@ export async function createTransaction(req, res) {
             }
         })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create transaction failed" })
     }
 }
@@ -145,7 +145,7 @@ export async function getTransactions(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch failed" })
     }
 }
@@ -174,7 +174,7 @@ export async function deleteTransaction(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete failed" })
     }
 }
@@ -268,7 +268,7 @@ export async function editTransaction(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Edit failed" })
     }
 }

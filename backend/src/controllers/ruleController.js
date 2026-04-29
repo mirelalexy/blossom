@@ -13,7 +13,7 @@ export async function getRules(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch rules failed" })
     }
 }
@@ -32,7 +32,7 @@ export async function createRule(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create rule failed" })
     }
 }
@@ -60,7 +60,7 @@ export async function updateRule(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update rule failed" })
     }
 }
@@ -83,7 +83,7 @@ export async function deleteRule(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete rule failed" })
     }
 }

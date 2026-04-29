@@ -33,7 +33,7 @@ export async function createGoal(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create goal failed" })
     }
 }
@@ -51,7 +51,7 @@ export async function getGoals(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch goals failed" })
     }
 }
@@ -111,7 +111,7 @@ export async function updateGoal(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update goal failed" })
     }
 }
@@ -134,7 +134,7 @@ export async function deleteGoal(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete failed" })
     }
 }

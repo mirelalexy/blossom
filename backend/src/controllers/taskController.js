@@ -13,7 +13,7 @@ export async function getTasks(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch tasks failed" })
     }
 }
@@ -34,7 +34,7 @@ export async function createTask(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create task failed" })
     }
 }
@@ -59,7 +59,7 @@ export async function toggleTask(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Toggle task failed" })
     }
 }
@@ -82,7 +82,7 @@ export async function updateTask(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update task failed" })
     }
 }
@@ -100,7 +100,7 @@ export async function deleteTask(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete task failed" })
     }
 }

@@ -95,7 +95,7 @@ function Profile() {
             }
         } catch (err) {
             showToast({ message: "Upload failed", type: "error" })
-            console.log(err)
+            console.error(err)
 
             // reset preview on failure
             if (type === "avatar") {

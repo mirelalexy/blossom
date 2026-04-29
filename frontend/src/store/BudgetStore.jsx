@@ -33,7 +33,7 @@ export function BudgetProvider({ children }) {
                     monthly_limit: Number(data.monthly_limit)
                 })
             } catch (err) {
-                console.log("Fetch budget failed: ", err)
+                console.error("Fetch budget failed: ", err)
             }
         }
 
@@ -54,7 +54,7 @@ export function BudgetProvider({ children }) {
                 monthly_limit: Number(data.monthly_limit)
             })
         } catch (err) {
-            console.log("Save budget failed: ", err)
+            console.error("Save budget failed: ", err)
         }
     }
 

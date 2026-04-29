@@ -90,7 +90,7 @@ export async function register(req, res) {
             user: result.rows[0]
         })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Register failed" })
     }
 }
@@ -132,7 +132,7 @@ export async function login(req, res) {
             }
         })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Server error" })
     }
 }

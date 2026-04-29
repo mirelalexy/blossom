@@ -17,7 +17,7 @@ export function ProfileProvider({ children }) {
                 
             setStats(data)
         } catch (err) {
-            console.log("Fetch profile stats failed: ", err)
+            console.error("Fetch profile stats failed: ", err)
         } finally {
             setLoading(false)
         }

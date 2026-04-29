@@ -27,7 +27,7 @@ export function ThemeProvider({ children }) {
         
                 setTheme(data.theme || "blossom")
             } catch (err) {
-                console.log("Fetch theme failed: ", err)
+                console.error("Fetch theme failed: ", err)
             }
         }
     
@@ -44,7 +44,7 @@ export function ThemeProvider({ children }) {
                 body: JSON.stringify({ theme: newTheme })
             })
         } catch (err) {
-            console.log("Update theme failed: ", err)
+            console.error("Update theme failed: ", err)
         }
     }
 

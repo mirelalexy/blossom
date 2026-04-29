@@ -36,7 +36,7 @@ export function ChallengeProvider({ children }) {
             prevChallengesRef.current = formatted
             setChallenges(formatted)
         } catch (err) {
-            console.log("Fetch challenges failed: ", err)
+            console.error("Fetch challenges failed: ", err)
         }
     }
     

@@ -13,7 +13,7 @@ export async function getCategories(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch categories failed" })
     }
 }
@@ -36,7 +36,7 @@ export async function createCategory(req, res) {
             return res.status(409).json({ error: "Category already exists" })
         }
 
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create category failed" })
     }
 }
@@ -73,7 +73,7 @@ export async function updateCategory(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update category failed" })
     }
 }
@@ -121,7 +121,7 @@ export async function deleteCategory(req, res) {
 
         res.json({ message: "Deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete category failed" })
     }
 }

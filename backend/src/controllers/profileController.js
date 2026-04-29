@@ -39,7 +39,7 @@ export async function getProfileStats(req, res) {
 
         res.json({ streak, xp, level, progress, levelTitle })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Failed to fetch profile stats" })
     }
 }

@@ -24,7 +24,7 @@ export function RewardProvider({ children }) {
                 const data = await res.json()
                 setRewards(data)
             } catch (err) {
-                console.log("Fetch rewards failed: ", err)
+                console.error("Fetch rewards failed: ", err)
             }
         }
         
@@ -44,7 +44,7 @@ export function RewardProvider({ children }) {
             showToast({ message: "Reward added" })
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Add reward failed: ", err)
+            console.error("Add reward failed: ", err)
         }
     }
 
@@ -67,7 +67,7 @@ export function RewardProvider({ children }) {
             await fetchChallenges()
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Claim reward failed: ", err)
+            console.error("Claim reward failed: ", err)
         }
     }
 
@@ -82,7 +82,7 @@ export function RewardProvider({ children }) {
             showToast({ message: "Reward deleted" })
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Delete reward failed: ", err)
+            console.error("Delete reward failed: ", err)
         }        
     }
 
@@ -100,7 +100,7 @@ export function RewardProvider({ children }) {
             )
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Update reward failed: ", err)
+            console.error("Update reward failed: ", err)
         }
     }
 

@@ -32,7 +32,7 @@ export function TransactionsProvider({ children }) {
 
             setTransactions(formatted)
         } catch (err) {
-            console.log("Fetch transactions failed: ", err)
+            console.error("Fetch transactions failed: ", err)
         } finally {
             setLoading(false)
         }
@@ -79,7 +79,7 @@ export function TransactionsProvider({ children }) {
             refreshApp()
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Add transaction failed: ", err)
+            console.error("Add transaction failed: ", err)
         }
     }
 
@@ -99,7 +99,7 @@ export function TransactionsProvider({ children }) {
             refreshApp()
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Delete transaction failed: ", err)
+            console.error("Delete transaction failed: ", err)
         }        
     }
 
@@ -135,7 +135,7 @@ export function TransactionsProvider({ children }) {
             refreshApp()
         } catch (err) {
             showToast({ message: err.message || "Something went wrong", type: "error" })
-            console.log("Update transaction failed: ", err)
+            console.error("Update transaction failed: ", err)
         }
     }
 

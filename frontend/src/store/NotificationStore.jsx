@@ -16,7 +16,7 @@ export function NotificationProvider({ children }) {
             
             setNotifications(data)
         } catch (err) {
-            console.log("Fetch notifications failed: ", err)
+            console.error("Fetch notifications failed: ", err)
         }
     }
 
@@ -43,7 +43,7 @@ export function NotificationProvider({ children }) {
 
             setNotifications(prev => [...prev, data])
         } catch (err) {
-            console.log("Add notification failed: ", err)
+            console.error("Add notification failed: ", err)
         }
     }
 
@@ -61,7 +61,7 @@ export function NotificationProvider({ children }) {
                 )
             )
         } catch (err) {
-            console.log("Mark as read failed: ", err)
+            console.error("Mark as read failed: ", err)
         }
     }
 

@@ -13,7 +13,7 @@ export async function getNotifications(req, res) {
 
         res.json(result.rows)
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Fetch notifications failed" })
     }
 }
@@ -44,7 +44,7 @@ export async function createNotification(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create notification failed" })
     }
 }
@@ -68,7 +68,7 @@ export async function markAsRead(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update notification failed" })
     }
 }

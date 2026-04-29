@@ -88,7 +88,7 @@ export async function getBudget(req, res) {
 
         res.json(updatedBudgetRes.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Failed to fetch budget" })
     }
 }
@@ -127,7 +127,7 @@ export async function upsertBudget(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Create/update budget failed" })
     }
 }

@@ -20,7 +20,7 @@ export async function getCurrentUser(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Failed to fetch user" })
     }
 }
@@ -53,7 +53,7 @@ export async function updateUserSettings(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update settings failed" })
     }
 }
@@ -82,7 +82,7 @@ export async function uploadAvatar(req, res) {
 
         res.json({ avatar: result.secure_url })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Avatar upload failed" })
     }
 } 
@@ -100,7 +100,7 @@ export async function removeAvatar(req, res) {
 
         res.json({ avatar: null })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Remove avatar failed" })
     }
 } 
@@ -129,7 +129,7 @@ export async function uploadBanner(req, res) {
 
         res.json({ banner: result.secure_url })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Banner upload failed" })
     }
 } 
@@ -147,7 +147,7 @@ export async function removeBanner(req, res) {
 
         res.json({ banner: null })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Remove banner failed" })
     }
 } 
@@ -197,7 +197,7 @@ export async function changePassword(req, res) {
 
         res.json({ message: "Password updated successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Change password failed" })
     }
 }
@@ -232,7 +232,7 @@ export async function deleteAccount(req, res) {
             if (user.banner) await cloudinary.uploader.destroy(`blossom/banners/banner_${userId}`)
         } catch (cdnErr) {
             // proceed with account deletion even if cleanup fails
-            console.log("Cloudinary cleanup failed (non-fatal):", cdnErr.message)
+            console.error("Cloudinary cleanup failed (non-fatal):", cdnErr.message)
         }
 
         await pool.query(
@@ -242,7 +242,7 @@ export async function deleteAccount(req, res) {
 
         res.json({ message: "Account deleted successfully" })
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Delete account failed" })
     }
 }
@@ -351,7 +351,7 @@ export async function resetApp(req, res) {
             return res.status(404).json({ error: err.message })
         }
 
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Reset app failed" })
     } finally {
         client.release()

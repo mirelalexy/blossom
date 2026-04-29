@@ -24,7 +24,7 @@ export async function getNotificationSettings(req, res) {
 
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Failed to fetch notification settings" })
     }
 }
@@ -72,7 +72,7 @@ export async function updateNotificationSettings(req, res) {
         }
         res.json(result.rows[0])
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({ error: "Update notification settings failed" })
     }
 }
