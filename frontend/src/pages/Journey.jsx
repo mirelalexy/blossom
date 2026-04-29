@@ -7,7 +7,7 @@ import { useProfile } from "../store/ProfileStore"
 
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
-import { isCurrentMonth, isLast30Days, parseLocalDate } from "../utils/dateUtils"
+import { isLast30Days, parseLocalDate } from "../utils/dateUtils"
 import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
