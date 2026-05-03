@@ -86,11 +86,11 @@ export function RewardProvider({ children }) {
         }        
     }
 
-    async function updateReward(id, updates) {
+    async function updateReward(id, reward) {
         try {
             const res = await apiFetch(`/api/rewards/${id}`, {
                 method: "PUT",
-                body: JSON.stringify(updates)
+                body: JSON.stringify(reward)
             })
 
             const data = await res.json()
