@@ -139,11 +139,11 @@ export function TransactionsProvider({ children }) {
         }
     }
 
-    function reassignCategory(oldCategoryId, newCategoryId) {
+    function reassignCategory(oldId, newId) {
         setTransactions(prev => 
             prev.map(t =>
-                t.categoryId === oldCategoryId
-                    ? {...t, categoryId: newCategoryId}
+                t.categoryId === oldId
+                    ? {...t, categoryId: newId}
                     : t
             )
         )
