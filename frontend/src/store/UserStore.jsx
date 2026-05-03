@@ -128,11 +128,11 @@ export function UserProvider({ children }) {
         }))
     }
 
-    async function changePassword(currentPassword, newPassword) {
+    async function changePassword(currentPwd, newPwd) {
         try {
             const res = await apiFetch("/api/users/password", {
                 method: "PATCH",
-                body: JSON.stringify({ currentPassword, newPassword })
+                body: JSON.stringify({ currentPwd, newPwd })
             })
 
             const data = await res.json()
