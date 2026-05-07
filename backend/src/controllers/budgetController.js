@@ -132,7 +132,7 @@ export async function upsertBudget(req, res) {
     }
 }
 
-export async function processAutoGoalDeposits(userId, currentMonth) {
+async function processAutoGoalDeposits(userId, currentMonth) {
     const goalsRes = await pool.query(
         `SELECT * FROM goals
         WHERE user_id = $1
