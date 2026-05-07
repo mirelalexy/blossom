@@ -110,7 +110,7 @@ export function TransactionsProvider({ children }) {
         }
 
         try {
-            const res = await apiFetch(`$/api/transactions/${transaction.id}`, {
+            const res = await apiFetch(`/api/transactions/${transaction.id}`, {
                 method: "PUT",
                 body: JSON.stringify(payload)
             })
