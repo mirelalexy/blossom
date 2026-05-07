@@ -11,15 +11,20 @@ export function calculateStreak(transactions) {
         )
     ].sort((a, b) => b - a)
 
-    let streak = 0
-    let currentDate = getStartOfDay(new Date())
+    const today = getStartOfDay(new Date())
+
+    // if no transactions logged today, streak is 0
+    if (uniqueDays[0] !== today.getTime()) return 0
+    
+    let streak = 1
+    let currentDate = today
 
     for (let i = 0; i < uniqueDays.length; i++) {
         const transactionDate = new Date(uniqueDays[i])
 
         const diffDays = getDayDiff(currentDate, transactionDate)
 
-        if (diffDays === 0 || diffDays === 1) {
+        if (diffDays === 1) {
             streak++;
             currentDate = transactionDate
         } else {
