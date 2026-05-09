@@ -45,6 +45,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 14px;
+    text-transform: capitalize;
 }
 
 .legend-values {
