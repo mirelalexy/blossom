@@ -63,6 +63,7 @@ import Rewards from "./pages/Rewards"
 import DeleteAccount from "./pages/settings/account/DeleteAccount"
 import ResetApp from "./pages/settings/data-and-privacy/ResetApp"
 import EditSavingGoal from "./pages/EditSavingGoal"
+import Chat from "./pages/Chat"
 import NotFound from "./pages/NotFound"
 
 const providers = [
@@ -154,6 +155,7 @@ function AppContent() {
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/rewards" element={<Rewards />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="login" element={<Login />} />

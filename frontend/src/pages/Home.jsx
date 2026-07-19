@@ -146,6 +146,8 @@ function Home() {
 				avatarSrc={user?.avatar}
 			/>
 
+			<div onClick={() => navigate("/chat")}>Ask me anything...</div>
+
 			<StreakCard
 				streak={streak}
 				message={streakMessage}

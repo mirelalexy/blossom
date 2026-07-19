@@ -61,7 +61,9 @@ import {
     Pencil,
     Gem,
     PiggyBank,
-    Heart
+    Heart,
+    ArrowUp,
+    X
 } from "lucide-react"
 
 export const appIcons = {
@@ -74,6 +76,8 @@ export const appIcons = {
     notifications: Bell,
     settings: Settings,
     back: ArrowLeft,
+    up: ArrowUp,
+    close: X,
     account: CircleUserRound,
     delete: Trash,
     dataPrivacy: GlobeLock,
