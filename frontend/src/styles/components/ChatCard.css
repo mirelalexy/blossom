@@ -1,0 +1,59 @@
+.home-chat-card {
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.home-chat-card:active {
+    transform: scale(0.98);
+}
+
+.home-chat-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 32px;
+}
+
+.home-chat-flower {
+    font-size: 28px;
+    line-height: 1;
+    animation: homeChatFlowerSpin 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.3));
+}
+
+.home-chat-text {
+    color: var(--text-secondary);
+}
+
+@keyframes homeChatFlowerSpin {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(90deg) scale(1.06);
+    }
+    50% {
+        transform: rotate(180deg) scale(1);
+    }
+    75% {
+        transform: rotate(270deg) scale(1.06);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.fade-in-text {
+    animation: fadeInText 0.5s ease;
+}
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,33 @@
+.chat-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 200;
+    animation: fadeIn 0.18s ease;
+}
+
+.chat-modal-panel {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    width: min(94vw, 420px);
+    height: min(80vh, 640px);
+    z-index: 201;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+    border-radius: var(--r-xl);
+    border: 1px solid var(--card-border);
+    animation: chatModalIn 0.22s ease;
+}
+
+@keyframes chatModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

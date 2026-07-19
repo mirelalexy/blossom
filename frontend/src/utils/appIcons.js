@@ -63,7 +63,8 @@ import {
     PiggyBank,
     Heart,
     ArrowUp,
-    X
+    X,
+    MessageCircle
 } from "lucide-react"
 
 export const appIcons = {
@@ -78,6 +79,7 @@ export const appIcons = {
     back: ArrowLeft,
     up: ArrowUp,
     close: X,
+    chat: MessageCircle,
     account: CircleUserRound,
     delete: Trash,
     dataPrivacy: GlobeLock,

@@ -39,6 +39,7 @@ import StreakCard from "../components/home/StreakCard"
 import BudgetSnapshotCard from "../components/home/BudgetSnapshotCard"
 import LevelCard from "../components/profile/LevelCard"
 import OnboardingFlow from "../components/home/OnboardingFlow"
+import ChatCard from "../components/home/ChatCard"
 
 import "../styles/pages/Home.css"
 
@@ -146,7 +147,7 @@ function Home() {
 				avatarSrc={user?.avatar}
 			/>
 
-			<div onClick={() => navigate("/chat")}>Ask me anything...</div>
+			<ChatCard />
 
 			<StreakCard
 				streak={streak}
