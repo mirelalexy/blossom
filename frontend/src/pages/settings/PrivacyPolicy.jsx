@@ -16,7 +16,7 @@ function PrivacyPolicy() {
                     No legalese where plain language will do.
                 </p>
                 
-                <p className="policy-meta">Last updated: April 20, 2026</p>
+                <p className="policy-meta">Last updated: July 20, 2026</p>
             </div>
 
             <Section title="Information We Collect">
@@ -56,6 +56,22 @@ function PrivacyPolicy() {
                 </p>
             </Section>
 
+            <Section title="Ask Blossom">
+                <p className="policy-text">
+                    When you use Ask Blossom to get questions about your own spending or moods,
+                    a limited, relevant slice of your data - recent transactions, mood
+                    tags, and goals - is sent to Anthropic's Claude API to generate a response.
+                    We only send what's needed to answer your question, never your name, email,
+                    or account details.
+                </p>
+
+                <p className="policy-text">
+                    This data is processed to generate a response and is not used by Anthropic
+                    to train their models. If you'd rather not use this feature, Ask Blossom is
+                    entirely optional and the rest of the app works fully without it.
+                </p>
+            </Section>
+
             <Section title="How Your Data Is Stored">
                 <p className="policy-text">
                     Your data is stored in a secure PostgreSQL database, protected
@@ -86,10 +102,11 @@ function PrivacyPolicy() {
             <Section title="Data Sharing">
                 <p className="policy-text">
                     We do not sell, trade, rent, or share your personal data with
-                    third parties. The only external service that handles any of
-                    your data is Cloudinary, which processes profile images you
-                    upload. Cloudinary operates under its own privacy policy.
-                    No financial data ever leaves our servers.
+                    third parties. Two external services process limited data on
+                    our behalf: Cloudinary, which handle profile images you upload,
+                    and Anthropic, whose Claude AI powers Ask Blossom. Both operate
+                    under their own privacy policies. Beyond these two integrations,
+                    no data leaves our servers.
                 </p>
             </Section>
 
