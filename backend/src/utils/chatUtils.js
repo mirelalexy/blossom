@@ -85,7 +85,7 @@ function extractDateRange(question) {
             let year = now.getFullYear()
 
             // month has not been met yet this year
-            if (i > now.getMonth) {
+            if (i > now.getMonth()) {
                 year -= 1
             }
 
