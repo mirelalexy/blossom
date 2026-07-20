@@ -101,3 +101,38 @@ function extractDateRange(question) {
     start.setDate(start.getDate() - DEFAULT_RANGE)
     return { start, end: now }
 }
+
+function summarizeByField(transactions, field) {
+    const counts = {}
+    let total = 0
+
+    for (const t of transactions) {
+        const key = t[field] || "untagged"
+        const amount = Number(t.amount) || 0
+        
+        // initialize if key does not exist
+        counts[key] = counts[key] || { count: 0, amount: 0 }
+
+        counts[key].count += 1
+        counts[key].amount += amount
+        total += amount
+    }
+
+    const summary = {}
+
+    for (const key in counts) {
+        summary[key] = {
+            count: counts[key].count,
+            // get percentage of entries
+            pctEntries: transactions.length
+                ? Math.round((counts[key].count / transactions.length) * 100)
+                : 0,
+            // get percentage of sum spent
+            pctSpending: total
+                ? Math.round((counts[key].amount / total) * 100)
+                : 0,
+        }
+    }
+
+    return summary
+}
