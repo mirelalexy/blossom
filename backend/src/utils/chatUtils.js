@@ -206,18 +206,21 @@ export async function getDataSlice(userId, question) {
         `SELECT
             t.id, t.amount, t.type, t.method, t.title,
             c.name AS category_name,
-            t.date::text AS date, t.mood, t.intent, t.notes
+            t.date::text AS date, t.mood, t.intent, t.notes, u.currency
         FROM transactions t
         LEFT JOIN categories c ON c.id = t.category_id
+        JOIN users u ON u.id = t.user_id
         WHERE t.user_id = $1 AND t.date >= $2 AND t.date <= $3
         ORDER BY t.date DESC
         LIMIT $4`,
         [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
     )
 
-    const transactions = result.rows
+    const currency = result.rows[0]?.currency || "USD"
+    const transactions = result.rows.map(({ currency, ...t }) => t)
 
     return {
+        currency,
         dateRange: {
             start: start.toISOString().slice(0, 10),
             end: end.toISOString().slice(0, 10)
