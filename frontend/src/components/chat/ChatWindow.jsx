@@ -38,23 +38,31 @@ function formatDividerTime(date) {
     return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
 }
 
+function createOpeningMessage(isEvil) {
+    return {
+        id: "opening",
+        role: "blossom",
+        text: isEvil ? OPENING_MESSAGE.evil : OPENING_MESSAGE.regular,
+        time: new Date()
+    }
+}
+
 function ChatWindow({ variant = "page", onClose }) {
     const isEvil = isEvilMode()
 
     const { user } = useUser()
     const userInitial = user?.displayName ? user.displayName.charAt(0).toUpperCase() : "?"
 
-    const [messages, setMessages] = useState([
-        {
-            id: "opening",
-            role: "blossom",
-            text: isEvil ? OPENING_MESSAGE.evil : OPENING_MESSAGE.regular,
-            time: new Date()
-        }
-    ])
+    // create key to persist conversation in local storage
+    const storageKey = user?.id
+        ? `blossom-chat-${user.id}`
+        : null
+
+    const [messages, setMessages] = useState(() => [createOpeningMessage(isEvil)])
 
     const [input, setInput] = useState("")
     const [isThinking, setIsThinking] = useState(false)
+    const [hasLoadedChat, setHasLoadedChat] = useState(false)
 
     // auto scroll on new message
     const listRef = useRef(null)
@@ -62,6 +70,39 @@ function ChatWindow({ variant = "page", onClose }) {
     useEffect(() => {
         listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" })
     }, [messages, isThinking])
+
+    // restore messages using key saved in local storage
+    useEffect(() => {
+        if (!storageKey) return
+        const saved = localStorage.getItem(storageKey)
+
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved)
+
+                setMessages(
+                    parsed.map((m) => ({
+                        ...m,
+                        time: new Date(m.time)
+                    }))
+                )
+            } catch (err) {
+                console.error("Failed to restore chat: ", err)
+            }
+        }
+
+        setHasLoadedChat(true)
+    }, [storageKey])
+
+    // save chat whenever new changes are detected
+    useEffect(() => {
+        if (!storageKey || !hasLoadedChat) return
+
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify(messages.slice(-20)) // save last twenty messages
+        )
+    }, [messages, storageKey, hasLoadedChat])
 
     async function handleSend() {
         const question = input.trim()
