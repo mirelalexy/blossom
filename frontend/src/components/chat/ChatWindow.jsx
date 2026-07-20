@@ -4,6 +4,7 @@ import { useUser } from "../../store/UserStore"
 
 import { isEvilMode } from "../../utils/evilBlossom"
 import { formatDate } from "../../utils/dateUtils"
+import { apiFetch } from "../../utils/apiFetch"
 
 import Icon from "../ui/Icon"
 
@@ -14,41 +15,9 @@ const OPENING_MESSAGE = {
     evil: "Want to share something?"
 }
 
-// test out feature using replies based on keywords
-const REPLIES = [
-    {
-        keywords: ["coffee"],
-        regular: "You've logged coffee 9 times this month, 6 tagged impulse, and 5 of those before 9am. Does that timing match what you'd expect?",
-        evil: "Nine times. Six impulse, by your own tag. Mostly before 9am. You already know this one."
-    },
-    {
-        keywords: ["anxious", "anxiety", "stress"],
-        regular: "Anxious-tagged purchases make up about 18% of your entries but 35% of your spending... so when you're anxious, you spend more per purchase, not just more often. Does that fit?",
-        evil: "Anxious tags: 18% of entries, 35% of the money. You spend bigger, not just more. Draw your own conclusion."
-    },
-    {
-        keywords: ["guilt", "guilty"],
-        regular: "Guilt shows up in your notes on self purchases far more than on ones for other people. Is the guilt about the money, or about giving yourself permission?",
-        evil: "Guilt shows up a lot more when the purchase is for you, not someone else. That's not a money pattern. You know what it is."
-    },
-    {
-        keywords: ["doing", "how am i", "this month"],
-        regular: "You're on a solid streak, and your impulse-tagged spending has dropped since last month. That's a real shift, not a lucky stretch.",
-        evil: "Streak's holding. Impulse spending's down from last month. Fine. That's good, actually."
-    }
-]
-
-const FALLBACK_REPLY = {
-    regular: "I can only really speak to what's in your Journey, like transactions, moods, and goals. Want to ask me about one of those?",
-    evil: "That's not really my place. Stick to your data and I'll have something to say."
-}
-
-function getReply(question, isEvil) {
-    const lower = question.toLowerCase()
-    const match = REPLIES.find((r) => r.keywords.some((k) => lower.includes(k)))
-    const entry = match || FALLBACK_REPLY
-
-    return isEvil ? entry.evil : entry.regular
+const ERROR_REPLY = {
+    regular: "Something went wrong on my end. Mind trying that again?",
+    evil: "That didn't work. Try again."
 }
 
 // generate random ID until fetch from API is available
@@ -70,7 +39,6 @@ function formatDividerTime(date) {
 
 function ChatWindow({ variant = "page", onClose }) {
     const isEvil = isEvilMode()
-    const now = useRef(new Date()).current
 
     const { user } = useUser()
     const userInitial = user?.displayName ? user.displayName.charAt(0).toUpperCase() : "?"
@@ -80,7 +48,7 @@ function ChatWindow({ variant = "page", onClose }) {
             id: "opening",
             role: "blossom",
             text: isEvil ? OPENING_MESSAGE.evil : OPENING_MESSAGE.regular,
-            time: now
+            time: new Date()
         }
     ])
 
@@ -98,6 +66,11 @@ function ChatWindow({ variant = "page", onClose }) {
         const question = input.trim()
         if (!question) return
 
+        // snapshot history before adding new question
+        const conversationHistory = messages
+            .filter((m) => m.id !== "opening")
+            .map((m) => ({ role: m.role, text: m.text }))
+
         setMessages((prev) => [
             ...prev,
             {
@@ -111,20 +84,44 @@ function ChatWindow({ variant = "page", onClose }) {
         setInput("")
         setIsThinking(true)
 
-        // TODO: replace with real API call
-        setTimeout(() => {
+        try {
+            const res = await apiFetch("/api/chat/ask", {
+                method: "POST",
+                body: JSON.stringify({
+                    question,
+                    isEvil,
+                    conversationHistory
+                })
+            })
+
+            if (!res.ok) throw new Error("Request failed")
+
+            const data = await res.json()
+
             setMessages((prev) => [
                 ...prev,
                 {
                     id: generateId(),
                     role: "blossom",
-                    text: getReply(question, isEvil),
+                    text: data.response,
                     time: new Date()
                 }
             ])
-
+        } catch (err) {
+            console.error("Ask Blossom failed: ", err)
+            
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: generateId(),
+                    role: "blossom",
+                    text: isEvil ? ERROR_REPLY.evil : ERROR_REPLY.regular,
+                    time: new Date()
+                }
+            ])
+        } finally {
             setIsThinking(false)
-        }, 1100)
+        }
     }
 
     // send using enter
