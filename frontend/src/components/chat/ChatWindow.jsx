@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import ReactMarkdown from "react-markdown"
 
 import { useUser } from "../../store/UserStore"
 
@@ -165,7 +166,7 @@ function ChatWindow({ variant = "page", onClose }) {
                                 </div>
  
                                 <div className={`chat-bubble chat-bubble-${m.role}`}>
-                                    {m.text}
+                                    <ReactMarkdown>{m.text}</ReactMarkdown>
                                 </div>
                             </div>
                         </div>
