@@ -62,7 +62,7 @@ function ChatWindow({ variant = "page", onClose }) {
         listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" })
     }, [messages, isThinking])
 
-    function handleSend() {
+    async function handleSend() {
         const question = input.trim()
         if (!question) return
 
