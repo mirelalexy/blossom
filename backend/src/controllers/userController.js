@@ -12,7 +12,7 @@ export async function getCurrentUser(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level
+            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level, bio, share_bio
             FROM users
             WHERE id = $1`,
             [userId]
@@ -27,10 +27,14 @@ export async function getCurrentUser(req, res) {
 
 export async function updateUserSettings(req, res) {
     const userId = req.user.userId
-    const { theme, currency, displayName, email } = req.body
+    const { theme, currency, displayName, email, bio, shareBio } = req.body
 
     if (email && !email.includes("@")) {
         return res.status(400).json({ error: "Invalid email" })
+    }
+
+    if (bio && bio.length > 500) {
+        return res.status(400).json({ error: "Bio must be 500 characters or fewer" })
     }
 
     try {
@@ -39,14 +43,18 @@ export async function updateUserSettings(req, res) {
             SET theme = COALESCE($1, theme),
                 currency = COALESCE($2, currency),
                 display_name = COALESCE($3, display_name),
-                email = COALESCE($4, email)
-            WHERE id = $5
+                email = COALESCE($4, email),
+                bio = COALESCE($5, bio),
+                share_bio = COALESCE($6, share_bio)
+            WHERE id = $7
             RETURNING *`,
             [
                 theme ?? null, 
                 currency ?? null, 
                 displayName ?? null, 
-                email ?? null, 
+                email ?? null,
+                bio ?? null,
+                shareBio ?? null, 
                 userId
             ]
         )

@@ -45,6 +45,7 @@ import DisplayName from "./pages/settings/account/DisplayName"
 import Email from "./pages/settings/account/Email"
 import Password from "./pages/settings/account/Password"
 import DataPrivacy from "./pages/settings/data-and-privacy/DataPrivacy"
+import Bio from "./pages/settings/data-and-privacy/Bio"
 import ExportData from "./pages/settings/data-and-privacy/ExportData"
 import NotificationSettings from "./pages/settings/notifications/NotificationSettings"
 import Frequency from "./pages/settings/notifications/Frequency"
@@ -140,6 +141,7 @@ function AppContent() {
           <Route path="/settings/account/password" element={<Password />} />
           <Route path="/settings/account/delete" element={<DeleteAccount />} />
           <Route path="/settings/data-and-privacy" element={<DataPrivacy />} />
+          <Route path="/settings/data-and-privacy/bio" element={<Bio />} />
           <Route path="/settings/data-and-privacy/export" element={<ExportData />} />
           <Route path="/settings/data-and-privacy/reset" element={<ResetApp />} />
           <Route path="/settings/notifications" element={<NotificationSettings />} />

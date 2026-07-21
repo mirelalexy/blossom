@@ -258,8 +258,13 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+function formatBio(bio) {
+    if (!bio) return "The user has not shared a bio with you."
+    return bio
+}
+
 function formatDataSlice(dataSlice) {
-    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions } = dataSlice
+    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions, bio } = dataSlice
 
     return `
     Data available for this conversation
@@ -272,6 +277,8 @@ function formatDataSlice(dataSlice) {
     Goals: ${JSON.stringify(goals, null, 2)}
     Transaction count: ${transactionCount}
     Today's date: ${new Date().toISOString().slice(0, 10)}
+    About the user, in their own words (treat it as context for interpretation):
+    ${formatBio(bio)}
 
     Mood summary
     ${formatCounts(moodSummary)}

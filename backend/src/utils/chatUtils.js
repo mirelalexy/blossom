@@ -219,11 +219,23 @@ async function getActiveGoals(userId) {
     }))
 }
 
+async function getUserBio(userId) {
+    const result = await pool.query(
+        `SELECT bio, share_bio FROM users WHERE id = $1`,
+        [userId]
+    )
+    
+    const row = result.rows[0]
+    if (!row || !row.share_bio || !row.bio) return null
+    
+    return row.bio
+}
+
 export async function getDataSlice(userId, question) {
     const { start, end } = extractDateRange(question)
 
     // get transactions in range and category name to use directly and goals
-    const [result, goals] = await Promise.all([
+    const [result, goals, bio] = await Promise.all([
         pool.query(
             `SELECT
                 t.id, t.amount, t.type, t.method, t.title,
@@ -237,7 +249,8 @@ export async function getDataSlice(userId, question) {
             LIMIT $4`,
             [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
         ),
-        getActiveGoals(userId)
+        getActiveGoals(userId),
+        getUserBio(userId)
     ])
 
     const currency = result.rows[0]?.currency || "USD"
@@ -254,6 +267,7 @@ export async function getDataSlice(userId, question) {
         moodSummary: summarizeByField(transactions, "mood"),
         intentSummary: summarizeByField(transactions, "intent"),
         stats: computeStats(transactions),
-        goals
+        goals,
+        bio
     }
 }

@@ -1,0 +1,13 @@
+.bio-explainer {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 4px 4px 10px;
+}
+
+.bio-char-count {
+    color: var(--text-tertiary);
+    font-size: 12px;
+    text-align: right;
+    margin: 4px 4px 10px;
+}

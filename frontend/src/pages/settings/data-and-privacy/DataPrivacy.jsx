@@ -12,17 +12,22 @@ function DataPrivacy() {
         <div className="page">
             <PageHeader title="Data & Privacy" />
 
-            <Section>
+            <Section title="About You">
+                <SettingsCard>
+                    <SettingsItem 
+                        label="Your Bio"
+                        onClick={() => navigate("/settings/data-and-privacy/bio")}
+                    />
+                </SettingsCard>
+            </Section>
+
+            <Section title="Control Your Data">
                 <SettingsCard>
                     <SettingsItem 
                         label="Export Data"
                         onClick={() => navigate("/settings/data-and-privacy/export")}
                     />
-                </SettingsCard>
-            </Section>
 
-            <Section>
-                <SettingsCard>
                     <SettingsItem 
                         label="Reset App (Clear Data)"
                         onClick={() => navigate("/settings/data-and-privacy/reset")}
