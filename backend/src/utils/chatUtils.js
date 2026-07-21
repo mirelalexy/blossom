@@ -79,7 +79,7 @@ function extractDateRange(question) {
     }
 
     // look for month names
-    for (let i = 0; i < MONTHS; i++) {
+    for (let i = 0; i < MONTHS.length; i++) {
         if (lower.includes(MONTHS[i])) {
             // assume most recent occurrence of the month
             let year = now.getFullYear()
