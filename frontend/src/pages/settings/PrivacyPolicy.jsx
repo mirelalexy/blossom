@@ -16,7 +16,7 @@ function PrivacyPolicy() {
                     No legalese where plain language will do.
                 </p>
                 
-                <p className="policy-meta">Last updated: July 20, 2026</p>
+                <p className="policy-meta">Last updated: July 21, 2026</p>
             </div>
 
             <Section title="Information We Collect">
@@ -63,6 +63,13 @@ function PrivacyPolicy() {
                     tags, and goals - is sent to Anthropic's Claude API to generate a response.
                     We only send what's needed to answer your question, never your name, email,
                     or account details.
+                </p>
+
+                <p className="policy-text">
+                    You can optionally add a short bio and choose to share it with Blossom so
+                    responses can take context like your job or personal goals into account. 
+                    This feature is off by default. You can write, edit, or stop sharing your
+                    bio at any time from Settings → Data & Privacy → About You.
                 </p>
 
                 <p className="policy-text">
