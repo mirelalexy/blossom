@@ -35,7 +35,8 @@ export async function askBlossom(req, res) {
             },
             body: JSON.stringify({
                 model: MODEL,
-                max_tokens: 600,
+                max_tokens: 400,
+                thinking: { type: "disabled" },
                 cache_control: { type: "ephemeral" },
                 system: systemPrompt,
                 messages
