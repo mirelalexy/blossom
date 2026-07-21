@@ -283,9 +283,9 @@ function formatDataSlice(dataSlice) {
     Total spent: ${stats.totalSpent}
     Average purchase: ${stats.averagePurchase}
     Largest purchase: ${stats.largestPurchase ? `${stats.largestPurchase.amount} - ${stats.largestPurchase.title}` : "n/a"}
-    Most frequent category: ${stats.mostFrequentCategory ? `${stats.mostFrequentCategory.name} (${stats.mostFrequentCategory.count})` : "n/a"}
-    Most common mood: ${stats.mostCommonMood ? `${capitalize(stats.mostCommonMood.mood)} (${stats.mostCommonMood.count})` : "n/a"}
-    Most common intent: ${stats.mostCommonIntent ? `${capitalize(stats.mostCommonIntent.intent)} (${stats.mostCommonIntent.count})` : "n/a"}
+    Most frequent category: ${stats.topCategory ? `${stats.topCategory.name} (${stats.topCategory.count})` : "n/a"}
+    Most common mood: ${stats.topMood ? `${capitalize(stats.topMood.mood)} (${stats.topMood.count})` : "n/a"}
+    Most common intent: ${stats.topIntent ? `${capitalize(stats.topIntent.intent)} (${stats.topIntent.count})` : "n/a"}
 
     Transactions (most recent first, JSON, capped at 100):
     ${JSON.stringify(transactions, null, 2)}
