@@ -43,11 +43,20 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Milestone awareness at 7, 14, 30, and 60 days
 - Streak card messages adapt to your recent mood data and time of day
 
+### Ask Blossom
+- Chat with Blossom about your own transactions, moods, intents, and goals
+- Two voices: the default gentle, reflective Blossom, and Evil Blossom's dry, deadpan alternate, based on active theme
+- Grounded entirely in your real data, plus well-established behavioral patterns around money and emotion
+- Designed to reflect your patterns back rather than prescribe fixes
+- Aware of your active saving goals, so it can connect spending patterns to what you're actually working toward
+- Conversation history persists locally between sessions until you log out
+- Don't be afraid to get personal. Blossom isn't. Try asking things like: *"What's your first impression of me?"*, *"Have my spending habits changed recently?"*, *"What's something I might be misunderstanding about myself?"*, or *"If you forgot all the numbers tomorrow, what would you still remember about me?"*
+
 ### Journey
 - Browse any past month using the month selector
 - 5 charts: spending by category, spending over time, by intent, by mood, income vs expenses
 - Deep insight text per chart: not just "what" but "so what"
-- 7 pattern cards derived from the last 30 days: weekend vs weekday, card vs cash behaviour, mood-spend correlation, impulse vs planned amounts, recurring impact, savings rate, peak spending day
+- 7 pattern cards derived from the last 30 days: weekend vs weekday, card vs cash behavior, mood-spend correlation, impulse vs planned amounts, recurring impact, savings rate, peak spending day
 - Spending style classification (9 types)
 
 ### Notifications
@@ -89,6 +98,7 @@ Need a more direct budgeting partner? Meet Evil Blossom: still Blossom, but dark
 | Database | PostgreSQL |
 | Auth | JWT (7-day tokens, stored in localStorage) |
 | Image storage | Cloudinary |
+| AI (Chat) | Anthropic Claude (Sonnet) |
 | Charts | Recharts |
 | Icons | Lucide React |
 | Fonts | Google Fonts |
@@ -114,12 +124,12 @@ blossom/
 └── backend/
     └── db/                  # DB schema
     └── src/
-        ├── config/          # Cloudinary config, default categories, default challenges
+        ├── config/          # Anthropic, Cloudinary, default categories, default challenges
         ├── controllers/     # Express route handlers
         ├── middleware/      # JWT auth, file upload (Multer)
         ├── routes/          # Express routers
         ├── services/        # Notification service
-        └── utils/           # Challenge, level, date, password, media, streak, transactions, user state utilities
+        └── utils/           # Challenge, level, date, password, media, streak, transactions, chat, user state utilities
                              # XP config
 ```
 
@@ -132,6 +142,7 @@ blossom/
 - Node.js 20+
 - PostgreSQL 15+
 - A [Cloudinary](https://cloudinary.com) account (free tier works)
+- An [Anthropic](https://console.anthropic.com) API key (for Ask Blossom)
 
 ### Environment variables
 
@@ -146,8 +157,9 @@ DB_PORT=5432
 DB_DATABASE=blossom
 JWT_SECRET=your_secret_here
 CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+ANTHROPIC_API_KEY=your_anthropic_api_key
 ```
 
 Create `frontend/.env`:
@@ -184,10 +196,7 @@ Run the schema SQL file to create all tables, then start the backend. It will se
 - Push notifications
 - Group features: going on a trip with your friends? Manage your budget by logging transactions together. Saving up for a trip? Make a group and put aside money. Cover for someone else to meet your monthly goal deposit.
 - Offline support
-- AI analysis for insights
 - Further gamification
-- Connect with user more: do they recognize their patterns?
-- Blossom flower on Home screen to reflect budget health and reflection time
 
 ---
 
