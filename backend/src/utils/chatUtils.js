@@ -198,23 +198,47 @@ function computeStats(transactions) {
     }
 }
 
+async function getActiveGoals(userId) {
+    const result = await pool.query(
+        `SELECT name, target_amount, current_amount, deadline::text AS deadline, notes, saving_mode, is_primary
+        FROM goals
+        WHERE user_id = $1 AND is_completed = false
+        ORDER BY is_primary DESC, deadline ASC`,
+        [userId]
+    )
+
+    return result.rows.map((g) => ({
+        name: g.name,
+        targetAmount: Number(g.target_amount),
+        currentAmount: Number(g.current_amount),
+        pctComplete: Math.round((Number(g.current_amount) / Number(g.target_amount))),
+        deadline: g.deadline,
+        notes: g.notes,
+        savingMode: g.saving_mode,
+        isPrimary: g.is_primary
+    }))
+}
+
 export async function getDataSlice(userId, question) {
     const { start, end } = extractDateRange(question)
 
-    // get transactions in range and category name to use directly
-    const result = await pool.query(
-        `SELECT
-            t.id, t.amount, t.type, t.method, t.title,
-            c.name AS category_name,
-            t.date::text AS date, t.mood, t.intent, t.notes, u.currency
-        FROM transactions t
-        LEFT JOIN categories c ON c.id = t.category_id
-        JOIN users u ON u.id = t.user_id
-        WHERE t.user_id = $1 AND t.date >= $2 AND t.date <= $3
-        ORDER BY t.date DESC
-        LIMIT $4`,
-        [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
-    )
+    // get transactions in range and category name to use directly and goals
+    const [result, goals] = await Promise.all([
+        pool.query(
+            `SELECT
+                t.id, t.amount, t.type, t.method, t.title,
+                c.name AS category_name,
+                t.date::text AS date, t.mood, t.intent, t.notes, u.currency
+            FROM transactions t
+            LEFT JOIN categories c ON c.id = t.category_id
+            JOIN users u ON u.id = t.user_id
+            WHERE t.user_id = $1 AND t.date >= $2 AND t.date <= $3
+            ORDER BY t.date DESC
+            LIMIT $4`,
+            [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
+        ),
+        getActiveGoals(userId)
+    ])
 
     const currency = result.rows[0]?.currency || "USD"
     const transactions = result.rows.map(({ currency, ...t }) => t)
@@ -229,6 +253,7 @@ export async function getDataSlice(userId, question) {
         transactions,
         moodSummary: summarizeByField(transactions, "mood"),
         intentSummary: summarizeByField(transactions, "intent"),
-        stats: computeStats(transactions)
+        stats: computeStats(transactions),
+        goals
     }
 }

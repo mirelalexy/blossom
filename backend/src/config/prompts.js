@@ -103,7 +103,7 @@ function capitalize(str) {
 }
 
 function formatDataSlice(dataSlice) {
-    const { currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions } = dataSlice
+    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions } = dataSlice
 
     return `
     Data available for this conversation
@@ -113,6 +113,7 @@ function formatDataSlice(dataSlice) {
     If the user's currency does not have a commonly used symbol, write the currency code after the amount (e.g. "38 RON").
 
     Date range: ${dateRange.start} -> ${dateRange.end}
+    Goals: ${JSON.stringify(goals, null, 2)}
     Transaction count: ${transactionCount}
     Today's date: ${new Date().toISOString().slice(0, 10)}
 
