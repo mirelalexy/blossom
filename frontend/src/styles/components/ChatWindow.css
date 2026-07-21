@@ -112,6 +112,10 @@
     border-bottom-right-radius: var(--r-sm);
 }
 
+.chat-bubble p:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
 @keyframes chatBubbleIn {
     from {
         opacity: 0;
