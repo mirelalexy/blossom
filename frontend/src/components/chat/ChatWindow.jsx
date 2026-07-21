@@ -207,7 +207,9 @@ function ChatWindow({ variant = "page", onClose }) {
                                 </div>
  
                                 <div className={`chat-bubble chat-bubble-${m.role}`}>
-                                    <ReactMarkdown>{m.text}</ReactMarkdown>
+                                    {m.role === "blossom"
+                                    ? <ReactMarkdown>{m.text}</ReactMarkdown>
+                                    : m.text}
                                 </div>
                             </div>
                         </div>
