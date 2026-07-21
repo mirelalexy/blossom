@@ -211,7 +211,7 @@ async function getActiveGoals(userId) {
         name: g.name,
         targetAmount: Number(g.target_amount),
         currentAmount: Number(g.current_amount),
-        pctComplete: Math.round((Number(g.current_amount) / Number(g.target_amount))),
+        pctComplete: Math.round((Number(g.current_amount) / Number(g.target_amount)) * 100),
         deadline: g.deadline,
         notes: g.notes,
         savingMode: g.saving_mode,
