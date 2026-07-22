@@ -1,6 +1,6 @@
 import pool from "../db.js"
 
-import { getCurrentMonthKey, getCurrentWeekKey } from "../utils/dateUtils.js"
+import { getCurrentMonthKey, getCurrentWeekKey, parseLocalDate } from "../utils/dateUtils.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { evaluateChallenges } from "./challengeUtils.js"
 import { calculateStreak } from "./streakUtils.js"
@@ -73,8 +73,16 @@ export async function recalculateUserState(userId) {
         })
     }
 
+    // get expenses for current month
+    const now = new Date()
+
     const expenses = transactions
-        .filter(t => t.type === "expense")
+        .filter(t => {
+            if (t.type !== "expense" || !t.date) return false
+
+            const d = parseLocalDate(t.date)
+            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()
+        })
         .reduce((sum, t) => sum + Number(t.amount), 0)
         
     const percentUsedBudget = budget?.monthly_limit
