@@ -5,6 +5,17 @@ import { apiFetch } from "../utils/apiFetch"
 
 const GoalsContext = createContext()
 
+// normalize goal to avoid string concatenation
+// not just the initial fetch needs normalization
+function normalizeGoal(g) {
+    return {
+        ...g,
+        current_amount: Number(g.current_amount),
+        target_amount: Number(g.target_amount),
+        deadline: g.deadline?.slice(0, 10)
+    }
+}
+
 export function GoalsProvider({ children }) {
     const { user } = useUser()
     const { showToast } = useToast()
@@ -27,12 +38,7 @@ export function GoalsProvider({ children }) {
 
                 const data = await res.json()
 
-                const formatted = data.map(g => ({
-                    ...g,
-                    current_amount: Number(g.current_amount),
-                    target_amount: Number(g.target_amount),
-                    deadline: g.deadline?.slice(0, 10)
-                }))
+                const formatted = data.map(normalizeGoal)
 
                 setGoals(formatted)
             } catch (err) {
@@ -53,7 +59,7 @@ export function GoalsProvider({ children }) {
             })
 
             const data = await res.json()
-            setGoals(prev => [data, ...prev])
+            setGoals(prev => [normalizeGoal(data), ...prev])
 
             showToast({ message: "Goal added" })
         } catch (err) {
@@ -88,7 +94,7 @@ export function GoalsProvider({ children }) {
 
             setGoals(prev => 
                 prev.map(g =>
-                    g.id === data.id ? data : g
+                    g.id === data.id ? normalizeGoal(data) : g
                 )
             )
 
