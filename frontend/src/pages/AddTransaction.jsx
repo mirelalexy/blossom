@@ -212,6 +212,14 @@ function AddTransaction() {
             )}
 
 			<form className="form" onSubmit={handleSubmit} onFocus={handleInteraction} onChange={handleInteraction}>
+				{/* Title */}
+				<Input
+					label="Title"
+					type="text"
+					value={formData.title}
+					onChange={(e) => handleChange("title", e.target.value)}
+				/>
+				
 				{/* Amount */}
 				<Input
 					label="Amount"
@@ -243,14 +251,6 @@ function AddTransaction() {
 						{ value: "card", label: "Card" },
 						{ value: "cash", label: "Cash" },
 					]}
-				/>
-
-				{/* Title */}
-				<Input
-					label="Title"
-					type="text"
-					value={formData.title}
-					onChange={(e) => handleChange("title", e.target.value)}
 				/>
 
 				{/* Category */}
