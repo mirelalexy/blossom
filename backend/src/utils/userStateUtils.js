@@ -38,7 +38,7 @@ export async function recalculateUserState(userId) {
         [userId]
     )
 
-    const goalCategoryId = goalCategoryRes?.rows[0].id
+    const goalCategoryId = goalCategoryRes.rows[0]?.id
 
     // evaluate challenges
     const updatedChallenges = evaluateChallenges({
