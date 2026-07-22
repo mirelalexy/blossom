@@ -9,7 +9,7 @@ import Button from "../../../components/ui/Button"
 
 function EditCategory() {
     const navigate = useNavigate()
-    const [error, setError] = setState("")
+    const [error, setError] = useState("")
 
     const { id } = useParams()
 
