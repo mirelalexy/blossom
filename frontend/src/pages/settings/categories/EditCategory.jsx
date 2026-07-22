@@ -34,7 +34,7 @@ function EditCategory() {
         const exists = categories.some(
             c =>
                 c.name.toLowerCase() === trimmed.toLowerCase() &&
-                c.type === category.type &
+                c.type === category.type &&
                 c.id !== category.id
         )
 
