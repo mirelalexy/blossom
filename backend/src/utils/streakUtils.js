@@ -19,7 +19,7 @@ export function calculateStreak(transactions) {
     let streak = 1
     let currentDate = today
 
-    for (let i = 0; i < uniqueDays.length; i++) {
+    for (let i = 1; i < uniqueDays.length; i++) {
         const transactionDate = new Date(uniqueDays[i])
 
         const diffDays = getDayDiff(currentDate, transactionDate)
