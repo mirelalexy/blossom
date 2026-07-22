@@ -107,6 +107,38 @@ input[type="date"] {
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 44px;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--r-full);
+}
+
+.password-toggle-icon {
+    color: var(--text-tertiary);
+}
+
+.password-toggle-btn:hover .password-toggle-icon {
+    color: var(--text-secondary);
+}
+
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,

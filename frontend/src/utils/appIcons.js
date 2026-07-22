@@ -64,11 +64,15 @@ import {
     Heart,
     ArrowUp,
     X,
-    MessageCircle
+    MessageCircle,
+    Eye,
+    EyeClosed
 } from "lucide-react"
 
 export const appIcons = {
     // UI icons
+    visible: Eye,
+    hidden: EyeClosed,
     home: House,
     transactions: Receipt,
     add: Plus,
