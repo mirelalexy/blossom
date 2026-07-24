@@ -40,7 +40,7 @@ export function CategoryProvider({ children }) {
             const data = await res.json()
 
             if (!res.ok) {
-                setError("Error: ", data.error)
+                setError(data.error)
                 return null
             }
 
