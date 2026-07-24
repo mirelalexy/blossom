@@ -59,3 +59,9 @@
 .auth-link:hover { 
     opacity: 0.75; 
 }
+
+.auth-forgot {
+    font-size: 13px;
+    text-align: right;
+    margin-top: -6px;
+}

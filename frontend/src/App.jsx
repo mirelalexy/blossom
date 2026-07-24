@@ -28,6 +28,7 @@ import ScrollToTop from "./components/utils/ScrollToTop"
 
 import Home from "./pages/Home"
 import Login from "./pages/Login"
+import ForgotPassword from "./pages/ForgotPassword"
 import Transactions from "./pages/Transactions"
 import Goals from "./pages/Goals"
 import Journey from "./pages/Journey"
@@ -162,6 +163,7 @@ function AppContent() {
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
       </Routes>
     </>
   )
