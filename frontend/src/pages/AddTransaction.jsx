@@ -21,6 +21,7 @@ import Toggle from "../components/forms/Toggle"
 import MoodSelector from "../components/forms/MoodSelector"
 import Textarea from "../components/forms/Textarea"
 import ConfirmModal from "../components/ui/ConfirmModal"
+import IconSelector from "../components/forms/IconSelector"
 
 function AddTransaction() {
 	const navigate = useNavigate()
@@ -34,7 +35,7 @@ function AddTransaction() {
 	const { rules } = useRules()
 	const { budget } = useBudget()
 	const { categoryBudgets } = useCategoryBudgets()
-	const { categories, getCategoriesByType } = useCategories()
+	const { categories, getCategoriesByType, addCategory } = useCategories()
 
 	const existingTransaction = transactions.find((t) => t.id === id)
 
@@ -44,6 +45,10 @@ function AddTransaction() {
 	const [warningMessage, setWarningMessage] = useState("")
 
 	const [error, setError] = useState("")
+
+	const [showNewCategory, setShowNewCategory] = useState(false)
+	const [newCategoryName, setNewCategoryName] = useState("")
+	const [newCategoryIcon, setNewCategoryIcon] = useState("circle")
 
 	const [formData, setFormData] = useState({
 		amount: "",
@@ -195,7 +200,34 @@ function AddTransaction() {
 			value: cat.id,
 			label: cat.name,
 		})),
+		{ value: "__new__", label: "+ Add new category" }
 	]
+
+	function handleCategorySelect(value) {
+		if (value === "__new__") {
+			setShowNewCategory(true)
+			return
+		}
+
+		handleChange("categoryId", value)
+	}
+
+	async function handleCreateCategory() {
+		const created = await addCategory(newCategoryName, formData.type, newCategoryIcon)
+
+		if (created) {
+			handleChange("categoryId", created.id)
+			setShowNewCategory(false)
+			setNewCategoryName("")
+			setNewCategoryIcon("circle")
+		}
+	}
+
+	function handleCancelNewCategory() {
+		setShowNewCategory(false)
+		setNewCategoryName("")
+		setNewCategoryIcon("circle")
+	}
 
 	return (
 		<div className="page">
@@ -258,9 +290,43 @@ function AddTransaction() {
 					label="Category"
 					name="category"
 					value={formData.categoryId}
-					onChange={(e) => handleChange("categoryId", e.target.value)}
+					onChange={(e) => handleCategorySelect(e.target.value)}
 					options={categoryOptions}
 				/>
+
+				{showNewCategory && (
+					<div className="inline-new-category">
+						<Input 
+							label="New Category Name"
+							type="text"
+							value={newCategoryName}
+							onChange={(e) => setNewCategoryName(e.target.value)}
+						/>
+
+						<IconSelector
+							value={newCategoryIcon}
+							onChange={setNewCategoryIcon}
+						/>
+
+						<div className="inline-new-category-actions">
+							<Button
+								type="button"
+								onClick={handleCreateCategory}
+								disabled={!newCategoryName.trim()}
+							>
+								Create Category
+							</Button>
+
+							<Button
+								type="button"
+								className="secondary"
+								onClick={handleCancelNewCategory}
+							>
+								Cancel
+							</Button>
+						</div>
+					</div>
+				)}
 
 				{/* Date */}
 				<Input

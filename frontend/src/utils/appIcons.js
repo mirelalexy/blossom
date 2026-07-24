@@ -71,7 +71,6 @@ import {
     Store,
     Phone,
     Tv,
-    Palette,
     Paintbrush,
     PenTool,
     Baby,
@@ -94,7 +93,6 @@ import {
     MicVocal,
     Recycle,
     WavesLadder,
-    SportShoe,
     Tent,
     Wrench
 } from "lucide-react"
@@ -175,7 +173,6 @@ export const appIcons = {
     store: Store,
     phone: Phone,
     tv: Tv,
-    palette: Palette,
     paintbrush: Paintbrush,
     pen: PenTool,
     baby: Baby,
@@ -198,17 +195,16 @@ export const appIcons = {
     mic: MicVocal,
     recycle: Recycle,
     swimming: WavesLadder,
-    sportShoe: SportShoe,
     tent: Tent,
     wrench: Wrench,
     circle: Circle
 }
 
 export const CUSTOM_CATEGORY_KEYS = [
-    "graduationCap", "store", "phone", "tv", "palette", "paintbrush", "pen",
+    "graduationCap", "store", "phone", "tv", "paintbrush", "pen",
     "baby", "keySquare", "rabbit", "bird", "cat", "dog", "fish", "ferrisWheel",
     "bot", "popcorn", "flower2", "drama", "dices", "club", "bed", "lamp", "coffee",
     "dumbbell", "gamepad2", "pawprint", "shirt", "wine", "headset", "bubbles",
     "music", "libraryBig", "volleyball", "plane", "sofa", "parking", "mic",
-    "recycle", "swimming", "sportShoe", "tent", "wrench"
+    "recycle", "swimming", "tent", "wrench"
 ]

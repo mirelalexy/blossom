@@ -79,6 +79,25 @@ button {
     gap: 6px;
 }
 
+.inline-new-category {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--card-border);
+    background-color: var(--card);
+}
+
+.inline-new-category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.inline-new-category-actions .button {
+    flex: 1;
+}
+
 .input-label {
     font-size: 12px;
     font-weight: 600;

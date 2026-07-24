@@ -27,26 +27,28 @@ export function CategoryProvider({ children }) {
         fetchCategories()
     }, [user])
 
-    async function addCategory(name, type = "expense") {
+    async function addCategory(name, type = "expense", icon = "circle") {
         const trimmed = name.trim()
         if (!trimmed) return
 
         try {
             const res = await apiFetch("/api/categories", {
                 method: "POST",
-                body: JSON.stringify({ name: trimmed, type })
+                body: JSON.stringify({ name: trimmed, type, icon })
             })
 
             const data = await res.json()
 
             if (!res.ok) {
                 setError("Error: ", data.error)
-                return
+                return null
             }
 
             setCategories(prev => [...prev, data])
+            return data
         } catch (err) {
             console.error("Add category failed: ", err)
+            return null
         }
     }
 

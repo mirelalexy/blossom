@@ -1,0 +1,29 @@
+.icon-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+    gap: 8px;
+}
+
+.icon-selector-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--r-md);
+    border: 1.5px solid transparent;
+    background-color: var(--input-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.icon-selector-option:hover {
+    background-color: var(--input-focus);
+}
+
+.icon-selector-option.selected {
+    border-color: var(--accent);
+    background-color: var(--accent-dim);
+    color: var(--accent);
+}
