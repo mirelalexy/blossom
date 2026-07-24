@@ -52,11 +52,11 @@ export function CategoryProvider({ children }) {
         }
     }
 
-    async function renameCategory(id, newName) {
+    async function updateCategory(id, { name, icon } = {}) {
         try {
             const res = await apiFetch(`/api/categories/${id}`, {
                 method: "PUT",
-                body: JSON.stringify({ name: newName })
+                body: JSON.stringify({ name, icon })
             })
 
             const data = await res.json()
@@ -66,8 +66,10 @@ export function CategoryProvider({ children }) {
                     cat.id === id ? data : cat
                 )
             )
+
+            return data
         } catch (err) {
-            console.error("Rename category failed: ", err)
+            console.error("Update category failed: ", err)
         }
     }
 
@@ -101,7 +103,7 @@ export function CategoryProvider({ children }) {
     }
 
     return (
-        <CategoryContext.Provider value={{ categories, addCategory, renameCategory, deleteCategory, getCategoriesByType, getCategoryById }}>
+        <CategoryContext.Provider value={{ categories, addCategory, updateCategory, deleteCategory, getCategoriesByType, getCategoryById }}>
             {children}
         </CategoryContext.Provider>
     )

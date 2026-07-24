@@ -10,12 +10,14 @@ import SettingsItem from "../../../components/settings/SettingsItem"
 import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
 import RadioGroup from "../../../components/forms/RadioGroup"
+import IconSelector from "../../../components/forms/IconSelector"
 
 function Categories() {
     const navigate = useNavigate()
     const { categories, addCategory, deleteCategory } = useCategories()
-    const [ newCategory, setNewCategory] = useState("")
-    const [ type, setType ] = useState("expense")
+    const [newCategory, setNewCategory] = useState("")
+    const [type, setType] = useState("expense")
+    const [icon, setIcon] = useState("circle")
 
     function sortCategories(list) {
         return [...list]
@@ -33,8 +35,9 @@ function Categories() {
     )
 
     function handleAdd() {
-        addCategory(newCategory, type)
+        addCategory(newCategory, type, icon)
         setNewCategory("")
+        setIcon("circle")
     }
 
     return (
@@ -58,7 +61,12 @@ function Categories() {
                         { value: "expense", label: "Expense" },
                         { value: "income", label: "Income" }
                     ]}
-                    />
+                />
+
+                <IconSelector 
+                    value={icon}
+                    onChange={setIcon}
+                />
 
                 <Button 
                     onClick={handleAdd} 

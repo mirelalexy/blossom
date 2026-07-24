@@ -6,6 +6,7 @@ import { useCategories } from "../../../store/CategoryStore"
 import PageHeader from "../../../components/ui/PageHeader"
 import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
+import IconSelector from "../../../components/forms/IconSelector"
 
 function EditCategory() {
     const navigate = useNavigate()
@@ -13,11 +14,12 @@ function EditCategory() {
 
     const { id } = useParams()
 
-    const { categories, getCategoryById, renameCategory } = useCategories() 
+    const { categories, getCategoryById, updateCategory } = useCategories() 
 
     const category = getCategoryById(id)
 
     const [name, setName] = useState(category?.name || "")
+    const [icon, setIcon] = useState(category?.icon || "circle")
 
     if (!category) {
         return <p>Category not found.</p>
@@ -43,7 +45,7 @@ function EditCategory() {
             return
         }
 
-        renameCategory(category.id, trimmed)
+        updateCategory(category.id, { name: trimmed, icon })
         navigate(-1)
     }
 
@@ -56,6 +58,11 @@ function EditCategory() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+            />
+
+            <IconSelector 
+                value={icon}
+                onChange={setIcon}
             />
 
             {error && <p className="error-text">{error}</p>}
