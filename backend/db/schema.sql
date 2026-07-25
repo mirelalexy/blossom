@@ -15,7 +15,9 @@ CREATE TABLE users (
 	xp INTEGER NOT NULL DEFAULT 0,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	bio TEXT,
-	share_bio BOOLEAN NOT NULL DEFAULT false
+	share_bio BOOLEAN NOT NULL DEFAULT false,
+	reset_token_hash TEXT,
+	reset_token_expires_at TIMESTAMPTZ
 );
 
 -- ================= CATEGORIES =================
