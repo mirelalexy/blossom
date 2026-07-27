@@ -30,7 +30,6 @@ function PieChart({ data }) {
                             boxShadow: "var(--card-shadow)"
                         }}
                         itemStyle={{ color: "var(--text-primary)" }}
-                        itemStyle={{ color: "var(--text-secondary)" }}
                     />
                     <Pie
                         data={data}
