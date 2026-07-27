@@ -49,6 +49,7 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Grounded entirely in your real data, plus well-established behavioral patterns around money and emotion
 - Designed to reflect your patterns back rather than prescribe fixes
 - Aware of your active saving goals, so it can connect spending patterns to what you're actually working toward
+- Share a short bio with Blossom for extra context: off by default, editable anytime
 - Conversation history persists locally between sessions until you log out
 - Don't be afraid to get personal. Blossom isn't. Try asking things like: *"What's your first impression of me?"*, *"Have my spending habits changed recently?"*, *"What's something I might be misunderstanding about myself?"*, or *"If you forgot all the numbers tomorrow, what would you still remember about me?"*
 
@@ -79,12 +80,12 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 
 > *I get a little different in the dark...*
 
-Need a more direct budgeting partner? Meet Evil Blossom: still Blossom, but darker. This theme changes more than colours. It switches tone for streak messages, greeting, onboarding for new users, app tips, and FAQ.
+Need a more direct budgeting partner? Meet Evil Blossom: still Blossom, but darker. This theme changes more than colors. It switches tone for streak messages, greeting, onboarding for new users, app tips, and FAQ.
 
 ### Settings
-- Account: display name, email, password
-- Data & Privacy: export full transaction history as CSV, reset app (wipes all data, keeps account and settings)
-- Theme, Notifications (conditional frequency control), Monthly Budget, Categories, Currency, Custom Spending Rules
+- Account: display name, email, password (change it anytime, or reset it via email if you get logged out)
+- Data & Privacy: export full transaction history as CSV, reset app (wipes all data, keeps account and settings), share your bio with Blossom
+- Theme, Notifications (conditional frequency control), Monthly Budget, Categories (with custom icons), Currency, Custom Spending Rules
 - Explore App Tips and FAQ
 
 ---
@@ -99,6 +100,7 @@ Need a more direct budgeting partner? Meet Evil Blossom: still Blossom, but dark
 | Auth | JWT (7-day tokens, stored in localStorage) |
 | Image storage | Cloudinary |
 | AI (Chat) | Anthropic Claude (Sonnet) |
+| Email | Resend |
 | Charts | Recharts |
 | Icons | Lucide React |
 | Fonts | Google Fonts |
@@ -129,7 +131,7 @@ blossom/
         ├── middleware/      # JWT auth, file upload (Multer)
         ├── routes/          # Express routers
         ├── services/        # Notification service
-        └── utils/           # Challenge, level, date, password, media, streak, transactions, chat, user state utilities
+        └── utils/           # Challenge, level, date, password, media, streak, transactions, email, chat, user state utilities
                              # XP config
 ```
 
@@ -143,29 +145,36 @@ blossom/
 - PostgreSQL 15+
 - A [Cloudinary](https://cloudinary.com) account (free tier works)
 - An [Anthropic](https://console.anthropic.com) API key (for Ask Blossom)
+- A [Resend](https://resend.com) API key (free tier works)
 
 ### Environment variables
 
 Create `backend/.env`:
 
 ```env
-PORT=3000
+PORT=5000
 DB_USER=your_user
 DB_PASSWORD=your_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_DATABASE=blossom
 JWT_SECRET=your_secret_here
+
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
 ANTHROPIC_API_KEY=your_anthropic_api_key
+
+RESEND_API_KEY=your_resend_api_key
+EMAIL_FROM=onboarding@resend.dev
+FRONTEND_URL=http://localhost:5173
 ```
 
 Create `frontend/.env`:
 
 ```env
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=http://localhost:5000
 ```
 
 ### Running locally
