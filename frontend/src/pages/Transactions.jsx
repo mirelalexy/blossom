@@ -7,7 +7,7 @@ import { useBudget } from "../store/BudgetStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
-import { getCurrentMonthYear, getDayDiff, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
+import { getCurrentMonthYear, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
 import { calculateBudgetWithRollover } from "../utils/budgetUtils"
 
@@ -42,17 +42,6 @@ function Transactions() {
 
 	const today = getStartOfDay(new Date())
 
-	const recentTransactions = transactions
-		.filter((t) => {
-			if (!t.date) return false
-
-			const transactionDate = getStartOfDay(parseLocalDate(t.date))
-			const diffDays = getDayDiff(today, transactionDate)
-
-			return diffDays >= 0 && diffDays <= 7
-		})
-		.sort((a, b) => new Date(b.date) - new Date(a.date))
-
 	const upcomingTransactions = transactions
 		.filter((t) => {
 			if (t.is_recurring) return false
@@ -72,13 +61,16 @@ function Transactions() {
 		.filter((t) => {
 			if (!t.date) return false
 
-			const date = parseLocalDate(t.date)
+			const date = getStartOfDay(parseLocalDate(t.date))
+
+			if (date > today) return false
 
 			return (
 				date.getMonth() === today.getMonth() &&
 				date.getFullYear() === today.getFullYear()
 			)
 		})
+		.sort((a, b) => new Date(b.date) - new Date(a.date))
 
 	const expenses = monthlyTransactions
 		.filter((t) => t.type === "expense")
@@ -101,13 +93,14 @@ function Transactions() {
 	const rolloverAmount = effectiveBudget - baseBudget
 
 	const noTransactions =
-		upcomingTransactions.length === 0 && recentTransactions.length === 0
+		upcomingTransactions.length === 0 && monthlyTransactions.length === 0
 
 	const topCategoryId = location.state?.categoryId || ""
 
 	const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
 		.toISOString()
 		.split("T")[0]
+
 	const lastDayOfMonth = new Date(
 		today.getFullYear(),
 		today.getMonth() + 1,
@@ -122,11 +115,11 @@ function Transactions() {
 		intent: "",
 		mood: "",
 		period: topCategoryId
-			? {
+			?   {
 					start: firstDayOfMonth,
 					end: lastDayOfMonth,
-				}
-			: {
+			    }
+			:   {
 					start: "",
 					end: "",
 				},
@@ -163,20 +156,21 @@ function Transactions() {
 
 	const filteredTransactions = filterTransactions(
 		transactions.filter((t) => !t.is_recurring),
-		filters,
+		filters
 	)
+
 	const [showFilters, setShowFilters] = useState(false)
 
 	const searchedTransactions = searchTransactions(
 		filteredTransactions,
-		searchQuery,
+		searchQuery
 	)
 
 	// pagination
 	const paginatedFiltered = searchedTransactions.slice(0, visibleCount)
 	const hasMore = searchedTransactions.length > visibleCount
-	const paginatedRecent = recentTransactions.slice(0, visibleCount)
-	const recentHasMore = recentTransactions.length > visibleCount
+	const paginatedMonth = monthlyTransactions.slice(0, visibleCount)
+	const monthHasMore = monthlyTransactions.length > visibleCount
 
 	return (
 		<div className="page">
@@ -302,16 +296,16 @@ function Transactions() {
 						)}
 					</Section>
 
-					<Section title="Recent">
-						{recentTransactions.length === 0 ? (
-							<EmptyState {...getEmpty("transactionsRecent")} />
+					<Section title="This Month">
+						{monthlyTransactions.length === 0 ? (
+							<EmptyState {...getEmpty("transactionsMonth")} />
 						) : (
 							<>
-								{paginatedRecent.map((t) => (
+								{paginatedMonth.map((t) => (
 									<TransactionCard key={t.id} {...t} />
 								))}
 
-								{recentHasMore && (
+								{monthHasMore && (
 									<Button
 										className="secondary"
 										onClick={() =>

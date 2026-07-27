@@ -14,9 +14,9 @@ export const EMPTY = {
         title: `Nothing for "${query}"`,
         subtitle: "Try a different word or check the spelling."
     }),
-    transactionsRecent: {
-        title: "Nothing logged recently",
-        subtitle: "Nothing logged in the last 7 days. Whenever you're ready, I'm here."
+    transactionsMonth: {
+        title: "Nothing logged this month",
+        subtitle: "Nothing logged yet this month. Whenever you're ready, I'm here."
     },
     transactionsUpcoming: {
         title: "Nothing scheduled",
@@ -85,8 +85,8 @@ const EVIL_EMPTY = {
         title: `Nothing for "${query}".`,
         subtitle: "Try something else."
     }),
-    transactionsRecent: {
-        title: "Nothing in 7 days.",
+    transactionsMonth: {
+        title: "Nothing this month.",
         subtitle: "I noticed. Whenever you're ready."
     },
     transactionsUpcoming: {
