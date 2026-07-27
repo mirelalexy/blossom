@@ -21,6 +21,11 @@ const ERROR_REPLY = {
     evil: "That didn't work. Try again."
 }
 
+const RATE_LIMIT_REPLY = {
+    regular: "I need a moment... You've asked me quite a few things really quickly. Give me a second, then try again.",
+    evil: "Slow down. Even I need a second to think..."
+}
+
 // generate random ID until fetch from API is available
 function generateId() {
     return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
@@ -135,6 +140,18 @@ function ChatWindow({ variant = "page", onClose }) {
                     conversationHistory
                 })
             })
+
+            if (res.status === 429) {
+                setMessages((prev) => [
+                    ...prev,
+                    {
+                        id: generateId(),
+                        role: "blossom",
+                        text: isEvil ? RATE_LIMIT_REPLY.evil : RATE_LIMIT_REPLY.regular,
+                        time: new Date()
+                    }
+                ])
+            }
 
             if (!res.ok) throw new Error("Request failed")
 
