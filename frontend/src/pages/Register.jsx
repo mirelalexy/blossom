@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom" 
 
-import { useUser } from "../store/UserStore"
-
 import Input from "../components/forms/Input"
 import Button from "../components/ui/Button"
 
@@ -16,11 +14,11 @@ function Register() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const { fetchUser } = useUser()
+    const [registered, setRegistered] = useState(false)
 
     const navigate = useNavigate()
 
-    // prevent going back to login if already logged in
+    // prevent going back to register if already logged in
     useEffect(() => {
         if (localStorage.getItem("token")) {
             navigate("/")
@@ -48,16 +46,28 @@ function Register() {
                 return
             }
 
-            localStorage.setItem("token", data.token)
-
-            await fetchUser()
-
-            navigate("/")
+            setRegistered(true)
         } catch (err) {
             setError("Something went wrong. Please try again.")
         } finally {
             setIsSubmitting(false)
         }
+    }
+
+    if (registered) {
+        return (
+            <div className="page">
+                <div className="auth-intro">
+                    <div className="auth-flower">🌸</div>
+                    <h1 className="auth-title">Almost there</h1>
+                    <p className="auth-subtitle">Sent you a verification link to {email}. Click it, then come back and log in.</p>
+                </div>
+
+                <p className="auth-switch">
+                    <Link to="/login" className="auth-link">Go to login</Link>
+                </p>
+            </div>
+        )
     }
 
     return (

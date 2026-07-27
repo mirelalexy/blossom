@@ -14,6 +14,8 @@ function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [needsVerification, setNeedsVerification] = useState(false)
+    const [resendState, setResendState] = useState("idle") // state should be idle, sending, or sent
     const { loading, fetchUser } = useUser()
 
     const navigate = useNavigate()
@@ -34,7 +36,11 @@ function Login() {
             const data = await res.json()
 
             if (!res.ok) {
-                setError(data.error || "Login failed")
+                if (data.code === "EMAIL_NOT_VERIFIED") {
+                    setNeedsVerification(true)
+                } else {
+                    setError(data.error || "Login failed")
+                }
                 return
             }
 
@@ -46,6 +52,24 @@ function Login() {
            navigate("/")
         } catch (err) {
             setError("Something went wrong. Please try again.")
+        }
+    }
+
+    async function handleResendVerification() {
+        setResendState("sending")
+
+        try {
+            await fetch(`${API_URL}/api/auth/resend-verification`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email })
+            })
+        } catch (err) {
+            console.error("Resend verification failed: ", err)
+        } finally {
+            setResendState("sent")
         }
     }
 
@@ -78,6 +102,29 @@ function Login() {
                 <p className="auth-forgot">
                     <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
                 </p>
+
+                {needsVerification && (
+                    <div className="inline-new-category">
+                        <p className="error-text">
+                            Please verify your email before logging in.
+                        </p>
+                
+                        {resendState === "sent" ? (
+                            <p className="auth-subtitle">
+                                A new link is on its way.
+                            </p>
+                        ) : (
+                            <Button
+                                type="button"
+                                className="secondary"
+                                onClick={handleResendVerification}
+                                disabled={resendState === "sending"}
+                            >
+                                {resendState === "sending" ? "Sending..." : "Resend verification email"}
+                            </Button>
+                        )}
+                    </div>
+                )}
 
                 {error && <p className="error-text">{error}</p>}
 

@@ -5,10 +5,13 @@ import crypto from "crypto"
 import pool from "../db.js"
 
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
-import { sendResetPasswordEmail } from "../utils/emailUtils.js"
+import { sendResetPasswordEmail, sendVerificationEmail } from "../utils/emailUtils.js"
 
 import { defaultCategories } from "../config/defaultCategories.js"
 import { defaultChallenges } from "../config/defaultChallenges.js"
+
+// verify account token is available for 24 hours
+const VERIFY_TOKEN_EXPIRY = 24 * 60 * 60 * 1000
 
 export async function register(req, res) {
     const { email, password, displayName } = req.body
@@ -35,11 +38,24 @@ export async function register(req, res) {
 
         const userId = result.rows[0].id
 
-        const token = jwt.sign(
-            { userId },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        )
+        // send a verification email
+        try {
+            const token = crypto.randomBytes(32).toString("hex")
+            const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
+            const expiresAt = new Date(Date.now() + VERIFY_TOKEN_EXPIRY)
+
+            await pool.query(
+                `UPDATE users
+                SET verify_token_hash = $1, verify_token_expires_at = $2
+                WHERE id = $3`,
+                [tokenHash, expiresAt, userId]
+            )
+
+            const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${token}`
+            await sendVerificationEmail(email, verifyLink)
+        } catch (err) {
+            console.error("Failed to send a verification email: ", err)
+        }
 
         // add default categories
         const categoryValues = defaultCategories.map((_, i) => {
@@ -88,8 +104,7 @@ export async function register(req, res) {
         )
 
         res.json({
-            token,
-            user: result.rows[0]
+            message: "Account created. Check your email to verify it before logging in."
         })
     } catch (err) {
         console.error(err)
@@ -117,6 +132,14 @@ export async function login(req, res) {
 
         if (!validPassword) {
             return res.status(400).json({ error: "Wrong password" })
+        }
+
+        // check if user has verified email
+        if (!user.rows[0].email_verified) {
+            return res.status(403).json({
+                error: "Please verify your email before logging in.",
+                code: "EMAIL_NOT_VERIFIED"
+            })
         }
 
         const token = jwt.sign(
@@ -169,17 +192,16 @@ export async function forgotPassword(req, res) {
         // generate a random token and hash it before storing
         const token = crypto.randomBytes(32).toString("hex")
         const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
-        const expires = new Date(Date.now() + RESET_TOKEN_EXPIRY)
+        const expiresAt = new Date(Date.now() + RESET_TOKEN_EXPIRY)
 
         await pool.query(
             `UPDATE users
             SET reset_token_hash = $1, reset_token_expires_at = $2
             WHERE id = $3`,
-            [tokenHash, expires, userId]
+            [tokenHash, expiresAt, userId]
         )
 
         const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`
-
         await sendResetPasswordEmail(email, resetLink)
 
         res.json(response)
@@ -229,5 +251,87 @@ export async function resetPassword(req, res) {
     } catch (err) {
         console.error("Reset password failed: ", err)
         res.status(500).json({ error: "Something went wrong. Please try again." })
+    }
+}
+
+export async function verifyEmail(req, res) {
+    const { token } = req.body
+
+    if (!token) {
+        return res.status(400).json({ error: "Token is required." })
+    }
+
+    try {
+        const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
+
+        const userRes = await pool.query(
+            `SELECT id FROM users
+            WHERE verify_token_hash = $1 AND verify_token_expires_at > NOW()`,
+            [tokenHash]
+        )
+
+        if (userRes.rows.length === 0) {
+            return res.status(400).json({ error: "This verification link is invalid or has expired." })
+        }
+
+        const userId = userRes.rows[0].id
+
+        await pool.query(
+            `UPDATE users
+            SET email_verified = true, verify_token_hash = NULL, verify_token_expires_at = NULL
+            WHERE id = $1`,
+            [userId]
+        )
+
+        res.json({ message: "Email verified." })
+    } catch (err) {
+        console.error("Verify email failed: ", err)
+        res.status(500).json({ error: "Something went wrong. Please try again." })
+    }
+}
+
+export async function resendVerification(req, res) {
+    const { email } = req.body
+
+    if (!email) {
+        return res.status(400).json({ error: "Email is required." })
+    }
+
+    // respond with a generic message whether or not the email is verified for privacy reasons
+    const response = {
+        message: "If that account needs verifying, we've sent a new link."
+    }
+
+    try {
+        const userRes = await pool.query(
+            `SELECT id, email_verified FROM users
+            WHERE email = $1`,
+            [email]
+        )
+
+        if (userRes.rows.length === 0 || userRes.rows[0].email_verified) {
+            return res.json(response)
+        }
+
+        const userId = userRes.rows[0].id
+
+        const token = crypto.randomBytes(32).toString("hex")
+        const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
+        const expiresAt = new Date(Date.now() + VERIFY_TOKEN_EXPIRY)
+
+        await pool.query(
+            `UPDATE users
+            SET verify_token_hash = $1, verify_token_expires_at = $2
+            WHERE id = $3`,
+            [tokenHash, expiresAt, userId]
+        )
+
+        const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${token}`
+        await sendVerificationEmail(email, verifyLink)
+
+        res.json(response)
+    } catch (err) {
+        console.error("Resend verification failed: ", err)
+        res.json(response)
     }
 }

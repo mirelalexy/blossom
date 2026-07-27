@@ -17,7 +17,10 @@ CREATE TABLE users (
 	bio TEXT,
 	share_bio BOOLEAN NOT NULL DEFAULT false,
 	reset_token_hash TEXT,
-	reset_token_expires_at TIMESTAMPTZ
+	reset_token_expires_at TIMESTAMPTZ,
+	email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+	verify_token_hash TEXT,
+	verify_token_expires_at TIMESTAMPTZ
 );
 
 -- ================= CATEGORIES =================
