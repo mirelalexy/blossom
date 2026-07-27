@@ -201,11 +201,12 @@ Run the schema SQL file to create all tables, then start the backend. It will se
 
 ## What's next?
 
-- Deployment
-- Push notifications
+- Deployment;
+- Wrap for mobile platforms like iOS and Android;
+- Proactive Blossom insights: Blossom occasionally signals it noticed something or gives you a question to reflect upon;
+- Monthly summary: Blossom gives you a summary of how your month went, and you can export it as a PDF too to remember or compare later;
+- Original illustrated Blossom: hand-drawn character art to replace the current emoji, with simple state-based variations tied to level or mood further down the line;
 - Group features: going on a trip with your friends? Manage your budget by logging transactions together. Saving up for a trip? Make a group and put aside money. Cover for someone else to meet your monthly goal deposit.
-- Offline support
-- Further gamification
 
 ---
 
