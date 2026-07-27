@@ -4,6 +4,7 @@ import cloudinary from "../config/cloudinary.js"
 
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
+import { sendPasswordChangedEmail } from "../utils/emailUtils.js"
 
 import { defaultChallenges } from "../config/defaultChallenges.js"
 
@@ -12,7 +13,7 @@ export async function getCurrentUser(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level, bio, share_bio
+            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level, bio, share_bio, email_verified
             FROM users
             WHERE id = $1`,
             [userId]
@@ -177,7 +178,7 @@ export async function changePassword(req, res) {
     try {
         // get current password hash
         const userRes = await pool.query(
-            `SELECT password_hash FROM users WHERE id = $1`,
+            `SELECT email, password_hash FROM users WHERE id = $1`,
             [userId]
         )
 
@@ -202,6 +203,12 @@ export async function changePassword(req, res) {
             `UPDATE users SET password_hash = $1 WHERE id = $2`,
             [hashedPassword, userId]
         )
+
+        try {
+            await sendPasswordChangedEmail(user.email)
+        } catch (err) {
+            console.error("Failed to send password changed email: ", err)
+        }
 
         res.json({ message: "Password updated successfully" })
     } catch (err) {

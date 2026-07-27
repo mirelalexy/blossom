@@ -199,3 +199,67 @@ export async function sendVerificationEmail(to, verifyLink) {
         throw new Error("Failed to send verification email")
     }
 }
+
+export async function sendPasswordChangedEmail(to) {
+    const res = await fetch(RESEND_API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.RESEND_API_KEY}`
+        },
+        body: JSON.stringify({
+            from: process.env.EMAIL_FROM,
+            to,
+            subject: "Your Blossom password has changed",
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <title>Your Blossom password has changed</title>
+                </head>
+                <body style="margin:0;padding:0;background:#f8f6f2;font-family:Arial,Helvetica,sans-serif;color:#3b3b3b;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:40px 20px;">
+                        <tr>
+                            <td align="center">
+                                <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;padding:48px 40px;">
+                                    <tr>
+                                        <td align="center">
+                                            <h1 style="margin:0;font-size:28px;font-weight:700;color:#3b3b3b;">
+                                                🌸 Blossom
+                                            </h1>
+
+                                            <h2 style="margin:0 0 16px;font-size:24px;color:#3b3b3b;">
+                                                Your password was just changed.
+                                            </h2>
+
+                                            <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:#555;">
+                                                This is just a heads up, not something you need to act on if it was you.
+                                            </p>
+
+                                            <p style="margin:0;font-size:14px;line-height:1.6;color:#777;">
+                                                If you didn't make this change, someone else may have access to your account. We'd recommend resetting your password again right away and checking your account for anything unfamiliar.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <p style="margin-top:20px;font-size:12px;color:#999;">
+                                    © 2026 Blossom. All rights reserved.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            `
+        })
+    })
+
+    if (!res.ok) {
+        const errorText = await res.text()
+        console.error("Resend API error: ", res.status, errorText)
+        throw new Error("Failed to send password changed email")
+    }
+}
