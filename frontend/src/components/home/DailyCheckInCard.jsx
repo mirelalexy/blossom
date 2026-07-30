@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import { useCheckIn } from "../../store/CheckInStore"
+import { useUser } from "../../store/UserStore"
 import { isEvilMode } from "../../utils/evilBlossom"
 
 import Card from "../ui/Card"
@@ -15,6 +16,7 @@ const MAX_NOTES_LENGTH = 300
 
 function DailyCheckInCard() {
     const { todayCheckIn, loading, addCheckIn, updateNotes } = useCheckIn()
+    const { user } = useUser()
     const [mood, setMood] = useState("")
     const [showNotesInput, setShowNotesInput] = useState(false)
     const [notes, setNotes] = useState("")
@@ -37,7 +39,7 @@ function DailyCheckInCard() {
         return (
             <Card className="daily-check-in daily-check-in-done">
                 <p className="daily-check-in-done-text">
-                    {isEvil ? "Checked in. Fine." : "You checked in today. Good job."}
+                    {isEvil ? "Checked in. Fine." : `You checked in today. I'm glad you showed up, ${user.displayName}.`}
                 </p>
 
                 {todayCheckIn.notes ? (
