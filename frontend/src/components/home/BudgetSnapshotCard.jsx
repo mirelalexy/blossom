@@ -47,7 +47,7 @@ function BudgetSnapshotCard({ transactions, budget, currency }) {
     return (
         <Card
             title="Budget"
-            icon={<Icon name="budget" size={20} />}
+            icon={<Icon name="monthlyBudget" size={20} />}
             className={`budget-snapshot budget-snapshot--${tone}`}
         >
             <div className="budget-snapshot-amounts">
