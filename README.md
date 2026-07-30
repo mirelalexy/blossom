@@ -45,7 +45,7 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Streak card messages adapt to your recent mood data and time of day
 
 ### Ask Blossom
-- Chat with Blossom about your own transactions, moods, intents, and goals
+- Chat with Blossom about your own transactions, check-ins, moods, intents, and goals
 - Two voices: the default gentle, reflective Blossom, and Evil Blossom's dry, deadpan alternate, based on active theme
 - Grounded entirely in your real data, plus well-established behavioral patterns around money and emotion
 - Designed to reflect your patterns back rather than prescribe fixes
