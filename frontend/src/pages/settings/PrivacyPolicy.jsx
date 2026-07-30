@@ -16,7 +16,7 @@ function PrivacyPolicy() {
                     No legalese where plain language will do.
                 </p>
                 
-                <p className="policy-meta">Last updated: July 21, 2026</p>
+                <p className="policy-meta">Last updated: July 30, 2026</p>
             </div>
 
             <Section title="Information We Collect">
@@ -58,18 +58,15 @@ function PrivacyPolicy() {
 
             <Section title="Ask Blossom">
                 <p className="policy-text">
-                    When you use Ask Blossom to get questions about your own spending or moods,
+                    When you use Ask Blossom to ask questions about your own spending or moods,
                     a limited, relevant slice of your data - recent transactions, mood
-                    tags, and goals - is sent to Anthropic's Claude API to generate a response.
-                    We only send what's needed to answer your question, never your name, email,
-                    or account details.
-                </p>
-
-                <p className="policy-text">
-                    You can optionally add a short bio and choose to share it with Blossom so
-                    responses can take context like your job or personal goals into account. 
-                    This feature is off by default. You can write, edit, or stop sharing your
-                    bio at any time from Settings → Data & Privacy → About You.
+                    tags, check-ins, goals, and your personal bio (only if you've enabled it) - 
+                    is sent to Anthropic's Claude API to generate a response. We only send what's 
+                    needed to answer your question. Your account details, such as your email 
+                    address, are never shared. If you include personal information in your bio, 
+                    it will be shared with Anthropic's Claude API only while bio sharing is enabled. 
+                    This feature is off by default. You can write, edit, or stop sharing your bio
+                    at any time from Settings → Data & Privacy → About You.
                 </p>
 
                 <p className="policy-text">
