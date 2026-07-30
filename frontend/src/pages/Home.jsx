@@ -40,6 +40,7 @@ import BudgetSnapshotCard from "../components/home/BudgetSnapshotCard"
 import LevelCard from "../components/profile/LevelCard"
 import OnboardingFlow from "../components/home/OnboardingFlow"
 import ChatCard from "../components/home/ChatCard"
+import DailyCheckInCard from "../components/home/DailyCheckInCard"
 
 import "../styles/pages/Home.css"
 
@@ -154,6 +155,8 @@ function Home() {
 				message={streakMessage}
 				nextMileStone={nextStreakMileStone}
 			/>
+
+			<DailyCheckInCard />
 
 			{isNewUser ? (
 				/* NEW USER FLOW */

@@ -94,13 +94,15 @@ import {
     Recycle,
     WavesLadder,
     Tent,
-    Wrench
+    Wrench,
+    CheckLine
 } from "lucide-react"
 
 export const appIcons = {
     // UI icons
     visible: Eye,
     hidden: EyeClosed,
+    checkLine: CheckLine,
     home: House,
     transactions: Receipt,
     add: Plus,

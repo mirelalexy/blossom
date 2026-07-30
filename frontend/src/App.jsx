@@ -16,6 +16,7 @@ import { NotificationSettingsProvider } from "./store/NotificationSettingsStore"
 import { ProfileProvider } from "./store/ProfileStore"
 import { TaskProvider } from "./store/TaskStore"
 import { RewardProvider } from "./store/RewardStore"
+import { CheckInProvider } from "./store/CheckInStore"
 import { ToastProvider } from "./store/ToastStore"
 
 import { useUser } from "./store/UserStore"
@@ -81,6 +82,7 @@ const providers = [
   NotificationProvider,
   TransactionsProvider,
   RewardProvider,
+  CheckInProvider,
   TaskProvider,
   CategoryProvider,
   BudgetProvider,
