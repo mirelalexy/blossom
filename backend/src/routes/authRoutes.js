@@ -1,7 +1,7 @@
 import express from "express"
 
 import { resendVerificationLimiter } from "../middleware/resendVerificationLimiter.js"
-import { register, login, forgotPassword, resetPassword, verifyEmail, resendVerification } from "../controllers/authController.js"
+import { register, login, forgotPassword, resetPassword, verifyEmail, resendVerification, confirmEmailChange } from "../controllers/authController.js"
 
 const router = express.Router()
 
@@ -16,5 +16,7 @@ router.post("/reset-password", resetPassword)
 router.post("/verify-email", verifyEmail)
 
 router.post("/resend-verification", resendVerificationLimiter, resendVerification)
+
+router.post("/confirm-email-change", confirmEmailChange)
 
 export default router

@@ -20,7 +20,10 @@ CREATE TABLE users (
 	reset_token_expires_at TIMESTAMPTZ,
 	email_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	verify_token_hash TEXT,
-	verify_token_expires_at TIMESTAMPTZ
+	verify_token_expires_at TIMESTAMPTZ,
+	pending_email VARCHAR(255),
+	email_change_token_hash TEXT,
+	email_change_token_expires_at TIMESTAMPTZ
 );
 
 -- ================= CATEGORIES =================

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
 import { useUser } from "../../../store/UserStore"
@@ -8,15 +7,39 @@ import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
 
 function Email() {
-    const navigate = useNavigate()
-    const { user, updateUser } = useUser()
-    const [email, setEmail] = useState(user.email)
+    const { user, requestEmailChange } = useUser()
+    const [newEmail, setNewEmail] = useState(user.email)
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [requested, setRequested] = useState(false)
 
-    function handleSave(e) {
+    async function handleSave(e) {
         e.preventDefault()
+        setError("")
+        setIsSubmitting(true)
 
-        updateUser("email", email.trim().toLowerCase())
-        navigate(-1)
+        try {
+            await requestEmailChange(newEmail.trim().toLowerCase(), password)
+            setRequested(true)
+        } catch (err) {
+            setError(err.message || "Something went wrong.")
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    if (requested) {
+        return (
+            <div className="page">
+                <PageHeader title="Email" />
+
+                <p className="settings-item-label">
+                    Check {newEmail.trim().toLowerCase()} for a link to confirm the
+                    change. Your email stays as {user.email} until you do.
+                </p>
+            </div>
+        )
     }
 
     return (
@@ -27,17 +50,26 @@ function Email() {
                 <Input 
                     label="Email"
                     type="email"
-                    value={email}
-                    maxLength={30}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
                     required
                 />
 
+                <Input 
+                    label="Current Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+
+                {error && <p className="error-text">{error}</p>}
+
                 <Button 
                     type="submit"
-                    disabled={!email.trim() || email === user.email}
+                    disabled={!newEmail.trim() || newEmail === user.email || !password || isSubmitting}
                 >
-                    Save
+                    {isSubmitting ? "Waiting for confirmation..." : "Change"}
                 </Button>
             </form>
         </div>

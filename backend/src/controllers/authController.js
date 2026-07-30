@@ -5,7 +5,7 @@ import crypto from "crypto"
 import pool from "../db.js"
 
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
-import { sendResetPasswordEmail, sendVerificationEmail } from "../utils/emailUtils.js"
+import { sendEmailChangedEmail, sendResetPasswordEmail, sendVerificationEmail } from "../utils/emailUtils.js"
 
 import { defaultCategories } from "../config/defaultCategories.js"
 import { defaultChallenges } from "../config/defaultChallenges.js"
@@ -333,5 +333,47 @@ export async function resendVerification(req, res) {
     } catch (err) {
         console.error("Resend verification failed: ", err)
         res.json(response)
+    }
+}
+
+export async function confirmEmailChange(req, res) {
+    const { token } = req.body
+
+    if (!token) {
+        return res.status(400).json({ error: "Token is required." })
+    }
+
+    try {
+        const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
+
+        const userRes = await pool.query(
+            `SELECT id, email, pending_email FROM users
+            WHERE email_change_token_hash = $1 AND email_change_token_expires_at > NOW()`,
+            [tokenHash]
+        )
+
+        if (userRes.rows.length === 0) {
+            return res.status(400).json({ error: "This confirmation link is invalid or has expired." })
+        }
+
+        const { id: userId, email: oldEmail, pending_email: newEmail } = userRes.rows[0]
+
+        await pool.query(
+            `UPDATE users
+            SET email = $1, pending_email = NULL, email_change_token_hash = NULL, email_change_token_expires_at = NULL
+            WHERE id = $2`,
+            [newEmail, userId]
+        )
+
+        try {
+            await sendEmailChangedEmail(oldEmail, newEmail)
+        } catch (err) {
+            console.error("Failed to send email changed notice: ", err)
+        }
+
+        res.json({ message: "Email updated.", email: newEmail })
+    } catch (err) {
+        console.error("Confirm email change failed: ", err)
+        res.status(500).json({ error: "Something went wrong. Please try again." })
     }
 }

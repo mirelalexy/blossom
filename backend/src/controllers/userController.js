@@ -1,10 +1,11 @@
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 import pool from "../db.js"
 import cloudinary from "../config/cloudinary.js"
 
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
-import { sendPasswordChangedEmail } from "../utils/emailUtils.js"
+import { sendPasswordChangedEmail, sendEmailChangeConfirmationEmail } from "../utils/emailUtils.js"
 
 import { defaultChallenges } from "../config/defaultChallenges.js"
 
@@ -370,5 +371,77 @@ export async function resetApp(req, res) {
         res.status(500).json({ error: "Reset app failed" })
     } finally {
         client.release()
+    }
+}
+
+// email change confirmation token is available for one hour only
+const EMAIL_CHANGE_TOKEN_EXPIRY = 60 * 60 * 1000
+
+export async function requestEmailChange(req, res) {
+    const userId = req.user.userId
+    const { newEmail, password } = req.body
+
+    if (!newEmail || !newEmail.includes("@")) {
+        return res.status(400).json({ error: "A valid new email is required." })
+    }
+
+    if (!password) {
+        return res.status(400).json({ error: "Password is required to confirm this change." })
+    }
+
+    const normalizedEmail = newEmail.trim().toLowerCase()
+
+    try {
+        // get current password hash
+        const userRes = await pool.query(
+            `SELECT email, password_hash FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const user = userRes.rows[0]
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" })
+        }
+
+        // compare passwords
+        const isMatch = await bcrypt.compare(password, user.password_hash)
+
+        if (!isMatch) {
+            return res.status(400).json({ error: "Incorrect password" })
+        }
+
+        if (normalizedEmail === user.email) {
+            return res.status(400).json({ error: "That's already your current email." })
+        }
+
+        // make sure no other account already uses this email
+        const existing = await pool.query(
+            `SELECT id FROM users WHERE email = $1 AND id != $2`,
+            [normalizedEmail, userId]
+        )
+
+        if (existing.rows.length > 0) {
+            return res.status(400).json({ error: "That email is already in use." })
+        }
+
+        const token = crypto.randomBytes(32).toString("hex")
+        const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
+        const expiresAt = new Date(Date.now() + EMAIL_CHANGE_TOKEN_EXPIRY)
+
+        await pool.query(
+            `UPDATE users
+            SET pending_email = $1, email_change_token_hash = $2, email_change_token_expires_at = $3
+            WHERE id = $4`,
+            [normalizedEmail, tokenHash, expiresAt, userId]
+        )
+
+        const confirmLink = `${process.env.FRONTEND_URL}/confirm-email-change?token=${token}`
+        await sendEmailChangeConfirmationEmail(newEmail, confirmLink)
+
+        res.json({ message: "Check your new email to confirm the change" })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Change email request failed" })
     }
 }

@@ -158,6 +158,26 @@ export function UserProvider({ children }) {
         }
     } 
 
+    async function requestEmailChange(newEmail, password) {
+        try {
+            const res = await apiFetch("/api/users/email-change", {
+                method: "POST",
+                body: JSON.stringify({ newEmail, password })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.error || "Request email change failed")
+            }
+
+            return data
+        } catch (err) {
+            console.error("Request email change failed: ", err)
+            throw err
+        }
+    } 
+
     async function deleteAccount(password) {
         try {
             const res = await apiFetch("/api/users/account", {
@@ -207,7 +227,7 @@ export function UserProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, deleteAccount, resetApp, logout }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, requestEmailChange, deleteAccount, resetApp, logout }}>
             {children}
         </UserContext.Provider>
     )

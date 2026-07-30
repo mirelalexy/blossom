@@ -2,7 +2,7 @@ import express from "express"
 import multer from "multer"
 import { uploadAvatarMiddleware, uploadBannerMiddleware } from "../middleware/upload.js"
 
-import { getCurrentUser, updateUserSettings, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, deleteAccount, resetApp } from "../controllers/userController.js"
+import { getCurrentUser, updateUserSettings, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, deleteAccount, resetApp, requestEmailChange } from "../controllers/userController.js"
 import { authMiddleware } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
@@ -45,5 +45,6 @@ router.delete("/banner", authMiddleware, removeBanner)
 router.patch("/password", authMiddleware, changePassword)
 router.delete("/account", authMiddleware, deleteAccount)
 router.post("/reset-app", authMiddleware, resetApp)
+router.post("/email-change", authMiddleware, requestEmailChange)
 
 export default router
