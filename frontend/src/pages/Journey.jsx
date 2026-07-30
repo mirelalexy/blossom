@@ -17,6 +17,7 @@ import { toKey, isInMonth, prevMonthKey, labelFromKey, nextMonthKey } from "../u
 import { getEmpty } from "../data/emptyStates"
 
 import PageHeader from "../components/ui/PageHeader"
+import MonthSelector from "../components/ui/MonthSelector"
 import EmptyState from "../components/ui/EmptyState"
 import Section from "../components/ui/Section"
 import LevelCard from "../components/profile/LevelCard"
@@ -116,28 +117,14 @@ function Journey() {
                 </div>
             )}
 
-            <div className="month-selector">
-                <button
-                    className="month-arrow"
-                    onClick={() => setSelectedMonth(prevMonthKey(selectedMonth))}
-                    disabled={!canGoPrev}
-                >
-                    ←
-                </button>
-
-                <span className="month-label">
-                    {labelFromKey(selectedMonth)}
-                    {isCurrentMonth && <span className="month-current-badge">Current</span>}
-                </span>
-
-                <button
-                    className="month-arrow"
-                    onClick={() => setSelectedMonth(nextMonthKey(selectedMonth))}
-                    disabled={!canGoNext}
-                >
-                    →
-                </button>
-            </div>
+            <MonthSelector
+                label={labelFromKey(selectedMonth)}
+                isCurrentMonth={isCurrentMonth}
+                canGoPrev={canGoPrev}
+                canGoNext={canGoNext}
+                onPrev={() => setSelectedMonth(prevMonthKey(selectedMonth))}
+                onNext={() => setSelectedMonth(nextMonthKey(selectedMonth))}
+            />
             
             {patterns.length > 0 && (
                 <Section title="Your Patterns">
