@@ -1,20 +1,37 @@
+import { getMonthKey, getWeekKey, getCurrentMonthKey, getCurrentWeekKey, parseLocalDate } from "./dateUtils.js"
+
+function isInPeriod(transaction, period) {
+    if (!transaction.date) return false
+    const date = parseLocalDate(transaction.date)
+
+    if (period === "weekly") {
+        return getWeekKey(date) === getCurrentWeekKey()
+    }
+
+    if (period === "monthly") {
+        return getMonthKey(date) === getCurrentMonthKey()
+    }
+
+    return true
+}
+
 export function evaluateChallenges({ transactions, streak = 0, budget, challenges, goalCategoryId }) {
-    const expenseTransactions = transactions.filter(t => t.type === "expense")
-    const incomeTransactions = transactions.filter(t => t.type === "income")
-
-    const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
-
     // Steady Gardener uses a completion gate (the 25th)
     const today = new Date()
     const isLateInMonth = today.getDate() >= 25
 
     return challenges.map(c => {
+        const periodTransactions = transactions.filter(t => isInPeriod(t, c.period))
+        const expenseTransactions = periodTransactions.filter(t => t.type === "expense")
+        const incomeTransactions = periodTransactions.filter(t => t.type === "income")
+        const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
+
         let progress = 0
         let completed = false
 
         switch (c.type) {
             case "mood": {
-                const withMood = transactions.filter(t => {
+                const withMood = periodTransactions.filter(t => {
                     if (!t.mood) return false
 
                     // if specific mood required

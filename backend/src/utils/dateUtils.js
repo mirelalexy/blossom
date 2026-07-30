@@ -1,13 +1,10 @@
-export function getCurrentMonthKey() {
-    const now = new Date()
-    return `${now.getFullYear()} - ${now.getMonth()}`
+export function getMonthKey(inputDate = new Date()) {
+    return `${inputDate.getFullYear()} - ${inputDate.getMonth()}`
 }
 
-export function getCurrentWeekKey() {
-    const now = new Date()
-
+export function getWeekKey(inputDate = new Date()) {
     // make a copy of date
-    const date = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()))
+    const date = new Date(Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate()))
 
     // adjust since ISO weeks start on monday
     const dayNum = date.getUTCDay() || 7
@@ -25,6 +22,14 @@ export function getCurrentWeekKey() {
     const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7)
 
     return `${year}-week-${weekNo}`
+}
+
+export function getCurrentMonthKey() {
+    return getMonthKey(new Date())
+}
+
+export function getCurrentWeekKey() {
+    return getWeekKey(new Date())
 }
 
 export function parseLocalDate(dateInput) {
