@@ -34,12 +34,13 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Weekly and monthly challenges evaluated server-side after every transaction
 
 ### XP & Levels
-- Earn XP for every transaction (5 XP), streak day (2 XP), challenge completed (30 XP), and goal reached (50 XP)
+- Earn XP for every transaction (5 XP), daily check-in (3 XP), streak day (2 XP), challenge completed (30 XP), and goal reached (50 XP)
 - 8 level titles from Mindful Seed to Eternal Bloom, spread across 100 levels
 - Level and progress shown on Profile and Journey
 
 ### Streak
-- Counts consecutive days with at least one logged transaction
+- Counts consecutive days you engage with your finances, either by logging a transaction or completing a daily check-in
+- Daily check-ins let you stay consistent even on no-spend days (optional notes help you reflect, too)
 - Milestone awareness at 7, 14, 30, and 60 days
 - Streak card messages adapt to your recent mood data and time of day
 
