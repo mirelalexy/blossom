@@ -54,12 +54,32 @@ export function CheckInProvider({ children }) {
         }
     }
 
+    async function updateNotes(notes) {
+        try {
+            const res = await apiFetch("/api/check-ins/today/notes", {
+                method: "PATCH",
+                body: JSON.stringify({ notes })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.error || "Failed to save notes")
+            }
+
+            setTodayCheckIn(data)
+        } catch (err) {
+            showToast({ message: err.message || "Something went wrong", type: "error" })
+            console.error("Update check-in note failed: ", err)
+        }
+    }
+
     useEffect(() => {
         if (user) fetchTodayCheckIn()
     }, [user])
 
     return (
-        <CheckInContext.Provider value={{ todayCheckIn, loading, addCheckIn, fetchTodayCheckIn }}>
+        <CheckInContext.Provider value={{ todayCheckIn, loading, addCheckIn, fetchTodayCheckIn, updateNotes }}>
             {children}
         </CheckInContext.Provider>
     )

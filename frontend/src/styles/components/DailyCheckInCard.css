@@ -1,24 +1,64 @@
-.daily-check-in-prompt {
+.daily-check-in .daily-check-in-prompt {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 12px;
 }
 
-.daily-check-in-note {
+.daily-check-in .daily-check-in-note {
     font-size: 12px;
     color: var(--text-tertiary);
     margin-top: 10px;
 }
 
 .daily-check-in-done {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 16px;
 }
 
-.daily-check-in-done-text {
+.daily-check-in-done .daily-check-in-done-text {
     font-size: 14px;
+    font-weight: 400;
     color: var(--text-secondary);
     text-align: center;
+}
+
+.daily-check-in-notes-toggle {
+    align-self: center;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.daily-check-in-notes-toggle:hover {
+    opacity: 0.8;
+}
+
+.daily-check-in-notes-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.daily-check-in-notes-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.daily-check-in-done .daily-check-in-saved-notes {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.daily-check-in .daily-check-in-char-count {
+    color: var(--text-tertiary);
+    font-size: 12px;
+    text-align: right;
+    margin: 4px 4px 10px;
 }
