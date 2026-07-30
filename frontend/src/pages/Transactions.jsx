@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
@@ -7,9 +7,10 @@ import { useBudget } from "../store/BudgetStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
-import { getCurrentMonthYear, getStartOfDay, parseLocalDate } from "../utils/dateUtils"
+import { getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
 import { calculateBudgetWithRollover } from "../utils/budgetUtils"
+import { toKey, isInMonth, prevMonthKey, nextMonthKey, labelFromKey } from "../utils/journeyUtils"
 
 import { getEmpty } from "../data/emptyStates"
 
@@ -21,6 +22,7 @@ import EmptyState from "../components/ui/EmptyState"
 import FilterSheet from "../components/filters/FilterSheet"
 import SearchBar from "../components/ui/SearchBar"
 import PageHeader from "../components/ui/PageHeader"
+import MonthSelector from "../components/ui/MonthSelector"
 
 import "../styles/pages/Transactions.css"
 
@@ -34,13 +36,29 @@ function Transactions() {
 	const [showSearch, setShowSearch] = useState(false)
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-	const currentMonthYear = getCurrentMonthYear()
-
 	const { transactions } = useTransactions()
 	const { currency } = useCurrency()
 	const { budget } = useBudget()
 
 	const today = getStartOfDay(new Date())
+
+	// month selector state (following the same pattern as Journey)
+	const currentMonthKey = toKey(today)
+	const [selectedMonth, setSelectedMonth] = useState(currentMonthKey)
+	const isCurrentMonth = selectedMonth === currentMonthKey
+
+	const earliestKey = useMemo(() => {
+		if (!transactions.length) return currentMonthKey
+	
+		const sorted = [...transactions].sort(
+			(a, b) => new Date(a.date) - new Date(b.date)
+		)
+	
+		return toKey(parseLocalDate(sorted[0].date))
+	}, [transactions, currentMonthKey])
+	
+	const canGoPrev = selectedMonth > earliestKey
+	const canGoNext = selectedMonth < currentMonthKey
 
 	const upcomingTransactions = transactions
 		.filter((t) => {
@@ -65,10 +83,7 @@ function Transactions() {
 
 			if (date > today) return false
 
-			return (
-				date.getMonth() === today.getMonth() &&
-				date.getFullYear() === today.getFullYear()
-			)
+			return isInMonth(t.date, selectedMonth)
 		})
 		.sort((a, b) => new Date(b.date) - new Date(a.date))
 
@@ -175,7 +190,7 @@ function Transactions() {
 	return (
 		<div className="page">
 			<PageHeader
-                title={hasActiveFilters ? "Filtered" : currentMonthYear}
+                title={hasActiveFilters ? "Filtered" : "Transactions"}
                 left={
                     <button
                         className={`page-header-left ${hasActiveFilters ? "header-btn-active" : ""}`}
@@ -199,6 +214,17 @@ function Transactions() {
 
 			{showSearch && (
 				<SearchBar value={searchQuery} onChange={setSearchQuery} />
+			)}
+
+			{!hasActiveFilters && (
+				<MonthSelector
+					label={labelFromKey(selectedMonth)}
+					isCurrentMonth={isCurrentMonth}
+					canGoPrev={canGoPrev}
+					canGoNext={canGoNext}
+					onPrev={() => setSelectedMonth(prevMonthKey(selectedMonth))}
+					onNext={() => setSelectedMonth(nextMonthKey(selectedMonth))}
+				/>
 			)}
 
 			{!hasActiveFilters && (
@@ -286,16 +312,18 @@ function Transactions() {
 				</Section>
 			) : (
 				<>
-					<Section title="Upcoming">
-						{upcomingTransactions.length === 0 ? (
-							<EmptyState {...getEmpty("transactionsUpcoming")} />
-						) : (
-							upcomingTransactions.map((t) => (
-								<TransactionCard key={t.id} {...t} />
-							))
-						)}
-					</Section>
-
+					{isCurrentMonth && (
+						<Section title="Upcoming">
+							{upcomingTransactions.length === 0 ? (
+								<EmptyState {...getEmpty("transactionsUpcoming")} />
+							) : (
+								upcomingTransactions.map((t) => (
+									<TransactionCard key={t.id} {...t} />
+								))
+							)}
+						</Section>
+					)}
+					
 					<Section title="This Month">
 						{monthlyTransactions.length === 0 ? (
 							<EmptyState {...getEmpty("transactionsMonth")} />
