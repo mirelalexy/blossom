@@ -1,5 +1,6 @@
 export const XP = {
     TRANSACTION: 5,
+    CHECK_IN: 3,
     STREAK_PER_DAY: 2,
     GOAL_COMPLETED: 50,
     CHALLENGE_COMPLETED: 30

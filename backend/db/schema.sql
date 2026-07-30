@@ -62,6 +62,18 @@ CREATE TABLE transactions (
 	)
 );
 
+-- ================= CHECK-INS =================
+CREATE TABLE check_ins (
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	date DATE NOT NULL,
+	mood VARCHAR(20) CHECK (mood IN ('happy', 'calm', 'neutral', 'anxious', 'sad')),
+	notes TEXT,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	
+	UNIQUE (user_id, date)
+);
+
 -- ================= GOALS =================
 CREATE TABLE goals (
 	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

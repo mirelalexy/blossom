@@ -15,6 +15,14 @@ export async function getProfileStats(req, res) {
 
         const transactions = transactionsRes.rows
 
+        // get all user check-ins
+        const checkInsRes = await pool.query(
+            `SELECT * FROM check_ins WHERE user_id = $1`,
+            [userId]
+        )
+
+        const checkIns = checkInsRes.rows
+
         // get challenges
         const challengesRes = await pool.query(
             `SELECT * FROM challenges WHERE user_id = $1`,
@@ -24,7 +32,7 @@ export async function getProfileStats(req, res) {
         const challenges = challengesRes.rows
 
         // calculate stats
-        const streak = calculateStreak(transactions)
+        const streak = calculateStreak(transactions, checkIns)
 
         const userRes = await pool.query(
             `SELECT xp, level FROM users WHERE id = $1`,

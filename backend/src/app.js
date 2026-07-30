@@ -18,6 +18,7 @@ import profileRoutes from "./routes/profileRoutes.js"
 import taskRoutes from "./routes/taskRoutes.js"
 import rewardRoutes from "./routes/rewardRoutes.js"
 import chatRoutes from "./routes/chatRoutes.js"
+import checkInRoutes from "./routes/checkInRoutes.js"
 
 const app = express()
 
@@ -52,5 +53,6 @@ app.use("/api/profile", profileRoutes)
 app.use("/api/tasks", taskRoutes)
 app.use("/api/rewards", rewardRoutes)
 app.use("/api/chat", chatRoutes)
+app.use("/api/check-ins", checkInRoutes)
 
 export default app

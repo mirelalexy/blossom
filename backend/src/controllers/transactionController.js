@@ -146,7 +146,7 @@ export async function getTransactions(req, res) {
         res.json(result.rows)
     } catch (err) {
         console.error(err)
-        res.status(500).json({ error: "Fetch failed" })
+        res.status(500).json({ error: "Fetch transaction failed" })
     }
 }
 
@@ -172,10 +172,10 @@ export async function deleteTransaction(req, res) {
 
         await recalculateUserState(userId)
 
-        res.json({ message: "Deleted successfully" })
+        res.json({ message: "Transaction deleted successfully" })
     } catch (err) {
         console.error(err)
-        res.status(500).json({ error: "Delete failed" })
+        res.status(500).json({ error: "Delete transaction failed" })
     }
 }
 
@@ -269,6 +269,6 @@ export async function editTransaction(req, res) {
         res.json(result.rows[0])
     } catch (err) {
         console.error(err)
-        res.status(500).json({ error: "Edit failed" })
+        res.status(500).json({ error: "Edit transaction failed" })
     }
 }

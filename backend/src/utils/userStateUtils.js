@@ -14,6 +14,14 @@ export async function recalculateUserState(userId) {
 
     const transactions = transactionsRes.rows
 
+    // get all user check-ins
+    const checkInsRes = await pool.query(
+        `SELECT * FROM check_ins WHERE user_id = $1`,
+        [userId]
+    )
+
+    const checkIns = checkInsRes.rows
+
     // get challenges
     const challengesRes = await pool.query(
         `SELECT * FROM challenges WHERE user_id = $1`,
@@ -30,7 +38,7 @@ export async function recalculateUserState(userId) {
 
     const budget = budgetRes.rows[0]
 
-    const streak = calculateStreak(transactions)
+    const streak = calculateStreak(transactions, checkIns)
 
     // get goals category to update Growing challenge 
     const goalCategoryRes = await pool.query(
