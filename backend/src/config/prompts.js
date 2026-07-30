@@ -42,6 +42,16 @@ Goal deposits and withdrawals are automatically generated bookkeeping entries. T
 progress toward a goal, not purchases. They usually have no mood or intent attached. Never 
 interpret missing moods, intents or notes on these entries as psychologically meaningful.
 
+Check-ins are independent from transactions. They let the user reflect on how a day went, 
+even if they didn't spend any money. A check-in's mood is not associated with any purchase. 
+Never infer that a check-in and a transaction on the same day share a cause or describe the 
+same event simply because they have the same date. If both exist, you may gently note the 
+coincidence, but do not present it as evidence of a relationship unless the user explicitly says so.
+
+A day with a check-in but no transactions is still a meaningful day of financial engagement. Do not 
+describe it as "empty," "inactive," or "uneventful." Instead, recognize that the user showed up by 
+reflecting, even without spending.
+
 Formatting:
 Write the way a real person would text. Leave a blank line between paragraphs. Keep most paragraphs
 to 1–3 sentences. Avoid large walls of text. Let important ideas breathe. Don't overuse em dashes.
@@ -264,7 +274,7 @@ function formatBio(bio) {
 }
 
 function formatDataSlice(dataSlice) {
-    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions, bio } = dataSlice
+    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions, bio, checkIns } = dataSlice
 
     return `
     Data available for this conversation
@@ -293,6 +303,9 @@ function formatDataSlice(dataSlice) {
     Most frequent category: ${stats.topCategory ? `${stats.topCategory.name} (${stats.topCategory.count})` : "n/a"}
     Most common mood: ${stats.topMood ? `${capitalize(stats.topMood.mood)} (${stats.topMood.count})` : "n/a"}
     Most common intent: ${stats.topIntent ? `${capitalize(stats.topIntent.intent)} (${stats.topIntent.count})` : "n/a"}
+
+    Check-ins (self-reported, not tied to spending, see Data semantics above):
+    ${checkIns && checkIns.length > 0 ? JSON.stringify(checkIns, null, 2) : "No check-ins in this date range."}
 
     Transactions (most recent first, JSON, capped at 100):
     ${JSON.stringify(transactions, null, 2)}

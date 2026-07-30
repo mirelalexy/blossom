@@ -235,7 +235,7 @@ export async function getDataSlice(userId, question) {
     const { start, end } = extractDateRange(question)
 
     // get transactions in range and category name to use directly and goals
-    const [result, goals, bio] = await Promise.all([
+    const [result, checkInsRes, goals, bio] = await Promise.all([
         pool.query(
             `SELECT
                 t.id, t.amount, t.type, t.method, t.title,
@@ -249,12 +249,20 @@ export async function getDataSlice(userId, question) {
             LIMIT $4`,
             [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
         ),
+        pool.query(
+            `SELECT date::text AS date, mood, notes
+            FROM check_ins
+            WHERE user_id = $1 AND date >= $2 AND date <= $3
+            ORDER BY date DESC`,
+            [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10)]
+        ),
         getActiveGoals(userId),
         getUserBio(userId)
     ])
 
     const currency = result.rows[0]?.currency || "USD"
     const transactions = result.rows.map(({ currency, ...t }) => t)
+    const checkIns = checkInsRes.rows
 
     return {
         currency,
@@ -268,6 +276,7 @@ export async function getDataSlice(userId, question) {
         intentSummary: summarizeByField(transactions, "intent"),
         stats: computeStats(transactions),
         goals,
-        bio
+        bio,
+        checkIns
     }
 }
