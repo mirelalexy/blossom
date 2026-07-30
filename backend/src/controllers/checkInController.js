@@ -89,3 +89,28 @@ export async function getTodayCheckIn(req, res) {
         res.status(500).json({ error: "Fetch today's check-in failed" })
     }
 }
+
+export async function updateCheckInNotes(req, res) {
+    const userId = req.user.userId
+    const { notes } = req.body
+    const today = toDateStringLocal(new Date())
+
+    try {
+        const result = await pool.query(
+            `UPDATE check_ins
+            SET notes = $1
+            WHERE user_id = $2 AND date = $3
+            RETURNING id, date::text AS date, mood, notes, created_at`,
+            [notes ?? null, userId, today]
+        )
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "No check-in found for today." })
+        }
+
+        res.json(result.rows[0])
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Failed to update notes" })
+    }
+}
