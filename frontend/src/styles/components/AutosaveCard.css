@@ -1,6 +1,6 @@
 .autosave-card {
-    background-color: var(--accent-dim);
-    border: 1px solid var(--border-strong);
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
     border-radius: var(--r-lg);
     display: flex;
     flex-direction: column;

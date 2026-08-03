@@ -260,7 +260,7 @@ function SavingGoalCard({ goal }) {
             {!mode && !isComplete && (
                 <div className="goal-actions">
                     <Button onClick={() => openMode("add")}>Add Funds</Button>
-                    <Button className="secondary" onClick={() => openMode("withdraw")}>
+                    <Button className="neutral" onClick={() => openMode("withdraw")}>
                         Withdraw
                     </Button>
                 </div>

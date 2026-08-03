@@ -35,6 +35,12 @@
     color: var(--accent);
 }
 
+.button.neutral {
+    background-color: transparent;
+    border: 1.5px solid var(--card-border);
+    color: var(--text-primary);
+}
+
 .button.ghost {
     background-color: transparent;
     border: none;
@@ -58,6 +64,10 @@
 
     .button.secondary:hover { 
         background-color: var(--accent-dim); 
+    }
+
+    .button.neutral:hover {
+        background-color: var(--bg-secondary);
     }
 
     .button.ghost:hover { 
