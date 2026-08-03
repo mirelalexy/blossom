@@ -5,6 +5,7 @@ import { useUser } from "../../../store/UserStore"
 import PageHeader from "../../../components/ui/PageHeader"
 import Input from "../../../components/forms/Input"
 import Button from "../../../components/ui/Button"
+import Section from "../../../components/ui/Section"
 
 function Email() {
     const { user, requestEmailChange } = useUser()
@@ -36,7 +37,7 @@ function Email() {
 
                 <p className="settings-item-label">
                     Check {newEmail.trim().toLowerCase()} for a link to confirm the
-                    change. Your email stays as {user.email} until you do.
+                    change.
                 </p>
             </div>
         )
@@ -45,6 +46,14 @@ function Email() {
     return (
         <div className="page">
             <PageHeader title="Email" />
+
+            <Section>
+                <p className="secondary-text">
+                    Enter your new email and your current password to confirm it's you.
+                    You will receive a confirmation link to the new address. Your email
+                    won't change until you click it.
+                </p>
+            </Section>
 
             <form onSubmit={handleSave} className="form">
                 <Input 
