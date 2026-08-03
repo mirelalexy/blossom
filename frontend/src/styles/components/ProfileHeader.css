@@ -4,6 +4,16 @@
     overflow: hidden;
 }
 
+.profile-banner--repositioning {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+.profile-banner--repositioning:active {
+    cursor: grabbing;
+}
+
 .profile-banner::after {
     content: "";
     position: absolute;
@@ -64,12 +74,6 @@
     box-sizing: border-box;
     gap: 8px;
     z-index: 3;
-}
-
-@media (min-width: 1024px) {
-    .profile-header-content { 
-        max-width: 625px;
-     }
 }
 
 .profile-email {
@@ -189,6 +193,7 @@
     backdrop-filter: blur(6px);
     transition: background-color 0.15s ease;
 }
+
 .profile-media-btn:hover { 
     background: rgba(0, 0, 0, 0.75); 
 }
@@ -201,6 +206,13 @@
 .profile-media-btn--remove {
     background: rgba(180, 40, 40, 0.65);
 }
+
 .profile-media-btn--remove:hover { 
     background: rgba(180, 40, 40, 0.9); 
+}
+
+@media (min-width: 1024px) {
+    .profile-header-content { 
+        max-width: 625px;
+     }
 }

@@ -157,7 +157,28 @@ export async function removeBanner(req, res) {
         console.error(err)
         res.status(500).json({ error: "Remove banner failed" })
     }
-} 
+}
+
+export async function updateBannerPosition(req, res) {
+    const userId = req.user.userId
+    const { positionY } = req.body
+
+    if (typeof positionY !== "number" || positionY < 0 || positionY > 100) {
+        return res.status(400).json({ error: "Position Y must be a number between 0 and 100" })
+    }
+
+    try {
+        await pool.query(
+            `UPDATE users SET banner_position_y = $1 WHERE id = $2`,
+            [Math.round(positionY), userId]
+        )
+
+        res.json({ bannerPositionY: Math.round(positionY) })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Failed to update banner position" })
+    }
+}
 
 export async function changePassword(req, res) {
     const userId = req.user.userId

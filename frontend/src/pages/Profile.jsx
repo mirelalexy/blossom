@@ -17,7 +17,7 @@ import Button from "../components/ui/Button"
 import "../styles/pages/Profile.css"
 
 function Profile() {
-    const { user, uploadAvatar, uploadBanner, removeAvatar, removeBanner } = useUser()
+    const { user, uploadAvatar, uploadBanner, removeAvatar, removeBanner, updateBannerPosition } = useUser()
     const { stats } = useProfile()
     const { rewards } = useRewards()
     const { tasks } = useTasks()
@@ -136,6 +136,8 @@ function Profile() {
         <div className="profile-page">
             <ProfileHeader 
                 bannerSrc={bannerPreview || user?.banner}
+                bannerPositionY={user?.bannerPositionY}
+                onBannerPositionChange={updateBannerPosition}
                 avatarSrc={avatarPreview || user?.avatar}
                 name={user?.displayName}
                 email={user?.email}

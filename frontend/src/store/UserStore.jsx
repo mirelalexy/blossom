@@ -21,6 +21,7 @@ export function UserProvider({ children }) {
                 email: data.email,
                 avatar: data.avatar,
                 banner: data.banner,
+                bannerPositionY: data.banner_position_y,
                 bio: data.bio,
                 shareBio: data.share_bio,
                 createdAt: data.created_at
@@ -118,10 +119,31 @@ export function UserProvider({ children }) {
 
         setUser(prev => ({
             ...prev,
-            banner: data.banner
+            banner: data.banner,
+            bannerPositionY: data.bannerPositionY
         }))
 
         return data.banner
+    }
+
+    async function updateBannerPosition(positionY) {
+        const res = await apiFetch("/api/users/banner-position", {
+            method: "PATCH",
+            body: JSON.stringify({ positionY })
+        })
+
+        if (!res.ok) {
+            throw new Error("Failed to update banner position")
+        }
+
+        const data = await res.json()
+
+        setUser(prev => ({
+            ...prev,
+            bannerPositionY: data.bannerPositionY
+        }))
+
+        return data.bannerPositionY
     }
 
     async function removeBanner() {
@@ -228,7 +250,7 @@ export function UserProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, removeAvatar, uploadBanner, removeBanner, changePassword, requestEmailChange, deleteAccount, resetApp, logout }}>
+        <UserContext.Provider value={{ user, updateUser, fetchUser, loading, uploadAvatar, removeAvatar, uploadBanner, removeBanner, updateBannerPosition, changePassword, requestEmailChange, deleteAccount, resetApp, logout }}>
             {children}
         </UserContext.Provider>
     )
