@@ -160,8 +160,8 @@ function Profile() {
             />
 
             <div className="profile-edit-toggle-container">
-                <Button className="profile-edit-toggle" onClick={() => setIsEditing(prev => !prev)}>
-                    {isEditing ? "Done" : "Edit profile"}
+                <Button className={isEditing ? "profile-edit-toggle" : ""} onClick={() => setIsEditing(prev => !prev)}>
+                    {isEditing ? "Done" : "Edit Profile"}
                 </Button>
             </div>
 

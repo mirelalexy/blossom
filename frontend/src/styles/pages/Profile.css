@@ -11,23 +11,16 @@
 }
 
 .profile-edit-toggle {
-    display: inline-flex;
-    align-self: flex-start;
-    border-radius: var(--r-full);
-    border: 1.5px solid var(--border-strong);
-    background: transparent;
+    background: var(--accent-dim);
     color: var(--accent);
-    font-size: 13px;
-    font-weight: 600;
     font-family: var(--font-primary);
-    cursor: pointer;
     transition: background-color 0.15s ease;
     position: relative;
     z-index: 4;
 }
 
 .profile-edit-toggle:hover { 
-    background: var(--accent-dim); 
+    background: var(--accent-soft); 
 }
 
 .profile-edit-toggle-container {
