@@ -7,7 +7,7 @@
     --text-primary:   #1a0d14;
     --text-secondary: #7a4e61;
     --text-tertiary:  #946276;
-    --text-chat: #ffffff;
+    --text-chat:      #ffffff;
 
     --accent:       #bd5172;
     --accent-soft:  #f0dae2;
@@ -198,8 +198,8 @@
 /* NIGHT - deep charcoal and violet */
 [data-theme="night"] {
     --bg-primary:    #131417;
-    --bg-secondary:  #1c1d22;
-    --bg-tertiary:   #24252c;
+    --bg-secondary:  #18181c;
+    --bg-tertiary:   #202127;
 
     --text-primary:   #edeef6;
     --text-secondary: #8890a8;
@@ -245,8 +245,8 @@
 /* VELVET ROSE - dark deep magenta */
 [data-theme="velvet-rose"] {
     --bg-primary:    #100d14;
-    --bg-secondary:  #18141e;
-    --bg-tertiary:   #201828;
+    --bg-secondary:  #141019;
+    --bg-tertiary:   #1c1623;
 
     --text-primary:   #f0eaf8;
     --text-secondary: #8878a0;
@@ -292,8 +292,8 @@
 /* ABYSS - intense dark blue */
 [data-theme="abyss"] {
     --bg-primary:    #080c14;
-    --bg-secondary:  #0e1420;
-    --bg-tertiary:   #141c2c;
+    --bg-secondary:  #0b101a;
+    --bg-tertiary:   #111826;
 
     --text-primary:   #e8edf8;
     --text-secondary: #7888b0;
@@ -339,8 +339,8 @@
 /* EVIL BLOSSOM - dark crimson */
 [data-theme="evil-blossom"] {
     --bg-primary:    #0e0608;
-    --bg-secondary:  #180a0c;
-    --bg-tertiary:   #220e10;
+    --bg-secondary:  #13080a;
+    --bg-tertiary:   #1d0c0e;
 
     --text-primary:   #f0e8e8;
     --text-secondary: #a07080;
