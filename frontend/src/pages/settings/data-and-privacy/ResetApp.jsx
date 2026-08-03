@@ -101,10 +101,10 @@ function ResetApp() {
 
             {showConfirm && (
                 <ConfirmModal
-                    title="Reset app?"
-                    message={`This action cannot be undone.\nAll the data will be permanently deleted.`}
-                    confirmLabel="Yes, delete my data"
-                    cancelLabel="Keep my data"
+                    title="Ready for a fresh start?"
+                    message={`This will permanently clear your progress and financial data while keeping your account, theme, and personal settings intact.`}
+                    confirmLabel="Ready!"
+                    cancelLabel="Maybe Another Time"
                     onConfirm={handleConfirmReset}
                     onCancel={() => setShowConfirm(false)}
                     variant="warning"

@@ -143,8 +143,8 @@ function TransactionDetails() {
                         ? "This will delete the recurring template, but keep all its past generated transactions."
                         : "This transaction will be gone permanently."
                     }
-                    confirmLabel="Delete"
-                    cancelLabel="Keep it"
+                    confirmLabel="Delete Transaction"
+                    cancelLabel="Keep It"
                     onConfirm={handleDelete}
                     onCancel={() => setShowConfirm(false)}
                     variant="warning"

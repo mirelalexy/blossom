@@ -58,8 +58,8 @@ function CustomSpendingRules() {
                 <ConfirmModal
                     title="Remove this rule?"
                     message="The spending limit for this category will be removed. You can always add it back."
-                    confirmLabel="Remove"
-                    cancelLabel="Keep it"
+                    confirmLabel="Remove Rule"
+                    cancelLabel="Keep It"
                     onConfirm={handleDeleteConfirm}
                     onCancel={() => setPendingDeleteId(null)}
                     variant="warning"
