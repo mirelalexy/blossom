@@ -11,7 +11,7 @@
     color: var(--text-primary);
     outline: none;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--text-secondary);
     appearance: none;
     transition: border-color 0.15s ease, background-color 0.15s ease;

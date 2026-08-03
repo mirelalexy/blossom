@@ -119,7 +119,7 @@ input[type="date"] {
     border: 1.5px solid transparent;
     background-color: var(--input-bg);
     color: var(--text-primary);
-    font-size: 15px;
+    font-size: 16px;
     font-family: var(--font-primary);
     appearance: none;
     outline: none;
