@@ -17,6 +17,7 @@ function TopCategoryCard({ category }) {
         >
                 <p className="normal-text"><strong>{category?.name}</strong> is your highest spending category this month.</p>
                 <Button
+                    className="small neutral"
                     onClick={() => navigate("/transactions", {
                         state: { categoryId: category.id }
                         })

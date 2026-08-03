@@ -17,7 +17,7 @@ function AutosaveCard({ autosaveActive, primaryGoal, onAction }) {
                 <p>No primary goal selected.</p>
             )}
             
-            <Button onClick={onAction}>Change</Button>
+            <Button className="small neutral" onClick={onAction}>Change</Button>
         </div>
     )
 }
