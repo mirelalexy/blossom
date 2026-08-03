@@ -10,7 +10,6 @@ const router = express.Router()
 router.get("/me", authMiddleware, getCurrentUser)
 router.put("/settings", authMiddleware, updateUserSettings)
 
-
 router.post("/avatar", authMiddleware, (req, res) => {
     uploadAvatarMiddleware.single("image")(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -19,6 +18,11 @@ router.post("/avatar", authMiddleware, (req, res) => {
             }
         } else if (err) {
             return res.status(400).json({ error: err.message })
+        }
+
+        // enforce the upload limit after parsing as a defensive backstop
+        if (req.file && req.file.size > 2 * 1024 * 1024) {
+            return res.status(400).json({ error: "File too large (max 2MB)" })
         }
 
         uploadAvatar(req, res)
@@ -35,6 +39,11 @@ router.post("/banner", authMiddleware, (req, res) => {
             }
         } else if (err) {
             return res.status(400).json({ error: err.message })
+        }
+
+        // enforce the upload limit after parsing as a defensive backstop
+        if (req.file && req.file.size > 5 * 1024 * 1024) {
+            return res.status(400).json({ error: "File too large (max 5MB)" })
         }
 
         uploadBanner(req, res)
