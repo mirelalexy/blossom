@@ -24,7 +24,7 @@
 }
 
 .profile-edit-toggle-container {
-    padding: 24px;
+    padding: 5px 24px;
 }
 
 .profile-page {
@@ -32,6 +32,13 @@
     flex-direction: column;
     min-height: 100vh;
     position: relative;
+}
+
+.blooming-together-info {
+    padding: 18px 24px 8px;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 13px;
 }
 
 @media (min-width: 1024px) {
@@ -43,7 +50,6 @@
         padding: 24px 20px 96px;
         display: flex;
         flex-direction: column;
-        gap: 24px;
         max-width: 720px;
         margin: 0 auto;
         width: 100%;

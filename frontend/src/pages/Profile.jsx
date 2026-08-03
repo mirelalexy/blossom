@@ -6,6 +6,8 @@ import { useRewards } from "../store/RewardStore"
 import { useTasks } from "../store/TaskStore"
 import { useToast } from "../store/ToastStore"
 
+import { formatDate } from "../utils/dateUtils"
+
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
 import ChallengesPreview from "../components/challenges/ChallengesPreview"
@@ -158,6 +160,10 @@ function Profile() {
                 style={{ display: "none" }}
                 onChange={(e) => handleUpload(e, "banner")}
             />
+
+            <p className="blooming-together-info">
+                Blooming together since {formatDate(user.createdAt)}
+            </p>
 
             <div className="profile-edit-toggle-container">
                 <Button className={isEditing ? "profile-edit-toggle" : ""} onClick={() => setIsEditing(prev => !prev)}>

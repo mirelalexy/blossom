@@ -22,7 +22,8 @@ export function UserProvider({ children }) {
                 avatar: data.avatar,
                 banner: data.banner,
                 bio: data.bio,
-                shareBio: data.share_bio
+                shareBio: data.share_bio,
+                createdAt: data.created_at
             })
         } catch (err) {
             console.error("Failed to fetch user: ", err)
