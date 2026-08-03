@@ -53,8 +53,8 @@
 }
 
 .button.danger {
-    background-color: var(--danger-soft);
-    color: var(--danger);
+    background-color: var(--danger);
+    color: var(--danger-soft);
 }
 
 .button.active { 

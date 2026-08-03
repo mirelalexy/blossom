@@ -5,8 +5,8 @@ function ConfirmModal({ title = "Are you sure?", message, confirmLabel = "Contin
     return (
         <Modal title={title} variant={variant} onClose={onCancel} actions={
             <>
-                <Button onClick={onConfirm}>{confirmLabel}</Button>
-                <Button onClick={onCancel}>{cancelLabel}</Button>
+                <Button className="danger" onClick={onConfirm}>{confirmLabel}</Button>
+                <Button className="neutral" onClick={onCancel}>{cancelLabel}</Button>
             </>
         }>
             {message && (

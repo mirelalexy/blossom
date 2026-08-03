@@ -51,15 +51,15 @@ function DeleteAccount() {
 
             <Section>
                 <p className="secondary-text">
-                    Deleting your account will <strong>permanently</strong> remove all your data - including
-                    transactions, goals, challenges, rewards, and settings.
-                    This cannot be undone.
+                    Deleting your account will <strong>permanently</strong> remove all your data, including
+                    your transactions, goals, challenges, rewards, settings, and everything else associated
+                    with your account. This action cannot be undone.
                 </p>
             </Section>
 
             <Section>
                 <Input 
-                    label="Confirm Password"
+                    label="Current Password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -73,15 +73,15 @@ function DeleteAccount() {
                 onClick={handleDeleteClick}
                 disabled={!password || loading}
             >
-                Delete Account
+                Permanently Delete Account
             </Button>
 
             {showConfirm && (
                 <ConfirmModal
-                    title="Delete account?"
-                    message={`This action cannot be undone.\nAll your data will be permanently deleted.`}
-                    confirmLabel="Yes, delete everything"
-                    cancelLabel="Keep my account"
+                    title="Sure you're ready to let go?"
+                    message={`This action can't be undone. All your account data will be permanently removed.`}
+                    confirmLabel="Delete Account"
+                    cancelLabel="Keep My Account"
                     onConfirm={handleConfirmDelete}
                     onCancel={() => setShowConfirm(false)}
                     variant="warning"
