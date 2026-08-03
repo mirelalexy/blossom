@@ -9,6 +9,7 @@ CREATE TABLE users (
 	password_hash TEXT NOT NULL,
 	avatar TEXT,
 	banner TEXT,
+	banner_position_y SMALLINT NOT NULL DEFAULT 50 CHECK (banner_position_y BETWEEN 0 AND 100),
 	theme VARCHAR(50) NOT NULL DEFAULT 'blossom',
 	currency VARCHAR(10) NOT NULL DEFAULT 'EUR',
 	level INTEGER DEFAULT 1,

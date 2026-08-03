@@ -14,7 +14,7 @@ export async function getCurrentUser(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT id, display_name, email, avatar, banner, theme, currency, xp, level, bio, share_bio, email_verified, created_at::text
+            `SELECT id, display_name, email, avatar, banner, banner_position_y, theme, currency, xp, level, bio, share_bio, email_verified, created_at::text
             FROM users
             WHERE id = $1`,
             [userId]
@@ -126,18 +126,15 @@ export async function uploadBanner(req, res) {
         const result = await uploadToCloudinary(req.file.buffer, {
             folder: "blossom/banners",
             public_id: `banner_${userId}`,
-            overwrite: true,
-            transformation: [
-                { width: 1200, height: 400, crop: "fill" }
-            ]
+            overwrite: true
         })
 
         await pool.query(
-            `UPDATE users SET banner = $1 WHERE id = $2`,
+            `UPDATE users SET banner = $1, banner_position_y = 50 WHERE id = $2`,
             [result.secure_url, userId]
         )
 
-        res.json({ banner: result.secure_url })
+        res.json({ banner: result.secure_url, bannerPositionY: 50 })
     } catch (err) {
         console.error(err)
         res.status(500).json({ error: "Banner upload failed" })
