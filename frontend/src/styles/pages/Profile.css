@@ -41,6 +41,25 @@
     font-size: 13px;
 }
 
+.account-anniversary-info {
+    padding: 7px 24px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 15px;
+    animation: anniversaryFadeIn 0.4s ease-out;
+}
+
+@keyframes anniversaryFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(4px) scale(0.98); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
 @media (min-width: 1024px) {
     .profile-content { 
         padding: 24px 48px 72px; 

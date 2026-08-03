@@ -210,3 +210,26 @@ export function getDayDiff(a, b) {
     const diff = getStartOfDay(a) - getStartOfDay(b)
     return Math.floor(diff / (1000 * 60 * 60 * 24))
 }
+
+export function isAccountAnniversary(dateString) {
+    const joined = parseLocalDate(dateString)
+    const today = getStartOfDay(new Date())
+
+    return (
+        today.getMonth() === joined.getMonth() &&
+        today.getDate() === joined.getDate() &&
+        today.getFullYear() !== joined.getFullYear()
+    )
+}
+
+export function getYearsSince(dateString) {
+    const joined = parseLocalDate(dateString)
+    const today = getStartOfDay(new Date())
+
+    let years = today.getFullYear() - joined.getFullYear()
+
+    const anniversaryThisYear = new Date(today.getFullYear(), joined.getMonth(), joined.getDate())
+    if (today < anniversaryThisYear) years--
+
+    return years
+}

@@ -6,7 +6,7 @@ import { useRewards } from "../store/RewardStore"
 import { useTasks } from "../store/TaskStore"
 import { useToast } from "../store/ToastStore"
 
-import { formatDate } from "../utils/dateUtils"
+import { formatDate, isAccountAnniversary, getYearsSince } from "../utils/dateUtils"
 
 import ProfileHeader from "../components/profile/ProfileHeader"
 import LevelCard from "../components/profile/LevelCard"
@@ -29,6 +29,9 @@ function Profile() {
 
     const avatarRef = useRef()
     const bannerRef = useRef()
+
+    const anniversary = isAccountAnniversary(user.createdAt)
+    const years = getYearsSince(user.createdAt)
 
     // get ready and locked rewards
     const getTask = (id) => tasks.find(t => t.id === id)
@@ -161,9 +164,17 @@ function Profile() {
                 onChange={(e) => handleUpload(e, "banner")}
             />
 
-            <p className="blooming-together-info">
-                Blooming together since {formatDate(user.createdAt)}
-            </p>
+            {anniversary ? (
+                <p className="account-anniversary-info">
+                    Happy anniversary! We've been blooming together for {years} {years === 1 ? "year" : "years"}.
+                </p>
+            ) : (
+                <p className="blooming-together-info">
+                    Blooming together since {formatDate(user.createdAt)}
+                </p>
+            )}
+
+            
 
             <div className="profile-edit-toggle-container">
                 <Button className={isEditing ? "profile-edit-toggle" : ""} onClick={() => setIsEditing(prev => !prev)}>
