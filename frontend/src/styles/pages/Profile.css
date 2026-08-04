@@ -27,6 +27,12 @@
     padding: 5px 24px;
 }
 
+.profile-edit-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .profile-page {
     display: flex;
     flex-direction: column;
