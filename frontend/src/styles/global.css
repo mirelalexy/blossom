@@ -329,3 +329,9 @@ ul strong {
 .card.clickable {
     cursor: pointer;
 }
+
+body.media-menu-open {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+}

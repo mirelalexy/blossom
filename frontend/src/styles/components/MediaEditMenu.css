@@ -6,6 +6,10 @@
     animation: fadeIn 0.2s ease forwards;
 }
 
+.media-menu-overlay--out {
+    animation: fadeOut 0.25s ease forwards;
+}
+
 .media-menu-sheet {
     position: fixed;
     bottom: 0;
@@ -19,8 +23,24 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.18);
-    animation: sheetSlideUp 0.28s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
     align-items: center;
+}
+
+.media-menu-sheet--closing {
+    pointer-events: none;
+}
+
+.media-menu-handle-area {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 6px;
+    cursor: grab;
+    touch-action: none;
+}
+
+.media-menu-handle-area:active {
+    cursor: grabbing;
 }
 
 .media-menu-handle {
@@ -28,7 +48,6 @@
     height: 4px;
     background: var(--border);
     border-radius: var(--r-full);
-    margin: 5px auto 6px;
 }
 
 .media-menu-title {
@@ -90,12 +109,12 @@
     background-color: var(--bg-secondary);
 }
 
-@keyframes sheetSlideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-}
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
