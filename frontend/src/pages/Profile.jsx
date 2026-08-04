@@ -16,6 +16,9 @@ import Button from "../components/ui/Button"
 
 import "../styles/pages/Profile.css"
 
+const AVATAR_MAX_SIZE = 2 * 1024 * 1024
+const BANNER_MAX_SIZE = 5 * 1024 * 1024
+
 function Profile() {
     const { user, uploadAvatar, uploadBanner, removeAvatar, removeBanner, updateBannerPosition } = useUser()
     const { stats } = useProfile()
@@ -24,8 +27,18 @@ function Profile() {
     const { showToast } = useToast()
 
     const [isEditing, setIsEditing] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
+    const [saveError, setSaveError] = useState("")
+
+    // unsaved changes until user saves everything
+    const [avatarFile, setAvatarFile] = useState(null)
     const [avatarPreview, setAvatarPreview] = useState(null)
+    const [avatarRemoved, setAvatarRemoved] = useState(null)
+
+    const [bannerFile, setBannerFile] = useState(null)
     const [bannerPreview, setBannerPreview] = useState(null)
+    const [bannerRemoved, setBannerRemoved] = useState(null)
+    const [draftPositionY, setDraftPositionY] = useState(user?.bannerPositionY ?? 50)
 
     const avatarRef = useRef()
     const bannerRef = useRef()
@@ -71,82 +84,141 @@ function Profile() {
         }
     }, [bannerPreview])
 
-    async function handleUpload(e, type) {
-        const file = e.target.files[0]
+    function resetDraftState() {
+        setAvatarFile(null)
+        setAvatarPreview(null)
+        setAvatarRemoved(false)
+
+        setBannerFile(null)
+        setBannerPreview(null)
+        setAvatarRemoved(null)
+        setDraftPositionY(user?.bannerPositionY ?? 50)
+
+        setSaveError("")
+    }
+
+    function handleEnterEditMode() {
+        setDraftPositionY(user?.bannerPositionY ?? 50)
+        setIsEditing(true)
+    }
+
+    function handleAvatarFileSelected(file) {
         if (!file) return
-
-        const maxSize = type === "banner"
-            ? 5 * 1024 * 1024
-            : 2 * 1024 * 1024
         
-        if (file.size > maxSize) {
-            showToast({ message: `File too large (max ${type === "banner" ? "5" : "2"}MB)`, type: "error" })
-            return
+        if (file.size > AVATAR_MAX_SIZE) {
+            showToast({ message: "File too large (max 2MB)", type: "error" })
         }
 
-        const preview = URL.createObjectURL(file)
+        // clean up from previous file
+        if (avatarPreview?.startsWith("blob:")) {
+            URL.revokeObjectURL(avatarPreview)
+        }
+
+        setAvatarFile(file)
+        setAvatarPreview(URL.createObjectURL(file))
+        setAvatarRemoved(false)
+    }
+
+    function handleBannerFileSelected(file) {
+        if (!file) return
+        
+        if (file.size > BANNER_MAX_SIZE) {
+            showToast({ message: "File too large (max 5MB)", type: "error" })
+        }
+
+        // clean up from previous file
+        if (bannerPreview?.startsWith("blob:")) {
+            URL.revokeObjectURL(bannerPreview)
+        }
+
+        setBannerFile(file)
+        setBannerPreview(URL.createObjectURL(file))
+        setBannerRemoved(false)
+        setDraftPositionY(50) // always center new banner file
+    }
+
+    function handleAvatarRemove() {
+        if (avatarPreview?.startsWith("blob:")) {
+            URL.revokeObjectURL(avatarPreview)
+        }
+
+        setAvatarFile(null)
+        setAvatarPreview(null)
+        setAvatarRemoved(true)
+    }
+
+    function handleBannerRemove() {
+        if (bannerPreview?.startsWith("blob:")) {
+            URL.revokeObjectURL(bannerPreview)
+        }
+
+        setBannerFile(null)
+        setBannerPreview(null)
+        setBannerRemoved(true)
+        setDraftPositionY(50)
+    }
+
+    async function handleDone() {
+        setIsSaving(true)
+        setSaveError("")
 
         try {
-            if (type === "avatar") {
-                setAvatarPreview(preview)
-                await uploadAvatar(file)
-                setAvatarPreview(null)
-                showToast({ message: "Avatar updated" })
-            } else {
-                setBannerPreview(preview)
-                await uploadBanner(file)
-                setBannerPreview(null)
-                showToast({ message: "Banner updated" })
+            if (avatarFile) {
+                await uploadAvatar(avatarFile)
+            } else if (avatarRemoved) {
+                await removeAvatar()
             }
+
+            if (bannerFile) {
+                await uploadBanner(bannerFile)
+            } else if (bannerRemoved) {
+                await removeBanner()
+            } else if (draftPositionY !== (user?.bannerPositionY ?? 50)) {
+                await updateBannerPosition(draftPositionY)
+            }
+
+            resetDraftState()
+            setIsEditing(false)
+            showToast({ message: "Profile updated" })
         } catch (err) {
-            showToast({ message: "Upload failed", type: "error" })
-            console.error(err)
-
-            // reset preview on failure
-            if (type === "avatar") {
-                setAvatarPreview(null)
-            } else {
-                setBannerPreview(null)
-            }
-        }
-        
-        // reset input in case of re-uploading
-        e.target.value = ""
-    }
-
-    async function handleRemoveAvatar() {
-        try {
-            await removeAvatar()
-            showToast({ message: "Avatar removed" })
-        } catch {
-            showToast({ message: "Couldn't remove avatar", type: "error" })
+            console.error("Failed to save profile changes: ", err)
+            setSaveError("Couldn't save your changes. Please try again.")
+        } finally {
+            setIsSaving(false)
         }
     }
 
-    async function handleRemoveBanner() {
-        try {
-            await removeBanner()
-            showToast({ message: "Banner removed" })
-        } catch {
-            showToast({ message: "Couldn't remove banner", type: "error" })
-        }
+    function handleCancel() {
+        resetDraftState()
+        setIsEditing(false)
     }
+
+    const displayAvatarSrc = avatarFile
+        ? avatarPreview
+        : avatarRemoved
+            ? null
+            : user?.avatar
+
+    const displayBannerSrc = bannerFile
+        ? bannerPreview
+        : bannerRemoved
+            ? null
+            : user?.banner
 
     return (
         <div className="profile-page">
             <ProfileHeader 
-                bannerSrc={bannerPreview || user?.banner}
-                bannerPositionY={user?.bannerPositionY}
-                onBannerPositionChange={updateBannerPosition}
-                avatarSrc={avatarPreview || user?.avatar}
+                bannerSrc={displayBannerSrc}
+                bannerPositionY={draftPositionY}
+                onBannerPositionDrag={setDraftPositionY}
+                avatarSrc={displayAvatarSrc}
                 name={user?.displayName}
                 email={user?.email}
                 isEditing={isEditing}
-                onEditToggle={() => setIsEditing(prev => !prev)} 
                 onAvatarClick={() => avatarRef.current.click()}
                 onBannerClick={() => bannerRef.current.click()}
-                onRemoveAvatar={handleRemoveAvatar}
-                onRemoveBanner={handleRemoveBanner}
+                onRemoveAvatar={handleAvatarRemove}
+                onRemoveBanner={handleBannerRemove}
                 streak={streak}
             />
 
@@ -155,7 +227,10 @@ function Profile() {
                 accept="image/png, image/jpeg, image/jpg, image/gif"
                 ref={avatarRef}
                 style={{ display: "none" }}
-                onChange={(e) => handleUpload(e, "avatar")}
+                onChange={(e) => {
+                    handleAvatarFileSelected(e.target.files[0])
+                    e.target.value = ""
+                }}
             />
 
             <input
@@ -163,7 +238,10 @@ function Profile() {
                 accept="image/png, image/jpeg, image/jpg, image/gif"
                 ref={bannerRef}
                 style={{ display: "none" }}
-                onChange={(e) => handleUpload(e, "banner")}
+                onChange={(e) => {
+                    handleBannerFileSelected(e.target.files[0])
+                    e.target.value = ""
+                }}
             />
 
             {anniversary ? (
@@ -176,12 +254,31 @@ function Profile() {
                 </p>
             )}
 
-            
-
             <div className="profile-edit-toggle-container">
-                <Button className={isEditing ? "profile-edit-toggle" : ""} onClick={() => setIsEditing(prev => !prev)}>
-                    {isEditing ? "Done" : "Edit Profile"}
-                </Button>
+                {isEditing ? (
+                    <div className="profile-edit-actions">
+                        <Button
+                            onClick={handleDone}
+                            disabled={isSaving}
+                        >
+                            {isSaving? "Saving..." : "Done"}
+                        </Button>
+
+                        <Button
+                            className="neutral"
+                            onClick={handleCancel}
+                            disabled={isSaving}
+                        >
+                            Cancel
+                        </Button>
+                    </div>
+                ) : (
+                    <Button className="profile-edit-toggle" onClick={handleEnterEditMode}>
+                        Edit Profile
+                    </Button>
+                )}
+
+                {saveError && <p className="error-text">{saveError}</p>}
             </div>
 
             <div className="profile-content">
