@@ -120,6 +120,7 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onAvatarC
                                     hasImage={!!bannerSrc}
                                     title="Banner"
                                     anchorRef={bannerEditRef}
+                                    maxSize={5}
                                 />
                             </div>
                         </div>
@@ -158,6 +159,7 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onAvatarC
                                 hasImage={!!avatarSrc}
                                 title="Avatar"
                                 anchorRef={avatarEditRef}
+                                maxSize={2}
                             />
                         </div>
                     )}

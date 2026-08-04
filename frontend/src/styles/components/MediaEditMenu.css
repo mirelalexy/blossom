@@ -1,10 +1,9 @@
 .media-menu-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 100;
     animation: fadeIn 0.2s ease forwards;
-    backdrop-filter: blur(2px);
 }
 
 .media-menu-sheet {
@@ -21,6 +20,7 @@
     flex-direction: column;
     box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.18);
     animation: sheetSlideUp 0.28s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    align-items: center;
 }
 
 .media-menu-handle {
@@ -28,15 +28,19 @@
     height: 4px;
     background: var(--border);
     border-radius: var(--r-full);
-    margin: 10px auto 6px;
+    margin: 5px auto 6px;
 }
 
 .media-menu-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     text-align: center;
-    padding: 4px 20px 12px;
+    padding: 10px 20px 30px;
+}
+
+.media-menu-row-container {
+    width: 95%;
 }
 
 .media-menu-row {

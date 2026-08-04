@@ -1,10 +1,14 @@
 import { useRef, useEffect } from "react"
 
+import Section from "../ui/Section"
+import SettingsCard from "../../components/settings/SettingsCard"
+import SheetItem from "../ui/SheetItem"
+
 import useIsMobile from "../../hooks/useIsMobile"
 
 import "../../styles/components/MediaEditMenu.css"
 
-function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, anchorRef }) {
+function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, anchorRef, maxSize }) {
     const isMobile = useIsMobile()
     const menuRef = useRef(null)
 
@@ -59,21 +63,21 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
 
                     <h3 className="media-menu-title">{title}</h3>
 
-                    <button 
-                        className="media-menu-row" 
-                        onClick={handleUpload}
-                    >
-                        Upload Image
-                    </button>
+                    <Section className="media-menu-row-container">
+                        <SettingsCard>
+                            <SheetItem 
+                                label="Upload Image"
+                                onClick={handleUpload}
+                                text={`Upload a PNG, JPG, JPG or GIF under ${maxSize}MB.`}
+                            />
 
-                    {hasImage && (
-                        <button 
-                            className="media-menu-row media-menu-row--danger" 
-                            onClick={handleRemove}
-                        >
-                            Remove {title}
-                        </button>
-                    )}
+                            <SheetItem 
+                                label={`Remove ${title}`}
+                                onClick={handleRemove}
+                                variant="danger"
+                            />
+                        </SettingsCard>
+                    </Section>
                 </div>
             </>
         )
