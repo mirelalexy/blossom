@@ -95,7 +95,9 @@ import {
     WavesLadder,
     Tent,
     Wrench,
-    CheckLine
+    CheckLine,
+    Check,
+    Move
 } from "lucide-react"
 
 export const appIcons = {
@@ -141,6 +143,8 @@ export const appIcons = {
     tags: Tags,
     sparkles: Sparkles,
     edit: Pencil,
+    check: Check,
+    move: Move,
     piggyBank: PiggyBank,
     heart: Heart,
 
