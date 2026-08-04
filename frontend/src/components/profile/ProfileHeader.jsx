@@ -2,6 +2,7 @@ import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
 import Icon from "../ui/Icon"
+import MediaEditMenu from "./MediaEditMenu"
 
 import "../../styles/components/ProfileHeader.css"
 
@@ -9,7 +10,13 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onAvatarC
     const navigate = useNavigate()
     const initial = name ? name.charAt(0).toUpperCase() : "?"
 
+    const [avatarMenuOpen, setAvatarMenuOpen] = useState(false)
+    const [bannerMenuOpen, setBannerMenuOpen] = useState(false)
+
     const [isRepositioning, setIsRepositioning] = useState(false)
+
+    const avatarEditRef = useRef(null)
+    const bannerEditRef = useRef(null)
 
     // remember where the current drag started
     const dragStartRef = useRef(null)
@@ -76,70 +83,82 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onAvatarC
                 )}
 
                 {isEditing && (
-                    <div className="profile-banner-actions">
-                        {isRepositioning ? (
-                            <button
-                                className="profile-media-btn"
-                                onClick={() => setIsRepositioning(false)}
-                            >
-                                Exit reposition
-                            </button>
-                        ) : (
-                            <>
-                                <button 
-                                    className="profile-media-btn" 
-                                    onClick={onBannerClick}
+                    isRepositioning ? (
+                        <button
+                            className="media-icon-btn media-icon-btn--done"
+                            onClick={() => setIsRepositioning(false)}
+                        >
+                            <Icon name="completed" size={16} />
+                        </button>
+                    ) : (
+                        <div className="banner-icon-actions">
+                            {bannerSrc && (
+                                <button
+                                    className="media-icon-btn"
+                                    onClick={() => setIsRepositioning(true)}
+                                    aria-label="Reposition banner"
                                 >
-                                    {bannerSrc ? "Change banner" : "Add banner"}
+                                    <Icon name="move" size={16} />
+                                </button>
+                            )}
+
+                            <div className="media-icon-btn-wrap">
+                                <button
+                                    className="media-icon-btn"
+                                    ref={bannerEditRef}
+                                    onClick={() => setBannerMenuOpen(prev => !prev)}
+                                    aria-label="Edit banner"
+                                >
+                                    <Icon name="edit" size={16} />
                                 </button>
 
-                                {bannerSrc && (
-                                    <button
-                                        className="profile-media-btn"
-                                        onClick={() => setIsRepositioning(true)}
-                                    >
-                                        Reposition
-                                    </button>
-                                )}
-
-                                {bannerSrc && (
-                                    <button
-                                        className="profile-media-btn profile-media-btn--remove"
-                                        onClick={onRemoveBanner}
-                                    >
-                                        Remove
-                                    </button>
-                                )}
-                            </>
-                        )}
-                    </div>
+                                <MediaEditMenu 
+                                    isOpen={bannerMenuOpen}
+                                    onClose={() => setBannerMenuOpen(false)}
+                                    onUpload={onBannerClick}
+                                    onRemove={onRemoveBanner}
+                                    hasImage={!!bannerSrc}
+                                    title="Banner"
+                                    anchorRef={bannerEditRef}
+                                />
+                            </div>
+                        </div>
+                    )
                 )}
             </div>
 
             <div className="profile-header-content">
-                <div className="profile-avatar">
-                    {avatarSrc ? (
-                        <img src={avatarSrc} alt="avatar" />
-                    ) : (
-                        <div className="avatar-placeholder">
-                            <span className="avatar-initial">{initial}</span>
-                          </div>
-                    )}
+                <div className="profile-avatar-wrap">
+                    <div className="profile-avatar">
+                        {avatarSrc ? (
+                            <img src={avatarSrc} alt="avatar" />
+                        ) : (
+                            <div className="avatar-placeholder">
+                                <span className="avatar-initial">{initial}</span>
+                            </div>
+                        )}
+                    </div>
                     
                     {isEditing && (
-                        <div className="profile-avatar-actions">
-                            <button className="profile-media-btn profile-media-btn--sm" onClick={onAvatarClick}>
-                                {avatarSrc ? "Change" : "Add"}
+                        <div className="media-icon-btn-wrap avatar-edit-wrap">
+                            <button
+                                className="media-icon-btn"
+                                ref={avatarEditRef}
+                                onClick={() => setAvatarMenuOpen(prev => !prev)}
+                                aria-label="Edit avatar"
+                            >
+                                <Icon name="edit" size={14} />
                             </button>
 
-                            {avatarSrc && (
-                                <button
-                                    className="profile-media-btn profile-media-btn--sm profile-media-btn--remove"
-                                    onClick={onRemoveAvatar}
-                                >
-                                    Remove
-                                </button>
-                            )}
+                            <MediaEditMenu 
+                                isOpen={avatarMenuOpen}
+                                onClose={() => setAvatarMenuOpen(false)}
+                                onUpload={onAvatarClick}
+                                onRemove={onRemoveAvatar}
+                                hasImage={!!avatarSrc}
+                                title="Avatar"
+                                anchorRef={avatarEditRef}
+                            />
                         </div>
                     )}
                 </div>
