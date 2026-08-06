@@ -41,7 +41,7 @@
 }
 
 .blooming-together-info {
-    padding: 18px 24px 8px;
+    padding: 18px 24px 0;
     font-style: italic;
     color: var(--text-secondary);
     font-size: 13px;
