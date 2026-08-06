@@ -127,83 +127,162 @@ export const evilOnboarding = {
 
 export const EVIL_APP_TIPS = [
     {
+        category: "Logging Habits",
         title: "Log it, especially when you don't want to",
-        content: "The transaction you're pretending didn't happen is the most useful one to log. I'm not going to shame you for it. But I need the data."
+        content: "The purchase you're pretending didn't happen is usually the most interesting one. If you skip it, you're not hiding it from me. You're hiding it from yourself."
     },
     {
-        title: "Mood tags are not decorative",
-        content: "Tag how you felt when you spent. Over time you'll see it: the anxiety purchases, the happy splurges, the 'necessary' thing that wasn't. It's uncomfortable data. That's the point."
+        category: "Logging Habits",
+        title: "Small purchases built this habit",
+        content: "Do you ever wonder about the coffees, snacks, and subscriptions that were just a few bucks? How do they even add up? Well, guess what? You need to log them all. Don't skip because it makes you uncomfortable. Live with that feeling. You spent that money, might as well admit it to yourself."
     },
     {
-        title: "Going over budget isn't failure, but ignoring it is",
-        content: "I'll note when you exceed your limit. I won't make it dramatic. But you need to acknowledge it - not wallow, just see. Budgets are meant to inform, not imprison."
+        category: "Logging Habits",
+        title: "Stop trying to pick the perfect mood",
+        content: "This isn't a psychology exam. Pick the closest one and move on. Your patterns care about consistency far more than precision."
+    },
+     {
+        category: "Logging Habits",
+        title: "Budgets don't fail, but people stop looking at them",
+        content: "Going over budget isn't the problem. Pretending it didn't happen is. If your budget no longer matches reality, change it. Reality won't change itself."
     },
     {
-        title: "Your primary goal should make you slightly uncomfortable",
-        content: "If it's too easy, it's not a goal. It's a schedule. Set something that requires actual choices. I'll keep it visible."
+        category: "Goals & Rewards",
+        title: "If your goal doesn't demand choices, it's not a goal",
+        content: "Saving for something should occasionally make spending on something else uncomfortable. Otherwise you're just waiting, not choosing."
     },
     {
-        title: "The task system only works if you're honest about it",
-        content: "Don't reward yourself for something you'd do anyway. The friction is the feature. Earn the reward. Then take it without guilt."
+        category: "Goals & Rewards",
+        title: "Earn the reward properly",
+        content: "Don't invent fake victories so you can collect fake rewards. Make the task difficult enough that claiming the reward actually feels deserved."
     },
     {
-        title: "Streaks measure showing up",
-        content: "You don't need a perfect financial day to extend your streak. You just need to log something real. Some of your most useful days will be the ugly ones."
+        category: "Streaks & Check-ins",
+        title: "Don't confuse a streak with progress",
+        content: "A long streak doesn't automatically mean you've learned anything. It's proof you showed up. What you do with that consistency is the part that actually matters."
     },
     {
-        title: "Journey is most useful when you don't want to look",
-        content: "At the end of a month where things went sideways, that's where you face it. The charts don't soften the numbers. But they give you something to learn from."
+        category: "Streaks & Check-ins",
+        title: "Quiet days still count",
+        content: "Nothing happened financially? Good. Check in anyway. Your brain existed today even if your wallet didn't."
     },
     {
-        title: "Notice your patterns, but remember you don't have to fix them all at once",
-        content: "Maybe you overspend on weekends. Maybe anxiety spending is real for you. See it first. Then decide what to do about it."
+        category: "Reflection",
+        title: "Leave breadcrumbs for your future self",
+        content: "You'll swear you'll remember why you bought that weird thing. You won't. Write the note while you still know."
+    },
+    {
+        category: "Reflection",
+        title: "The month is smarter than the moment",
+        content: "Three days tell stories. Thirty days tell the truth. Wait until the month ends before deciding who you think you are."
+    },
+    {
+        category: "Reflection",
+        title: "Don't defend your habits",
+        content: "Every habit makes perfect sense to the person doing it. That's exactly why you should question it before you justify it."
+    },
+     {
+        category: "Conversation",
+        title: "Ask something that makes you uncomfortable",
+        content: "Don't waste me on questions you already know the answer to. Ask what you're avoiding. Ask what pattern you're pretending not to see. Then let's ruin your excuses together."
+    },
+    {
+        category: "Conversation",
+        title: "Context helps me call you out accurately",
+        content: "A short bio gives me context your transactions can't. It's optional. But if I'm going to challenge your thinking, I'd rather know who I'm talking to."
     }
 ]
 
 export const EVIL_FAQ = [
     {
+        category: "Getting Started",
         title: "What actually are you?",
-        content: "I'm a budget tracker, but I'm built around the idea that money is emotional. Most apps show you what you spent. I focus on why. You log transactions with a mood and a purchase intent, and over time I build a picture of your habits that goes deeper than numbers. I won't block any purchases or connect to your bank. I show you what's there. What you do with it is up to you."
+        content: "I'm a budget tracker built around the idea that money is emotional. Most apps tell you what you spent. I care more about why. Every transaction gives me another piece of the picture: what you bought, how you felt, why you justified it, and what habits start repeating. I won't connect to your bank or tell you what to do with your money. I'll simply show you what's already there. Whether you look is your problem."
     },
     {
-        title: "How does XP and levelling up work?",
-        content: "Every transaction you log earns you 5 XP. Each day you keep your streak alive adds 2 XP. Completing a challenge is worth 30 XP. Your XP total determines your level, and your level unlocks a title - from Mindful Seed all the way to Eternal Bloom. The levels get harder to reach as you go, so early progress feels fast and rewarding. You can see your full breakdown on your Journey page."
-    },
-    {
-        title: "What is a streak?",
-        content: "A streak counts how many consecutive days you've logged at least one transaction. It resets if you miss a day. It doesn't measure perfection - just whether you showed up. Break it if you want. You'll see the difference."
-    },
-    {
-        title: "What do the mood tags actually do?",
-        content: "When you log a transaction, you can tag how you were feeling - happy, calm, neutral, anxious, or sad. I track these over time. On your Journey page, you'll see a mood chart that shows spending patterns by emotional state. The patterns are usually clearer than people expect."
-    },
-    {
-        title: "What's purchase intent?",
-        content: "Every expense can be tagged as necessary, planned, or impulse. Over time, your Journey page will show you what portion of your spending falls into each category. The goal isn't to eliminate impulse purchases - it's just to know they're happening."
-    },
-    {
-        title: "Why do I log whether I paid by card or cash?",
-        content: "Because they behave differently - not in terms of what you buy, but in terms of how it feels to spend. Cash is physical. You feel it leave your hand. That friction tends to make purchases feel more real, which is why cash spending tends to be smaller and more deliberate. Card spending is easier and faster, which is why it's also easier to overspend without noticing. I track which method you use so I can show you whether there's a gap in your averages - and whether that gap reflects unconscious spending or just how your life is structured. Neither is inherently better, but they affect behavior differently."
-    },
-    {
-        title: "What are challenges?",
-        content: "Challenges are monthly and weekly goals I set for you automatically - things like logging 10 transactions, keeping your spending under budget, or tagging your mood on every purchase. Completing a challenge earns you 30 XP."
-    },
-    {
-        title: "How do Rewards and Tasks work?",
-        content: "You create a task and link it to a reward. When you mark the task complete, the reward unlocks and you can claim it. If the reward has a price, claiming it automatically logs an expense. Rewards without a price are just for you. The system only works if you use it honestly."
-    },
-    {
-        title: "What is the Journey page?",
-        content: "Journey is where I show you what I've noticed. It has charts for spending by category, mood, and intent - plus your income vs expenses for the current month. There's also a narrative section that describes where you are in your growth stage and what it means. The more you log, the more useful Journey becomes. I'd suggest giving it a proper look after your first full month."
-    },
-    {
+        category: "Getting Started",
         title: "Do you connect to my bank?",
-        content: "No. Everything here is manual. You log what you spend, when you spent it, and how you felt. That friction is part of the point - the act of logging something forces a moment of awareness that automatic import never would. Your data lives in your account and isn't shared with anyone."
+        content: "No. Everything is logged manually. That little bit of effort is intentional. Automatic imports record transactions. Manually writing them down forces you to acknowledge them. Turns out awareness requires participation."
     },
     {
+        category: "Spending & Insights",
+        title: "What do the mood tags actually do?",
+        content: "Every transaction can be tagged with the mood you were in when you made it. I keep those tags because feelings have an annoying habit of repeating themselves. Journey will eventually show you which emotions tend to cost you money. Sometimes the patterns are surprisingly obvious. Sometimes they're just uncomfortable."
+    },
+    {
+        category: "Spending & Insights",
+        title: "What's purchase intent?",
+        content: "Every expense can be marked as necessary, planned, or impulse. It's less about judging your choices and more about exposing how often you convince yourself something just... happened. Once enough data builds up, excuses become much harder to maintain."
+    },
+    {
+        category: "Spending & Insights",
+        title: "Why do I log whether I paid by card or cash?",
+        content: "Because paying doesn't always feel the same. Cash leaves your hand. Cards barely interrupt your day. I compare both so you can see whether convenience quietly changes your behavior. Neither method is automatically better. One might simply be better at helping you forget you spent money."
+    },
+    {
+        category: "Spending & Insights",
+        title: "What is my Journey?",
+        content: "Journey is where I stop collecting information and start connecting it. Spending, moods, purchase intent, payment methods, income, expenses, growth stages... it's all there. The longer you stay with me, the harder it becomes to pretend your habits came out of nowhere."
+    },
+    {
+        category: "Streaks, XP & Challenges",
+        title: "How does XP and levelling up work?",
+        content: "Transactions earn 5 XP. Check-ins earn 3 XP. Every day your streak survives adds another 2 XP. Challenges are worth 30 XP. More XP means higher levels and new titles, from Mindful Seed to Eternal Bloom. The levels get harder because progress should eventually require consistency, not enthusiasm."
+    },
+    {
+        category: "Streaks, XP & Challenges",
+        title: "What is a streak?",
+        content: "A streak counts consecutive days where you either logged a transaction or completed a check-in. Miss a day and it resets. It's not measuring perfection. It's measuring whether you kept showing up after life inevitably became inconvenient."
+    },
+    {
+        category: "Streaks, XP & Challenges",
+        title: "What's a check-in?",
+        content: "A check-in lets you record how you're feeling without spending anything. I built it because a streak that only rewarded purchases would have been a spectacularly stupid idea. Some of your healthiest financial days won't involve money moving at all."
+    },
+    {
+        category: "Streaks, XP & Challenges",
+        title: "What are challenges?",
+        content: "Challenges are weekly and monthly objectives I generate automatically. Log consistently. Stay within budget. Remember your mood tags. Complete them and you'll earn XP. Think of them as gentle nudges before your habits become permanent."
+    },
+    {
+        category: "Rewards & Goals",
+        title: "How do Rewards and Tasks work?",
+        content: "Link a real task to a reward worth earning. Finish the task and the reward unlocks. If it costs money, I'll log the expense automatically. If it doesn't, even better. Just don't cheat the system. You're only making it easier to fool yourself."
+    },
+    {
+        category: "Conversation",
+        title: "Can I ask you things directly?",
+        content: "Of course. Find me on your Home page. Ask about your spending, your moods, your habits, or whatever question you've been carefully avoiding. I'll answer using your data and what I know about human behavior."
+    },
+    {
+        category: "Conversation",
+        title: "Can I tell you more about myself?",
+        content: "If you write a bio in Settings → Data & Privacy → Your Bio, I'll use it as context. Your work, goals, ambitions, whatever matters. It's optional. I won't quote it back to you. Just connecting stuff..."
+    },
+    {
+        category: "Account & Customization",
+        title: "Can I pick my own category icons?",
+        content: "Yes. Create or edit a category and pick whichever icon makes sense to you. If you realize halfway through logging a transaction that you're missing a category, create it on the spot."
+    },
+    {
+        category: "Account & Customization",
+        title: "What if I forget my password?",
+        content: "Click \"Forgot password?\" on the login page and I'll email you a reset link that expires after an hour. If your password ever changes (whether through recovery or Settings), I'll send another email. If someone else changed it, I'd rather you found out immediately."
+    },
+    {
+        category: "Account & Customization",
+        title: "Why do I need to verify my email?",
+        content: "Because your recovery options depend on that email actually belonging to you. I'll send a verification link after registration. Click it, then log in. Lose the email? Request another. Bureaucracy is annoying. Losing your account is worse."
+    },
+    {
+        category: "Account & Customization",
+        title: "Can I change my email address?",
+        content: "Settings → Account → Email. Enter your current password first. I'll send a confirmation link to the new address, and nothing changes until you click it. Ignore it, and your old email stays exactly where it is. Once the change goes through, I'll notify your previous email too. Just in case."
+    },
+    {
+        category: "Account & Customization",
         title: "Can I export my data?",
-        content: "Yes. Go to Settings → Data & Privacy → Export Data. You'll get a CSV file with your full transaction history - date, title, category, type, amount, mood, intent, and notes. You can open it in any spreadsheet app."
+        content: "Yes. Settings → Data & Privacy → Export Data. You'll get a CSV containing your transaction history, ready for whatever spreadsheet obsession you have planned."
     }
 ]
 
