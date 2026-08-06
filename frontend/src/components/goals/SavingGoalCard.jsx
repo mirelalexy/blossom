@@ -12,6 +12,7 @@ import { parseLocalDate } from "../../utils/dateUtils"
 import Button from "../ui/Button"
 import ProgressBar from "../ui/ProgressBar"
 import Icon from "../ui/Icon"
+import ConfirmModal from "../ui/ConfirmModal"
 
 import "../../styles/components/SavingGoalCard.css"
 
@@ -27,6 +28,7 @@ function SavingGoalCard({ goal }) {
     const [amount, setAmount] = useState("")
     const [error, setError] = useState("")
     const [expanded, setExpanded] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const goalsExpenseCategory = categories.find(
         cat => cat.name === "Goals" && cat.type === "expense"
@@ -130,12 +132,24 @@ function SavingGoalCard({ goal }) {
                         </button>
                         <button
                             className="goal-icon-btn goal-icon-btn--delete"
-                            onClick={() => deleteGoal(goal.id)}
+                            onClick={() => setShowConfirm(true)}
                             aria-label="Delete goal"
                         >
                             <Icon name="delete" size={16} />
                         </button>
                     </div>
+                    
+                    {showConfirm && (
+                        <ConfirmModal
+                            title="Delete this saving goal?"
+                            message="This saving goal will be gone permanently. Related transactions will remain in your history."
+                            confirmLabel="Delete Saving Goal"
+                            cancelLabel="Keep It"
+                            onConfirm={() => deleteGoal(goal.id)}
+                            onCancel={() => setShowConfirm(false)}
+                            variant="warning"
+                        />
+                    )}
                 </div>
 
                 <div className="goal-meta-row">
