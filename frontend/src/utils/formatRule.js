@@ -6,12 +6,12 @@ export function formatRule(rule) {
 
     switch(rule.type) {
         case "single_limit":
-            return `When a single transaction exceeds: ${formatCurrency(rule.value, currency)}`
+            return { number: formatCurrency(rule.value, currency), type: "Max amount for a transaction"}
 
         case "weekly_count":
-            return `Limit number of transactions per week: ${rule.value}`
+            return { number: rule.value, type: "Max number of transactions per week"}
 
         default:
-            return ""
+            return {}
     }
 }

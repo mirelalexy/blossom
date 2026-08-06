@@ -1,0 +1,23 @@
+.settings-item-category-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.settings-item-max-number {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 27px;
+}
+
+.settings-item-type-rule {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.settings-item--rule {
+    cursor: default;
+}
+
+.settings-item--rule:hover { 
+    background-color: var(--card); 
+}
