@@ -10,19 +10,6 @@
     box-sizing: border-box;
 }
 
-.profile-edit-toggle {
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-family: var(--font-primary);
-    transition: background-color 0.15s ease;
-    position: relative;
-    z-index: 4;
-}
-
-.profile-edit-toggle:hover { 
-    background: var(--accent-soft); 
-}
-
 .profile-edit-toggle-container {
     padding: 5px 24px;
 }
@@ -30,7 +17,7 @@
 .profile-edit-actions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .profile-page {

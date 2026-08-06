@@ -273,7 +273,7 @@ function Profile() {
                         </Button>
                     </div>
                 ) : (
-                    <Button className="profile-edit-toggle" onClick={handleEnterEditMode}>
+                    <Button onClick={handleEnterEditMode}>
                         Edit Profile
                     </Button>
                 )}
