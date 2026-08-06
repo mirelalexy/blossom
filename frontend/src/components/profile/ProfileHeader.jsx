@@ -130,7 +130,10 @@ function ProfileHeader({ bannerSrc, avatarSrc, name, email, isEditing, onAvatarC
 
             <div className="profile-header-content">
                 <div className="profile-avatar-wrap">
-                    <div className="profile-avatar">
+                    <div 
+                        className={`profile-avatar ${isEditing ? "profile-avatar--editable" : ""}`}
+                        onClick={() => isEditing && setAvatarMenuOpen(prev => !prev)}
+                    >
                         {avatarSrc ? (
                             <img src={avatarSrc} alt="avatar" />
                         ) : (
