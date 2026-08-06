@@ -8,6 +8,8 @@ import useIsMobile from "../../hooks/useIsMobile"
 
 import "../../styles/components/MediaEditMenu.css"
 
+const DRAG_THRESHOLD = 8
+
 function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, anchorRef, maxSize }) {
     const isMobile = useIsMobile()
     const menuRef = useRef(null)
@@ -15,6 +17,7 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
     // on mobile, drag to dismiss
     const sheetRef = useRef(null)
     const dragStartRef = useRef(null)
+    const dragEngagedRef = useRef(null)
     const currentTranslateRef = useRef(0)
 
     const [translateY, setTranslateY] = useState(0)
@@ -35,9 +38,7 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
     function handlePointerDown(e) {
         dragStartRef.current = e.clientY
         currentTranslateRef.current = 0
-        setIsDragging(true)
-
-        e.currentTarget.setPointerCapture(e.pointerId)
+        dragEngagedRef.current = false
     }
 
     function handlePointerMove(e) {
@@ -45,6 +46,14 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
 
         // downward drag
         const delta = e.clientY - dragStartRef.current
+
+        if (!dragEngagedRef.current) {
+            if (Math.abs(delta) < DRAG_THRESHOLD) return // could still be just a tap
+        
+            dragEngagedRef.current = true
+            setIsDragging(true)
+            e.currentTarget.setPointerCapture(e.pointerId)
+        }
 
         // upward drag (rubber band effect)
         const next = delta < 0 ? Math.max(delta / 3, -40) : delta
@@ -54,8 +63,13 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
     }
 
     function handlePointerUp() {
-        setIsDragging(false)
+        const wasDragging = dragEngagedRef.current
+
         dragStartRef.current = null
+        dragEngagedRef.current = false
+        setIsDragging(false)
+
+        if (!wasDragging) return
 
         if (currentTranslateRef.current > 100) {
             triggerClose()
@@ -132,17 +146,15 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
                 <div 
                     className={`media-menu-sheet ${isClosing ? "media-menu-sheet--closing" : ""}`}
                     ref={sheetRef}
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
                     style={{
                         transform: `translateY(${translateY}px)`,
                         transition: isDragging ? "none" : undefined
                     }}
                 >
-                    <div
-                        className="media-menu-handle-area"
-                        onPointerDown={handlePointerDown}
-                        onPointerMove={handlePointerMove}
-                        onPointerUp={handlePointerUp}
-                    >
+                    <div className="media-menu-handle-area">
                         <div className="media-menu-handle" />
                     </div>
 
