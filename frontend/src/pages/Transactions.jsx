@@ -26,6 +26,10 @@ import SearchBar from "../components/ui/SearchBar"
 import PageHeader from "../components/ui/PageHeader"
 import MonthSelector from "../components/ui/MonthSelector"
 import FilterPill from "../components/filters/FilterPill"
+import FilterPillMenu from "../components/filters/FilterPillMenu"
+import Input from "../components/forms/Input"
+import RadioGroup from "../components/forms/RadioGroup"
+import Select from "../components/forms/Select"
 
 import "../styles/pages/Transactions.css"
 
@@ -264,7 +268,7 @@ function Transactions() {
 						<Icon name="close" size={20} />
 					</button>
 				)}
-				
+
 				<FilterPill
 					pillRef={categoryPillRef}
 					label="Category"
@@ -306,6 +310,101 @@ function Transactions() {
 					onClear={() => clearFilter("period")}
 				/>
 			</div>
+
+			<FilterPillMenu
+				isOpen={openFilterId === "category"}
+				onClose={() => setOpenFilterId(null)}
+				anchorRef={categoryPillRef}
+				title="Category"
+			>
+				<Select
+					value={filters.category}
+					onChange={(e) => updateFilter("category", e.target.value)}
+					options={categoryOptions}
+				/>
+			</FilterPillMenu>
+
+			<FilterPillMenu
+				isOpen={openFilterId === "type"}
+				onClose={() => setOpenFilterId(null)}
+				anchorRef={typePillRef}
+				title="Type"
+			>
+				<RadioGroup
+					value={filters.type}
+					onChange={(val) => updateFilter("type", val)}
+					options={[
+						{ value: "", label: "All" },
+						{ value: "expense", label: "Expense" },
+						{ value: "income", label: "Income" }
+					]}
+				/>
+			</FilterPillMenu>
+
+			<FilterPillMenu
+				isOpen={openFilterId === "intent"}
+				onClose={() => setOpenFilterId(null)}
+				anchorRef={intentPillRef}
+				title="Intent"
+			>
+				<RadioGroup
+					value={filters.intent}
+					onChange={(val) => updateFilter("intent", val)}
+					options={[
+						{ value: "", label: "All" },
+						{ value: "necessary", label: "Necessary" },
+						{ value: "planned", label: "Planned" },
+						{ value: "impulse", label: "Impulse" }
+					]}
+				/>
+			</FilterPillMenu>
+
+			<FilterPillMenu
+				isOpen={openFilterId === "mood"}
+				onClose={() => setOpenFilterId(null)}
+				anchorRef={moodPillRef}
+				title="Mood"
+			>
+				<Select
+					value={filters.mood}
+					onChange={(e) => updateFilter("mood", e.target.value)}
+					options={[
+						{ value: "", label: "Any mood" },
+						{ value: "happy", label: "Happy" },
+						{ value: "calm", label: "Calm" },
+						{ value: "neutral", label: "Neutral" },
+						{ value: "anxious", label: "Anxious" },
+						{ value: "sad", label: "Sad" }
+					]}
+				/>
+			</FilterPillMenu>
+
+			<FilterPillMenu
+				isOpen={openFilterId === "dateRange"}
+				onClose={() => setOpenFilterId(null)}
+				anchorRef={dateRangePillRef}
+				title="Date Range"
+			>
+				<Input
+					label="From"
+					type="date"
+					value={filters.period.start}
+					onChange={(e) => updateFilter("period", {
+						...filters.period,
+						start: e.target.value
+					})}
+				/>
+
+				<Input
+					label="To"
+					type="date"
+					value={filters.period.end}
+					onChange={(e) => updateFilter("period", {
+						...filters.period,
+						end: e.target.value
+					})}
+				/>
+			</FilterPillMenu>
 
 			{!hasActiveFilters && (
 				<MonthSelector

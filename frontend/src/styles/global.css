@@ -330,7 +330,7 @@ ul strong {
     cursor: pointer;
 }
 
-body.media-menu-open {
+body.menu-open {
     overflow: hidden;
     touch-action: none;
     overscroll-behavior: none;

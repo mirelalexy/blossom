@@ -17,7 +17,7 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
         triggerClose,
         dragHandlers,
         handleDone
-    } = useResponsiveSheetMenu({ isOpen, onClose, anchorRef, scrollLockClass: "media-menu-open" })
+    } = useResponsiveSheetMenu({ isOpen, onClose, anchorRef, scrollLockClass: "menu-open" })
 
     function handleUpload() {
         onUpload()
