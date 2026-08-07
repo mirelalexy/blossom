@@ -1,0 +1,67 @@
+.filter-pill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.filter-pill-clear-all {
+    background: var(--bg-tertiary);
+    border: none;
+    color: var(--text-tertiary);
+    border-radius: var(--r-full);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--card-border);
+    background-color: var(--card);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.filter-pill--active {
+    background-color: var(--accent-dim);
+    border-color: var(--border-strong);
+    color: var(--accent);
+}
+
+.filter-pill--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.filter-pill-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -2px -6px -2px 0;
+    padding: 2px;
+    border-radius: 50%;
+    color: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .filter-pill-clear:hover {
+        background-color: rgba(var(--accent-rgb), 0.8);
+    }
+}

@@ -1,9 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef } from "react"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useBudget } from "../store/BudgetStore"
+import { useCategories } from "../store/CategoryStore"
 
 import { formatCurrency } from "../utils/currencyUtils"
 import { filterTransactions } from "../utils/filterTransactions"
@@ -11,6 +12,7 @@ import { getStartOfDay, parseLocalDate } from "../utils/dateUtils"
 import { searchTransactions } from "../utils/searchTransactions"
 import { calculateBudgetWithRollover } from "../utils/budgetUtils"
 import { toKey, isInMonth, prevMonthKey, nextMonthKey, labelFromKey } from "../utils/journeyUtils"
+import { formatCategoryLabel, formatTypeLabel, formatIntentLabel, formatMoodLabel, formatDateRangeLabel } from "../utils/filterPillUtils"
 
 import { getEmpty } from "../data/emptyStates"
 
@@ -23,6 +25,7 @@ import FilterSheet from "../components/filters/FilterSheet"
 import SearchBar from "../components/ui/SearchBar"
 import PageHeader from "../components/ui/PageHeader"
 import MonthSelector from "../components/ui/MonthSelector"
+import FilterPill from "../components/filters/FilterPill"
 
 import "../styles/pages/Transactions.css"
 
@@ -39,6 +42,16 @@ function Transactions() {
 	const { transactions } = useTransactions()
 	const { currency } = useCurrency()
 	const { budget } = useBudget()
+	const { categories } = useCategories()
+
+	// only one filter pill's menu opens at a time
+	const [openFilterId, setOpenFilterId] = useState(null)
+	
+	const categoryPillRef = useRef(null)
+	const typePillRef = useRef(null)
+	const intentPillRef = useRef(null)
+	const moodPillRef = useRef(null)
+	const dateRangePillRef = useRef(null)
 
 	const today = getStartOfDay(new Date())
 
@@ -169,12 +182,21 @@ function Transactions() {
 		})
 	}
 
+	function clearFilter(field) {
+		if (field === "period") {
+			updateFilter("period", { start: "", end: "" })
+		} else {
+			updateFilter(field, "")
+		}
+	}
+
+	// if income is selected, there is no intent to filter after
+	const isIncomeSelected = filters.type === "income"
+
 	const filteredTransactions = filterTransactions(
 		transactions.filter((t) => !t.is_recurring),
 		filters
 	)
-
-	const [showFilters, setShowFilters] = useState(false)
 
 	const searchedTransactions = searchTransactions(
 		filteredTransactions,
@@ -187,18 +209,28 @@ function Transactions() {
 	const paginatedMonth = monthlyTransactions.slice(0, visibleCount)
 	const monthHasMore = monthlyTransactions.length > visibleCount
 
+	const categoryOptions = [
+        { value: "", label: "All categories" },
+        ...categories
+            .filter(c => !c.id.includes("other"))
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(c => ({
+                value: c.id,
+                label: c.name
+            })),
+        // make Other last option
+        ...categories
+            .filter(c => c.id.includes("other"))
+            .map(c => ({
+                value: c.id,
+                label: c.name
+            })),
+    ]
+
 	return (
 		<div className="page">
 			<PageHeader
                 title={hasActiveFilters ? "Filtered" : "Transactions"}
-                left={
-                    <button
-                        className={`page-header-left ${hasActiveFilters ? "header-btn-active" : ""}`}
-                        onClick={() => setShowFilters(true)}
-                    >
-                        <Icon name="filter" size={18} />
-                    </button>
-                }
                 right={
                     <button
                         className={`page-header-right ${showSearch ? "header-btn-active" : ""}`}
@@ -215,6 +247,65 @@ function Transactions() {
 			{showSearch && (
 				<SearchBar value={searchQuery} onChange={setSearchQuery} />
 			)}
+
+			<div className="filter-pill-row">
+				{hasActiveFilters && (
+					<button
+						className="filter-pill-clear-all"
+						onClick={() => {
+							clearFilter("category")
+							clearFilter("type")
+							clearFilter("intent")
+							clearFilter("mood")
+							clearFilter("period")
+							setSearchQuery("")
+						}}
+					>
+						<Icon name="close" size={20} />
+					</button>
+				)}
+				
+				<FilterPill
+					pillRef={categoryPillRef}
+					label="Category"
+					value={formatCategoryLabel(filters.category, categories)}
+					onClick={() => setOpenFilterId("category")}
+					onClear={() => clearFilter("category")}
+				/>
+			
+				<FilterPill
+					pillRef={typePillRef}
+					label="Type"
+					value={formatTypeLabel(filters.type)}
+					onClick={() => setOpenFilterId("type")}
+					onClear={() => clearFilter("type")}
+				/>
+			
+				<FilterPill
+					pillRef={intentPillRef}
+					label="Intent"
+					value={formatIntentLabel(filters.intent)}
+					onClick={() => setOpenFilterId("intent")}
+					onClear={() => clearFilter("intent")}
+					disabled={isIncomeSelected}
+				/>
+			
+				<FilterPill
+					pillRef={moodPillRef}
+					label="Mood"
+					value={formatMoodLabel(filters.mood)}
+					onClick={() => setOpenFilterId("mood")}
+					onClear={() => clearFilter("mood")}
+				/>
+			
+				<FilterPill
+					pillRef={dateRangePillRef}
+					label="Date Range"
+					value={formatDateRangeLabel(filters.period)}
+					onClick={() => setOpenFilterId("dateRange")}
+					onClear={() => clearFilter("period")}
+				/>
+			</div>
 
 			{!hasActiveFilters && (
 				<MonthSelector
@@ -353,14 +444,6 @@ function Transactions() {
 						</Button>
 					</Section>
 				</>
-			)}
-
-			{showFilters && (
-				<FilterSheet
-					filters={filters}
-					updateFilter={updateFilter}
-					onClose={() => setShowFilters(false)}
-				/>
 			)}
 		</div>
 	)
