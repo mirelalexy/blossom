@@ -1,10 +1,11 @@
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect } from "react"
 
 import Section from "../ui/Section"
 import SettingsCard from "../../components/settings/SettingsCard"
 import SheetItem from "../ui/SheetItem"
 
 import useIsMobile from "../../hooks/useIsMobile"
+import useDraggableSheet from "../../hooks/useDraggableSheet"
 
 import "../../styles/components/MediaEditMenu.css"
 
@@ -14,76 +15,19 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
     const isMobile = useIsMobile()
     const menuRef = useRef(null)
 
-    // on mobile, drag to dismiss
-    const sheetRef = useRef(null)
-    const dragStartRef = useRef(null)
-    const dragEngagedRef = useRef(null)
-    const currentTranslateRef = useRef(0)
-
-    const [translateY, setTranslateY] = useState(0)
-    const [isDragging, setIsDragging] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
-
-    function triggerClose() {
-        setIsClosing(true)
-
-        const dismissDistance = sheetRef.current?.offsetHeight
-            ? sheetRef.current.offsetHeight + 40
-            : 400
-
-        setTranslateY(dismissDistance)
-        setTimeout(onClose, 250)
-    }
-
-    function handlePointerDown(e) {
-        dragStartRef.current = e.clientY
-        currentTranslateRef.current = 0
-        dragEngagedRef.current = false
-    }
-
-    function handlePointerMove(e) {
-        if (dragStartRef.current === null) return
-
-        // downward drag
-        const delta = e.clientY - dragStartRef.current
-
-        if (!dragEngagedRef.current) {
-            if (Math.abs(delta) < DRAG_THRESHOLD) return // could still be just a tap
-        
-            dragEngagedRef.current = true
-            setIsDragging(true)
-            e.currentTarget.setPointerCapture(e.pointerId)
-        }
-
-        // upward drag (rubber band effect)
-        const next = delta < 0 ? Math.max(delta / 3, -40) : delta
-
-        currentTranslateRef.current = next
-        setTranslateY(next)
-    }
-
-    function handlePointerUp() {
-        const wasDragging = dragEngagedRef.current
-
-        dragStartRef.current = null
-        dragEngagedRef.current = false
-        setIsDragging(false)
-
-        if (!wasDragging) return
-
-        if (currentTranslateRef.current > 100) {
-            triggerClose()
-        } else {
-            setTranslateY(0)
-        }
-    }
+    const {
+        sheetRef,
+        translateY,
+        isDragging,
+        isClosing,
+        triggerClose,
+        reset,
+        dragHandlers
+    } = useDraggableSheet({ onClose })
 
     // reset drag state whenever the menu opens fresh
     useEffect(() => {
-        if (isOpen) {
-            setTranslateY(0)
-            setIsClosing(false)
-        }
+        if (isOpen) reset()
     }, [isOpen])
 
     function handleUpload() {
@@ -146,9 +90,7 @@ function MediaEditMenu({ isOpen, onClose, onUpload, onRemove, hasImage, title, a
                 <div 
                     className={`media-menu-sheet ${isClosing ? "media-menu-sheet--closing" : ""}`}
                     ref={sheetRef}
-                    onPointerDown={handlePointerDown}
-                    onPointerMove={handlePointerMove}
-                    onPointerUp={handlePointerUp}
+                    {...dragHandlers}
                     style={{
                         transform: `translateY(${translateY}px)`,
                         transition: isDragging ? "none" : undefined
