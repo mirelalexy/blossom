@@ -20,6 +20,7 @@
     height: 32px;
     display: flex;
     align-items: center;
+    order: 2;
 }
 
 .filter-pill {
@@ -36,6 +37,7 @@
     font-family: var(--font-primary);
     cursor: pointer;
     flex-shrink: 0;
+    order: 1;
     transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
@@ -43,6 +45,7 @@
     background-color: var(--accent-dim);
     border-color: var(--border-strong);
     color: var(--accent);
+    order: 0;
 }
 
 .filter-pill--disabled {
