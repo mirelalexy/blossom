@@ -34,3 +34,8 @@ export function formatDateRangeLabel(period) {
     if (period.start) return `From ${short(period.start)}`
     return `Until ${short(period.end)}`
 }
+
+export function formatRuleTypeLabel(type) {
+    if (!type) return null
+    return type === "single_limit" ? "Single Transaction Limit" : "Weekly Transaction Limit"
+}
