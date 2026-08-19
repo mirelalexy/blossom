@@ -126,6 +126,10 @@ input[type="date"] {
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
+input[type="date"] {
+    min-height: 50px;
+}
+
 .password-wrapper {
     position: relative;
 }
