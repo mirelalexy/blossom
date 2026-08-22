@@ -17,7 +17,8 @@ function CurrencySettings() {
         { value: "USD", label: "USD" },
         { value: "GBP", label: "GBP" },
         { value: "CAD", label: "CAD" },
-        { value: "AUD", label: "AUD" }
+        { value: "AUD", label: "AUD" },
+        { value: "JPY", label: "JPY" }
     ]
 
     return (
