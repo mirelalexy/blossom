@@ -86,7 +86,7 @@ Need a more direct budgeting partner? Meet Evil Blossom: still Blossom, but dark
 ### Settings
 - Account: display name, email, password (change it anytime, or reset it via email if you get logged out)
 - Data & Privacy: export full transaction history as CSV, reset app (wipes all data, keeps account and settings), share your bio with Blossom
-- Theme, Notifications (conditional frequency control), Monthly Budget, Categories (with custom icons), Currency, Custom Spending Rules
+- Theme, Notifications (conditional frequency control), Monthly Budget, Categories (with custom icons), Currency (currently supporting EUR, RON, USD, GBP, CAD, AUD, JPY), Custom Spending Rules
 - Explore App Tips and FAQ
 
 ---
