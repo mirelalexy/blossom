@@ -16,7 +16,8 @@ function CurrencySettings() {
         { value: "RON", label: "RON" },
         { value: "USD", label: "USD" },
         { value: "GBP", label: "GBP" },
-        { value: "CAD", label: "CAD" }
+        { value: "CAD", label: "CAD" },
+        { value: "AUD", label: "AUD" }
     ]
 
     return (
