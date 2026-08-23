@@ -24,7 +24,8 @@ CREATE TABLE users (
 	verify_token_expires_at TIMESTAMPTZ,
 	pending_email VARCHAR(255),
 	email_change_token_hash TEXT,
-	email_change_token_expires_at TIMESTAMPTZ
+	email_change_token_expires_at TIMESTAMPTZ,
+	last_insight_check_at TIMESTAMPTZ
 );
 
 -- ================= CATEGORIES =================
@@ -196,6 +197,15 @@ CREATE TABLE rewards (
 	amount NUMERIC,
 	transaction_id UUID,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- ================= PROACTIVE INSIGHTS =================
+CREATE TABLE proactive_insights (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    seen_at TIMESTAMPTZ
 );
 
 CREATE INDEX idx_rewards_user_id ON rewards(user_id);
