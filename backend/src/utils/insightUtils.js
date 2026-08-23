@@ -1,0 +1,84 @@
+import pool from "../db.js"
+import { getDataSlice } from "../utils/chatUtils.js"
+import { buildProactivePrompt, NO_INSIGHT_FOUND } from "../config/prompts.js"
+
+const CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
+const MODEL = "claude-sonnet-5"
+const MIN_DAYS_BETWEEN_INSIGHTS = 3
+
+export async function generateProactiveInsight(userId, isEvil) {
+    try {
+        const dataSlice = await getDataSlice(userId, "recent patterns this month")
+        const prompt = buildProactivePrompt(dataSlice, isEvil)
+
+        const response = await fetch(CLAUDE_API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": process.env.CLAUDE_API_KEY,
+                "anthropic-version": "2023-06-01"
+            },
+            body: JSON.stringify({
+                model: MODEL,
+                max_tokens: 200,
+                thinking: { type: "disabled" },
+                system: prompt,
+                messages: [
+                    { role: "user", content: "Is there anything worth noticing right now?" }
+                ]
+            })
+        })
+
+        if (!response.ok) {
+            const errText = await response.text()
+            console.error("Claude API error (proactive insight generation): ", response.status, errText)
+            return null
+        }
+
+        const data = await response.json()
+
+        // data content contains type and text fields
+        const textBlock = data.content?.find((block) => block.type === "text")
+
+        if (!textBlock) return null
+        
+        const text = textBlock.text
+
+        return (!text || text === NO_INSIGHT_FOUND) ? null : text
+    } catch (err) {
+        console.error("Proactive insight generation error: ", err)
+        return null
+    }
+}
+
+export async function triggerProactiveInsight(userId, isEvil = false) {
+    try {
+        const userRes = await pool.query(
+            `SELECT last_insight_check_at FROM users WHERE id = $1`,
+            [userId]
+        )
+
+        const lastCheck = userRes.rows[0]?.last_insight_check_at
+
+        if (lastCheck) {
+            const daysSince = (Date.now() - new Date(lastCheck).getTime()) / (1000 * 60 * 60 * 24)
+            if (daysSince < MIN_DAYS_BETWEEN_INSIGHTS) return
+        }
+
+        await pool.query(
+            `UPDATE users SET last_insight_check_at = NOW() WHERE id = $1`,
+            [userId] 
+        )
+
+        const insight = await generateProactiveInsight(userId, isEvil)
+
+        if (!insight) return
+
+        await pool.query(
+            `INSERT INTO proactive_insights (user_id, message) VALUES ($1, $2)`,
+            [userId, insight]
+        )
+    } catch (err) {
+        console.error("Trigger proactive insight failed: ", err)
+    }
+}

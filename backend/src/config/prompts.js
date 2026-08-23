@@ -321,6 +321,8 @@ export function buildSystemPrompt(dataSlice, isEvil) {
     return `${getVoicePrefix(isEvil)}\n${formatDataSlice(dataSlice)}`
 }
 
+export const NO_INSIGHT_FOUND = "NOTHING_NOTABLE"
+
 const PROACTIVE_TASK = `
 You are looking at this person's recent data on your own initiative right now. They have not 
 asked you anything. Your only job in this moment is to decide: is there something genuinely 
@@ -340,7 +342,7 @@ If there is something genuinely worth surfacing, respond with ONE short observat
 since this will appear as a new message in an existing conversation, not the start of one.
 
 If there is nothing genuinely notable right now, respond with exactly this and nothing else: 
-NOTHING_NOTABLE
+${NO_INSIGHT_FOUND}
 `
 
 export function buildProactivePrompt(dataSlice, isEvil) {

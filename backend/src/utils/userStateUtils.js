@@ -4,6 +4,7 @@ import { getCurrentMonthKey, getCurrentWeekKey, parseLocalDate } from "../utils/
 import { createSystemNotification } from "../services/notificationService.js"
 import { evaluateChallenges } from "./challengeUtils.js"
 import { calculateStreak } from "./streakUtils.js"
+import { triggerProactiveInsight } from "./insightUtils.js"
 
 export async function recalculateUserState(userId) {
     // get all user transactions
@@ -122,4 +123,9 @@ export async function recalculateUserState(userId) {
             eventKey: `budget_exceeded_${monthKey}`
         })
     }
+
+    // fire-and-forget: check the cooldown internally and never affect the triggering action
+    triggerProactiveInsight(userId).catch(err => 
+        console.error("Trigger proactive insight fire-and-forget error: ", err)
+    )
 }
