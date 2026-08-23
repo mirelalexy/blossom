@@ -316,3 +316,30 @@ export function buildSystemPrompt(dataSlice, isEvil) {
     const voice = isEvil ? EVIL_VOICE : REGULAR_VOICE
     return `${SHARED_RULES}\n${voice}\n${formatDataSlice(dataSlice)}`
 }
+
+const PROACTIVE_TASK = `
+You are looking at this person's recent data on your own initiative right now. They have not 
+asked you anything. Your only job in this moment is to decide: is there something genuinely 
+worth bringing to their attention unprompted, or not?
+
+Only speak up if there's a real, specific pattern, not something generic that could describe 
+almost anyone. Good reasons to speak up: a clear mood-spending connection emerging across 
+multiple weeks, a meaningful shift in a habit, a streak or goal milestone worth acknowledging, 
+something the data shows that they likely haven't consciously noticed themselves.
+
+Bad reasons to speak up: ordinary month-to-month variation, a single unusual purchase, anything 
+you would need to stretch or reach for to make sound significant. When in doubt, say nothing.
+A missed opportunity to comment costs nothing, but a forced or generic observation costs trust.
+
+If there is something genuinely worth surfacing, respond with ONE short observation 
+(1-2 sentences) or reflective question, in your usual voice. Do not open with a greeting, 
+since this will appear as a new message in an existing conversation, not the start of one.
+
+If there is nothing genuinely notable right now, respond with exactly this and nothing else: 
+NOTHING_NOTABLE
+`
+
+export function buildProactivePrompt(dataSlice, isEvil) {
+    const voice = isEvil ? EVIL_VOICE : REGULAR_VOICE
+    return `${SHARED_RULES}\n${voice}\n${formatDataSlice(dataSlice)}\n${PROACTIVE_TASK}`
+}
