@@ -312,9 +312,13 @@ function formatDataSlice(dataSlice) {
     `
 }
 
-export function buildSystemPrompt(dataSlice, isEvil) {
+export function getVoicePrefix(isEvil) {
     const voice = isEvil ? EVIL_VOICE : REGULAR_VOICE
-    return `${SHARED_RULES}\n${voice}\n${formatDataSlice(dataSlice)}`
+    return `${SHARED_RULES}\n${voice}`
+}
+
+export function buildSystemPrompt(dataSlice, isEvil) {
+    return `${getVoicePrefix(isEvil)}\n${formatDataSlice(dataSlice)}`
 }
 
 const PROACTIVE_TASK = `
@@ -340,6 +344,5 @@ NOTHING_NOTABLE
 `
 
 export function buildProactivePrompt(dataSlice, isEvil) {
-    const voice = isEvil ? EVIL_VOICE : REGULAR_VOICE
-    return `${SHARED_RULES}\n${voice}\n${formatDataSlice(dataSlice)}\n${PROACTIVE_TASK}`
+    return `${getVoicePrefix(isEvil)}\n${formatDataSlice(dataSlice)}\n${PROACTIVE_TASK}`
 }
