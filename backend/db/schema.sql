@@ -25,7 +25,8 @@ CREATE TABLE users (
 	pending_email VARCHAR(255),
 	email_change_token_hash TEXT,
 	email_change_token_expires_at TIMESTAMPTZ,
-	last_insight_check_at TIMESTAMPTZ
+	last_insight_check_at TIMESTAMPTZ,
+	new_transactions_since_last_insight_check INTEGER NOT NULL DEFAULT 0
 );
 
 -- ================= CATEGORIES =================

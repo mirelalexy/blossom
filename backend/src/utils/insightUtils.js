@@ -5,6 +5,7 @@ import { buildProactivePrompt, NO_INSIGHT_FOUND } from "../config/prompts.js"
 const CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-sonnet-5"
 const MIN_DAYS_BETWEEN_INSIGHTS = 3
+const BURST_THRESHOLD = 8
 
 export async function generateProactiveInsight(userId, isEvil) {
     try {
@@ -54,20 +55,30 @@ export async function generateProactiveInsight(userId, isEvil) {
 export async function triggerProactiveInsight(userId, isEvil = false) {
     try {
         const userRes = await pool.query(
-            `SELECT last_insight_check_at FROM users WHERE id = $1`,
+            `UPDATE users
+            SET new_transactions_since_last_insight_check = new_transactions_since_last_insight_check + 1
+            WHERE id = $1
+            RETURNING last_insight_check_at, new_transactions_since_last_insight_check`,
             [userId]
         )
 
         const lastCheck = userRes.rows[0]?.last_insight_check_at
+        const sinceCount = userRes.rows[0]?.new_transactions_since_last_insight_check
 
-        if (lastCheck) {
-            const daysSince = (Date.now() - new Date(lastCheck).getTime()) / (1000 * 60 * 60 * 24)
-            if (daysSince < MIN_DAYS_BETWEEN_INSIGHTS) return
-        }
+        const daysSince = lastCheck
+            ? (Date.now() - new Date(lastCheck).getTime()) / (1000 * 60 * 60 * 24)
+            : Infinity
+
+        const meetsTimeFloor = daysSince >= MIN_DAYS_BETWEEN_INSIGHTS
+        const meetsBurstThreshold = sinceCount >= BURST_THRESHOLD
+
+        if (!meetsTimeFloor && !meetsBurstThreshold) return
 
         await pool.query(
-            `UPDATE users SET last_insight_check_at = NOW() WHERE id = $1`,
-            [userId] 
+            `UPDATE users 
+            SET last_insight_check_at = NOW(), new_transactions_since_last_insight_check = 0
+            WHERE id = $1`,
+            [userId]
         )
 
         const insight = await generateProactiveInsight(userId, isEvil)
