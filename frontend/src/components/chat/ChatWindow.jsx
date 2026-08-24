@@ -40,7 +40,10 @@ function shouldShowDivider(current, previous) {
 }
  
 function formatDividerTime(date) {
-    return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+    const time = date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+    const dayLabel = formatDate(date)
+
+    return dayLabel === "Today" ? time : `${dayLabel}, ${time}`
 }
 
 function createOpeningMessage(isEvil) {
