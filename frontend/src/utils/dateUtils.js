@@ -2,8 +2,12 @@ export function formatDate(dateString) {
     const date = new Date(dateString)
     const today = new Date()
 
+    // compare calendar days, not raw hours
+    const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+    
     const diffDays = Math.floor(
-        (today - date) / (1000 * 60 * 60 * 24)
+        (startOfToday - startOfDate) / (1000 * 60 * 60 * 24)
     )
 
     if (diffDays === 0) return "Today"
