@@ -62,8 +62,10 @@ export async function triggerProactiveInsight(userId, isEvil = false) {
             [userId]
         )
 
-        const lastCheck = userRes.rows[0]?.last_insight_check_at
-        const sinceCount = userRes.rows[0]?.new_transactions_since_last_insight_check
+        const user = userRes.rows[0]
+
+        const lastCheck = user?.last_insight_check_at
+        const sinceCount = user?.new_transactions_since_last_insight_check
 
         const daysSince = lastCheck
             ? (Date.now() - new Date(lastCheck).getTime()) / (1000 * 60 * 60 * 24)
