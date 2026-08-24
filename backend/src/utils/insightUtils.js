@@ -5,7 +5,7 @@ import { buildProactivePrompt, NO_INSIGHT_FOUND } from "../config/prompts.js"
 const CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-sonnet-5"
 const MIN_DAYS_BETWEEN_INSIGHTS = 3
-const BURST_THRESHOLD = 8
+const BURST_THRESHOLD = 6
 
 export async function generateProactiveInsight(userId, isEvil) {
     try {
