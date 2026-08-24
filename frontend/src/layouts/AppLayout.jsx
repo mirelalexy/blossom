@@ -11,6 +11,7 @@ import { getReminderKey, getStartOfDay, parseLocalDate } from "../utils/dateUtil
 import BlossomLoader from "../components/ui/BlossomLoader"
 import Sidebar from "../components/navigation/Sidebar"
 import Bottombar from "../components/navigation/Bottombar"
+import FloatingChatButton from "../components/chat/FloatingChatButton"
 
 import "./AppLayout.css"
 
@@ -85,6 +86,7 @@ function AppLayoutInner() {
                 <Outlet />
             </main>
             <Bottombar />
+            <FloatingChatButton />
         </div>
     )
 }

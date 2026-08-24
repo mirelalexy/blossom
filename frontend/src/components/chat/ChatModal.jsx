@@ -4,7 +4,7 @@ import ChatWindow from "./ChatWindow"
 
 import "../../styles/components/ChatModal.css"
 
-function ChatModal({ onClose }) {
+function ChatModal({ onClose, initialInsight }) {
     useEffect(() => {
         const prev = document.body.style.overflow
         document.body.style.overflow = "hidden"
@@ -25,7 +25,7 @@ function ChatModal({ onClose }) {
         <>
             <div className="chat-modal-overlay" onClick={onClose} />
             <div className="chat-modal-panel" role="dialog" aria-modal="true">
-                <ChatWindow variant="modal" onClose={onClose} />
+                <ChatWindow variant="modal" onClose={onClose} initialInsight={initialInsight} />
             </div>
         </>
     )

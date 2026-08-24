@@ -5,7 +5,7 @@ import Card from "../ui/Card"
 import ChatModal from "../chat/ChatModal"
 import Icon from "../ui/Icon"
 
-import useIsMobile from "../../hooks/useIsMobile"
+import useOpenChat from "../../hooks/useOpenChat"
 import { isEvilMode } from "../../utils/evilBlossom"
 
 import "../../styles/components/ChatCard.css"
@@ -37,14 +37,11 @@ const EVIL_PROMPTS = [
 const ROTATE_INTERVAL = 5000
 
 function ChatCard() {
-    const navigate = useNavigate()
-    const isMobile = useIsMobile()
-
     const isEvil = isEvilMode()
     const prompts = isEvil ? EVIL_PROMPTS : REGULAR_PROMPTS
 
     const [index, setIndex] = useState(0)
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const { openChat, isModalOpen, closeModal } = useOpenChat()
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -54,21 +51,13 @@ function ChatCard() {
         return () => clearInterval(timer)
     }, [prompts.length])
 
-    function handleClick() {
-        if (isMobile) {
-            navigate("/chat")
-        } else {
-            setIsModalOpen(true)
-        }
-    }
-
     return (
         <>
             <Card
                 title="Ask Me"
                 icon={<Icon name="chat" size={20} />}
                 className="home-chat-card"
-                onClick={handleClick}
+                onClick={() => openChat()}
             >
                 <div className="home-chat-card-inner">
                     <div className="home-chat-flower">🌸</div>
@@ -80,7 +69,7 @@ function ChatCard() {
             </Card>
 
             {isModalOpen && (
-                <ChatModal onClose={() => setIsModalOpen(false)} />
+                <ChatModal onClose={closeModal} />
             )}
         </>
     )

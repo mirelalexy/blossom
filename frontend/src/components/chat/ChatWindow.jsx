@@ -52,7 +52,7 @@ function createOpeningMessage(isEvil) {
     }
 }
 
-function ChatWindow({ variant = "page", onClose }) {
+function ChatWindow({ variant = "page", onClose, initialInsight }) {
     const isEvil = isEvilMode()
 
     const { user } = useUser()
@@ -68,6 +68,7 @@ function ChatWindow({ variant = "page", onClose }) {
     const [input, setInput] = useState("")
     const [isThinking, setIsThinking] = useState(false)
     const [hasLoadedChat, setHasLoadedChat] = useState(false)
+    const hasInjectedInsight = useRef(false)
 
     // auto scroll on new message
     const listRef = useRef(null)
@@ -98,6 +99,23 @@ function ChatWindow({ variant = "page", onClose }) {
 
         setHasLoadedChat(true)
     }, [storageKey])
+
+    // append insight to history
+    useEffect(() => {
+        if (!hasLoadedChat || !initialInsight || hasInjectedInsight.current) return
+
+        hasInjectedInsight.current = true
+        
+        setMessages((prev) => [
+            ...prev,
+            {
+                id: generateId(),
+                role: "blossom",
+                text: initialInsight,
+                time: new Date()
+            }
+        ])
+    }, [hasLoadedChat, initialInsight])
 
     // save chat whenever new changes are detected
     useEffect(() => {
