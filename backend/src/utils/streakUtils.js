@@ -7,8 +7,8 @@ export function calculateStreak(transactions, checkIns) {
 
     // a day counts if user logged a transaction or checked in
     const allDates = [
-        ...transactions.filter(t => t.date).map(t => t.date),
-        ...checkIns.filter(c => c.date).map(c => c.date)
+        ...transactions.filter(t => t.created_at).map(t => t.created_at),
+        ...checkIns.filter(c => c.created_at).map(c => c.created_at)
     ]
 
     const uniqueDays = [
