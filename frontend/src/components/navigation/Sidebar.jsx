@@ -5,6 +5,7 @@ import { useProfile } from "../../store/ProfileStore"
 import { useNotifications } from "../../store/NotificationStore"
 
 import Icon from "../ui/Icon"
+import Logo from "../navigation/Logo"
 
 import "./Sidebar.css"
 
@@ -33,10 +34,7 @@ function Sidebar() {
 
     return (
         <aside className="sidebar">
-            <div className="sidebar-logo" onClick={() => navigate("/")}>
-                <Icon name="categories" size={22} />
-                <span>Blossom</span>
-            </div>
+            <Logo className="sidebar-logo" />
 
             <nav className="sidebar-nav">
                 {navItems.map(({ to, icon, label, end }) => (

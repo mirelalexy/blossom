@@ -19,21 +19,10 @@
     }
 
     .sidebar-logo {
-        display: flex;
-        align-items: center;
-        padding: 22px 20px 18px;
+        margin: 13px;
+        width: 90px;
         cursor: pointer;
-        border-bottom: 1px solid var(--border);
-        flex-shrink: 0;
         color: var(--text-primary);
-    }
-
-    .blossom-logo-text {
-        font-size: 20px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: var(--text-primary);
-        font-family: var(--font-primary);
     }
 
     .sidebar-nav {
