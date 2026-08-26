@@ -2,7 +2,7 @@ import pool from "../db.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { getLevelFromXP } from "../utils/levelUtils.js"
 import { recalculateUserState } from "../utils/userStateUtils.js"
-import { toDateStringLocal } from "../utils/dateUtils.js"
+import { getTodayKeyInTimezone, getUserTimezone } from "../utils/dateUtils.js"
 
 import { XP } from "../utils/xpConfig.js"
 
@@ -10,7 +10,8 @@ export async function createCheckIn(req, res) {
     const { mood, notes } = req.body
     const userId = req.user.userId
 
-    const today = toDateStringLocal(new Date())
+    const timezone = await getUserTimezone(userId)
+    const today = getTodayKeyInTimezone(timezone)
 
     try {
         // check if a check-in already exists
@@ -74,7 +75,9 @@ export async function createCheckIn(req, res) {
 
 export async function getTodayCheckIn(req, res) {
     const userId = req.user.userId
-    const today = toDateStringLocal(new Date())
+    
+    const timezone = await getUserTimezone(userId)
+    const today = getTodayKeyInTimezone(timezone)
 
     try {
         const result = await pool.query(
@@ -93,7 +96,9 @@ export async function getTodayCheckIn(req, res) {
 export async function updateCheckInNotes(req, res) {
     const userId = req.user.userId
     const { notes } = req.body
-    const today = toDateStringLocal(new Date())
+    
+    const timezone = await getUserTimezone(userId)
+    const today = getTodayKeyInTimezone(timezone)
 
     try {
         const result = await pool.query(

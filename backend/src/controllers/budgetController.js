@@ -1,10 +1,12 @@
 import pool from "../db.js"
-import { parseLocalDate } from "../utils/dateUtils.js"
+import { getDayKeyInTimezone, getTodayKeyInTimezone, getUserTimezone, parseDayKeyToUTCDate, parseLocalDate } from "../utils/dateUtils.js"
 
 export async function getBudget(req, res) {
     const userId = req.user.userId
 
     try {
+        const timezone = await getUserTimezone(userId)
+
         const budgetRes = await pool.query(
             `SELECT * FROM budgets WHERE user_id = $1`,
             [userId]
@@ -16,24 +18,23 @@ export async function getBudget(req, res) {
 
         const budget = budgetRes.rows[0]
 
-        const now = new Date()
-        const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+        const today = parseDayKeyToUTCDate(getTodayKeyInTimezone(timezone))
+        const currentMonth = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1))
 
         const last = budget.last_rollover_month
 
         const isSameMonth =
             last &&
-            last.getFullYear() === currentMonth.getFullYear() &&
-            last.getMonth() === currentMonth.getMonth()
+            last.getFullYear() === currentMonth.getUTCFullYear() &&
+            last.getMonth() === currentMonth.getUTCMonth()
 
         // run rollover only once per month
         if (!isSameMonth) {
             // get last month
-            const now = new Date()
-            const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+            const lastMonthDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1))
 
-            const month = lastMonthDate.getMonth()
-            const year = lastMonthDate.getFullYear()
+            const month = lastMonthDate.getUTCMonth()
+            const year = lastMonthDate.getUTCFullYear()
 
             // get user transactions
             const transactionsRes = await pool.query(
@@ -69,14 +70,14 @@ export async function getBudget(req, res) {
             }
 
             // monthly deposit to primary goal
-            await processAutoGoalDeposits(userId, currentMonth)
+            await processAutoGoalDeposits(userId, getDayKeyInTimezone(currentMonth, "UTC"), timezone)
 
             // mark as applied for next month rollover
             await pool.query(
                 `UPDATE budgets
                 SET last_rollover_month = $1
                 WHERE user_id = $2`,
-                [currentMonth, userId]
+                [getDayKeyInTimezone(currentMonth, "UTC"), userId]
             )
         }
 
@@ -132,7 +133,7 @@ export async function upsertBudget(req, res) {
     }
 }
 
-async function processAutoGoalDeposits(userId, currentMonth) {
+async function processAutoGoalDeposits(userId, currentMonth, tz) {
     const goalsRes = await pool.query(
         `SELECT * FROM goals
         WHERE user_id = $1
@@ -143,7 +144,7 @@ async function processAutoGoalDeposits(userId, currentMonth) {
         [userId, currentMonth]
     )
 
-    const now = new Date()
+    const now = parseDayKeyToUTCDate(getTodayKeyInTimezone(tz))
 
     for (const goal of goalsRes.rows) {
         const deadline = new Date(goal.deadline)
@@ -182,7 +183,7 @@ async function processAutoGoalDeposits(userId, currentMonth) {
 
         const categoryId = categoryRes.rows[0].id
         
-        const today = now.toISOString().slice(0, 10)
+        const today = getDayKeyInTimezone(now, "UTC")
 
         // create a transaction for deposit
         await pool.query(

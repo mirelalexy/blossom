@@ -3,6 +3,7 @@ import { createSystemNotification } from "../services/notificationService.js"
 import { getLevelFromXP } from "../utils/levelUtils.js"
 import { recalculateUserState } from "../utils/userStateUtils.js"
 import { processRecurringTransactions } from "../utils/transactionUtils.js"
+import { getUserTimezone } from "../utils/dateUtils.js"
 
 import { XP } from "../utils/xpConfig.js"
 
@@ -117,7 +118,8 @@ export async function getTransactions(req, res) {
     const userId = req.user.userId
 
     try {
-        await processRecurringTransactions(userId)
+        const timezone = await getUserTimezone(userId)
+        await processRecurringTransactions(userId, timezone)
         
         const result = await pool.query(
             `SELECT
@@ -263,7 +265,8 @@ export async function editTransaction(req, res) {
             return res.status(404).json({ error: "Transaction not found" })
         }
 
-        await processRecurringTransactions(userId)
+        const timezone = await getUserTimezone(userId)
+        await processRecurringTransactions(userId, timezone)
         await recalculateUserState(userId)
 
         res.json(result.rows[0])

@@ -6,6 +6,7 @@ import pool from "../db.js"
 
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
 import { sendEmailChangedEmail, sendResetPasswordEmail, sendVerificationEmail } from "../utils/emailUtils.js"
+import { isValidTimezone } from "../utils/dateUtils.js"
 
 import { defaultCategories } from "../config/defaultCategories.js"
 import { defaultChallenges } from "../config/defaultChallenges.js"
@@ -14,11 +15,13 @@ import { defaultChallenges } from "../config/defaultChallenges.js"
 const VERIFY_TOKEN_EXPIRY = 24 * 60 * 60 * 1000
 
 export async function register(req, res) {
-    const { email, password, displayName } = req.body
+    const { email, password, displayName, timezone } = req.body
 
     if (!email || !password || !displayName) {
         return res.status(400).json({ error: "All fields are required." })
     }
+
+    const validTimezone = isValidTimezone(timezone) ? timezone : "UTC"
 
     // validate password strength
     const strengthError = validatePasswordStrength(password)
@@ -30,10 +33,10 @@ export async function register(req, res) {
         const hashedPassword = await bcrypt.hash(password, 10)
 
         const result = await pool.query(
-            `INSERT INTO users (email, password_hash, display_name)
-             VALUES ($1, $2, $3)
+            `INSERT INTO users (email, password_hash, display_name, timezone)
+             VALUES ($1, $2, $3, $4)
              RETURNING id, email`,
-            [email, hashedPassword, displayName]
+            [email, hashedPassword, displayName, validTimezone]
         )
 
         const userId = result.rows[0].id

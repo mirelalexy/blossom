@@ -1,4 +1,5 @@
 import { getDataSlice } from "../utils/chatUtils.js"
+import { getUserTimezone } from "../utils/dateUtils.js"
 import { buildSystemPrompt } from "../config/prompts.js"
 
 const CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
@@ -14,7 +15,9 @@ export async function askBlossom(req, res) {
     }
 
     try {
-        const dataSlice = await getDataSlice(userId, question)
+        const timezone = await getUserTimezone(userId)
+
+        const dataSlice = await getDataSlice(userId, question, timezone)
         const systemPrompt = buildSystemPrompt(dataSlice, isEvil)
 
         const history = Array.isArray(conversationHistory)

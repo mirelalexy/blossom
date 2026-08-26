@@ -1,4 +1,15 @@
+import pool from "../db.js"
+
 const VALID_TIMEZONES = new Set(Intl.supportedValuesOf("timeZone"))
+
+export async function getUserTimezone(userId) {
+    const res = await pool.query(
+        `SELECT timezone FROM users WHERE id = $1`, 
+        [userId]
+    )
+
+    return res.rows[0]?.timezone || "UTC"
+}
 
 export function isValidTimezone(tz) {
     return typeof tz === "string" && VALID_TIMEZONES.has(tz)
