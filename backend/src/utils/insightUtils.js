@@ -7,9 +7,9 @@ const MODEL = "claude-sonnet-5"
 const MIN_DAYS_BETWEEN_INSIGHTS = 3
 const BURST_THRESHOLD = 6
 
-export async function generateProactiveInsight(userId, isEvil) {
+export async function generateProactiveInsight(userId, isEvil, tz = "UTC") {
     try {
-        const dataSlice = await getDataSlice(userId, "recent patterns this month")
+        const dataSlice = await getDataSlice(userId, "recent patterns this month", tz)
         const prompt = buildProactivePrompt(dataSlice, isEvil)
 
         const response = await fetch(CLAUDE_API_URL, {
@@ -58,12 +58,13 @@ export async function triggerProactiveInsight(userId, isEvil = false) {
             `UPDATE users
             SET new_transactions_since_last_insight_check = new_transactions_since_last_insight_check + 1
             WHERE id = $1
-            RETURNING last_insight_check_at, new_transactions_since_last_insight_check`,
+            RETURNING last_insight_check_at, new_transactions_since_last_insight_check, timezone`,
             [userId]
         )
 
         const user = userRes.rows[0]
 
+        const tz = user?.timezone || "UTC"
         const lastCheck = user?.last_insight_check_at
         const sinceCount = user?.new_transactions_since_last_insight_check
 
@@ -83,7 +84,7 @@ export async function triggerProactiveInsight(userId, isEvil = false) {
             [userId]
         )
 
-        const insight = await generateProactiveInsight(userId, isEvil)
+        const insight = await generateProactiveInsight(userId, isEvil, tz)
 
         if (!insight) return
 

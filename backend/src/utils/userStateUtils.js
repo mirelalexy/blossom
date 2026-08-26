@@ -1,12 +1,20 @@
 import pool from "../db.js"
 
-import { getCurrentMonthKey, getCurrentWeekKey, parseLocalDate } from "../utils/dateUtils.js"
+import { getCurrentMonthKey, getCurrentWeekKey, getTodayKeyInTimezone, parseLocalDate } from "../utils/dateUtils.js"
 import { createSystemNotification } from "../services/notificationService.js"
 import { evaluateChallenges } from "./challengeUtils.js"
 import { calculateStreak } from "./streakUtils.js"
 import { triggerProactiveInsight } from "./insightUtils.js"
 
 export async function recalculateUserState(userId) {
+    // get user timezone
+    const userRes = await pool.query(
+        `SELECT timezone FROM users WHERE id = $1`,
+        [userId]
+    )
+
+    const timezone = userRes.rows[0]?.timezone || "UTC"
+
     // get all user transactions
     const transactionsRes = await pool.query(
         `SELECT * FROM transactions WHERE user_id = $1`,
@@ -39,7 +47,7 @@ export async function recalculateUserState(userId) {
 
     const budget = budgetRes.rows[0]
 
-    const streak = calculateStreak(transactions, checkIns)
+    const streak = calculateStreak(transactions, checkIns, timezone)
 
     // get goals category to update Growing challenge 
     const goalCategoryRes = await pool.query(
@@ -55,7 +63,8 @@ export async function recalculateUserState(userId) {
         streak,
         budget,
         challenges,
-        goalCategoryId
+        goalCategoryId,
+        timezone
     })
 
     // create challenge notifications
@@ -70,8 +79,8 @@ export async function recalculateUserState(userId) {
         if (!c.completed) continue
 
         const periodKey = c.period === "weekly"
-            ? getCurrentWeekKey()
-            : getCurrentMonthKey()
+            ? getCurrentWeekKey(timezone)
+            : getCurrentMonthKey(timezone)
 
         await createSystemNotification({
             userId,
@@ -83,14 +92,15 @@ export async function recalculateUserState(userId) {
     }
 
     // get expenses for current month
-    const now = new Date()
+    const [todayYear, todayMonthOneIndexed] = getTodayKeyInTimezone(timezone).split("-").map(Number)
+    const todayMonth = todayMonthOneIndexed - 1
 
     const expenses = transactions
         .filter(t => {
             if (t.type !== "expense" || !t.date) return false
 
             const d = parseLocalDate(t.date)
-            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()
+            return d.getFullYear() === todayYear && d.getMonth() === todayMonth
         })
         .reduce((sum, t) => sum + Number(t.amount), 0)
         
@@ -113,7 +123,7 @@ export async function recalculateUserState(userId) {
 
     // create exceeded budget notifications    
     if (budget?.monthly_limit && percentUsedBudget > 100) {
-        const monthKey = getCurrentMonthKey()
+        const monthKey = getCurrentMonthKey(timezone)
 
         await createSystemNotification({
             userId,

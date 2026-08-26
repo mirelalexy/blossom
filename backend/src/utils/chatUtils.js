@@ -1,4 +1,5 @@
 import pool from "../db.js"
+import { getTodayKeyInTimezone, parseLocalDate, toDateStringLocal } from "./dateUtils.js"
 
 const DEFAULT_RANGE = 60
 const MAX_TRANSACTIONS = 100
@@ -8,9 +9,9 @@ const MONTHS = [
     "july", "august", "september", "october", "november", "december"
 ]
 
-function extractDateRange(question) {
+function extractDateRange(question, tz = "UTC") {
     const lower = question.toLowerCase()
-    const now = new Date()
+    const now = parseLocalDate(getTodayKeyInTimezone(tz))
 
     // look for keywords to determine range
     if (lower.includes("last month")) {
@@ -231,8 +232,10 @@ async function getUserBio(userId) {
     return row.bio
 }
 
-export async function getDataSlice(userId, question) {
-    const { start, end } = extractDateRange(question)
+export async function getDataSlice(userId, question, tz = "UTC") {
+    const { start, end } = extractDateRange(question, tz)
+    const startStr = toDateStringLocal(start)
+    const endStr = toDateStringLocal(end)
 
     // get transactions in range and category name to use directly and goals
     const [result, checkInsRes, goals, bio] = await Promise.all([
@@ -247,14 +250,14 @@ export async function getDataSlice(userId, question) {
             WHERE t.user_id = $1 AND t.date >= $2 AND t.date <= $3
             ORDER BY t.date DESC
             LIMIT $4`,
-            [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10), MAX_TRANSACTIONS]
+            [userId, startStr, endStr, MAX_TRANSACTIONS]
         ),
         pool.query(
             `SELECT date::text AS date, mood, notes
             FROM check_ins
             WHERE user_id = $1 AND date >= $2 AND date <= $3
             ORDER BY date DESC`,
-            [userId, start.toISOString().slice(0, 10), end.toISOString().slice(0, 10)]
+            [userId, startStr, endStr]
         ),
         getActiveGoals(userId),
         getUserBio(userId)
@@ -266,9 +269,10 @@ export async function getDataSlice(userId, question) {
 
     return {
         currency,
+        tz,
         dateRange: {
-            start: start.toISOString().slice(0, 10),
-            end: end.toISOString().slice(0, 10)
+            start: startStr,
+            end: endStr
         },
         transactionCount: transactions.length,
         transactions,

@@ -1,10 +1,41 @@
+const VALID_TIMEZONES = new Set(Intl.supportedValuesOf("timeZone"))
+
+export function isValidTimezone(tz) {
+    return typeof tz === "string" && VALID_TIMEZONES.has(tz)
+}
+
+export function getDayKeyInTimezone(date, tz = "UTC") {
+    const d = date instanceof Date ? date : new Date(date)
+
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: tz,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(d)
+}
+
+export function getTodayKeyInTimezone(tz = "UTC") {
+    return getDayKeyInTimezone(new Date(), tz)
+}
+
+export function parseDayKeyToUTCDate(dayKey) {
+    const [year, month, day] = dayKey.split("-").map(Number)
+    return new Date(Date.UTC(year, month - 1, day))
+}
+
+export function getDayKeyDiff(dayKey1, dayKey2) {
+    const diff = parseDayKeyToUTCDate(dayKey1) - parseDayKeyToUTCDate(dayKey2)
+    return Math.round(diff / (1000 * 60 * 60 * 24))
+}
+
 export function getMonthKey(inputDate = new Date()) {
-    return `${inputDate.getFullYear()} - ${inputDate.getMonth()}`
+    return `${inputDate.getUTCFullYear()} - ${inputDate.getUTCMonth()}`
 }
 
 export function getWeekKey(inputDate = new Date()) {
     // make a copy of date
-    const date = new Date(Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate()))
+    const date = new Date(Date.UTC(inputDate.getUTCFullYear(), inputDate.getUTCMonth(), inputDate.getUTCDate()))
 
     // adjust since ISO weeks start on monday
     const dayNum = date.getUTCDay() || 7
@@ -24,12 +55,12 @@ export function getWeekKey(inputDate = new Date()) {
     return `${year}-week-${weekNo}`
 }
 
-export function getCurrentMonthKey() {
-    return getMonthKey(new Date())
+export function getCurrentMonthKey(tz = "UTC") {
+    return getMonthKey(parseDayKeyToUTCDate(getTodayKeyInTimezone(tz)))
 }
 
-export function getCurrentWeekKey() {
-    return getWeekKey(new Date())
+export function getCurrentWeekKey(tz = "UTC") {
+    return getWeekKey(parseDayKeyToUTCDate(getTodayKeyInTimezone(tz)))
 }
 
 export function parseLocalDate(dateInput) {
@@ -59,8 +90,8 @@ export function getStartOfDay(date) {
     return d
 }
 
-export function getDayDiff(a, b) {
-    const diff = getStartOfDay(a) - getStartOfDay(b)
+export function getDayDiff(day1, day2) {
+    const diff = getStartOfDay(day1) - getStartOfDay(day2)
     return Math.floor(diff / (1000 * 60 * 60 * 24))
 }
 

@@ -1,8 +1,8 @@
 import pool from "../db.js"
-import { getStartOfDay, parseLocalDate, toDateStringLocal } from "./dateUtils.js"
+import { getStartOfDay, getTodayKeyInTimezone, parseLocalDate, toDateStringLocal } from "./dateUtils.js"
 
-export async function processRecurringTransactions(userId) {
-    const today = getStartOfDay(new Date())
+export async function processRecurringTransactions(userId, tz = "UTC") {
+    const today = parseLocalDate(getTodayKeyInTimezone(tz))
     
     // get all recurring templates
     const recurringRes = await pool.query(

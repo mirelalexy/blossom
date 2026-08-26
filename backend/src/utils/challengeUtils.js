@@ -1,27 +1,27 @@
-import { getMonthKey, getWeekKey, getCurrentMonthKey, getCurrentWeekKey, parseLocalDate } from "./dateUtils.js"
+import { getMonthKey, getWeekKey, getCurrentMonthKey, getCurrentWeekKey, parseLocalDate, parseDayKeyToUTCDate, getTodayKeyInTimezone } from "./dateUtils.js"
 
-function isInPeriod(transaction, period) {
+function isInPeriod(transaction, period, tz) {
     if (!transaction.date) return false
     const date = parseLocalDate(transaction.date)
 
     if (period === "weekly") {
-        return getWeekKey(date) === getCurrentWeekKey()
+        return getWeekKey(date) === getCurrentWeekKey(tz)
     }
 
     if (period === "monthly") {
-        return getMonthKey(date) === getCurrentMonthKey()
+        return getMonthKey(date) === getCurrentMonthKey(tz)
     }
 
     return true
 }
 
-export function evaluateChallenges({ transactions, streak = 0, budget, challenges, goalCategoryId }) {
+export function evaluateChallenges({ transactions, streak = 0, budget, challenges, goalCategoryId, tz = "UTC" }) {
     // Steady Gardener uses a completion gate (the 25th)
-    const today = new Date()
-    const isLateInMonth = today.getDate() >= 25
+    const today = parseDayKeyToUTCDate(getTodayKeyInTimezone(tz))
+    const isLateInMonth = today.getUTCDate() >= 25
 
     return challenges.map(c => {
-        const periodTransactions = transactions.filter(t => isInPeriod(t, c.period))
+        const periodTransactions = transactions.filter(t => isInPeriod(t, c.period, tz))
         const expenseTransactions = periodTransactions.filter(t => t.type === "expense")
         const incomeTransactions = periodTransactions.filter(t => t.type === "income")
         const expenses = expenseTransactions.reduce((sum, t) => sum + Number(t.amount), 0)
@@ -65,8 +65,8 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                     completed = false
                 } else {
                     // under budget
-                    const dayOfMonth = today.getDate()
-                    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+                    const dayOfMonth = today.getUTCDate()
+                    const daysInMonth = new Date(Date.UTC(today.getFullUTCYear(), today.getUTCMonth() + 1, 0)).getUTCDate()
                     const monthProgress = Math.round((dayOfMonth / daysInMonth) * 100)
                     
                     progress = Math.min(monthProgress, 99) // never go to 100 before end of month

@@ -1,9 +1,9 @@
-import { parseLocalDate, getStartOfDay, getDayDiff } from "./dateUtils.js"
+import { getTodayKeyInTimezone, getDayKeyInTimezone } from "./dateUtils.js"
 
-export function calculateStreak(transactions, checkIns) {
+export function calculateStreak(transactions, checkIns, tz = "UTC") {
     if (!transactions.length && !checkIns.length) return 0
 
-    const today = getStartOfDay(new Date())
+    const todayKey = getTodayKeyInTimezone(tz)
 
     // a day counts if user logged a transaction or checked in
     const allDates = [
@@ -11,29 +11,29 @@ export function calculateStreak(transactions, checkIns) {
         ...checkIns.filter(c => c.created_at).map(c => c.created_at)
     ]
 
-    const uniqueDays = [
+    const uniqueDayKeys = [
         ...new Set(
             allDates
-                .map(date => getStartOfDay(parseLocalDate(date)).getTime())
+                .map(date => getDayKeyInTimezone(date, tz))
                 // a future-dated recurring child should not be able to count for streak
-                .filter(time => time <= today.getTime())
+                .filter(dayKey => dayKey <= todayKey)
         )
-    ].sort((a, b) => b - a)
+    ].sort((a, b) => (a < b ? 1 : -1))
 
     // if no transactions logged today, streak is 0
-    if (uniqueDays[0] !== today.getTime()) return 0
+    if (uniqueKeyDays[0] !== todayKey) return 0
     
     let streak = 1
-    let currentDate = today
+    let currentDayKey = todayKey
 
-    for (let i = 1; i < uniqueDays.length; i++) {
-        const entryDate = new Date(uniqueDays[i])
+    for (let i = 1; i < uniqueDayKeys.length; i++) {
+        const entryDate = new Date(uniqueDayKeys[i])
 
-        const diffDays = getDayDiff(currentDate, entryDate)
+        const diffDays = getDayKeyDiff(currentDayKey, entryDate)
 
         if (diffDays === 1) {
-            streak++;
-            currentDate = entryDate
+            streak++
+            currentDayKey = entryDate
         } else {
             break
         }
