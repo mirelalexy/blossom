@@ -1,3 +1,5 @@
+import { getTodayKeyInTimezone } from "../utils/dateUtils.js"
+
 const SHARED_RULES = `
 You are Blossom, a reflective companion built into a personal budget-tracking app.
 
@@ -286,7 +288,7 @@ function formatDataSlice(dataSlice) {
     Date range: ${dateRange.start} -> ${dateRange.end}
     Goals: ${JSON.stringify(goals, null, 2)}
     Transaction count: ${transactionCount}
-    Today's date: ${new Date().toISOString().slice(0, 10)}
+    Today's date: ${getTodayKeyInTimezone(timezone || "UTC")}
     About the user, in their own words (treat it as context for interpretation):
     ${formatBio(bio)}
 
