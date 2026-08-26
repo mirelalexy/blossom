@@ -21,7 +21,7 @@ export function calculateStreak(transactions, checkIns, tz = "UTC") {
     ].sort((a, b) => (a < b ? 1 : -1))
 
     // if no transactions logged today, streak is 0
-    if (uniqueKeyDays[0] !== todayKey) return 0
+    if (uniqueDayKeys[0] !== todayKey) return 0
     
     let streak = 1
     let currentDayKey = todayKey
