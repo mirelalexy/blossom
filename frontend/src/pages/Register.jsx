@@ -36,7 +36,12 @@ function Register() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, password, displayName })
+                body: JSON.stringify({ 
+                    email, 
+                    password, 
+                    displayName,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                })
             })
 
             const data = await res.json()

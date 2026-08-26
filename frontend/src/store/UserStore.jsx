@@ -24,8 +24,23 @@ export function UserProvider({ children }) {
                 bannerPositionY: data.banner_position_y,
                 bio: data.bio,
                 shareBio: data.share_bio,
-                createdAt: data.created_at
+                createdAt: data.created_at,
+                timezone: data.timezone
             })
+
+            // update timezone if necessary
+            const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+            if (detectedTimezone && detectedTimezone !== data.timezone) {
+                try {
+                    await apiFetch("/api/users/timezone", {
+                        method: "PATCH",
+                        body: JSON.stringify({ timezone: detectedTimezone })
+                    })
+                } catch (err) {
+                    console.error("Failed to sync timezone: ", err)
+                }
+            }
         } catch (err) {
             console.error("Failed to fetch user: ", err)
             setUser(null)
