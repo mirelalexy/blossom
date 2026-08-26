@@ -14,7 +14,7 @@ export function formatDate(dateString) {
     if (diffDays === 1) return "Yesterday"
 
     return date.toLocaleDateString("en-US", {
-        month: "long",
+        month: "short",
         day: "numeric",
         year: "numeric"
     })
