@@ -6,6 +6,7 @@ import cloudinary from "../config/cloudinary.js"
 import { validatePasswordStrength } from "../utils/passwordUtils.js"
 import { uploadToCloudinary } from "../utils/uploadUtils.js"
 import { sendPasswordChangedEmail, sendEmailChangeConfirmationEmail } from "../utils/emailUtils.js"
+import { isValidTimezone } from "../utils/dateUtils.js"
 
 import { defaultChallenges } from "../config/defaultChallenges.js"
 
@@ -461,5 +462,26 @@ export async function requestEmailChange(req, res) {
     } catch (err) {
         console.error(err)
         res.status(500).json({ error: "Change email request failed" })
+    }
+}
+
+export async function updateTimezone(req, res) {
+    const userId = req.user.userId
+    const { timezone } = req.body
+
+    if (!isValidTimezone(timezone)) {
+        return res.status(400).json({ error: "Invalid timezone" })
+    }
+
+    try {
+        await pool.query(
+            `UPDATE users SET timezone = $1 WHERE id = $2`,
+            [timezone, userId]
+        )
+
+        res.json({ timezone })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Failed to update timezone" })
     }
 }
