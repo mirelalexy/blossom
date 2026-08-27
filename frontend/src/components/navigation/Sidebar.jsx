@@ -105,7 +105,7 @@ function Sidebar() {
                                                 </span>
 
                                                 <span className="sidebar-subitem-progress">
-                                                    {progress}
+                                                    {progress}%
                                                 </span>
                                             </NavLink>
                                         )
