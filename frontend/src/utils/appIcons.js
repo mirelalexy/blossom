@@ -96,13 +96,15 @@ import {
     Tent,
     Wrench,
     CheckLine,
-    Move
+    Move,
+    PanelLeft
 } from "lucide-react"
 
 export const appIcons = {
     // UI icons
     visible: Eye,
     hidden: EyeClosed,
+    expand: PanelLeft,
     checkLine: CheckLine,
     home: House,
     transactions: Receipt,

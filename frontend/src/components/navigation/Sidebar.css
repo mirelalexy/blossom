@@ -6,7 +6,7 @@
     .sidebar {
         display: flex;
         flex-direction: column;
-        width: 250px;
+        width: 260px;
         flex-shrink: 0;
         height: 100vh;
         position: sticky;
@@ -16,17 +16,86 @@
         padding: 0;
         box-sizing: border-box;
         overflow: hidden;
+        transition: width 0.2s ease;
+    }
+
+    .sidebar--collapsed {
+        width: 76px;
     }
 
     .sidebar-header {
-        padding: 13px 4px 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 4px 4px;
+        min-height: 80px;
+        box-sizing: border-box;
+    }
+
+    .sidebar--collapsed .sidebar-header {
+        justify-content: center;
+    }
+
+    .sidebar-collapse-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--r-md);
+        flex-shrink: 0;
+        margin-right: 8px;
+        transition: color 0.12s ease, background-color 0.12s ease;
+    }
+
+    .sidebar--collapsed .sidebar-collapse-btn {
+        margin-right: 0;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .sidebar-collapse-btn:hover {
+            color: var(--text-primary);
+            background: var(--card);
+        }
+    }
+
+    .sidebar-fade {
+        opacity: 1;
+        max-width: 160px;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: opacity 0.15s ease 0.08s, max-width 0.2s ease, margin 0.2s ease;
+    }
+
+    .sidebar--collapsed .sidebar-fade {
+        transition: opacity 0.08s ease, max-width 0.2s ease, margin 0.2s ease;
+        opacity: 0;
+        max-width: 0;
+        margin: 0 !important;
+        pointer-events: none;
     }
 
     .sidebar-logo {
-        margin: 13px;
+        margin: 0 13px;
         width: 90px;
         cursor: pointer;
         color: var(--text-primary);
+        opacity: 1;
+        overflow: hidden;
+        flex-shrink: 0;
+        transition: opacity 0.15s ease 0.08s, width 0.2s ease, margin 0.2s ease;
+    }
+
+    .sidebar--collapsed .sidebar-logo {
+        transition: opacity 0.08s ease, width 0.2s ease, margin 0.2s ease;
+        opacity: 0;
+        width: 0;
+        margin: 13px 0;
+        pointer-events: none;
     }
 
     .sidebar-nav {
@@ -35,21 +104,66 @@
         flex: 1;
         padding: 12px 10px 8px;
         overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .sidebar-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .sidebar-section + .sidebar-section {
+        margin-top: 14px;
+    }
+
+     .sidebar-section-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-tertiary);
+        padding: 4px 12px 6px;
+        margin: 0;
+        transition: opacity 0.15s ease 0.08s, max-width 0.2s ease, padding 0.2s ease, max-height 0.2s ease;
+    }
+
+    .sidebar--collapsed .sidebar-section-label {
+        transition: opacity 0.08s ease, max-width 0.2s ease, padding 0.2s ease, max-height 0.2s ease;
+        padding: 0;
+        max-height: 0;
     }
 
     .sidebar-item {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 7px 12px;
+        min-height: 40px;
+        padding: 10px 12px;
+        padding-left: 44px;
         border-radius: var(--r-lg);
         color: var(--text-secondary);
         text-decoration: none;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 500;
         font-family: var(--font-primary);
         transition: background-color 0.12s ease, color 0.12s ease;
         position: relative;
+        box-sizing: border-box;
+    }
+
+    .sidebar--collapsed .sidebar-item {
+        padding-left: 12px;
+    }
+
+    .sidebar-item:not(.sidebar-item--active) .sidebar-item-icon {
+        opacity: 0.75;
+        transition: opacity 0.12s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .sidebar-item:hover .sidebar-item-icon {
+            opacity: 1;
+        }
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -66,14 +180,25 @@
     }
 
     .sidebar-item-icon {
-        position: relative;
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
         display: flex;
         align-items: center;
-        flex-shrink: 0;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        transition: left 0.2s ease;
+    }
+
+    .sidebar--collapsed .sidebar-item-icon {
+        left: 18px;
     }
 
     .sidebar-item-label { 
         flex: 1; 
+        min-width: 0;
     }
 
     .sidebar-badge {
@@ -145,14 +270,26 @@
         }
     }
 
+    .sidebar--collapsed .sidebar-add-btn {
+        margin: 4px 14px 12px;
+        padding: 11px;
+        gap: 0;
+    }
+
     .sidebar-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 14px 14px 18px;
         border-top: 1px solid var(--border);
+        background: var(--bg-tertiary);
         gap: 10px;
         flex-shrink: 0;
+    }
+
+    .sidebar--collapsed .sidebar-footer {
+        justify-content: center;
+        padding: 14px 0 18px;
     }
 
     .sidebar-user {
@@ -165,6 +302,13 @@
         min-width: 0;
         padding: 6px 8px;
         transition: background-color 0.12s ease;
+    }
+
+    .sidebar--collapsed .sidebar-user {
+        flex: none;
+        justify-content: center;
+        padding: 6px;
+        gap: 0;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -239,6 +383,10 @@
         align-items: center;
         transition: color 0.12s ease, background-color 0.12s ease;
         flex-shrink: 0;
+    }
+
+    .sidebar--collapsed .sidebar-settings-btn {
+        display: none;
     }
 
     @media (hover: hover) and (pointer: fine) {
