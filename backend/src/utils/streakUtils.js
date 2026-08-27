@@ -1,4 +1,4 @@
-import { getTodayKeyInTimezone, getDayKeyInTimezone } from "./dateUtils.js"
+import { getTodayKeyInTimezone, getDayKeyInTimezone, getDayKeyDiff } from "./dateUtils.js"
 
 export function calculateStreak(transactions, checkIns, tz = "UTC") {
     if (!transactions.length && !checkIns.length) return 0
@@ -27,7 +27,7 @@ export function calculateStreak(transactions, checkIns, tz = "UTC") {
     let currentDayKey = todayKey
 
     for (let i = 1; i < uniqueDayKeys.length; i++) {
-        const entryDate = new Date(uniqueDayKeys[i])
+        const entryDate = uniqueDayKeys[i]
 
         const diffDays = getDayKeyDiff(currentDayKey, entryDate)
 
