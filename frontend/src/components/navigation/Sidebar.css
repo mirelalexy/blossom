@@ -6,7 +6,7 @@
     .sidebar {
         display: flex;
         flex-direction: column;
-        width: 260px;
+        width: 250px;
         flex-shrink: 0;
         height: 100vh;
         position: sticky;
@@ -19,7 +19,7 @@
     }
 
     .sidebar-header {
-        padding: 8px 4px 4px;
+        padding: 13px 4px 4px;
     }
 
     .sidebar-logo {
@@ -32,7 +32,6 @@
     .sidebar-nav {
         display: flex;
         flex-direction: column;
-        gap: 2px;
         flex: 1;
         padding: 12px 10px 8px;
         overflow-y: auto;
@@ -42,11 +41,11 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 10px 12px;
+        padding: 7px 12px;
         border-radius: var(--r-lg);
         color: var(--text-secondary);
         text-decoration: none;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
         font-family: var(--font-primary);
         transition: background-color 0.12s ease, color 0.12s ease;
