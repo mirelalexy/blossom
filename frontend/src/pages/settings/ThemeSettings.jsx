@@ -8,11 +8,11 @@ import SettingsItem from "../../components/settings/SettingsItem"
 const THEMES = [
     { id: "blossom", label: "Blossom", description: "Warm blush rose, the default" },
     { id: "petal", label: "Petal", description: "Soft lavender" },
-    { id: "forest", label: "Forest", description: "Earthy sage green" },
-    { id: "dusk", label: "Dusk", description: "Warm amber terracotta" },
+    { id: "wildflower", label: "Wildflower", description: "Golden meadow warmth" },
+    { id: "blossom-at-sea", label: "Blossom At Sea", description: "Soft coastal teal" },
+    { id: "honeydew", label: "Honeydew", description: "Fresh spring green" },
     { id: "night", label: "Night", description: "Deep charcoal with violet" },
-    { id: "velvet-rose", label: "Velvet Rose", description: "Dark deep magenta" },
-    { id: "abyss", label: "Abyss", description: "Intense dark blue" },
+    { id: "caramel", label: "Caramel", description: "Sugar overload" },
     { id: "evil-blossom", label: "Evil Blossom", description: "I get a little... different in the dark" }
 ]
 

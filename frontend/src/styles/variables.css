@@ -1,56 +1,56 @@
 /* BLOSSOM - warm blush rose (default) */
 :root {
-    --bg-primary:    #faf6f8;
-    --bg-secondary:  #f2e5ec;
-    --bg-tertiary:   #e8d3dd;
+    --bg-primary:   #f8f7f7;
+    --bg-secondary: #ede8ea;
+    --bg-tertiary:  #e2dadc;
 
-    --text-primary:   #1a0d14;
-    --text-secondary: #7a4e61;
-    --text-tertiary:  #946276;
+    --text-primary:   #24191c;
+    --text-secondary: #724653;
+    --text-tertiary:  #815663;
     --text-chat:      #ffffff;
 
-    --accent:       #bd5172;
-    --accent-soft:  #f0dae2;
-    --accent-dim:   rgba(192, 88, 120, 0.12);
-    --accent-rgb:   192, 88, 120;
-    --hover:        #a34464;
-    --active:       #e0457a;
+    --accent:         #bd4267;
+    --accent-soft:    #efdce2;
+    --accent-dim:     rgba(189, 66, 103, 0.12);
+    --accent-rgb:     189, 66, 103;
+    --hover:        #a13656;
+    --active:       #d94571;
 
-    --success:       #4d9470;
-    --success-soft:  #dcf0e6;
-    --danger:        #c25050;
-    --danger-soft:   #fce8e8;
-    --warning:       #b07830;
-    --warning-soft:  #fceeda;
+    --success:      #428a60;
+    --success-soft: #daf1e4;
+    --danger:       #b14b43;
+    --danger-soft:  #f4d9d7;
+    --warning:      #c9682a;
+    --warning-soft: #f7ddc8;
 
     --card:         #ffffff;
-    --card-raised:  #fffcfd;
-    --card-border:  rgba(192, 88, 120, 0.12);
-    --card-shadow:  0 1px 2px rgba(80,20,40,0.04), 0 4px 16px rgba(80,20,40,0.07);
+    --card-raised:  #fdfcfc;
+    --card-border:  rgba(189, 66, 103, 0.12);
+    --card-shadow:  0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.07);
 
-    --border:        rgba(192, 88, 120, 0.16);
-    --border-strong: rgba(192, 88, 120, 0.35);
-    --input-bg:      #edddea;
-    --input-focus:   #e2ceda;
+    --border:        rgba(189, 66, 103, 0.16);
+    --border-strong: rgba(189, 66, 103, 0.35);
+    --input-bg:      #e9e2e4;
+    --input-focus:   #ddd0d4;
 
     --nav-bg:     #ffffff;
-    --nav-border: rgba(192, 88, 120, 0.1);
+    --nav-border: rgba(189, 66, 103, 0.1);
 
-    --progress-track: #e0ccd5;
-    --focus-card:     #fce8ef;
+    --progress-track: #dcd1d4;
+    --focus-card:     #f2edef;
 
-    --chart-1: #c05878; 
-    --chart-2: #d4849e;
-    --chart-3: #9a4268; 
-    --chart-4: #7a3055; 
-    --chart-5: #b870a8;
+    --chart-1: #bf4a6d;
+    --chart-2: #c77575;
+    --chart-3: #8c2c5f;
+    --chart-4: #671d3d;
+    --chart-5: #b87261;
 
     --font-primary: "DM Sans", sans-serif;
 
-    --r-sm: 8px; 
-    --r-md: 12px; 
-    --r-lg: 16px; 
-    --r-xl: 24px; 
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-xl: 24px;
     --r-full: 9999px;
 }
 
@@ -101,100 +101,6 @@
     --chart-5: #9868e0;
 }
 
-/* FOREST - earthy sage */
-[data-theme="forest"] {
-    --bg-primary:    #f3f8f3;
-    --bg-secondary:  #e0ece0;
-    --bg-tertiary:   #cadcca;
-
-    --text-primary:   #0d1a0d;
-    --text-secondary: #3a5c3a;
-    --text-tertiary:  #5a765a;
-
-    --accent:      #3c8456;
-    --accent-soft: #c4e8d0;
-    --accent-dim:  rgba(62, 136, 88, 0.12);
-    --accent-rgb:  62, 136, 88;
-    --hover:       #2e6e45;
-    --active:      #52a870;
-
-    --success:       #3e8858; 
-    --success-soft:  #c4e8d0;
-    --danger:        #c25050; 
-    --danger-soft:   #fce8e8;
-    --warning:       #b07830; 
-    --warning-soft:  #fceeda;
-
-    --card:         #ffffff; 
-    --card-raised:  #fafffa;
-    --card-border:  rgba(62, 136, 88, 0.12);
-    --card-shadow:  0 1px 2px rgba(15,40,20,0.04), 0 4px 16px rgba(15,40,20,0.07);
-
-    --border:        rgba(62, 136, 88, 0.15);
-    --border-strong: rgba(62, 136, 88, 0.35);
-    --input-bg:      #d8eadc; 
-    --input-focus:   #c8dece;
-
-    --nav-bg:     #ffffff; 
-    --nav-border: rgba(62, 136, 88, 0.09);
-
-    --progress-track: #c8decc; 
-    --focus-card:     #e0ece0;
-
-    --chart-1: #3e8858; 
-    --chart-2: #5aa870;
-    --chart-3: #2e6848; 
-    --chart-4: #205038; 
-    --chart-5: #68b885;
-}
-
-/* DUSK - warm amber */
-[data-theme="dusk"] {
-    --bg-primary:    #faf5f0;
-    --bg-secondary:  #f0e2d2;
-    --bg-tertiary:   #e4cebb;
-
-    --text-primary:   #1e1008;
-    --text-secondary: #6a4828;
-    --text-tertiary:  #926649;
-
-    --accent:       #b85438;
-    --accent-soft:  #f0d4c4;
-    --accent-dim:   rgba(184, 84, 56, 0.12);
-    --accent-rgb:   184, 84, 56;
-    --hover:        #9e4430;
-    --active:       #d06040;
-
-    --success:       #4d9470; 
-    --success-soft:  #dcf0e6;
-    --danger:        #c25050; 
-    --danger-soft:   #fce8e8;
-    --warning:       #b07830; 
-    --warning-soft:  #fceeda;
-
-    --card:         #ffffff; 
-    --card-raised:  #fffcfa;
-    --card-border:  rgba(184, 84, 56, 0.12);
-    --card-shadow:  0 1px 2px rgba(80,35,10,0.04), 0 4px 16px rgba(80,35,10,0.07);
-
-    --border:        rgba(184, 84, 56, 0.16);
-    --border-strong: rgba(184, 84, 56, 0.35);
-    --input-bg:      #e8d8c8; 
-    --input-focus:   #dcc8b4;
-
-    --nav-bg:     #ffffff; 
-    --nav-border: rgba(184, 84, 56, 0.1);
-
-    --progress-track: #dcc8b0; 
-    --focus-card:     #f0e2d2;
-
-    --chart-1: #b85438; 
-    --chart-2: #d07050;
-    --chart-3: #9e4430; 
-    --chart-4: #7e3825; 
-    --chart-5: #c86850;
-}
-
 /* NIGHT - deep charcoal and violet */
 [data-theme="night"] {
     --bg-primary:    #131417;
@@ -242,100 +148,6 @@
     --chart-5: #a080f8;
 }
 
-/* VELVET ROSE - dark deep magenta */
-[data-theme="velvet-rose"] {
-    --bg-primary:    #100d14;
-    --bg-secondary:  #141019;
-    --bg-tertiary:   #1c1623;
-
-    --text-primary:   #f0eaf8;
-    --text-secondary: #8878a0;
-    --text-tertiary:  #8879a4;
-
-    --accent:       #b84488;
-    --accent-soft:  #2a1030;
-    --accent-dim:   rgba(184, 68, 136, 0.18);
-    --accent-rgb:   184, 68, 136;
-    --hover:        #c85898;
-    --active:       #d04898;
-
-    --success:       #428870; 
-    --success-soft:  #142818;
-    --danger:        #c25050; 
-    --danger-soft:   #2e1010;
-    --warning:       #a87030; 
-    --warning-soft:  #261408;
-
-    --card:         #18141e; 
-    --card-raised:  #201828;
-    --card-border:  rgba(255,255,255,0.06);
-    --card-shadow:  0 1px 3px rgba(0,0,0,0.38), 0 4px 20px rgba(0,0,0,0.3);
-
-    --border:        rgba(255,255,255,0.07);
-    --border-strong: rgba(184, 68, 136, 0.4);
-    --input-bg:      #20182a; 
-    --input-focus:   #281e34;
-
-    --nav-bg:     #18141e; 
-    --nav-border: rgba(255,255,255,0.05);
-
-    --progress-track: #281e30; 
-    --focus-card:     #1e0e2c;
-
-    --chart-1: #b84488; 
-    --chart-2: #c860a0;
-    --chart-3: #9c3878; 
-    --chart-4: #7c2860; 
-    --chart-5: #d878b0;
-}
-
-/* ABYSS - intense dark blue */
-[data-theme="abyss"] {
-    --bg-primary:    #080c14;
-    --bg-secondary:  #0b101a;
-    --bg-tertiary:   #111826;
-
-    --text-primary:   #e8edf8;
-    --text-secondary: #7888b0;
-    --text-tertiary:  #6b7fa6;
-
-    --accent:       #3060e0;
-    --accent-soft:  #0e1840;
-    --accent-dim:   rgba(48, 96, 224, 0.2);
-    --accent-rgb:   48, 96, 224;
-    --hover:        #4878f8;
-    --active:       #2048c8;
-
-    --success:       #38907a; 
-    --success-soft:  #0a2820;
-    --danger:        #c84040; 
-    --danger-soft:   #280808;
-    --warning:       #b07820; 
-    --warning-soft:  #241808;
-
-    --card:         #0e1420; 
-    --card-raised:  #141c2c;
-    --card-border:  rgba(48, 96, 224, 0.15);
-    --card-shadow:  0 1px 3px rgba(0,0,0,0.5), 0 4px 24px rgba(0,0,0,0.4);
-
-    --border:        rgba(48, 96, 224, 0.18);
-    --border-strong: rgba(48, 96, 224, 0.45);
-    --input-bg:      #121828; 
-    --input-focus:   #1a2238;
-
-    --nav-bg:     #0e1420; 
-    --nav-border: rgba(48, 96, 224, 0.12);
-
-    --progress-track: #182040; 
-    --focus-card: #0a1030;
-
-    --chart-1: #3060e0; 
-    --chart-2: #4878f8;
-    --chart-3: #2048b8; 
-    --chart-4: #1830a0; 
-    --chart-5: #6090ff;
-}
-
 /* EVIL BLOSSOM - dark crimson */
 [data-theme="evil-blossom"] {
     --bg-primary:    #0e0608;
@@ -381,4 +193,195 @@
     --chart-3: #a01010; 
     --chart-4: #800808; 
     --chart-5: #e05050;
+}
+
+/* CARAMEL - sugar overload */
+[data-theme="caramel"] {
+    --bg-primary:    #171615;
+    --bg-secondary:  #121110;
+    --bg-tertiary:   #211f1d;
+
+    --text-primary:   #eeece7;
+    --text-secondary: #b3afa8;
+    --text-tertiary:  #77736d;
+
+    --accent:       #bd7655;
+    --accent-soft:  #382119;
+    --accent-dim:   rgba(189, 118, 85, 0.2);
+    --accent-rgb:   189, 118, 85;
+    --hover:        #cf8967;
+    --active:       #a55d42;
+
+    --success:       #5b9478;
+    --success-soft:  #11271e;
+    --danger:        #c9544d;
+    --danger-soft:   #300e0b;
+    --warning:       #bd8b4b;
+    --warning-soft:  #30200e;
+
+    --card:         #211f1d;
+    --card-raised:  #2b2926;
+    --card-border:  rgba(196, 119, 77, 0.16);
+    --card-shadow:  0 1px 3px rgba(0,0,0,0.45), 0 4px 24px rgba(0,0,0,0.35);
+
+    --border:        rgba(238, 236, 231, 0.10);
+    --border-strong: rgba(196, 119, 77, 0.42);
+    --input-bg:      #1c1a18;
+    --input-focus:   #282420;
+
+    --nav-bg:     #141311;
+    --nav-border: rgba(238, 236, 231, 0.08);
+
+    --progress-track: #30251f;
+    --focus-card:     #332118;
+
+    --chart-1: #c4774d;
+    --chart-2: #d89a76;
+    --chart-3: #a8603d;
+    --chart-4: #7f492f;
+    --chart-5: #e4bba3;
+}
+
+/* WILDFLOWER - golden meadow warmth */
+[data-theme="wildflower"] {
+    --bg-primary:   #f8f8f7;
+    --bg-secondary: #edece8;
+    --bg-tertiary: #e2e0da;
+
+    --text-primary: #242119;
+    --text-secondary: #726546;
+    --text-tertiary: #776740;
+    --text-chat: #ffffff;
+
+    --accent: #8f7432;
+    --accent-soft: #efe9dc;
+    --accent-dim:   rgba(143, 116, 50, 0.12);
+    --accent-rgb: 143, 116, 50;
+    --hover: #735c26;
+    --active: #ba8e26;
+
+    --success: #428a60;
+    --success-soft: #daf1e4;
+    --danger: #b14b43;
+    --danger-soft: #f4d9d7;
+    --warning: #c9682a;
+    --warning-soft: #f7ddc8;
+
+    --card: #ffffff;
+    --card-raised: #fdfdfc;
+    --card-border: rgba(143, 116, 50, 0.12);
+    --card-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.07);
+
+    --border: rgba(143, 116, 50, 0.16);
+    --border-strong: rgba(143, 116, 50, 0.35);
+    --input-bg: #e9e7e2;
+    --input-focus: #ddd9d0;
+
+    --nav-bg: #ffffff;
+    --nav-border: rgba(143, 116, 50, 0.1);
+
+    --progress-track: #dcd8d1;
+    --focus-card: #f2f1ed;
+
+    --chart-1: #977a35;
+    --chart-2: #b5b54a;
+    --chart-3: #5d3b1d;
+    --chart-4: #382610;
+    --chart-5: #879744;
+}
+
+/* BLOSSOM AT SEA - soft coastal teal */
+[data-theme="blossom-at-sea"] {
+    --bg-primary: #f7f8f8;
+    --bg-secondary: #e8eced;
+    --bg-tertiary: #dae1e2;
+
+    --text-primary: #192224;
+    --text-secondary: #466a72;
+    --text-tertiary: #466f77;
+    --text-chat: #ffffff;
+
+    --accent: #32808f;
+    --accent-soft: #dcecef;
+    --accent-dim:   rgba(50, 128, 143, 0.12);
+    --accent-rgb: 50, 128, 143;
+    --hover: #266673;
+    --active: #26a2ba;
+
+    --success: #428a60;
+    --success-soft: #daf1e4;
+    --danger: #b14b43;
+    --danger-soft: #f4d9d7;
+    --warning: #c9682a;
+    --warning-soft: #f7ddc8;
+
+    --card: #ffffff;
+    --card-raised: #fcfdfd;
+    --card-border: rgba(50, 128, 143, 0.12);
+    --card-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.07);
+
+    --border: rgba(50, 128, 143, 0.16);
+    --border-strong: rgba(50, 128, 143, 0.35);
+    --input-bg: #e2e8e9;
+    --input-focus: #d0dbdd;
+
+    --nav-bg: #ffffff;
+    --nav-border: rgba(50, 128, 143, 0.1);
+
+    --progress-track: #d1dadc;
+    --focus-card: #edf2f2;
+
+    --chart-1: #358797;
+    --chart-2: #4a83b5;
+    --chart-3: #1d5d59;
+    --chart-4: #103638;
+    --chart-5: #446097;
+}
+
+/* HONEYDEW - fresh spring green */
+[data-theme="honeydew"] {
+    --bg-primary: #f7f8f7;
+    --bg-secondary: #e8ede9;
+    --bg-tertiary: #dae2db;
+
+    --text-primary: #19241b;
+    --text-secondary: #46724d;
+    --text-tertiary: #44744c;
+    --text-chat: #ffffff;
+
+    --accent: #30883e;
+    --accent-soft: #dcefdf;
+    --accent-dim:   rgba(48, 136, 62, 0.12);
+    --accent-rgb: 48, 136, 62;
+    --hover: #246b30;
+    --active: #24b23c;
+
+    --success: #428a60;
+    --success-soft: #daf1e4;
+    --danger: #b14b43;
+    --danger-soft: #f4d9d7;
+    --warning: #c9682a;
+    --warning-soft: #f7ddc8;
+
+    --card: #ffffff;
+    --card-raised: #fcfdfc;
+    --card-border: rgba(48, 136, 62, 0.12);
+    --card-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.07);
+
+    --border: rgba(48, 136, 62, 0.16);
+    --border-strong: rgba(48, 136, 62, 0.35);
+    --input-bg: #e2e9e3;
+    --input-focus: #d0ddd2;
+
+    --nav-bg: #ffffff;
+    --nav-border: rgba(48, 136, 62, 0.1);
+
+    --progress-track: #d1dcd3;
+    --focus-card: #edf2ee;
+
+    --chart-1: #328f42;
+    --chart-2: #47ae77;
+    --chart-3: #1f551b;
+    --chart-4: #0d300f;
+    --chart-5: #419076;
 }
