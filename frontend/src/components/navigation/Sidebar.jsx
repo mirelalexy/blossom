@@ -1,8 +1,10 @@
+import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 
 import { useUser } from "../../store/UserStore"
 import { useProfile } from "../../store/ProfileStore"
 import { useNotifications } from "../../store/NotificationStore"
+import { useGoals } from "../../store/GoalsStore"
 
 import Icon from "../ui/Icon"
 import Logo from "../navigation/Logo"
@@ -12,7 +14,7 @@ import "./Sidebar.css"
 const navItems = [
     { to: "/", icon: "home", label: "Home", end: true},
     { to: "/transactions", icon: "transactions", label: "Transactions"},
-    { to: "/goals", icon: "goals", label: "Saving Goals"},
+    { to: "/goals", icon: "goals", label: "Saving Goals", expandable: true},
     { to: "/journey", icon: "categories", label: "Journey"},
     { to: "/challenges", icon: "profile", label: "Challenges"},
     { to: "/rewards", icon: "gem", label: "Rewards"},
@@ -24,7 +26,10 @@ function Sidebar() {
 
     const { user } = useUser()
     const { stats } = useProfile()
+    const { goals } = useGoals()
     const { notifications } = useNotifications()
+
+    const [isGoalsExpanded, setIsGoalsExpanded] = useState(false)
 
     const unreadCount = notifications.filter(n => !n.read).length
     const streak = stats?.streak || 0
@@ -32,28 +37,84 @@ function Sidebar() {
 
     const initial  = user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"
 
+    function toggleGoals(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsGoalsExpanded(prev => !prev)
+    }
+
     return (
         <aside className="sidebar">
-            <Logo className="sidebar-logo" />
+            <div className="sidebar-header">
+                <Logo className="sidebar-logo" />
+            </div>
 
             <nav className="sidebar-nav">
-                {navItems.map(({ to, icon, label, end }) => (
-                    <NavLink
-                        key={to}
-                        to={to}
-                        end={end}
-                        className={({ isActive }) => `sidebar-item ${isActive ? "sidebar-item--active" : ""}`}
-                    >
-                        <span className="sidebar-item-icon">
-                            <Icon name={icon} size={20} />
-                            {label === "Notifications" && unreadCount > 0 && (
-                                <span className="sidebar-badge">
-                                    {unreadCount > 9 ? "9+" : unreadCount}
-                                </span>
+                {navItems.map(({ to, icon, label, end, expandable }) => (
+                    <div key={to} className="sidebar-item-group">
+                        <NavLink
+                            to={to}
+                            end={end}
+                            className={({ isActive }) => `sidebar-item ${isActive ? "sidebar-item--active" : ""}`}
+                        >
+                            <span className="sidebar-item-icon">
+                                <Icon name={icon} size={20} />
+                                {label === "Notifications" && unreadCount > 0 && (
+                                    <span className="sidebar-badge">
+                                        {unreadCount > 9 ? "9+" : unreadCount}
+                                    </span>
+                                )}
+                            </span>
+
+                            <span className="sidebar-item-label">{label}</span>
+                        
+                            {expandable && (
+                                <button
+                                    className={`sidebar-expand-btn ${isGoalsExpanded ? "sidebar-expand-btn--open" : ""}`}
+                                    onClick={toggleGoals}
+                                    aria-label={isGoalsExpanded ? "Collapse saving goals" : "Expand saving goals"}
+                                >
+                                    <Icon name="select" size={16} />
+                                </button>
                             )}
-                        </span>
-                        <span className="sidebar-item-label">{label}</span>
-                    </NavLink>
+                        </NavLink>
+
+                        {expandable && isGoalsExpanded && (
+                            <div className="sidebar-subitems">
+                                {goals.length === 0 ? (
+                                    <button
+                                        className="sidebar-subitem sidebar-subitem--empty"
+                                        onClick={() => navigate("/goals/add")}
+                                    >
+                                        Add your first goal
+                                    </button>
+                                ) : (
+                                    goals.slice(0, 4).map(goal => {
+                                        const progress = goal.target_amount > 0
+                                            ? Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100))
+                                            : 0
+
+                                        return (
+                                            <NavLink
+                                                key={goal.id}
+                                                to={`/goals/edit/${goal.id}`}
+                                                className="sidebar-subitem"
+                                            >
+                                                <span className="sidebar-subitem-name">
+                                                    {goal.name}
+                                                </span>
+
+                                                <span className="sidebar-subitem-progress">
+                                                    {progress}
+                                                </span>
+                                            </NavLink>
+                                        )
+                                    })
+                                )}
+                            </div>
+                        )}
+                    </div>
+                    
                 ))}
             </nav>
 
