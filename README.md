@@ -79,7 +79,7 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Unclaimed and locked rewards shown separately
 
 ### Themes
-8 themes: Blossom (warm blush rose, the default), Petal (soft lavender), Forest (earthy sage green), Dusk (warm amber terracotta), Night (dark charcoal with violet), Velvet Rose (dark deep magenta), Abyss (intense dark blue), and Evil Blossom (dark crimson with alternate personality).
+8 themes: Blossom (warm blush rose, the default), Petal (soft lavender), Wildflower (golden meadow warmth), Blossom At Sea (soft coastal teal), Honeydew (fresh spring green), Night (dark charcoal with violet), Caramel (sugar overload), and Evil Blossom (dark crimson with alternate personality).
 
 > *I get a little different in the dark...*
 
