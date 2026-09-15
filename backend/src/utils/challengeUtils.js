@@ -66,7 +66,7 @@ export function evaluateChallenges({ transactions, streak = 0, budget, challenge
                 } else {
                     // under budget
                     const dayOfMonth = today.getUTCDate()
-                    const daysInMonth = new Date(Date.UTC(today.getFullUTCYear(), today.getUTCMonth() + 1, 0)).getUTCDate()
+                    const daysInMonth = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 0)).getUTCDate()
                     const monthProgress = Math.round((dayOfMonth / daysInMonth) * 100)
                     
                     progress = Math.min(monthProgress, 99) // never go to 100 before end of month
