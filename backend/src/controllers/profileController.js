@@ -23,24 +23,17 @@ export async function getProfileStats(req, res) {
 
         const checkIns = checkInsRes.rows
 
-        // get challenges
-        const challengesRes = await pool.query(
-            `SELECT * FROM challenges WHERE user_id = $1`,
-            [userId]
-        )
-
-        const challenges = challengesRes.rows
-
-        // calculate stats
-        const streak = calculateStreak(transactions, checkIns)
-
         const userRes = await pool.query(
-            `SELECT xp, level FROM users WHERE id = $1`,
+            `SELECT xp, level, timezone FROM users WHERE id = $1`,
             [userId]
         )
 
         const xp = userRes.rows[0]?.xp || 0
         const level = userRes.rows[0]?.level || 1
+        const timezone = userRes.rows[0]?.timezone || "UTC"
+
+        // calculate stats
+        const streak = calculateStreak(transactions, checkIns, timezone)
 
         const progress = getLevelProgress(xp)
         const levelTitle = getLevelTitle(level)
