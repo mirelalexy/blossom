@@ -117,15 +117,6 @@ function Journey() {
                 </div>
             )}
 
-            <MonthSelector
-                label={labelFromKey(selectedMonth)}
-                isCurrentMonth={isCurrentMonth}
-                canGoPrev={canGoPrev}
-                canGoNext={canGoNext}
-                onPrev={() => setSelectedMonth(prevMonthKey(selectedMonth))}
-                onNext={() => setSelectedMonth(nextMonthKey(selectedMonth))}
-            />
-            
             {patterns.length > 0 && (
                 <Section title="Your Patterns">
                     {patterns.map((p, index) => (
@@ -138,6 +129,15 @@ function Journey() {
                     ))}
                 </Section>
             )}
+
+            <MonthSelector
+                label={labelFromKey(selectedMonth)}
+                isCurrentMonth={isCurrentMonth}
+                canGoPrev={canGoPrev}
+                canGoNext={canGoNext}
+                onPrev={() => setSelectedMonth(prevMonthKey(selectedMonth))}
+                onNext={() => setSelectedMonth(nextMonthKey(selectedMonth))}
+            />
 
             {!hasData ? (
                 <EmptyState {...getEmpty("journeyEmpty")} />
