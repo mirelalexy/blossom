@@ -7,7 +7,7 @@ import { useProfile } from "../store/ProfileStore"
 
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
-import { isLast30Days, parseLocalDate } from "../utils/dateUtils"
+import { parseLocalDate } from "../utils/dateUtils"
 import { getLevelNarrative } from "../utils/levelUtils"
 import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
@@ -41,8 +41,6 @@ function Journey() {
     const levelTitle = profileStats?.levelTitle || "Mindful Seed"
     const progress = profileStats?.progress || 0
     const levelStory = getLevelNarrative(level)
-
-    if (loading) return <BlossomLoader />
 
     // month selector state
     const currentMonthKey = toKey(new Date())
@@ -78,6 +76,8 @@ function Journey() {
             return d && (now - d) / 86400000 <= 30
         })
     }, [transactions])
+
+    if (loading) return <BlossomLoader />
 
     const colors = getChartColors()
     const patterns = getUserPatterns(recentTransactions, currency)
