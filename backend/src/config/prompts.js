@@ -276,7 +276,7 @@ function formatBio(bio) {
 }
 
 function formatDataSlice(dataSlice) {
-    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions, bio, checkIns } = dataSlice
+    const { goals, currency, dateRange, transactionCount, moodSummary, intentSummary, stats, transactions, bio, checkIns, timezone } = dataSlice
 
     return `
     Data available for this conversation
