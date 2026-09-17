@@ -41,3 +41,30 @@ export function calculateStreak(transactions, checkIns, tz = "UTC") {
 
     return streak
 }
+
+export function calculatePeakStreak(transactions, checkIns, monthKey, tz = "UTC") {
+    const allDates = [
+        ...transactions.filter(t => t.created_at && !t.recurring_parent_id).map(t => t.created_at),
+        ...checkIns.filter(c => c.created_at).map(c => c.created_at)
+    ]
+
+    const uniqueDayKeys = [...new Set(allDates.map(date => getDayKeyInTimezone(date, tz)))].sort()
+
+    if (uniqueDayKeys.length === 0) return 0
+
+    let peakInMonth = 0
+    let current = 1
+
+    for (let i = 0; i < uniqueDayKeys.length; i++) {
+        if (i > 0) {
+            const diff = getDayKeyDiff(uniqueDayKeys[i], uniqueDayKeys[i - 1])
+            current = diff === 1 ? current + 1 : 1
+        }
+
+        if (uniqueDayKeys[i].startsWith(monthKey)) {
+            peakInMonth = Math.max(peakInMonth, current)
+        }
+    }
+
+    return peakInMonth
+}

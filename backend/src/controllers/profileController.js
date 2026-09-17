@@ -1,7 +1,7 @@
 import pool from "../db.js"
 
 import { getLevelProgress, getLevelTitle } from "../utils/levelUtils.js"
-import { calculateStreak } from "../utils/streakUtils.js"
+import { calculatePeakStreak, calculateStreak } from "../utils/streakUtils.js"
 
 export async function getProfileStats(req, res) {
     const userId = req.user.userId
@@ -42,5 +42,35 @@ export async function getProfileStats(req, res) {
     } catch (err) {
         console.error(err)
         res.status(500).json({ error: "Failed to fetch profile stats" })
+    }
+}
+
+export async function getPeakStreak(req, res) {
+    const userId = req.user.userId
+    const { month } = req.query
+
+    try {
+        const transactionsRes = pool.query(
+            `SELECT * FROM transactions WHERE user_id = $1`,
+            [userId]
+        )
+
+        const checkInsRes = pool.query(
+            `SELECT * FROM check_ins WHERE user_id = $1`,
+            [userId]
+        )
+
+        const userRes = pool.query(
+            `SELECT timezone FROM users WHERE user_id = $1`,
+            [userId]
+        )
+
+        const timezone = userRes.rows[0]?.timezone || "UTC"
+        const peakStreak = calculatePeakStreak(transactionsRes.rows, (await checkInsRes).rows, month, timezone)
+
+        res.json({ peakStreak })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Failed to fetch peak streak" })
     }
 }
