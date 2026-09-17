@@ -4,6 +4,7 @@ import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
 import { useCategories } from "../store/CategoryStore"
 import { useProfile } from "../store/ProfileStore"
+import { useCheckIn } from "../store/CheckInStore"
 
 import { getCategoryData, getChartColors, getSpendingOverTime, getIntentData, getMoodData, getIncomeExpenseData, getTopSpendingSourcesData } from "../utils/chartUtils"
 import { getCategoryInsight, getIntentInsight, getMoodInsight, getTimeInsight, getIncomeExpenseInsight, getBiggestExpense, getSpendingStyle, getSpendingStyleDetails } from "../utils/insightUtils"
@@ -13,6 +14,7 @@ import { getUserPatterns } from "../utils/patternUtils"
 import { getStatistics } from "../utils/statisticsUtils"
 import { formatCurrency } from "../utils/currencyUtils"
 import { toKey, isInMonth, prevMonthKey, labelFromKey, nextMonthKey } from "../utils/journeyUtils"
+import { apiFetch } from "../utils/apiFetch"
 
 import { getEmpty } from "../data/emptyStates"
 
@@ -29,13 +31,13 @@ import InsightChart from "../components/charts/InsightChart"
 import BlossomLoader from "../components/ui/BlossomLoader"
 
 import "../styles/pages/Journey.css"
-import { apiFetch } from "../utils/apiFetch"
 
 function Journey() {
     const { transactions, loading } = useTransactions()
     const { stats: profileStats } = useProfile()
     const { currency } = useCurrency()
     const { categories } = useCategories()
+    const { checkIn } = useCheckIn()
     
     const streak = profileStats?.streak || 0
     const level = profileStats?.level || 1
@@ -62,7 +64,7 @@ function Journey() {
             .catch(err => console.error("Failed to fetch peak streak: ", err))
 
         return () => { cancelled = true }
-    }, [selectedMonth])
+    }, [selectedMonth, transactions, checkIn])
 
     // find earliest month that has data
     const earliestKey = useMemo(() => {
