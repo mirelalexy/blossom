@@ -46,6 +46,9 @@ function formatDividerTime(date) {
     return dayLabel === "Today" ? time : `${dayLabel}, ${time}`
 }
 
+// if last message is older than this (7 days), append a fresh greeting
+const STALE_CONVERSATION_MS = 7 * 24 * 60 * 60 * 1000
+
 function createOpeningMessage(isEvil) {
     return {
         id: "opening",
@@ -87,14 +90,28 @@ function ChatWindow({ variant = "page", onClose, initialInsight }) {
 
         if (saved) {
             try {
-                const parsed = JSON.parse(saved)
+                const parsed = JSON.parse(saved).map((m) => ({
+                    ...m,
+                    time: new Date(m.time)
+                }))
 
-                setMessages(
-                    parsed.map((m) => ({
-                        ...m,
-                        time: new Date(m.time)
-                    }))
-                )
+                const lastMessage = parsed[parsed.length - 1]
+                const gapMs = lastMessage ? Date.now() - lastMessage.time.getTime() : 0
+
+                if (gapMs > STALE_CONVERSATION_MS) {
+                    // add fresh greeting
+                    setMessages(
+                        ...parsed,
+                        {
+                            id: generateId(),
+                            role: "blossom",
+                            text: isEvil ? OPENING_MESSAGE.evil : OPENING_MESSAGE.regular,
+                            time: new Date()
+                        }
+                    )
+                } else {
+                    setMessages(parsed)
+                }
             } catch (err) {
                 console.error("Failed to restore chat: ", err)
             }
