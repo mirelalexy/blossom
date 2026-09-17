@@ -61,12 +61,12 @@ export async function getPeakStreak(req, res) {
         )
 
         const userRes = pool.query(
-            `SELECT timezone FROM users WHERE user_id = $1`,
+            `SELECT timezone FROM users WHERE id = $1`,
             [userId]
         )
 
         const timezone = userRes.rows[0]?.timezone || "UTC"
-        const peakStreak = calculatePeakStreak(transactionsRes.rows, (await checkInsRes).rows, month, timezone)
+        const peakStreak = calculatePeakStreak(transactionsRes.rows, checkInsRes.rows, month, timezone)
 
         res.json({ peakStreak })
     } catch (err) {
