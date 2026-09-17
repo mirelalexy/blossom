@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 
 import { useTransactions } from "../store/TransactionStore"
 import { useCurrency } from "../store/CurrencyStore"
@@ -29,6 +29,7 @@ import InsightChart from "../components/charts/InsightChart"
 import BlossomLoader from "../components/ui/BlossomLoader"
 
 import "../styles/pages/Journey.css"
+import { apiFetch } from "../utils/apiFetch"
 
 function Journey() {
     const { transactions, loading } = useTransactions()
@@ -46,6 +47,22 @@ function Journey() {
     const currentMonthKey = toKey(new Date())
     const [selectedMonth, setSelectedMonth] = useState(currentMonthKey)
     const isCurrentMonth = selectedMonth === currentMonthKey
+
+    const [peakStreak, setPeakStreak] = useState(null)
+
+    // get peak streak for selected month
+    useEffect(() => {
+        let cancelled = false
+
+        apiFetch(`/api/profile/peak?month=${selectedMonth}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!cancelled) setPeakStreak(data.peakStreak)
+            })
+            .catch(err => console.error("Failed to fetch peak streak: ", err))
+
+        return () => { cancelled = true }
+    }, [selectedMonth])
 
     // find earliest month that has data
     const earliestKey = useMemo(() => {
@@ -148,7 +165,7 @@ function Journey() {
                             <StatCard label="Spent" value={formatCurrency(stats.totalExpenses, currency)} />
                             <StatCard label="Income" value={formatCurrency(stats.totalIncome, currency)} />
                             <StatCard label="Transactions" value={stats.count} />
-                            <StatCard label="Streak" value={`${streak} ${streak === 1 ? "day" : "days"}`} />
+                            <StatCard label="Peak Streak" value={`${peakStreak} ${peakStreak === 1 ? "day" : "days"}`} />
                         </div>
                     </Section>
 
