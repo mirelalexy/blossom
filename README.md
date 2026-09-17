@@ -29,9 +29,8 @@ Blossom is a personal finance app built around the idea that budgeting works bet
 - Category-level budgets: advisory limits that warn you before logging a transaction that would exceed a category's limit
 - Budget snapshot card on the home screen with real-time progress
 
-### Challenges
-- 20 challenges across 8 types: mood tagging, streak consistency, budget adherence, transaction counts, small/large expenses, purchase intent, payment method, and goal deposits
-- Weekly and monthly challenges evaluated server-side after every transaction
+### Challenges (weekly and monthly)
+- 20 challenges across 11 types: mood tagging, streak consistency, budget adherence, expense/income counts, small/large expenses, purchase intent, payment method, method + mood/intent combined, and goal deposits
 
 ### XP & Levels
 - Earn XP for every transaction (5 XP), daily check-in (3 XP), streak day (2 XP), challenge completed (30 XP), and goal reached (50 XP)
@@ -196,7 +195,7 @@ npm run dev
 
 Frontend runs at `http://localhost:5173` by default.
 
-### Database setup
+### Database setup 
 
 Run the schema SQL file to create all tables, then start the backend. It will seed default categories and challenges on user registration.
 
