@@ -50,20 +50,11 @@ export async function getPeakStreak(req, res) {
     const { month } = req.query
 
     try {
-        const transactionsRes = await pool.query(
-            `SELECT * FROM transactions WHERE user_id = $1`,
-            [userId]
-        )
-
-        const checkInsRes = await pool.query(
-            `SELECT * FROM check_ins WHERE user_id = $1`,
-            [userId]
-        )
-
-        const userRes = await pool.query(
-            `SELECT timezone FROM users WHERE id = $1`,
-            [userId]
-        )
+        const [userRes, transactionsRes, checkInsRes] = await Promise.all([
+            pool.query(`SELECT timezone FROM users WHERE id = $1`, [userId]),
+            pool.query(`SELECT * FROM transactions WHERE user_id = $1`, [userId]),
+            pool.query(`SELECT * FROM check_ins WHERE user_id = $1`, [userId])
+        ])
 
         const timezone = userRes.rows[0]?.timezone || "UTC"
         const peakStreak = calculatePeakStreak(transactionsRes.rows, checkInsRes.rows, month, timezone)
