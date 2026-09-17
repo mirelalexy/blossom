@@ -55,7 +55,7 @@ function Goals() {
                 ))
             )}
                 
-            <Button onClick={() => navigate("/goals/add")}>Add saving goal</Button>
+            <Button onClick={() => navigate("/goals/add")}>Add Saving Goal</Button>
         </div>
     )
 }

@@ -84,7 +84,7 @@ function Password() {
                 onClick={handleSave}
                 disabled={!canSubmit || loading}
             >
-                {loading ? "Updating..." : "Update password"}
+                {loading ? "Updating..." : "Update Password"}
             </Button>
         </div>
     )

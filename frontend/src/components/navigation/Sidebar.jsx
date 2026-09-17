@@ -168,10 +168,10 @@ function Sidebar() {
             <button
                 className="sidebar-add-btn"
                 onClick={() => navigate("/transactions/add")}
-                title={isCollapsed ? "Log a transaction" : undefined}
+                title={isCollapsed ? "Log Transaction" : undefined}
             >
                 <Icon name="add" size={18} />
-                <span className="sidebar-fade">Log a transaction</span>
+                <span className="sidebar-fade">Log Transaction</span>
             </button>
 
             <div className="sidebar-footer">

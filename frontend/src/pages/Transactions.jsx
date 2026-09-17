@@ -480,7 +480,7 @@ function Transactions() {
 										setVisibleCount((c) => c + PAGE_SIZE)
 									}
 								>
-									Load more
+									Load More
 								</Button>
 							)}
 						</>
@@ -494,7 +494,7 @@ function Transactions() {
 							<Button
 								onClick={() => navigate("/transactions/add")}
 							>
-								Log something
+								Log Something
 							</Button>
 						}
 					/>
@@ -531,7 +531,7 @@ function Transactions() {
 											)
 										}
 									>
-										Load more
+										Load More
 									</Button>
 								)}
 							</>
